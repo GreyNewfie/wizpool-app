@@ -1,11 +1,11 @@
-import FullButton from './fullButton';
+import PrimaryButton from './primarylButton';
 
 export default function Welcome() {
   return (
     <div className="welcome-container">
       <HeaderLogo />
       <TextCarrousel />
-      <FullButton text={'Get Started'} />
+      <PrimaryButton text={'Get Started'} />
     </div>
   );
 }
