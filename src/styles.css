@@ -10,4 +10,18 @@
 
 body {
     background-color: var(--main-bg);
+    color: white;
+    font-family: "roboto", sans-serif;
+}
+
+.welcome-container {
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header-logo {
+    width: 300px;
 }
