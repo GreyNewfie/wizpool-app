@@ -1,7 +1,11 @@
+import FullButton from './fullButton';
+
 export default function Welcome() {
   return (
     <div className="welcome-container">
       <HeaderLogo />
+      <TextCarrousel />
+      <FullButton text={'Get Started'} />
     </div>
   );
 }
@@ -11,9 +15,18 @@ function HeaderLogo() {
     <div className="header-logo-container">
       <img
         className="header-logo"
-        src="/public/wizpool-stacked-no-bg-750x750.png"
+        src="/wizpool-stacked-no-bg-750x750.png"
         alt="a trophy with a wizard hat on top"
       />
+    </div>
+  );
+}
+
+function TextCarrousel() {
+  return (
+    <div className="text-carrousel-container">
+      <h1>Welcome to WizPool</h1>
+      <p>The app that will make you a wins pool tracking wizard.</p>
     </div>
   );
 }

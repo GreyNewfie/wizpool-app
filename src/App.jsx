@@ -1,4 +1,4 @@
-import Welcome from '/src/components/welcome.jsx';
+import Welcome from './components/welcome';
 
 export default function App() {
   return (
