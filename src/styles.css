@@ -5,23 +5,41 @@
 }
 
 :root {
-    --main-bg: #1F201F;
+    --main-bg-color: #1F201F;
+    --primary-color: #675b8d;
+    --primary-text: 'Poppins', sans-serif;
+    --secondary-text: 'Roboto', sans-serif;
 }
 
 body {
-    background-color: var(--main-bg);
+    background-color: black;
     color: white;
-    font-family: "roboto", sans-serif;
+    font-family: var(--primary-text);
+}
+
+button {
+    background-color: var(--primary-color);
+    color: white;
 }
 
 .welcome-container {
     text-align: center;
+    padding-top: 10px;
 
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 45px;
 }
 
 .header-logo {
     width: 300px;
+}
+
+.primary-button {
+    font-size: 1.2rem;
+    padding: 10px 101px;
+    font-family: inherit;
+    border: none;
+    border-radius: 25px;
 }
