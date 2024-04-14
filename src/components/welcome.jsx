@@ -1,11 +1,11 @@
-import FullButton from './fullButton';
+import PrimaryButton from './primarylButton';
 
 export default function Welcome() {
   return (
     <div className="welcome-container">
       <HeaderLogo />
       <TextCarrousel />
-      <FullButton text={'Get Started'} />
+      <PrimaryButton text={'Get Started'} />
     </div>
   );
 }
@@ -15,7 +15,7 @@ function HeaderLogo() {
     <div className="header-logo-container">
       <img
         className="header-logo"
-        src="/wizpool-stacked-no-bg-750x750.png"
+        src="/wizpool-stacked-no-bg-750x650.png"
         alt="a trophy with a wizard hat on top"
       />
     </div>
