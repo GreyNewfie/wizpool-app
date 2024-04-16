@@ -1,4 +1,4 @@
-import PrimaryButton from './primarylButton';
+import PrimaryButton from '../components/primaryl-button';
 
 export default function Welcome() {
   return (
