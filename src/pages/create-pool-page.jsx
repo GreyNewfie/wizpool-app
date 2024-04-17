@@ -1,4 +1,5 @@
 import AddPlayer from '../components/add-player-form';
+import PrimaryButton from '../components/primary-button';
 
 export default function CreatePool() {
   return (
@@ -15,6 +16,7 @@ export default function CreatePool() {
       />
       <h2>Add players to your pool</h2>
       <AddPlayer />
+      <PrimaryButton text={'Add player'} />
     </div>
   );
 }
