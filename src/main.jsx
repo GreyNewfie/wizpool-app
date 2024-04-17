@@ -3,11 +3,16 @@ import ReactDOM from 'react-dom/client';
 import './styles.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App.jsx';
+import CreatePool from './pages/create-pool-page.jsx';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
+  },
+  {
+    path: '/create-pool',
+    element: <CreatePool />,
   },
 ]);
 
