@@ -41,7 +41,7 @@ div:has(.create-pool-container) {
     padding-top: 20px;
     display: flex;
     flex-direction: column;
-    gap: 1.1rem;
+    gap: 1.5rem;
 }
 
 .header-logo {
@@ -91,6 +91,16 @@ div:has(.create-pool-container) {
     font-size: 1.3rem;
     font-weight: 500;
 
+}
+
+.add-players-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.add-players-section button {
+    margin-top: 10px;
 }
 
 .add-player {
