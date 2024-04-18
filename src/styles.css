@@ -63,3 +63,25 @@ div:has(.create-pool-container) {
 
     align-self: flex-end;
 }
+
+.choose-pool-name {
+    font-size: 1.3rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.text-input {
+    color: white;
+    font-size: 1rem;
+    padding: 1rem;
+    border-radius: 10px;
+    background-color: #2E2E33;
+    border: none;
+}
+
+.create-pool-page-header {
+    display: flex;
+    flex-direction: column;
+}
