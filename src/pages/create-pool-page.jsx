@@ -10,7 +10,9 @@ export default function CreatePool() {
         <h1>Create a pool</h1>
       </div>
       <div className="choose-pool-name">
-        <label htmlFor="pool-name">Name your pool</label>
+        <label htmlFor="pool-name" className="page-subsection-header">
+          Name your pool
+        </label>
         <input
           type="text"
           id="pool-name"
@@ -20,7 +22,7 @@ export default function CreatePool() {
           required
         />
       </div>
-      <h2>Add players to your pool</h2>
+      <p className="page-subsection-header">Add players to your pool</p>
       <AddPlayer />
       <PrimaryButton text={'Add player'} />
     </div>

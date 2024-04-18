@@ -87,6 +87,12 @@ div:has(.create-pool-container) {
     flex-direction: column;
 }
 
+.page-subsection-header {
+    font-size: 1.3rem;
+    font-weight: 500;
+
+}
+
 .add-player {
     display: flex;
     flex-direction: column;
