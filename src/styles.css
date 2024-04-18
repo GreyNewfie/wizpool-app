@@ -37,6 +37,12 @@ div:has(.create-pool-container) {
     justify-content: center;
 }
 
+.create-pool-container {
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
 .header-logo {
     width: 300px;
 }
@@ -47,4 +53,13 @@ div:has(.create-pool-container) {
     font-family: inherit;
     border: none;
     border-radius: 25px;
+}
+
+.top-right-action-btn {
+    background: transparent;
+    border: none;
+    font-size: 1rem;
+    color: #A8A6AD;
+
+    align-self: flex-end;
 }
