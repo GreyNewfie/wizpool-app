@@ -41,6 +41,7 @@ div:has(.create-pool-container) {
     padding-top: 20px;
     display: flex;
     flex-direction: column;
+    gap: 1.1rem;
 }
 
 .header-logo {
@@ -84,4 +85,10 @@ div:has(.create-pool-container) {
 .create-pool-page-header {
     display: flex;
     flex-direction: column;
+}
+
+.add-player {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
 }
