@@ -4,6 +4,7 @@ import './styles.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App.jsx';
 import CreatePool from './pages/create-pool-page.jsx';
+import AssignTeams from './pages/assign-teams-page.jsx';
 
 const router = createBrowserRouter([
   {
@@ -13,6 +14,10 @@ const router = createBrowserRouter([
   {
     path: '/create-pool',
     element: <CreatePool />,
+  },
+  {
+    path: '/assign-teams',
+    element: <AssignTeams />,
   },
 ]);
 
