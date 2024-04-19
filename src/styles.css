@@ -49,11 +49,17 @@ div:has(.create-pool-container) {
 }
 
 .primary-button {
+    position: relative;
     font-size: 1.2rem;
     padding: 10px 101px;
     font-family: inherit;
     border: none;
     border-radius: 25px;
+}
+
+.plus-symbol {
+    position: absolute;
+    left: 5%;
 }
 
 .top-right-action-btn {
