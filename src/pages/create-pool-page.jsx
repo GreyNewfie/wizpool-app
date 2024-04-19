@@ -25,6 +25,7 @@ export default function CreatePool() {
       <div className="add-players-section">
         <p className="page-subsection-header">Add players to your pool</p>
         <AddPlayer />
+        <p className="secondary-text">Select next when all players are added</p>
         <PrimaryButton text={'Add another player'} />
       </div>
     </div>

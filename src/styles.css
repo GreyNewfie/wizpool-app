@@ -7,14 +7,15 @@
 :root {
     --main-bg-color: #1F201F;
     --primary-color: #675b8d;
-    --primary-text: 'Poppins', sans-serif;
-    --secondary-text: 'Roboto', sans-serif;
+    --secondary-text-color: #b3b7b6;
+    --primary-text-font: 'Poppins', sans-serif;
+    --secondary-text-font: 'Roboto', sans-serif;
 }
 
 body {
     background-color: black;
     color: white;
-    font-family: var(--primary-text);
+    font-family: var(--primary-text-font);
 }
 
 button {
@@ -66,7 +67,7 @@ div:has(.create-pool-container) {
     background: transparent;
     border: none;
     font-size: 1rem;
-    color: #A8A6AD;
+    color: var(--secondary-text-color);
 
     align-self: flex-end;
 }
@@ -113,4 +114,10 @@ div:has(.create-pool-container) {
     display: flex;
     flex-direction: column;
     gap: .5rem;
+}
+
+.secondary-text {
+    color: var(--secondary-text-color);
+    font-size: .9rem;
+    text-align: center;
 }
