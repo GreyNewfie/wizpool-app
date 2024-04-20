@@ -1,6 +1,6 @@
 import PrimaryButton from '../components/primary-button';
 
-export default function AssignTeams() {
+export default function ChooseAssignTeamsPlayer() {
   return (
     <div className="assign-teams-page">
       <PageHeader header={'Assign Teams'} />
