@@ -12,6 +12,11 @@
     --secondary-text-font: 'Roboto', sans-serif;
 }
 
+h3 {
+    font-size: 1.3rem;
+    font-weight: 500;
+}
+
 body {
     background-color: black;
     color: white;
@@ -33,7 +38,8 @@ button {
     align-items: center;
 }
 
-div:has(.create-pool-container) {
+div:has(.create-pool-container),
+div:has(.assign-teams-page) {
     display: flex;
     justify-content: center;
 }
@@ -51,8 +57,9 @@ div:has(.create-pool-container) {
 
 .primary-button {
     position: relative;
-    font-size: 1.2rem;
-    padding: 10px 101px;
+    width: clamp(280px, 100%, 330px);
+    font-size: clamp(1rem, 1.1rem, 1.2rem);
+    padding: 10px;
     font-family: inherit;
     border: none;
     border-radius: 25px;
@@ -127,13 +134,44 @@ div:has(.create-pool-container) {
 }
 
 .assign-teams-page {
+    padding: 1.16rem;
     display: flex;
     justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 2rem;
 }
 
 .page-header {
+    width: 100%;
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 
-.back-btn {}
+.select-player {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.player {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.team-icon {
+    width: 60px;
+}
+
+.player-info {
+    display: flex;
+    gap: .6rem;
+}
+
+.player-info>div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}

@@ -2,7 +2,7 @@ import PrimaryButton from '../components/primary-button';
 
 export default function AssignTeams() {
   return (
-    <>
+    <div className="assign-teams-page">
       <PageHeader header={'Assign Teams'} />
       <div className="select-player">
         <h3>Select a player to assign teams</h3>
@@ -10,18 +10,17 @@ export default function AssignTeams() {
           return <PlayerProfile player={player} />;
         })}
       </div>
-    </>
+      <PrimaryButton text={'Next'} />
+    </div>
   );
 }
 
 function PageHeader({ header }) {
   return (
-    <div className="assign-teams-page">
-      <div className="page-header">
-        <button className="back-btn">&#8592;</button>
-        <h3>{header}</h3>
-        <button className="save-btn">Save</button>
-      </div>
+    <div className="page-header">
+      <button className="back-btn">&#8592;</button>
+      <h3>{header}</h3>
+      <button className="save-btn">Save</button>
     </div>
   );
 }
@@ -29,11 +28,17 @@ function PageHeader({ header }) {
 function PlayerProfile({ player }) {
   return (
     <div className="player">
-      <img className="team-icon" src={player.icon} alt="team icon" />
-      <h5>{player.name}</h5>
-      <span className="profile-team-name">
-        {player.teamName ? player.teamName : `${player.name}'s Awesome Team`}
-      </span>
+      <div className="player-info">
+        <img className="team-icon" src={player.icon} alt="team icon" />
+        <div>
+          <h5>{player.name}</h5>
+          <span className="profile-team-name">
+            {player.teamName
+              ? player.teamName
+              : `${player.name}'s Awesome Team`}
+          </span>
+        </div>
+      </div>
       <PrimaryButton text={`Assign Teams to ${player.name}`} />
     </div>
   );
