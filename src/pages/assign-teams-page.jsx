@@ -1,13 +1,53 @@
+import PrimaryButton from '../components/primary-button';
+
 export default function AssignTeams() {
-  return <PageHeader header={'Assign Teams'} />;
+  return (
+    <>
+      <PageHeader header={'Assign Teams'} />
+      <div className="select-player">
+        <h3>Select a player to assign teams</h3>
+        {players.map((player) => {
+          return <PlayerProfile player={player} />;
+        })}
+      </div>
+    </>
+  );
 }
 
 function PageHeader({ header }) {
   return (
-    <div className="page-header">
-      <span>&#8592;</span>
-      <h3>{header}</h3>
-      <button className="save-btn">Save</button>
+    <div className="assign-teams-page">
+      <div className="page-header">
+        <button className="back-btn">&#8592;</button>
+        <h3>{header}</h3>
+        <button className="save-btn">Save</button>
+      </div>
     </div>
   );
 }
+
+function PlayerProfile({ player }) {
+  return (
+    <div className="player">
+      <img className="team-icon" src={player.icon} alt="team icon" />
+      <h5>{player.name}</h5>
+      <span className="profile-team-name">
+        {player.teamName ? player.teamName : `${player.name}'s Awesome Team`}
+      </span>
+      <PrimaryButton text={`Assign Teams to ${player.name}`} />
+    </div>
+  );
+}
+
+const players = [
+  {
+    name: 'John Doe',
+    teamName: "John's Super Team",
+    icon: './public/team-icon-1-200x200.png',
+  },
+  {
+    name: 'Jane Smith',
+    teamName: 'Great Janes',
+    icon: './public/team-icon-2-200x200.png',
+  },
+];
