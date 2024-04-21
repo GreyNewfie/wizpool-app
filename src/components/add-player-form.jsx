@@ -6,14 +6,14 @@ export default function AddPlayer() {
         id="player-1-name"
         name="player-1-name"
         className="text-input"
-        placeholder="Player's name"
+        placeholder="Player's Name"
       />
       <input
         type="text"
         id="player-1-team-name"
         name="player-1-team-name"
         className="text-input"
-        placeholder="Player's team name (optional)"
+        placeholder="Player's Team Name (optional)"
       />
     </form>
   );

@@ -1,4 +1,4 @@
-import PrimaryButton from '../components/primary-button';
+import PrimaryLinkButton from '../components/primary-link-button';
 
 export default function ChooseAssignTeamsPlayer() {
   return (
@@ -10,7 +10,7 @@ export default function ChooseAssignTeamsPlayer() {
           return <PlayerProfile key={index} player={player} />;
         })}
       </div>
-      <PrimaryButton text={'Next'} />
+      <PrimaryLinkButton text={'Next'} />
     </div>
   );
 }
@@ -39,7 +39,7 @@ function PlayerProfile({ player }) {
           </span>
         </div>
       </div>
-      <PrimaryButton text={`Assign Teams to ${player.name}`} />
+      <PrimaryLinkButton text={`Assign Teams to ${player.name}`} />
     </div>
   );
 }

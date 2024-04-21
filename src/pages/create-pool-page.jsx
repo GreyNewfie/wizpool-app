@@ -1,5 +1,5 @@
 import AddPlayer from '../components/add-player-form';
-import PrimaryButton from '../components/primary-button';
+import PrimaryLinkButton from '../components/primary-link-button';
 import NextHeaderButton from '../components/next-header-btn';
 
 export default function CreatePool() {
@@ -18,7 +18,7 @@ export default function CreatePool() {
           id="pool-name"
           name="pool-name"
           className="text-input"
-          placeholder="Pool name"
+          placeholder="Pool Name"
           required
         />
       </div>
@@ -28,7 +28,7 @@ export default function CreatePool() {
         <span className="secondary-text">
           Select next when all players are added
         </span>
-        <PrimaryButton text={'Add another player'} />
+        <PrimaryLinkButton text={'Add another player'} />
       </div>
     </div>
   );
