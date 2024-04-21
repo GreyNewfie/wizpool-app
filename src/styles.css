@@ -8,6 +8,7 @@
     --main-bg-color: #1F201F;
     --primary-color: #675b8d;
     --secondary-text-color: #b3b7b6;
+    --input-background-color: #2E2E33;
     --primary-text-font: 'Poppins', sans-serif;
     --secondary-text-font: 'Roboto', sans-serif;
 }
@@ -55,6 +56,10 @@ div:has(.assign-teams-page) {
     width: 300px;
 }
 
+.primary-button-container {
+    width: clamp(280px, 100%, 330px);
+}
+
 .primary-button {
     position: relative;
     width: clamp(280px, 100%, 330px);
@@ -65,12 +70,18 @@ div:has(.assign-teams-page) {
     border-radius: 25px;
 }
 
+.primary-button:hover {
+    cursor: pointer;
+    background-color: var(--input-background-color);
+    color: white;
+}
+
 .plus-symbol {
     position: absolute;
     left: 5%;
 }
 
-.top-right-action-btn,
+.next-header-btn,
 .back-btn,
 .save-btn {
     background: transparent;
@@ -79,7 +90,11 @@ div:has(.assign-teams-page) {
     color: var(--secondary-text-color);
 }
 
-.top-right-action-btn {
+.next-header-btn:hover {
+    cursor: pointer;
+}
+
+.next-header-btn {
     align-self: flex-end;
 }
 

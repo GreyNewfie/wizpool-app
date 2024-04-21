@@ -1,10 +1,20 @@
-export default function PrimaryButton({ text }) {
+import { Link } from 'react-router-dom';
+
+export default function PrimaryButton({ text, path }) {
   return text === 'Add another player' ? (
-    <button className="primary-button">
-      <span className="plus-symbol">&#43;</span>
-      <span>{text}</span>
-    </button>
+    <div className="primary-button-container">
+      <Link to={path}>
+        <button className="primary-button">
+          <span className="plus-symbol">&#43;</span>
+          <span>{text}</span>
+        </button>
+      </Link>
+    </div>
   ) : (
-    <button className="primary-button">{text}</button>
+    <div className="primary-button-container">
+      <Link to={path}>
+        <button className="primary-button">{text}</button>
+      </Link>
+    </div>
   );
 }

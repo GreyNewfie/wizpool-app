@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import PrimaryButton from '../components/primary-button';
 
 export default function Welcome() {
@@ -5,7 +6,7 @@ export default function Welcome() {
     <div className="welcome-container">
       <HeaderLogo />
       <TextCarrousel />
-      <PrimaryButton text={'Get Started'} />
+      <PrimaryButton text={'Get Started'} path={'/create-pool'} />
     </div>
   );
 }

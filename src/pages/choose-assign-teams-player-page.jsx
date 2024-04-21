@@ -6,8 +6,8 @@ export default function ChooseAssignTeamsPlayer() {
       <PageHeader header={'Assign Teams'} />
       <div className="select-player">
         <h3>Select a player to assign teams</h3>
-        {players.map((player) => {
-          return <PlayerProfile player={player} />;
+        {players.map((player, index) => {
+          return <PlayerProfile key={index} player={player} />;
         })}
       </div>
       <PrimaryButton text={'Next'} />
