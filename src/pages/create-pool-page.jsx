@@ -1,12 +1,12 @@
 import AddPlayer from '../components/add-player-form';
 import PrimaryButton from '../components/primary-button';
-import TopRightActionBtn from '../components/top-right-action-btn';
+import NextHeaderButton from '../components/next-header-btn';
 
 export default function CreatePool() {
   return (
     <div className="create-pool-container">
       <div className="create-pool-page-header">
-        <TopRightActionBtn />
+        <NextHeaderButton />
         <h1>Create a pool</h1>
       </div>
       <div className="choose-pool-name">
