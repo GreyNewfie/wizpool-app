@@ -1,4 +1,5 @@
 import PrimaryLinkButton from '../components/primary-link-button';
+import PrimaryActioButton from '../components/primary-action-button';
 
 export default function ChooseAssignTeamsPlayer() {
   return (
@@ -39,7 +40,7 @@ function PlayerProfile({ player }) {
           </span>
         </div>
       </div>
-      <PrimaryLinkButton text={`Assign Teams to ${player.name}`} />
+      <PrimaryActioButton text={`Assign Teams to ${player.name}`} />
     </div>
   );
 }
