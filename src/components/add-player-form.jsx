@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 export default function AddPlayer({ playerId }) {
   return (
     <form className="add-player">
@@ -18,3 +20,7 @@ export default function AddPlayer({ playerId }) {
     </form>
   );
 }
+
+AddPlayer.propTypes = {
+  playerId: PropTypes.number,
+};

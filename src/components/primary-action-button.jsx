@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 export default function PrimaryActionButton({
   text,
   handleClick,
@@ -14,3 +16,9 @@ export default function PrimaryActionButton({
     </button>
   );
 }
+
+PrimaryActionButton.propTypes = {
+  text: PropTypes.string,
+  handleClick: PropTypes.func,
+  addPlusSymbol: PropTypes.bool,
+};

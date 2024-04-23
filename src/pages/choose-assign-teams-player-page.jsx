@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import PrimaryLinkButton from '../components/primary-link-button';
 import PrimaryActioButton from '../components/primary-action-button';
 
@@ -26,6 +27,10 @@ function PageHeader({ header }) {
   );
 }
 
+PageHeader.propTypes = {
+  header: PropTypes.string,
+};
+
 function PlayerProfile({ player }) {
   return (
     <div className="player">
@@ -44,6 +49,10 @@ function PlayerProfile({ player }) {
     </div>
   );
 }
+
+PlayerProfile.propTypes = {
+  player: PropTypes.object,
+};
 
 const players = [
   {
