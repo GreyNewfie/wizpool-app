@@ -1,4 +1,6 @@
-import PrimaryButton from '../components/primary-button';
+import PropTypes from 'prop-types';
+import PrimaryLinkButton from '../components/primary-link-button';
+import PrimaryActioButton from '../components/primary-action-button';
 
 export default function ChooseAssignTeamsPlayer() {
   return (
@@ -10,7 +12,7 @@ export default function ChooseAssignTeamsPlayer() {
           return <PlayerProfile key={index} player={player} />;
         })}
       </div>
-      <PrimaryButton text={'Next'} />
+      <PrimaryLinkButton text={'Next'} />
     </div>
   );
 }
@@ -24,6 +26,10 @@ function PageHeader({ header }) {
     </div>
   );
 }
+
+PageHeader.propTypes = {
+  header: PropTypes.string,
+};
 
 function PlayerProfile({ player }) {
   return (
@@ -39,10 +45,14 @@ function PlayerProfile({ player }) {
           </span>
         </div>
       </div>
-      <PrimaryButton text={`Assign Teams to ${player.name}`} />
+      <PrimaryActioButton text={`Assign Teams to ${player.name}`} />
     </div>
   );
 }
+
+PlayerProfile.propTypes = {
+  player: PropTypes.object,
+};
 
 const players = [
   {

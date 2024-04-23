@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-export default function PrimaryButton({ text, path }) {
+export default function PrimaryLinkButton({ text, path }) {
   return text === 'Add another player' ? (
     <div className="primary-button-container">
       <Link to={path}>

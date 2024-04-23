@@ -72,8 +72,8 @@ div:has(.assign-teams-page) {
 
 .primary-button:hover {
     cursor: pointer;
-    background-color: var(--input-background-color);
-    color: white;
+    background-color: white;
+    color: var(--primary-color);
 }
 
 .plus-symbol {
@@ -92,6 +92,7 @@ div:has(.assign-teams-page) {
 
 .next-header-btn:hover {
     cursor: pointer;
+    color: white;
 }
 
 .next-header-btn {

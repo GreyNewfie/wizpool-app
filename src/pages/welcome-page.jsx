@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
-import PrimaryButton from '../components/primary-button';
+import PrimaryLinkButton from '../components/primary-link-button';
 
 export default function Welcome() {
   return (
     <div className="welcome-container">
       <HeaderLogo />
       <TextCarrousel />
-      <PrimaryButton text={'Get Started'} path={'/create-pool'} />
+      <PrimaryLinkButton text={'Get Started'} path={'/create-pool'} />
     </div>
   );
 }
