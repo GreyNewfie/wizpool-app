@@ -6,7 +6,7 @@ export default function UserTextInput({ props }) {
     <input
       type="text"
       id={props.id}
-      name={`props.name`}
+      name={props.name}
       className={classes['user-text-input']}
       placeholder={props.placeholderText}
     />
@@ -17,4 +17,5 @@ UserTextInput.propTypes = {
   props: PropTypes.object,
   id: PropTypes.number,
   placeholderText: PropTypes.string,
+  name: PropTypes.string,
 };
