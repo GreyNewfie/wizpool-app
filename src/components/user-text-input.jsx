@@ -1,19 +1,20 @@
 import PropTypes from 'prop-types';
 import classes from './user-text-input.module.css';
 
-export default function UserTextInput({ placeholderText, inputId }) {
+export default function UserTextInput({ props }) {
   return (
     <input
       type="text"
-      id={inputId}
-      name={`player-${inputId}-name`}
+      id={props.id}
+      name={`props.name`}
       className={classes['user-text-input']}
-      placeholder={placeholderText}
+      placeholder={props.placeholderText}
     />
   );
 }
 
 UserTextInput.propTypes = {
+  props: PropTypes.object,
+  id: PropTypes.number,
   placeholderText: PropTypes.string,
-  inputId: PropTypes.string,
 };
