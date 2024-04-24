@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import PrimaryLinkButton from '../components/primary-link-button';
 
 export default function Welcome() {
