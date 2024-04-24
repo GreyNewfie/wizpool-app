@@ -2,6 +2,7 @@ import { useState } from 'react';
 import AddPlayer from '../components/add-player-form';
 import NextHeaderButton from '../components/next-header-btn';
 import PrimaryActionButton from '../components/primary-action-button';
+import UserTextInput from '../components/user-text-input';
 
 export default function CreatePool() {
   const [playerCount, setPlayerCount] = useState(1);
@@ -20,13 +21,12 @@ export default function CreatePool() {
         <label htmlFor="pool-name" className="page-subsection-header">
           Name your pool
         </label>
-        <input
-          type="text"
-          id="pool-name"
-          name="pool-name"
-          className="text-input"
-          placeholder="Pool Name"
-          required
+        <UserTextInput
+          props={{
+            id: 'pool-name',
+            name: 'pool-name',
+            placeholderText: 'Pool Name',
+          }}
         />
       </div>
       <div className="add-players-section">
