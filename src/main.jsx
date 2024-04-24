@@ -16,10 +16,12 @@ const router = createBrowserRouter([
   {
     path: '/create-pool',
     element: <CreatePool />,
+    errorElement: <ErrorPage />,
   },
   {
     path: '/choose-assign-teams-player',
     element: <ChooseAssignTeamsPlayer />,
+    errorElement: <ErrorPage />,
   },
 ]);
 
