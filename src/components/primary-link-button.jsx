@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 export default function PrimaryLinkButton({ text, path }) {
   return text === 'Add another player' ? (
@@ -18,3 +19,8 @@ export default function PrimaryLinkButton({ text, path }) {
     </div>
   );
 }
+
+PrimaryLinkButton.propTypes = {
+  text: PropTypes.string,
+  path: PropTypes.string,
+};
