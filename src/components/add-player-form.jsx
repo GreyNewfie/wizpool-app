@@ -6,12 +6,18 @@ export default function AddPlayer({ playerId }) {
   return (
     <form className={classes['add-player']}>
       <UserTextInput
-        placeholderText="Player\'s Name"
-        inputId={`player-${playerId}-team-name`}
+        props={{
+          id: `player-${playerId}-team-name`,
+          name: `player-${playerId}-team-name`,
+          placeholderText: "Player's Name",
+        }}
       />
       <UserTextInput
-        placeholderText="Player's Team Name (optional)"
-        inputId={`player-${playerId}-team-name`}
+        props={{
+          id: `player-${playerId}-team-name`,
+          name: `player-${playerId}-team-name`,
+          placeholderText: "Player's Team Name (optional)",
+        }}
       />
     </form>
   );
