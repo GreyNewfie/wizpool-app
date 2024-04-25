@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import classes from './primary-button.module.css';
 
 export default function PrimaryActionButton({
   text,
@@ -6,12 +7,12 @@ export default function PrimaryActionButton({
   addPlusSymbol,
 }) {
   return addPlusSymbol ? (
-    <button className="primary-button" onClick={handleClick}>
-      <span className="plus-symbol">&#43;</span>
+    <button className={classes['primary-button']} onClick={handleClick}>
+      <span className={classes['plus-symbol']}>&#43;</span>
       <span>{text}</span>
     </button>
   ) : (
-    <button className="primary-button" onClick={handleClick}>
+    <button className={classes['primary-button']} onClick={handleClick}>
       {text}
     </button>
   );

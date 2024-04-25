@@ -56,31 +56,6 @@ div:has(.assign-teams-page) {
     width: 300px;
 }
 
-.primary-button-container {
-    width: clamp(280px, 100%, 330px);
-}
-
-.primary-button {
-    position: relative;
-    width: clamp(280px, 100%, 330px);
-    font-size: clamp(1rem, 1.1rem, 1.2rem);
-    padding: 10px;
-    font-family: inherit;
-    border: none;
-    border-radius: 25px;
-}
-
-.primary-button:hover {
-    cursor: pointer;
-    background-color: white;
-    color: var(--primary-color);
-}
-
-.plus-symbol {
-    position: absolute;
-    left: 5%;
-}
-
 .next-header-btn,
 .back-btn,
 .save-btn {
