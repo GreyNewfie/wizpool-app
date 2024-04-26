@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import AddPlayer from '../components/add-player-form';
-import NextHeaderButton from '../components/next-header-btn';
-import PrimaryActionButton from '../components/primary-action-button';
-import UserTextInput from '../components/user-text-input';
+import AddPlayer from '../components/AddPlayer';
+import NextHeaderButton from '../components/NextHeaderButton';
+import PrimaryActionButton from '../components/PrimayActionButton';
+import UserTextInput from '../components/UserTextInput';
 
-export default function CreatePool() {
+export default function CreatePoolPage() {
   const [playerCount, setPlayerCount] = useState(1);
 
   function handleClick() {
@@ -38,9 +38,11 @@ export default function CreatePool() {
           Select next when all players are added
         </span>
         <PrimaryActionButton
-          text={'Add another player'}
-          handleClick={handleClick}
-          addPlusSymbol={true}
+          props={{
+            text: 'Add another player',
+            handleClick: handleClick,
+            optionalSymbol: '+',
+          }}
         />
       </div>
     </div>

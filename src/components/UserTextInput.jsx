@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import classes from './user-text-input.module.css';
+import classes from './UserTextInput.module.css';
 
 export default function UserTextInput({ props }) {
   return (
