@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import classes from './primary-button.module.css';
+import classes from './PrimaryButton.module.css';
 
 export default function PrimaryLinkButton({ text, path }) {
   return text === 'Add another player' ? (

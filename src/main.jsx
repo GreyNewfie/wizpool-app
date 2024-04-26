@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom/client';
 import './styles.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App.jsx';
-import CreatePool from './pages/create-pool-page.jsx';
-import ChooseAssignTeamsPlayer from './pages/choose-assign-teams-player-page.jsx';
-import ErrorPage from './pages/error-page.jsx';
+import CreatePoolPage from './pages/CreatePoolPage.jsx';
+import ChooseAssignTeamsPlayerPage from './pages/ChooseAssignTeamsPlayerPage.jsx';
+import ErrorPage from './pages/ErrorPage.jsx';
 
 const router = createBrowserRouter([
   {
@@ -15,12 +15,12 @@ const router = createBrowserRouter([
   },
   {
     path: '/create-pool',
-    element: <CreatePool />,
+    element: <CreatePoolPage />,
     errorElement: <ErrorPage />,
   },
   {
     path: '/choose-assign-teams-player',
-    element: <ChooseAssignTeamsPlayer />,
+    element: <ChooseAssignTeamsPlayerPage />,
     errorElement: <ErrorPage />,
   },
 ]);

@@ -1,4 +1,4 @@
-import PrimaryLinkButton from '../components/primary-link-button';
+import PrimaryLinkButton from '../components/PrimaryLinkButton';
 
 export default function Welcome() {
   return (

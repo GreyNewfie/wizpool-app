@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
-import PrimaryLinkButton from '../components/primary-link-button';
-import PrimaryActioButton from '../components/primary-action-button';
+import PrimaryLinkButton from '../components/PrimaryLinkButton';
+import PrimaryActioButton from '../components/PrimayActionButton';
 
-export default function ChooseAssignTeamsPlayer() {
+export default function ChooseAssignTeamsPlayerPage() {
   return (
     <div className="assign-teams-page">
       <PageHeader header={'Assign Teams'} />
