@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import PrimaryActionButton from './PrimayActionButton';
 
 export default function PlayerProfile({ player }) {

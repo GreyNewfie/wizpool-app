@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import PrimaryLinkButton from '../components/PrimaryLinkButton';
-import PrimaryActioButton from '../components/PrimayActionButton';
+import PlayerProfile from '../components/PlayerProfile';
 
 export default function ChooseAssignTeamsPlayerPage() {
   return (
@@ -29,34 +29,6 @@ function PageHeader({ header }) {
 
 PageHeader.propTypes = {
   header: PropTypes.string,
-};
-
-function PlayerProfile({ player }) {
-  return (
-    <div className="player">
-      <div className="player-info">
-        <img className="team-icon" src={player.icon} alt="team icon" />
-        <div>
-          <h5>{player.name}</h5>
-          <span className="profile-team-name">
-            {player.teamName
-              ? player.teamName
-              : `${player.name}'s Awesome Team`}
-          </span>
-        </div>
-      </div>
-      <PrimaryActioButton
-        props={{
-          text: `Assign Teams to ${player.name}`,
-          handleClick: () => console.log(player.name),
-        }}
-      />
-    </div>
-  );
-}
-
-PlayerProfile.propTypes = {
-  player: PropTypes.object,
 };
 
 const players = [
