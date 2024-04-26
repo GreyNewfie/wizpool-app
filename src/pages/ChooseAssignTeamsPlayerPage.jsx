@@ -45,7 +45,12 @@ function PlayerProfile({ player }) {
           </span>
         </div>
       </div>
-      <PrimaryActioButton text={`Assign Teams to ${player.name}`} />
+      <PrimaryActioButton
+        props={{
+          text: `Assign Teams to ${player.name}`,
+          handleClick: () => console.log(player.name),
+        }}
+      />
     </div>
   );
 }
