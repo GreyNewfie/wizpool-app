@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import PrimaryLinkButton from '../components/PrimaryLinkButton';
 import PlayerProfile from '../components/PlayerProfile';
+import { players } from '../data';
 
 export default function ChooseAssignTeamsPlayerPage() {
   return (
@@ -30,16 +31,3 @@ function PageHeader({ header }) {
 PageHeader.propTypes = {
   header: PropTypes.string,
 };
-
-const players = [
-  {
-    name: 'John Doe',
-    teamName: "John's Super Team",
-    icon: './public/team-icon-1-200x200.png',
-  },
-  {
-    name: 'Jane Smith',
-    teamName: 'Great Janes',
-    icon: './public/team-icon-2-200x200.png',
-  },
-];
