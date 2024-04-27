@@ -14,7 +14,7 @@ export default function CreatePoolPage() {
   return (
     <div className="create-pool-container">
       <div className="create-pool-page-header">
-        <NextHeaderButton />
+        <NextHeaderButton path="/choose-assign-teams-player" />
         <h1>Create a pool</h1>
       </div>
       <div className="choose-pool-name">
