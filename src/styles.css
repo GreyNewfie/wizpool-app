@@ -56,22 +56,12 @@ div:has(.assign-teams-page) {
     width: 300px;
 }
 
-.next-header-btn,
 .back-btn,
 .save-btn {
     background: transparent;
     border: none;
     font-size: 1rem;
     color: var(--secondary-text-color);
-}
-
-.next-header-btn:hover {
-    cursor: pointer;
-    color: white;
-}
-
-.next-header-btn {
-    align-self: flex-end;
 }
 
 .choose-pool-name {
@@ -104,8 +94,6 @@ div:has(.assign-teams-page) {
 .add-players-section button {
     margin-top: 10px;
 }
-
-
 
 .secondary-text {
     color: var(--secondary-text-color);
