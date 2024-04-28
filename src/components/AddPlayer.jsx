@@ -4,7 +4,7 @@ import UserTextInput from './UserTextInput';
 
 export default function AddPlayer({ playerId }) {
   return (
-    <form className={classes['add-player']}>
+    <>
       <UserTextInput
         props={{
           id: `player-${playerId}-team-name`,
@@ -19,7 +19,7 @@ export default function AddPlayer({ playerId }) {
           placeholderText: "Player's Team Name (optional)",
         }}
       />
-    </form>
+    </>
   );
 }
 

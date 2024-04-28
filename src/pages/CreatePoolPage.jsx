@@ -30,10 +30,12 @@ export default function CreatePoolPage() {
         />
       </div>
       <div className="add-players-section">
-        <h3 className="page-subsection-header">Add players to your pool</h3>
-        {[...Array(playerCount)].map((_, index) => {
-          return <AddPlayer key={index} playerId={index} />;
-        })}
+        <form className={classes['add-player']}>
+          <h3 className="page-subsection-header">Add players to your pool</h3>
+          {[...Array(playerCount)].map((_, index) => {
+            return <AddPlayer key={index} playerId={index} />;
+          })}
+        </form>
         <span className="secondary-text">
           Select next when all players are added
         </span>
