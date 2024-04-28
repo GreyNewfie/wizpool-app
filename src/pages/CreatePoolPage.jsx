@@ -3,6 +3,7 @@ import AddPlayer from '../components/AddPlayer';
 import NextHeaderButton from '../components/NextHeaderButton';
 import PrimaryActionButton from '../components/PrimayActionButton';
 import UserTextInput from '../components/UserTextInput';
+import classes from './CreatePoolPage.module.css';
 
 export default function CreatePoolPage() {
   const [playerCount, setPlayerCount] = useState(1);
