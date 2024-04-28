@@ -9,6 +9,7 @@ export default function UserTextInput({ props }) {
       name={props.name}
       className={classes['user-text-input']}
       placeholder={props.placeholderText}
+      onChange={props.handleChange}
     />
   );
 }
@@ -18,4 +19,5 @@ UserTextInput.propTypes = {
   id: PropTypes.number,
   placeholderText: PropTypes.string,
   name: PropTypes.string,
+  handleChange: PropTypes.func,
 };

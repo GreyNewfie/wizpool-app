@@ -7,10 +7,18 @@ import classes from './CreatePoolPage.module.css';
 
 export default function CreatePoolPage() {
   const [playerCount, setPlayerCount] = useState(1);
+  const [poolName, setPoolName] = useState('Initial');
+  const [players, setPlayers] = useState([]);
 
   function handleClick() {
     setPlayerCount(playerCount + 1);
   }
+
+  const handlePoolNameChange = (e) => {
+    setPoolName(e.target.value);
+  };
+
+  const handlePlayerNameChange = (e) => {};
 
   return (
     <div
@@ -33,14 +41,25 @@ export default function CreatePoolPage() {
             id: 'pool-name',
             name: 'pool-name',
             placeholderText: 'Pool Name',
+            handleChange: handlePoolNameChange,
           }}
         />
+        <p>{poolName}</p>
       </div>
       <div className={classes['add-players-section']}>
         <form className={classes['add-player']}>
           <h3 className="page-subsection-header">Add players to your pool</h3>
           {[...Array(playerCount)].map((_, index) => {
-            return <AddPlayer key={index} playerId={index} />;
+            return (
+              <AddPlayer
+                key={index}
+                props={{
+                  playerId: index,
+                  handlePlayerNameChange: handlePlayerNameChange,
+                  handleTeamNameChange: () => console.log('temporary'),
+                }}
+              />
+            );
           })}
         </form>
         <span className="secondary-text">
