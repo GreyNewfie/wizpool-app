@@ -13,13 +13,19 @@ export default function CreatePoolPage() {
   }
 
   return (
-    <div className="create-pool-container">
-      <div className="create-pool-page-header">
+    <div
+      id="create-pool-container"
+      className={classes['create-pool-container']}
+    >
+      <div className={classes['create-pool-page-header']}>
         <NextHeaderButton path="/choose-assign-teams-player" />
         <h1>Create a pool</h1>
       </div>
-      <div className="choose-pool-name">
-        <label htmlFor="pool-name" className="page-subsection-header">
+      <div className={classes['choose-pool-name']}>
+        <label
+          htmlFor="pool-name"
+          className={classes['page-subsection-header']}
+        >
           Name your pool
         </label>
         <UserTextInput
@@ -30,7 +36,7 @@ export default function CreatePoolPage() {
           }}
         />
       </div>
-      <div className="add-players-section">
+      <div className={classes['add-players-section']}>
         <form className={classes['add-player']}>
           <h3 className="page-subsection-header">Add players to your pool</h3>
           {[...Array(playerCount)].map((_, index) => {
