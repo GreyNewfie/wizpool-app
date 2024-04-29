@@ -13,7 +13,7 @@ export default function AddPlayer({
           id: `player-${playerId}-name`,
           name: `player-${playerId}-name`,
           placeholderText: "Player's Name",
-          onChange: (e) => handlePlayerNameChange(e.target.value),
+          onChange: handlePlayerNameChange,
         }}
       />
       <UserTextInput

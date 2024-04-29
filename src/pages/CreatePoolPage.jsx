@@ -7,7 +7,7 @@ import classes from './CreatePoolPage.module.css';
 
 export default function CreatePoolPage() {
   const [playerCount, setPlayerCount] = useState(1);
-  const [poolName, setPoolName] = useState('Initial');
+  const [poolName, setPoolName] = useState('');
   const [players, setPlayers] = useState([]);
 
   function handleClick() {
@@ -53,13 +53,11 @@ export default function CreatePoolPage() {
             handleChange: handlePoolNameChange,
           }}
         />
-        <p>{poolName}</p>
       </div>
       <div className={classes['add-players-section']}>
         <form className={classes['add-player']}>
           <h3 className="page-subsection-header">Add players to your pool</h3>
           {[...Array(playerCount)].map((_, index) => {
-            console.log(index);
             return (
               <AddPlayer
                 key={index} //Shold this be outside of the props object?
