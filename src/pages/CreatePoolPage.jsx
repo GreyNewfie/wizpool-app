@@ -18,7 +18,16 @@ export default function CreatePoolPage() {
     setPoolName(e.target.value);
   };
 
-  const handlePlayerNameChange = (e) => {};
+  const handlePlayerNameChange = (e, index) => {
+    const updatedPlayers = [...players];
+
+    updatedPlayers[index] = {
+      ...updatedPlayers[index],
+      playerName: e.target.value,
+    };
+
+    setPlayers(updatedPlayers);
+  };
 
   return (
     <div
@@ -50,14 +59,13 @@ export default function CreatePoolPage() {
         <form className={classes['add-player']}>
           <h3 className="page-subsection-header">Add players to your pool</h3>
           {[...Array(playerCount)].map((_, index) => {
+            console.log(index);
             return (
               <AddPlayer
-                key={index}
-                props={{
-                  playerId: index,
-                  handlePlayerNameChange: handlePlayerNameChange,
-                  handleTeamNameChange: () => console.log('temporary'),
-                }}
+                key={index} //Shold this be outside of the props object?
+                playerId={index}
+                handlePlayerNameChange={(e) => handlePlayerNameChange(e, index)}
+                handleTeamNameChange={() => console.log('temporary')}
               />
             );
           })}

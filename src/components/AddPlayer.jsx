@@ -1,23 +1,27 @@
 import PropTypes from 'prop-types';
 import UserTextInput from './UserTextInput';
 
-export default function AddPlayer({ props }) {
+export default function AddPlayer({
+  playerId,
+  handlePlayerNameChange,
+  handleTeamNameChange,
+}) {
   return (
     <>
       <UserTextInput
         props={{
-          id: `player-${props.playerId}-name`,
-          name: `player-${props.playerId}-name`,
+          id: `player-${playerId}-name`,
+          name: `player-${playerId}-name`,
           placeholderText: "Player's Name",
-          onChange: props.handlePlayerNameChange,
+          onChange: (e) => handlePlayerNameChange(e.target.value),
         }}
       />
       <UserTextInput
         props={{
-          id: `player-${props.playerId}-team-name`,
-          name: `player-${props.playerId}-team-name`,
+          id: `player-${playerId}-team-name`,
+          name: `player-${playerId}-team-name`,
           placeholderText: "Player's Team Name (optional)",
-          onChange: props.handleTeamNameChange,
+          onChange: handleTeamNameChange,
         }}
       />
     </>
@@ -26,7 +30,7 @@ export default function AddPlayer({ props }) {
 
 AddPlayer.propTypes = {
   props: PropTypes.object,
-  playerId: PropTypes.number,
-  handlePlayerNameChange: PropTypes.func,
-  handleTeamNameChange: PropTypes.func,
+  playerId: PropTypes.number.isRequired,
+  handlePlayerNameChange: PropTypes.func.isRequired,
+  handleTeamNameChange: PropTypes.func.isRequired,
 };
