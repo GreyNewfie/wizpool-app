@@ -63,7 +63,7 @@ export default function CreatePoolPage() {
                 key={index} //Shold this be outside of the props object?
                 playerId={index}
                 handlePlayerNameChange={(e) => handlePlayerNameChange(e, index)}
-                handleTeamNameChange={() => console.log('temporary')}
+                handleTeamNameChange={(e) => console.log(e.target.value)}
               />
             );
           })}
