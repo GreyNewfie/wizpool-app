@@ -9,12 +9,10 @@ export default function AddPlayer({
   return (
     <>
       <UserTextInput
-        props={{
-          id: `player-${playerId}-name`,
-          name: `player-${playerId}-name`,
-          placeholderText: "Player's Name",
-          onChange: handlePlayerNameChange,
-        }}
+        id={`player-${playerId}-name`}
+        name={`player-${playerId}-name`}
+        placeholderText="Player's Name"
+        onChange={handlePlayerNameChange}
       />
       <UserTextInput
         props={{
