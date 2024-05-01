@@ -46,12 +46,10 @@ export default function CreatePoolPage() {
           Name your pool
         </label>
         <UserTextInput
-          props={{
-            id: 'pool-name',
-            name: 'pool-name',
-            placeholderText: 'Pool Name',
-            handleChange: handlePoolNameChange,
-          }}
+          id="pool-name"
+          name="pool-name"
+          placeholderText="Pool Name"
+          handleChange={handlePoolNameChange}
         />
       </div>
       <div className={classes['add-players-section']}>
@@ -60,7 +58,7 @@ export default function CreatePoolPage() {
           {[...Array(playerCount)].map((_, index) => {
             return (
               <AddPlayer
-                key={index} //Shold this be outside of the props object?
+                key={index}
                 playerId={index}
                 handlePlayerNameChange={(e) => handlePlayerNameChange(e, index)}
                 handleTeamNameChange={(e) => console.log(e.target.value)}
@@ -72,11 +70,9 @@ export default function CreatePoolPage() {
           Select next when all players are added
         </span>
         <PrimaryActionButton
-          props={{
-            text: 'Add another player',
-            handleClick: handleClick,
-            optionalSymbol: '+',
-          }}
+          text="Add another player"
+          handleClick={handleClick}
+          optionalSymbol="+"
         />
       </div>
     </div>
