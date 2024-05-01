@@ -15,7 +15,7 @@ export default function UserTextInput(props) {
 }
 
 UserTextInput.propTypes = {
-  id: PropTypes.number,
+  id: PropTypes.string,
   placeholderText: PropTypes.string,
   name: PropTypes.string,
   handleChange: PropTypes.func,

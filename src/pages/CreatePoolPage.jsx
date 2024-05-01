@@ -29,6 +29,17 @@ export default function CreatePoolPage() {
     setPlayers(updatedPlayers);
   };
 
+  const handleTeamNameChange = (e, index) => {
+    const updatedPlayers = [...players];
+
+    updatedPlayers[index] = {
+      ...updatedPlayers[index],
+      teanName: e.target.value,
+    };
+
+    setPlayers(updatedPlayers);
+  };
+
   return (
     <div
       id="create-pool-container"
@@ -61,7 +72,7 @@ export default function CreatePoolPage() {
                 key={index}
                 playerId={index}
                 handlePlayerNameChange={(e) => handlePlayerNameChange(e, index)}
-                handleTeamNameChange={(e) => console.log(e.target.value)}
+                handleTeamNameChange={(e) => handleTeamNameChange(e, index)}
               />
             );
           })}
