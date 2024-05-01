@@ -12,14 +12,14 @@ export default function AddPlayer({
         id={`player-${playerId}-name`}
         name={`player-${playerId}-name`}
         placeholderText="Player's Name"
-        onChange={handlePlayerNameChange}
+        handleChange={handlePlayerNameChange}
       />
       <UserTextInput
         props={{
           id: `player-${playerId}-team-name`,
           name: `player-${playerId}-team-name`,
           placeholderText: "Player's Team Name (optional)",
-          onChange: handleTeamNameChange,
+          handleChange: handleTeamNameChange,
         }}
       />
     </>
