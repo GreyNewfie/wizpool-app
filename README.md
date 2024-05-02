@@ -1,4 +1,5 @@
 Inspiration for WizPool
+
 WizPool is an app that allows a user to track their season long wins pool and see which player's teams will accumulate the most wins. It automatically tracks the win-loss record of each team, calculates the total wins of each players chosen teams and displays a standings board of who is in the lead at any given point.
 
 MVP Features:
