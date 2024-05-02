@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import classes from './PrimaryButton.module.css';
 
-export default function PrimaryActionButton({ props }) {
+export default function PrimaryActionButton(props) {
   return (
     <button className={classes['primary-button']} onClick={props.handleClick}>
       <span className={classes['plus-symbol']}>{props.optionalSymbol}</span>
@@ -11,7 +11,6 @@ export default function PrimaryActionButton({ props }) {
 }
 
 PrimaryActionButton.propTypes = {
-  props: PropTypes.object,
   text: PropTypes.string,
   handleClick: PropTypes.func,
   optionalSymbol: PropTypes.string,

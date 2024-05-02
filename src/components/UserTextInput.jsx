@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import classes from './UserTextInput.module.css';
 
-export default function UserTextInput({ props }) {
+export default function UserTextInput(props) {
   return (
     <input
       type="text"
@@ -9,13 +9,14 @@ export default function UserTextInput({ props }) {
       name={props.name}
       className={classes['user-text-input']}
       placeholder={props.placeholderText}
+      onChange={props.handleChange}
     />
   );
 }
 
 UserTextInput.propTypes = {
-  props: PropTypes.object,
-  id: PropTypes.number,
+  id: PropTypes.string,
   placeholderText: PropTypes.string,
   name: PropTypes.string,
+  handleChange: PropTypes.func,
 };
