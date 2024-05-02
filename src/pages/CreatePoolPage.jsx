@@ -7,37 +7,42 @@ import classes from './CreatePoolPage.module.css';
 
 export default function CreatePoolPage() {
   const [playerCount, setPlayerCount] = useState(1);
-  const [poolName, setPoolName] = useState('');
-  const [players, setPlayers] = useState([]);
+  const [pool, setPool] = useState({});
 
   function handleClick() {
     setPlayerCount(playerCount + 1);
   }
 
   const handlePoolNameChange = (e) => {
-    setPoolName(e.target.value);
+    const updatedPool = { ...pool, poolName: e.target.value };
+    setPool(updatedPool);
   };
 
   const handlePlayerNameChange = (e, index) => {
-    const updatedPlayers = [...players];
+    const updatedPlayers = pool.players ? [...pool.players] : [];
 
     updatedPlayers[index] = {
+      // {playerName, teamName}
       ...updatedPlayers[index],
       playerName: e.target.value,
     };
 
-    setPlayers(updatedPlayers);
+    const updatedPool = { ...pool, players: [...updatedPlayers] }; // {poolName, players[{playerName, teamName}]}
+
+    setPool(updatedPool);
   };
 
   const handleTeamNameChange = (e, index) => {
-    const updatedPlayers = [...players];
+    const updatedPlayers = pool.players ? [...pool.players] : [];
 
     updatedPlayers[index] = {
       ...updatedPlayers[index],
       teanName: e.target.value,
     };
 
-    setPlayers(updatedPlayers);
+    const updatedPool = { ...pool, players: [...updatedPlayers] };
+
+    setPool(updatedPool);
   };
 
   return (
