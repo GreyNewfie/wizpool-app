@@ -22,12 +22,11 @@ export default function CreatePoolPage() {
     const updatedPlayers = pool.players ? [...pool.players] : [];
 
     updatedPlayers[index] = {
-      // {playerName, teamName}
       ...updatedPlayers[index],
       playerName: e.target.value,
     };
 
-    const updatedPool = { ...pool, players: [...updatedPlayers] }; // {poolName, players[{playerName, teamName}]}
+    const updatedPool = { ...pool, players: [...updatedPlayers] };
 
     setPool(updatedPool);
   };
