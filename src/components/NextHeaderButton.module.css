@@ -1,15 +1,15 @@
-.next-header-btn {
+.right-header-btn {
     background: transparent;
     border: none;
     font-size: 1rem;
     color: var(--secondary-text-color);
 }
 
-.next-header-btn:hover {
+.right-header-btn:hover {
     cursor: pointer;
     color: white;
 }
 
-a:has(.next-header-btn) {
+a:has(.right-header-btn) {
     align-self: flex-end;
 }
