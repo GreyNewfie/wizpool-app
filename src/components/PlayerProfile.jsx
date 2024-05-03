@@ -16,10 +16,8 @@ export default function PlayerProfile({ player }) {
         </div>
       </div>
       <PrimaryActionButton
-        props={{
-          text: `Assign Teams to ${player.name}`,
-          handleClick: () => console.log(player.name),
-        }}
+        text={`Assign Teams to ${player.name}`}
+        handleClick={() => console.log(player.name)}
       />
     </div>
   );

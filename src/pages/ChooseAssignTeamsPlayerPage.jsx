@@ -14,7 +14,7 @@ export default function ChooseAssignTeamsPlayerPage() {
           return <PlayerProfile key={index} player={player} />;
         })}
       </div>
-      <PrimaryLinkButton text={'Next'} />
+      <PrimaryLinkButton text="Next" />
     </div>
   );
 }
