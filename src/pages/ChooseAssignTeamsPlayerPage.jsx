@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import PrimaryLinkButton from '../components/PrimaryLinkButton';
 import PlayerProfile from '../components/PlayerProfile';
 import { players } from '../data';
-import { Link } from 'react-router-dom';
 import PageHeader from '../components/PageHeader';
 
 export default function ChooseAssignTeamsPlayerPage() {
