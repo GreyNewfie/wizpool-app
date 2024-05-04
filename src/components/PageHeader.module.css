@@ -1,3 +1,8 @@
+div:has(.page-header) {
+    display: flex;
+    justify-content: center;
+}
+
 .page-header {
     width: 100%;
     display: flex;

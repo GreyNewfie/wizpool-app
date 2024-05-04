@@ -1,0 +1,9 @@
+.teams-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.select-team-container {
+    display: flex;
+    justify-content: space-between;
+}
