@@ -1,0 +1,9 @@
+.choose-teams {
+    padding: 1.16rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 2rem;
+}

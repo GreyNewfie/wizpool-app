@@ -6,6 +6,7 @@ import App from './App.jsx';
 import CreatePoolPage from './pages/CreatePoolPage.jsx';
 import ChooseAssignTeamsPlayerPage from './pages/ChooseAssignTeamsPlayerPage.jsx';
 import ErrorPage from './pages/ErrorPage.jsx';
+import ChooseTeamsPage from './pages/ChooseTeamsPage.jsx';
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,11 @@ const router = createBrowserRouter([
   {
     path: '/choose-assign-teams-player',
     element: <ChooseAssignTeamsPlayerPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: '/choose-teams',
+    element: <ChooseTeamsPage />,
     errorElement: <ErrorPage />,
   },
 ]);

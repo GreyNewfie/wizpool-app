@@ -1,0 +1,25 @@
+div:has(.page-header) {
+    display: flex;
+    justify-content: center;
+}
+
+.page-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.back-btn,
+.save-btn {
+    background: transparent;
+    border: none;
+    font-size: 1rem;
+    color: var(--secondary-text-color);
+}
+
+.back-btn:hover,
+.save-btn:hover {
+    cursor: pointer;
+    color: white;
+}

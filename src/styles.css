@@ -18,6 +18,11 @@ h3 {
     font-weight: 500;
 }
 
+h5 {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
 body {
     background-color: black;
     color: white;
@@ -56,13 +61,7 @@ div:has(.assign-teams-page) {
     width: 300px;
 }
 
-.back-btn,
-.save-btn {
-    background: transparent;
-    border: none;
-    font-size: 1rem;
-    color: var(--secondary-text-color);
-}
+
 
 /*** CREATE POOL PAGE ***/
 
@@ -81,13 +80,6 @@ div:has(.assign-teams-page) {
     align-items: center;
     flex-direction: column;
     gap: 2rem;
-}
-
-.page-header {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
 }
 
 .select-player {

@@ -6,7 +6,7 @@ export default function NextHeaderButton({ handleClick, path }) {
   return (
     <Link to={path}>
       <button
-        className={classes['next-header-btn']}
+        className={classes['right-header-btn']}
         type="submit"
         onClick={handleClick}
       >
