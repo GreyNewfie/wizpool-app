@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import AddPlayer from '../components/AddPlayer';
 import NextHeaderButton from '../components/NextHeaderButton';
 import PrimaryActionButton from '../components/PrimayActionButton';
@@ -57,13 +57,17 @@ export default function CreatePoolPage() {
 
   const pool = poolObj.getPool();
 
+  const setLocalStorage = () => {
+    localStorage.setItem('pool', JSON.stringify(pool));
+  };
+
   return (
     <div
       id="create-pool-container"
       className={classes['create-pool-container']}
     >
       <div className={classes['create-pool-page-header']}>
-        <NextHeaderButton path="/choose-player" />
+        <NextHeaderButton handleClick={setLocalStorage} path="/choose-player" />
         <h1>Create a pool</h1>
       </div>
       <div className={classes['choose-pool-name']}>
