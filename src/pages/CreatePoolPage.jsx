@@ -5,44 +5,57 @@ import PrimaryActionButton from '../components/PrimayActionButton';
 import UserTextInput from '../components/UserTextInput';
 import classes from './CreatePoolPage.module.css';
 
+class Pool {
+  constructor() {
+    this.pool = {};
+  }
+
+  setPoolName(poolName) {
+    this.pool = { ...this.pool, poolName };
+  }
+
+  setPlayername(playerName, index) {
+    const updatedPlayers = this.pool.players ? [...this.pool.players] : [];
+    updatedPlayers[index] = {
+      ...updatedPlayers[index],
+      playerName,
+    };
+    this.pool = { ...this.pool, players: updatedPlayers };
+  }
+
+  setTeamName(teamName, index) {
+    const updatedPlayers = this.pool.players ? [...this.pool.players] : [];
+    updatedPlayers[index] = { ...updatedPlayers[index], teamName };
+    this.pool = { ...this.pool, players: updatedPlayers };
+  }
+
+  getPool() {
+    return this.pool;
+  }
+}
+
 export default function CreatePoolPage() {
   const [playerCount, setPlayerCount] = useState(1);
-  const [pool, setPool] = useState({});
+  const [poolObj] = useState(new Pool());
+  // const [pool, setPool] = useState({});
 
   function handleClick() {
     setPlayerCount(playerCount + 1);
   }
 
   const handlePoolNameChange = (e) => {
-    const updatedPool = { ...pool, poolName: e.target.value };
-    setPool(updatedPool);
+    poolObj.setPoolName(e.target.value);
   };
 
   const handlePlayerNameChange = (e, index) => {
-    const updatedPlayers = pool.players ? [...pool.players] : [];
-
-    updatedPlayers[index] = {
-      ...updatedPlayers[index],
-      playerName: e.target.value,
-    };
-
-    const updatedPool = { ...pool, players: [...updatedPlayers] };
-
-    setPool(updatedPool);
+    poolObj.setPlayername(e.target.value, index);
   };
 
   const handleTeamNameChange = (e, index) => {
-    const updatedPlayers = pool.players ? [...pool.players] : [];
-
-    updatedPlayers[index] = {
-      ...updatedPlayers[index],
-      teanName: e.target.value,
-    };
-
-    const updatedPool = { ...pool, players: [...updatedPlayers] };
-
-    setPool(updatedPool);
+    poolObj.setTeamName(e.target.value, index);
   };
+
+  const pool = poolObj.getPool();
 
   return (
     <div
