@@ -47,6 +47,7 @@ export default function CreatePoolPage() {
 
   const handlePoolNameChange = (e) => {
     const updatedPool = new Pool('', []);
+    updatedPool.updatePool(pool);
     updatedPool.setPoolName(e.target.value);
     setPool(updatedPool);
   };
