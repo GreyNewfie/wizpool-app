@@ -4,7 +4,7 @@ import './styles.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App.jsx';
 import CreatePoolPage from './pages/CreatePoolPage.jsx';
-import ChooseAssignTeamsPlayerPage from './pages/ChooseAssignTeamsPlayerPage.jsx';
+import ChoosePlayerPage from './pages/ChoosePlayerPage.jsx';
 import ErrorPage from './pages/ErrorPage.jsx';
 import ChooseTeamsPage from './pages/ChooseTeamsPage.jsx';
 
@@ -20,8 +20,8 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: '/choose-assign-teams-player',
-    element: <ChooseAssignTeamsPlayerPage />,
+    path: '/choose-player',
+    element: <ChoosePlayerPage />,
     errorElement: <ErrorPage />,
   },
   {

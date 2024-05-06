@@ -1,46 +1,68 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import AddPlayer from '../components/AddPlayer';
 import NextHeaderButton from '../components/NextHeaderButton';
 import PrimaryActionButton from '../components/PrimayActionButton';
 import UserTextInput from '../components/UserTextInput';
 import classes from './CreatePoolPage.module.css';
+import { json } from 'react-router-dom';
+
+class Pool {
+  constructor(poolName, players) {
+    this.poolName = poolName;
+    this.players = players;
+  }
+
+  setPoolName(poolName) {
+    this.poolName = poolName;
+  }
+
+  SetPlayerName(playerName, index) {
+    this.players[index] = { ...this.players[index], playerName };
+  }
+
+  setTeamName(teamName, index) {
+    this.players[index] = { ...this.players[index], teamName };
+  }
+
+  updatePool(pool) {
+    this.poolName = pool.poolName;
+    this.players = pool.players;
+  }
+
+  getPool() {
+    return this.poolName, this.players;
+  }
+}
 
 export default function CreatePoolPage() {
   const [playerCount, setPlayerCount] = useState(1);
-  const [pool, setPool] = useState({});
+  const [pool, setPool] = useState(new Pool('', []));
+
+  useEffect(() => {
+    localStorage.setItem('pool', JSON.stringify(pool));
+  }, [pool]);
 
   function handleClick() {
     setPlayerCount(playerCount + 1);
   }
 
   const handlePoolNameChange = (e) => {
-    const updatedPool = { ...pool, poolName: e.target.value };
+    const updatedPool = new Pool('', []);
+    updatedPool.setPoolName(e.target.value);
     setPool(updatedPool);
   };
 
   const handlePlayerNameChange = (e, index) => {
-    const updatedPlayers = pool.players ? [...pool.players] : [];
-
-    updatedPlayers[index] = {
-      ...updatedPlayers[index],
-      playerName: e.target.value,
-    };
-
-    const updatedPool = { ...pool, players: [...updatedPlayers] };
-
+    const updatedPool = new Pool('', []);
+    updatedPool.updatePool(pool);
+    updatedPool.SetPlayerName(e.target.value, index);
     setPool(updatedPool);
   };
 
   const handleTeamNameChange = (e, index) => {
-    const updatedPlayers = pool.players ? [...pool.players] : [];
-
-    updatedPlayers[index] = {
-      ...updatedPlayers[index],
-      teanName: e.target.value,
-    };
-
-    const updatedPool = { ...pool, players: [...updatedPlayers] };
-
+    const updatedPool = new Pool('', []);
+    updatedPool.updatePool(pool);
+    updatedPool.setTeamName(e.target.value, index);
     setPool(updatedPool);
   };
 
@@ -50,7 +72,7 @@ export default function CreatePoolPage() {
       className={classes['create-pool-container']}
     >
       <div className={classes['create-pool-page-header']}>
-        <NextHeaderButton path="/choose-assign-teams-player" />
+        <NextHeaderButton path="/choose-player" />
         <h1>Create a pool</h1>
       </div>
       <div className={classes['choose-pool-name']}>

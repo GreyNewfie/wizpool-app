@@ -4,7 +4,7 @@ import PlayerProfile from '../components/PlayerProfile';
 import { players } from '../data';
 import PageHeader from '../components/PageHeader';
 
-export default function ChooseAssignTeamsPlayerPage() {
+export default function ChoosePlayerPage() {
   return (
     <div className="assign-teams-page">
       <PageHeader headerText="Assign Teams" path="/create-pool" />

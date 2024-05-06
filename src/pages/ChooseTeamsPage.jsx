@@ -5,10 +5,7 @@ import classes from './ChooseTeamsPage.module.css';
 export default function ChooseTeamsPage() {
   return (
     <div className={classes['choose-teams']}>
-      <PageHeader
-        headerText="Choose Teams"
-        path="/choose-assign-teams-player"
-      />
+      <PageHeader headerText="Choose Teams" path="/choose-player" />
       <TeamsList />
     </div>
   );
