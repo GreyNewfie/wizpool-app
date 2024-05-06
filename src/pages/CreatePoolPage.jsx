@@ -4,6 +4,7 @@ import NextHeaderButton from '../components/NextHeaderButton';
 import PrimaryActionButton from '../components/PrimayActionButton';
 import UserTextInput from '../components/UserTextInput';
 import classes from './CreatePoolPage.module.css';
+import { json } from 'react-router-dom';
 
 class Pool {
   constructor() {
@@ -36,8 +37,7 @@ class Pool {
 
 export default function CreatePoolPage() {
   const [playerCount, setPlayerCount] = useState(1);
-  const [poolObj] = useState(new Pool());
-  // const [pool, setPool] = useState({});
+  const [poolObj, setPoolObj] = useState(new Pool());
 
   function handleClick() {
     setPlayerCount(playerCount + 1);
@@ -45,21 +45,22 @@ export default function CreatePoolPage() {
 
   const handlePoolNameChange = (e) => {
     poolObj.setPoolName(e.target.value);
+    setPoolObj(poolObj);
   };
 
   const handlePlayerNameChange = (e, index) => {
     poolObj.setPlayername(e.target.value, index);
+    setPoolObj(poolObj);
   };
 
   const handleTeamNameChange = (e, index) => {
     poolObj.setTeamName(e.target.value, index);
+    setPoolObj(poolObj);
   };
 
-  const pool = poolObj.getPool();
-
-  const setLocalStorage = () => {
-    localStorage.setItem('pool', JSON.stringify(pool));
-  };
+  useEffect(() => {
+    localStorage.setItem('pool', JSON.stringify(poolObj.getPool()));
+  }, [poolObj]);
 
   return (
     <div
@@ -67,7 +68,7 @@ export default function CreatePoolPage() {
       className={classes['create-pool-container']}
     >
       <div className={classes['create-pool-page-header']}>
-        <NextHeaderButton handleClick={setLocalStorage} path="/choose-player" />
+        <NextHeaderButton path="/choose-player" />
         <h1>Create a pool</h1>
       </div>
       <div className={classes['choose-pool-name']}>
