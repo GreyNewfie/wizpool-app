@@ -4,7 +4,6 @@ import NextHeaderButton from '../components/NextHeaderButton';
 import PrimaryActionButton from '../components/PrimayActionButton';
 import UserTextInput from '../components/UserTextInput';
 import classes from './CreatePoolPage.module.css';
-import { json } from 'react-router-dom';
 
 class Pool {
   constructor(poolName, players) {
