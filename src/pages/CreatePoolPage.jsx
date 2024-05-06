@@ -7,60 +7,64 @@ import classes from './CreatePoolPage.module.css';
 import { json } from 'react-router-dom';
 
 class Pool {
-  constructor() {
-    this.pool = {};
+  constructor(poolName, players) {
+    this.poolName = poolName;
+    this.players = players;
   }
 
   setPoolName(poolName) {
-    this.pool = { ...this.pool, poolName };
+    this.poolName = poolName;
   }
 
-  setPlayername(playerName, index) {
-    const updatedPlayers = this.pool.players ? [...this.pool.players] : [];
-    updatedPlayers[index] = {
-      ...updatedPlayers[index],
-      playerName,
-    };
-    this.pool = { ...this.pool, players: updatedPlayers };
+  SetPlayerName(playerName, index) {
+    this.players[index] = { ...this.players[index], playerName };
   }
 
   setTeamName(teamName, index) {
-    const updatedPlayers = this.pool.players ? [...this.pool.players] : [];
-    updatedPlayers[index] = { ...updatedPlayers[index], teamName };
-    this.pool = { ...this.pool, players: updatedPlayers };
+    this.players[index] = { ...this.players[index], teamName };
+  }
+
+  updatePool(pool) {
+    this.poolName = pool.poolName;
+    this.players = pool.players;
   }
 
   getPool() {
-    return this.pool;
+    return this.poolName, this.players;
   }
 }
 
 export default function CreatePoolPage() {
   const [playerCount, setPlayerCount] = useState(1);
-  const [poolObj, setPoolObj] = useState(new Pool());
+  const [pool, setPool] = useState(new Pool('', []));
+
+  useEffect(() => {
+    localStorage.setItem('pool', JSON.stringify(pool));
+  }, [pool]);
 
   function handleClick() {
     setPlayerCount(playerCount + 1);
   }
 
   const handlePoolNameChange = (e) => {
-    poolObj.setPoolName(e.target.value);
-    setPoolObj(poolObj);
+    const updatedPool = new Pool('', []);
+    updatedPool.setPoolName(e.target.value);
+    setPool(updatedPool);
   };
 
   const handlePlayerNameChange = (e, index) => {
-    poolObj.setPlayername(e.target.value, index);
-    setPoolObj(poolObj);
+    const updatedPool = new Pool('', []);
+    updatedPool.updatePool(pool);
+    updatedPool.SetPlayerName(e.target.value, index);
+    setPool(updatedPool);
   };
 
   const handleTeamNameChange = (e, index) => {
-    poolObj.setTeamName(e.target.value, index);
-    setPoolObj(poolObj);
+    const updatedPool = new Pool('', []);
+    updatedPool.updatePool(pool);
+    updatedPool.setTeamName(e.target.value, index);
+    setPool(updatedPool);
   };
-
-  useEffect(() => {
-    localStorage.setItem('pool', JSON.stringify(poolObj.getPool()));
-  }, [poolObj]);
 
   return (
     <div
