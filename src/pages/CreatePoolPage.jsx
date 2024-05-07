@@ -4,34 +4,9 @@ import NextHeaderButton from '../components/NextHeaderButton';
 import PrimaryActionButton from '../components/PrimayActionButton';
 import UserTextInput from '../components/UserTextInput';
 import classes from './CreatePoolPage.module.css';
+import Pool from '../Utils/Pool';
 
-class Pool {
-  constructor(poolName, players) {
-    this.poolName = poolName;
-    this.players = players;
-  }
-
-  setPoolName(poolName) {
-    this.poolName = poolName;
-  }
-
-  SetPlayerName(playerName, index) {
-    this.players[index] = { ...this.players[index], playerName };
-  }
-
-  setTeamName(teamName, index) {
-    this.players[index] = { ...this.players[index], teamName };
-  }
-
-  updatePool(pool) {
-    this.poolName = pool.poolName;
-    this.players = pool.players;
-  }
-
-  getPool() {
-    return this.poolName, this.players;
-  }
-}
+function copyPool(pool) {}
 
 export default function CreatePoolPage() {
   const [playerCount, setPlayerCount] = useState(1);
