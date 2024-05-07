@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-class Pool {
+export default class Pool {
   constructor(poolName, players) {
     this.poolName = poolName;
     this.players = players;

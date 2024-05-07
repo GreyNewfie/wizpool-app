@@ -4,9 +4,13 @@ import NextHeaderButton from '../components/NextHeaderButton';
 import PrimaryActionButton from '../components/PrimayActionButton';
 import UserTextInput from '../components/UserTextInput';
 import classes from './CreatePoolPage.module.css';
-import Pool from '../Utils/Pool';
+import Pool from '../utils/Pool';
 
-function copyPool(pool) {}
+function copyOfPool(pool) {
+  const copyOfPool = new Pool('', []);
+  copyOfPool.updatePool(pool);
+  return copyOfPool;
+}
 
 export default function CreatePoolPage() {
   const [playerCount, setPlayerCount] = useState(1);
@@ -21,22 +25,19 @@ export default function CreatePoolPage() {
   }
 
   const handlePoolNameChange = (e) => {
-    const updatedPool = new Pool('', []);
-    updatedPool.updatePool(pool);
+    const updatedPool = copyOfPool(pool);
     updatedPool.setPoolName(e.target.value);
     setPool(updatedPool);
   };
 
   const handlePlayerNameChange = (e, index) => {
-    const updatedPool = new Pool('', []);
-    updatedPool.updatePool(pool);
+    const updatedPool = copyOfPool(pool);
     updatedPool.SetPlayerName(e.target.value, index);
     setPool(updatedPool);
   };
 
   const handleTeamNameChange = (e, index) => {
-    const updatedPool = new Pool('', []);
-    updatedPool.updatePool(pool);
+    const updatedPool = copyOfPool(pool);
     updatedPool.setTeamName(e.target.value, index);
     setPool(updatedPool);
   };
