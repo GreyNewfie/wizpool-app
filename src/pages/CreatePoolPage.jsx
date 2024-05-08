@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import AddPlayer from '../components/AddPlayer';
 import NextHeaderButton from '../components/NextHeaderButton';
 import PrimaryActionButton from '../components/PrimayActionButton';
 import UserTextInput from '../components/UserTextInput';
 import classes from './CreatePoolPage.module.css';
 import Pool from '../utils/Pool';
+import usePool from '../utils/usePool';
 
 function copyOfPool(pool) {
   const copyOfPool = new Pool('', []);
@@ -14,12 +15,8 @@ function copyOfPool(pool) {
 
 export default function CreatePoolPage() {
   const [playerCount, setPlayerCount] = useState(1);
-  const [pool, setPool] = useState(new Pool('', []));
-
-  useEffect(() => {
-    localStorage.setItem('pool', JSON.stringify(pool));
-  }, [pool]);
-
+  const { pool, setPool } = usePool();
+  // Tracks how many add player forms to display
   function handleClick() {
     setPlayerCount(playerCount + 1);
   }
