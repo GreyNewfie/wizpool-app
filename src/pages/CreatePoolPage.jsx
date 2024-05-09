@@ -7,7 +7,7 @@ import classes from './CreatePoolPage.module.css';
 import Pool from '../utils/Pool';
 import usePool from '../utils/usePool';
 
-function copyOfPool(pool) {
+function copyPool(pool) {
   const copyOfPool = new Pool('', []);
   copyOfPool.updatePool(pool);
   return copyOfPool;
@@ -16,25 +16,26 @@ function copyOfPool(pool) {
 export default function CreatePoolPage() {
   const [playerCount, setPlayerCount] = useState(1);
   const { pool, setPool } = usePool();
+
   // Tracks how many add player forms to display
   function handleClick() {
     setPlayerCount(playerCount + 1);
   }
 
   const handlePoolNameChange = (e) => {
-    const updatedPool = copyOfPool(pool);
+    const updatedPool = copyPool(pool);
     updatedPool.setPoolName(e.target.value);
     setPool(updatedPool);
   };
 
   const handlePlayerNameChange = (e, index) => {
-    const updatedPool = copyOfPool(pool);
+    const updatedPool = copyPool(pool);
     updatedPool.SetPlayerName(e.target.value, index);
     setPool(updatedPool);
   };
 
   const handleTeamNameChange = (e, index) => {
-    const updatedPool = copyOfPool(pool);
+    const updatedPool = copyPool(pool);
     updatedPool.setTeamName(e.target.value, index);
     setPool(updatedPool);
   };
@@ -58,6 +59,7 @@ export default function CreatePoolPage() {
         <UserTextInput
           id="pool-name"
           name="pool-name"
+          value={pool.poolName}
           placeholderText="Pool Name"
           handleChange={handlePoolNameChange}
         />
