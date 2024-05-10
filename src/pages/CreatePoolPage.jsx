@@ -75,7 +75,7 @@ export default function CreatePoolPage() {
           <PlayersList
             players={pool.players}
             handlePlayerNameChange={handlePlayerNameChange}
-            handleTeamNameChange={handlePlayerNameChange}
+            handleTeamNameChange={handleTeamNameChange}
           />
         </form>
         <span className="secondary-text">
