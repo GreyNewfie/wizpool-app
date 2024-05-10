@@ -1,11 +1,10 @@
-import { useState } from 'react';
-import AddPlayer from '../components/AddPlayer';
 import NextHeaderButton from '../components/NextHeaderButton';
 import PrimaryActionButton from '../components/PrimayActionButton';
 import UserTextInput from '../components/UserTextInput';
 import classes from './CreatePoolPage.module.css';
 import Pool from '../utils/Pool';
 import usePool from '../utils/usePool';
+import PlayersList from '../components/PlayersList';
 
 function copyPool(pool) {
   const copyOfPool = new Pool('', []);
@@ -14,12 +13,14 @@ function copyPool(pool) {
 }
 
 export default function CreatePoolPage() {
-  const [playerCount, setPlayerCount] = useState(1);
   const { pool, setPool } = usePool();
 
   // Tracks how many add player forms to display
-  function handleClick() {
-    setPlayerCount(playerCount + 1);
+  function addBlankPlayer() {
+    const updatedPlayers = [...pool.players];
+    updatedPlayers.push({ playerName: '', teamName: '' });
+    const updatedPool = { ...pool, players: updatedPlayers };
+    setPool(updatedPool);
   }
 
   const handlePoolNameChange = (e) => {
@@ -67,25 +68,18 @@ export default function CreatePoolPage() {
       <div className={classes['add-players-section']}>
         <form className={classes['add-player']}>
           <h3 className="page-subsection-header">Add players to your pool</h3>
-          {[...Array(playerCount)].map((_, index) => {
-            return (
-              <AddPlayer
-                key={index}
-                playerId={index}
-                playerName={pool.players[index]?.playerName}
-                teamName={pool.players[index]?.teamName}
-                handlePlayerNameChange={(e) => handlePlayerNameChange(e, index)}
-                handleTeamNameChange={(e) => handleTeamNameChange(e, index)}
-              />
-            );
-          })}
+          <PlayersList
+            players={pool.players}
+            handlePlayerNameChange={handlePlayerNameChange}
+            handleTeamNameChange={handleTeamNameChange}
+          />
         </form>
         <span className="secondary-text">
           Select next when all players are added
         </span>
         <PrimaryActionButton
           text="Add another player"
-          handleClick={handleClick}
+          handleClick={addBlankPlayer}
           optionalSymbol="+"
         />
       </div>

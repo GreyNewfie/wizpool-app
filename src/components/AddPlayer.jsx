@@ -24,8 +24,8 @@ export default function AddPlayer(props) {
 
 AddPlayer.propTypes = {
   playerId: PropTypes.number.isRequired,
-  playerName: PropTypes.string,
-  teamName: PropTypes.string,
+  playerName: PropTypes.string.isRequired,
+  teamName: PropTypes.string.isRequired,
   handlePlayerNameChange: PropTypes.func.isRequired,
   handleTeamNameChange: PropTypes.func.isRequired,
 };
