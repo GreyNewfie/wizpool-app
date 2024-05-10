@@ -14,8 +14,14 @@ export default function usePool() {
     localStorage.setItem('pool', JSON.stringify(pool));
   }, [pool]);
 
+  function getStoredPool() {
+    const storedPool = JSON.parse(localStorage.getItem('pool'));
+    return storedPool;
+  }
+
   return {
     pool,
     setPool,
+    getStoredPool,
   };
 }
