@@ -72,8 +72,8 @@ export default function CreatePoolPage() {
               <AddPlayer
                 key={index}
                 playerId={index}
-                playerName={pool.players[index]?.playerName}
-                teamName={pool.players[index]?.teamName}
+                playerName={pool.players[index]?.playerName ?? ''}
+                teamName={pool.players[index]?.teamName ?? ''}
                 handlePlayerNameChange={(e) => handlePlayerNameChange(e, index)}
                 handleTeamNameChange={(e) => handleTeamNameChange(e, index)}
               />
