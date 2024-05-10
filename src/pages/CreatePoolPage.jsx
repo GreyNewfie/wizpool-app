@@ -1,5 +1,3 @@
-import { useState } from 'react';
-import AddPlayer from '../components/AddPlayer';
 import NextHeaderButton from '../components/NextHeaderButton';
 import PrimaryActionButton from '../components/PrimayActionButton';
 import UserTextInput from '../components/UserTextInput';
@@ -15,13 +13,11 @@ function copyPool(pool) {
 }
 
 export default function CreatePoolPage() {
-  const [playerCount, setPlayerCount] = useState(1);
   const { pool, setPool } = usePool();
 
   // Tracks how many add player forms to display
   function addBlankPlayer() {
     const updatedPlayers = [...pool.players];
-    const index = pool.players.length;
     updatedPlayers.push({ playerName: '', teamName: '' });
     const updatedPool = { ...pool, players: updatedPlayers };
     setPool(updatedPool);
