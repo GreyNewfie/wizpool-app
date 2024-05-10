@@ -1,12 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import AddPlayer from '../components/AddPlayer';
 import NextHeaderButton from '../components/NextHeaderButton';
 import PrimaryActionButton from '../components/PrimayActionButton';
 import UserTextInput from '../components/UserTextInput';
 import classes from './CreatePoolPage.module.css';
 import Pool from '../utils/Pool';
+import usePool from '../utils/usePool';
 
-function copyOfPool(pool) {
+function copyPool(pool) {
   const copyOfPool = new Pool('', []);
   copyOfPool.updatePool(pool);
   return copyOfPool;
@@ -14,30 +15,27 @@ function copyOfPool(pool) {
 
 export default function CreatePoolPage() {
   const [playerCount, setPlayerCount] = useState(1);
-  const [pool, setPool] = useState(new Pool('', []));
+  const { pool, setPool } = usePool();
 
-  useEffect(() => {
-    localStorage.setItem('pool', JSON.stringify(pool));
-  }, [pool]);
-
+  // Tracks how many add player forms to display
   function handleClick() {
     setPlayerCount(playerCount + 1);
   }
 
   const handlePoolNameChange = (e) => {
-    const updatedPool = copyOfPool(pool);
+    const updatedPool = copyPool(pool);
     updatedPool.setPoolName(e.target.value);
     setPool(updatedPool);
   };
 
   const handlePlayerNameChange = (e, index) => {
-    const updatedPool = copyOfPool(pool);
+    const updatedPool = copyPool(pool);
     updatedPool.SetPlayerName(e.target.value, index);
     setPool(updatedPool);
   };
 
   const handleTeamNameChange = (e, index) => {
-    const updatedPool = copyOfPool(pool);
+    const updatedPool = copyPool(pool);
     updatedPool.setTeamName(e.target.value, index);
     setPool(updatedPool);
   };
@@ -61,6 +59,7 @@ export default function CreatePoolPage() {
         <UserTextInput
           id="pool-name"
           name="pool-name"
+          value={pool.poolName}
           placeholderText="Pool Name"
           handleChange={handlePoolNameChange}
         />
@@ -73,6 +72,8 @@ export default function CreatePoolPage() {
               <AddPlayer
                 key={index}
                 playerId={index}
+                playerName={pool.players[index]?.playerName}
+                teamName={pool.players[index]?.teamName}
                 handlePlayerNameChange={(e) => handlePlayerNameChange(e, index)}
                 handleTeamNameChange={(e) => handleTeamNameChange(e, index)}
               />

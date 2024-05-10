@@ -7,12 +7,14 @@ export default function AddPlayer(props) {
       <UserTextInput
         id={`player-${props.playerId}-name`}
         name={`player-${props.playerId}-name`}
+        value={props.playerName}
         placeholderText="Player's Name"
         handleChange={props.handlePlayerNameChange}
       />
       <UserTextInput
         id={`player-${props.playerId}-team-name`}
         name={`player-${props.playerId}-team-name`}
+        value={props.teamName}
         placeholderText="Player's Team Name (optional)"
         handleChange={props.handleTeamNameChange}
       />
@@ -22,6 +24,8 @@ export default function AddPlayer(props) {
 
 AddPlayer.propTypes = {
   playerId: PropTypes.number.isRequired,
+  playerName: PropTypes.string,
+  teamName: PropTypes.string,
   handlePlayerNameChange: PropTypes.func.isRequired,
   handleTeamNameChange: PropTypes.func.isRequired,
 };
