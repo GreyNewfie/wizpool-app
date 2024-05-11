@@ -22,6 +22,10 @@ export default class Pool {
     this.players = pool.players;
   }
 
+  updatePlayers(players) {
+    this.players = players;
+  }
+
   getPool() {
     return this.poolName, this.players;
   }
