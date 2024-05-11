@@ -8,7 +8,7 @@ export default function PlayerProfile({ player, index }) {
       <div className="player-info">
         <img
           className="team-icon"
-          src={`team-icon-${iconNum}-200x200.png`}
+          src={`player-icon-${iconNum}-150x150.png`}
           alt="team icon"
         />
         <div>
