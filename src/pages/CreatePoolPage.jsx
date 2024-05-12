@@ -23,6 +23,15 @@ export default function CreatePoolPage() {
     setPool(updatedPool);
   }
 
+  function removeBlankPlayers() {
+    const updatedPool = copyPool(pool);
+    const updatedPlayers = updatedPool.players.filter(
+      (player) => player.playerName !== '',
+    );
+    updatedPool.updatePlayers(updatedPlayers);
+    setPool(updatedPool);
+  }
+
   const handlePoolNameChange = (e) => {
     const updatedPool = copyPool(pool);
     updatedPool.setPoolName(e.target.value);
@@ -47,7 +56,10 @@ export default function CreatePoolPage() {
       className={classes['create-pool-container']}
     >
       <div className={classes['create-pool-page-header']}>
-        <NextHeaderButton path="/choose-player" />
+        <NextHeaderButton
+          path="/choose-player"
+          handleClick={removeBlankPlayers}
+        />
         <h1>Create a pool</h1>
       </div>
       <div className={classes['choose-pool-name']}>

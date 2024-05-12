@@ -25,7 +25,7 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: '/choose-teams',
+    path: '/choose-teams/:id',
     element: <ChooseTeamsPage />,
     errorElement: <ErrorPage />,
   },
