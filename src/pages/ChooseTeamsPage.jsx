@@ -14,7 +14,7 @@ export default function ChooseTeamsPage() {
     <div className={classes['choose-teams']}>
       <PageHeader headerText="Choose Teams" path="/choose-player" />
       <h3>Select Teams for {pool.players[id].playerName}</h3>
-      <TeamsList />
+      <TeamsList playerId={id} />
     </div>
   );
 }

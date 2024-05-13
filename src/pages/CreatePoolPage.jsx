@@ -6,6 +6,7 @@ import Pool from '../utils/Pool';
 import usePool from '../utils/usePool';
 import PlayersList from '../components/PlayersList';
 
+// Should I move this into usePool?
 function copyPool(pool) {
   const copyOfPool = new Pool('', []);
   copyOfPool.updatePool(pool);
@@ -15,7 +16,6 @@ function copyPool(pool) {
 export default function CreatePoolPage() {
   const { pool, setPool } = usePool();
 
-  // Tracks how many add player forms to display
   function addBlankPlayer() {
     const updatedPlayers = [...pool.players];
     updatedPlayers.push({ playerName: '', teamName: '' });
