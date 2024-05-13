@@ -26,9 +26,7 @@ export default function usePool() {
       const response = await fetch(url);
       const data = await response.json();
 
-      if (response.status === 200) {
-        console.log(data);
-      } else {
+      if (response.status !== 200) {
         console.log('Server Error:', data.message);
       }
     } catch (error) {
