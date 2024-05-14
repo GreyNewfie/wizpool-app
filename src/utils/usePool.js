@@ -14,9 +14,25 @@ export default function usePool() {
   const url =
     'https://api.sportsdata.io/v3/nba/scores/json/Standings/2024?key=b461640f8b2641b8bcaf42396b30ba9a';
 
-  useEffect(() => {
+  const setPoolInLocalStorage = () => {
+    removeBlankPlayers();
     localStorage.setItem('pool', JSON.stringify(pool));
-  }, [pool]);
+  };
+
+  const removeBlankPlayers = () => {
+    const updatedPool = copyPool(pool);
+    const updatedPlayers = updatedPool.players.filter(
+      (player) => player.playerName !== '',
+    );
+    updatedPool.updatePlayers(updatedPlayers);
+    setPool(updatedPool);
+  };
+
+  const copyPool = () => {
+    const copyOfPool = new Pool('', []);
+    copyOfPool.updatePool(pool);
+    return copyOfPool;
+  };
 
   function getStoredPool() {
     const storedPool = JSON.parse(localStorage.getItem('pool'));
@@ -42,5 +58,6 @@ export default function usePool() {
     pool,
     setPool,
     getStoredPool,
+    setPoolInLocalStorage,
   };
 }
