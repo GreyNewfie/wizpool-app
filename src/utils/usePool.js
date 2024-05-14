@@ -7,6 +7,8 @@ function getInitialPool() {
   if (!storedPool) return new Pool('', []);
 }
 
+// let cachedData = {if cachedData else getData}
+
 export default function usePool() {
   const [pool, setPool] = useState(getInitialPool());
   const url =
@@ -25,16 +27,16 @@ export default function usePool() {
     try {
       const response = await fetch(url);
       const data = await response.json();
-
+      console.log(data);
       if (response.status !== 200) {
         console.log('Server Error:', data.message);
       }
     } catch (error) {
-      console.log('Fetch Erro:', error);
+      console.log('Fetch Error:', error);
     }
   };
 
-  fecthData();
+  // fecthData();
 
   return {
     pool,

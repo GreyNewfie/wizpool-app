@@ -9,25 +9,12 @@ export default function TeamsList({ playerId }) {
   const [selectedTeams, setSelectedTeams] = useState([]);
   const { pool, setPool } = usePool();
 
-  // const toggleSelect = (teamName) => {
-  //   if (selectedTeams.includes(teamName)) {
-  //     setSelectedTeams(selectedTeams.filter((team) => team !== teamName));
-  //   } else {
-  //     setSelectedTeams([...selectedTeams, teamName]);
-  //   }
-  // };
-
   const toggleSelect = (teamName) => {
-    setSelectedTeams((prevSelectedteams) => {
-      if (prevSelectedteams.includes(teamName)) {
-        return prevSelectedteams.filter((team) => team !== teamName);
-      } else {
-        return [...prevSelectedteams, teamName];
-      }
-    }),
-      () => {
-        updatePlayerTeams();
-      };
+    if (selectedTeams.includes(teamName)) {
+      setSelectedTeams(selectedTeams.filter((team) => team !== teamName));
+    } else {
+      setSelectedTeams([...selectedTeams, teamName]);
+    }
   };
 
   function copyPool(pool) {
