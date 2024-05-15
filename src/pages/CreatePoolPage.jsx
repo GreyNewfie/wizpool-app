@@ -6,16 +6,11 @@ import Pool from '../utils/Pool';
 import usePool from '../utils/usePool';
 import PlayersList from '../components/PlayersList';
 
-function copyPool(pool) {
-  const copyOfPool = new Pool('', []);
-  copyOfPool.updatePool(pool);
-  return copyOfPool;
-}
+// Should I move this into usePool?
 
 export default function CreatePoolPage() {
-  const { pool, setPool } = usePool();
+  const { pool, setPool, copyPool } = usePool();
 
-  // Tracks how many add player forms to display
   function addBlankPlayer() {
     const updatedPlayers = [...pool.players];
     updatedPlayers.push({ playerName: '', teamName: '' });
@@ -23,29 +18,20 @@ export default function CreatePoolPage() {
     setPool(updatedPool);
   }
 
-  function removeBlankPlayers() {
-    const updatedPool = copyPool(pool);
-    const updatedPlayers = updatedPool.players.filter(
-      (player) => player.playerName !== '',
-    );
-    updatedPool.updatePlayers(updatedPlayers);
-    setPool(updatedPool);
-  }
-
   const handlePoolNameChange = (e) => {
-    const updatedPool = copyPool(pool);
+    const updatedPool = copyPool();
     updatedPool.setPoolName(e.target.value);
     setPool(updatedPool);
   };
 
   const handlePlayerNameChange = (e, index) => {
-    const updatedPool = copyPool(pool);
+    const updatedPool = copyPool();
     updatedPool.SetPlayerName(e.target.value, index);
     setPool(updatedPool);
   };
 
   const handleTeamNameChange = (e, index) => {
-    const updatedPool = copyPool(pool);
+    const updatedPool = copyPool();
     updatedPool.setTeamName(e.target.value, index);
     setPool(updatedPool);
   };
@@ -58,7 +44,7 @@ export default function CreatePoolPage() {
       <div className={classes['create-pool-page-header']}>
         <NextHeaderButton
           path="/choose-player"
-          handleClick={removeBlankPlayers}
+          handleClick={() => console.log('Button clicked')}
         />
         <h1>Create a pool</h1>
       </div>

@@ -26,6 +26,10 @@ export default class Pool {
     this.players = players;
   }
 
+  updatePlayersTeams(teams, playerIndex) {
+    this.players[playerIndex].teams = [...teams];
+  }
+
   getPool() {
     return this.poolName, this.players;
   }

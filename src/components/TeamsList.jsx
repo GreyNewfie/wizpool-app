@@ -1,9 +1,13 @@
 import classes from './TeamsList.module.css';
+import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { nflTeams } from '../data';
+import usePool from '../utils/usePool';
+import Pool from '../utils/Pool';
 
-export default function TeamsList() {
+export default function TeamsList({ playerId }) {
   const [selectedTeams, setSelectedTeams] = useState([]);
+  const { pool, setPool } = usePool();
 
   const toggleSelect = (teamName) => {
     if (selectedTeams.includes(teamName)) {
@@ -11,6 +15,21 @@ export default function TeamsList() {
     } else {
       setSelectedTeams([...selectedTeams, teamName]);
     }
+  };
+
+  function copyPool(pool) {
+    const copyOfPool = new Pool('', []);
+    copyOfPool.updatePool(pool);
+    return copyOfPool;
+  }
+
+  const updatePlayerTeams = () => {
+    const updatedPool = copyPool(pool);
+    updatedPool.players[playerId] = {
+      ...updatedPool.players[playerId],
+      playerTeams: selectedTeams,
+    };
+    setPool(updatedPool);
   };
 
   return (
@@ -32,3 +51,7 @@ export default function TeamsList() {
     </div>
   );
 }
+
+TeamsList.propTypes = {
+  playerId: PropTypes.string,
+};
