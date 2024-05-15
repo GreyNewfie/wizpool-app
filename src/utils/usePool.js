@@ -34,11 +34,6 @@ export default function usePool() {
     return copyOfPool;
   };
 
-  function getStoredPool() {
-    const storedPool = JSON.parse(localStorage.getItem('pool'));
-    return storedPool;
-  }
-
   const fecthData = async () => {
     try {
       const response = await fetch(url);
@@ -57,7 +52,6 @@ export default function usePool() {
   return {
     pool,
     setPool,
-    getStoredPool,
     copyPool,
   };
 }
