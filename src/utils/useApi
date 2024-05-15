@@ -1,0 +1,21 @@
+import { useState } from 'react';
+
+export default function useApi() {
+  const [apiData, setApiData] = useState();
+
+  const nbaStandingUrl =
+    'https://api.sportsdata.io/v3/nba/scores/json/Standings/2024?key=b461640f8b2641b8bcaf42396b30ba9a';
+
+  const fecthData = async () => {
+    try {
+      const response = await fetch(nbaStandingUrl);
+      const data = await response.json();
+      console.log(data);
+      if (response.status !== 200) {
+        console.log('Server Error:', data.message);
+      }
+    } catch (error) {
+      console.log('Fetch Error:', error);
+    }
+  };
+}
