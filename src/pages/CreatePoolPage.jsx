@@ -9,7 +9,7 @@ import PlayersList from '../components/PlayersList';
 // Should I move this into usePool?
 
 export default function CreatePoolPage() {
-  const { pool, setPool, setPoolInLocalStorage, copyPool } = usePool();
+  const { pool, setPool, copyPool } = usePool();
 
   function addBlankPlayer() {
     const updatedPlayers = [...pool.players];
@@ -44,7 +44,7 @@ export default function CreatePoolPage() {
       <div className={classes['create-pool-page-header']}>
         <NextHeaderButton
           path="/choose-player"
-          handleClick={setPoolInLocalStorage}
+          handleClick={() => console.log('Button clicked')}
         />
         <h1>Create a pool</h1>
       </div>
