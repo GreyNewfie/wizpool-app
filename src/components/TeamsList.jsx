@@ -10,8 +10,7 @@ export default function TeamsList({ playerId }) {
   const [selectedTeams, setSelectedTeams] = useState([]);
   const { pool, setPool } = usePool();
   const { getAllNbaTeamNames } = useApi();
-
-  console.log('NBA Teams: ', getAllNbaTeamNames());
+  const nbaTeamNames = getAllNbaTeamNames().sort();
 
   const toggleSelect = (teamName) => {
     if (selectedTeams.includes(teamName)) {
@@ -38,14 +37,14 @@ export default function TeamsList({ playerId }) {
 
   return (
     <div className={classes['teams-list']}>
-      {nflTeams.map((team, index) => {
-        const isSelected = selectedTeams.includes(team.teamName);
+      {nbaTeamNames.map((teamName, index) => {
+        const isSelected = selectedTeams.includes(teamName);
         return (
           <div key={index} className={classes['select-team-container']}>
-            <p>{team.teamName}</p>
+            <p>{teamName}</p>
             <button
               className={`${classes['select-btn']} ${isSelected ? classes['selected'] : ''}`}
-              onClick={() => toggleSelect(team.teamName)}
+              onClick={() => toggleSelect(teamName)}
             >
               {isSelected ? 'Selected' : 'Select'}
             </button>
