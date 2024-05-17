@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 const cache = {};
 
-export default function useApi() {
+export default function useApiData() {
   const [apiData, setApiData] = useState();
   const [loading, setLoading] = useState(false);
 
@@ -42,8 +42,16 @@ export default function useApi() {
   }, []);
 
   const getAllNbaTeamNames = (apiData) => {
-    const nbaTeamsNames = apiData.map((team) => {
+    const nbaTeamsNames = apiData?.map((team) => {
       const teamName = `${team.City} ${team.Name}`;
       return teamName;
+    });
+    return nbaTeamsNames;
+  };
+
+  return {
+    apiData,
+    loading,
+    getAllNbaTeamNames: () => getAllNbaTeamNames(apiData),
   };
 }
