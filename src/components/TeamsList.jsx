@@ -1,7 +1,6 @@
 import classes from './TeamsList.module.css';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { nflTeams } from '../data';
 import usePool from '../utils/usePool';
 import Pool from '../utils/Pool';
 import useApi from '../utils/useApi';
