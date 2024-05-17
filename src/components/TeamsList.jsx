@@ -4,10 +4,14 @@ import { useState } from 'react';
 import { nflTeams } from '../data';
 import usePool from '../utils/usePool';
 import Pool from '../utils/Pool';
+import useApi from '../utils/useApi';
 
 export default function TeamsList({ playerId }) {
   const [selectedTeams, setSelectedTeams] = useState([]);
   const { pool, setPool } = usePool();
+  const { getAllNbaTeamNames } = useApi();
+
+  console.log('NBA Teams: ', getAllNbaTeamNames());
 
   const toggleSelect = (teamName) => {
     if (selectedTeams.includes(teamName)) {

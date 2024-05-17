@@ -3,12 +3,12 @@ import TeamsList from '../components/TeamsList';
 import usePool from '../utils/usePool';
 import classes from './ChooseTeamsPage.module.css';
 import { useParams } from 'react-router-dom';
+import useApi from '../utils/useApi';
 
 export default function ChooseTeamsPage() {
   const { id } = useParams();
   const { pool } = usePool();
   const player = pool.players[id];
-  console.log(player);
 
   return (
     <div className={classes['choose-teams']}>
