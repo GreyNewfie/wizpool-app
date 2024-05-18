@@ -3,15 +3,13 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import usePool from '../utils/usePool';
 import useApi from '../utils/useApi';
-import { useParams } from 'react-router-dom';
 
 export default function TeamsList({ playerId }) {
   const [selectedTeams, setSelectedTeams] = useState([]);
   const { pool, setPool, copyPool } = usePool();
-  const { id } = useParams();
   const { getAllNbaTeamNames } = useApi();
   const nbaTeamNames = getAllNbaTeamNames();
-  const playerIndex = id;
+  const playerIndex = playerId;
 
   const toggleSelect = (teamName) => {
     if (selectedTeams.includes(teamName)) {
