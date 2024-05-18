@@ -9,7 +9,7 @@ export default function TeamsList({ playerId }) {
   const { pool, setPool, copyPool } = usePool();
   const { getAllNbaTeamNames } = useApi();
   const nbaTeamNames = getAllNbaTeamNames();
-  const playerIndex = playerId;
+  const player = pool.players[playerId];
 
   const toggleSelect = (teamName) => {
     if (selectedTeams.includes(teamName)) {
@@ -22,7 +22,7 @@ export default function TeamsList({ playerId }) {
 
   const updatePlayerTeams = (teamName) => {
     const updatedPool = copyPool(pool);
-    updatedPool.players[playerIndex]['nbaTeams'] = {
+    updatedPool.players[playerId]['nbaTeams'] = {
       ...updatedPool.players[playerId]['nbaTeams'],
       teamName,
     };
