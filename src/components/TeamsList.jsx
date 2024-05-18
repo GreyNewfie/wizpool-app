@@ -2,34 +2,31 @@ import classes from './TeamsList.module.css';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import usePool from '../utils/usePool';
-import Pool from '../utils/Pool';
 import useApi from '../utils/useApi';
+import { useParams } from 'react-router-dom';
 
 export default function TeamsList({ playerId }) {
   const [selectedTeams, setSelectedTeams] = useState([]);
-  const { pool, setPool } = usePool();
+  const { pool, setPool, copyPool } = usePool();
+  const { id } = useParams();
   const { getAllNbaTeamNames } = useApi();
-  const nbaTeamNames = getAllNbaTeamNames().sort();
+  const nbaTeamNames = getAllNbaTeamNames();
+  const playerIndex = id;
 
   const toggleSelect = (teamName) => {
     if (selectedTeams.includes(teamName)) {
       setSelectedTeams(selectedTeams.filter((team) => team !== teamName));
     } else {
       setSelectedTeams([...selectedTeams, teamName]);
+      updatePlayerTeams(teamName);
     }
   };
 
-  function copyPool(pool) {
-    const copyOfPool = new Pool('', []);
-    copyOfPool.updatePool(pool);
-    return copyOfPool;
-  }
-
-  const updatePlayerTeams = () => {
+  const updatePlayerTeams = (teamName) => {
     const updatedPool = copyPool(pool);
-    updatedPool.players[playerId] = {
-      ...updatedPool.players[playerId],
-      playerTeams: selectedTeams,
+    updatedPool.players[playerIndex]['nbaTeams'] = {
+      ...updatedPool.players[playerId]['nbaTeams'],
+      teamName,
     };
     setPool(updatedPool);
   };
