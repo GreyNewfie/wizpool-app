@@ -21,6 +21,7 @@ export default function usePool() {
   useEffect(() => {
     // Remove possible blank player forms before adding to localStorage
     const cleanedPool = cleanPool(pool);
+    console.log('Pool cleaned and passed to storage');
     localStorage.setItem('pool', JSON.stringify(cleanedPool));
   }, [pool]);
 
@@ -30,9 +31,15 @@ export default function usePool() {
     return copyOfPool;
   };
 
+  const getPoolFromStorage = () => {
+    const storedPool = JSON.parse(localStorage.getItem('pool'));
+    return storedPool;
+  };
+
   return {
     pool,
     setPool,
     copyPool,
+    getPoolFromStorage,
   };
 }

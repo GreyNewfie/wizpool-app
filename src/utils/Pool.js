@@ -26,8 +26,15 @@ export default class Pool {
     this.players = players;
   }
 
-  updatePlayerNbaTeams(nbaTeams, playerIndex) {
-    this.players[playerIndex].nbaTeams = [...nbaTeams];
+  updatePlayerNbaTeams(nbaTeamName, playerIndex) {
+    if (this.players[playerIndex].nbaTeams) {
+      this.players[playerIndex].nbaTeams = [
+        ...this.players[playerIndex].nbaTeams,
+        nbaTeamName,
+      ];
+    } else {
+      this.players[playerIndex].nbaTeams = [nbaTeamName];
+    }
   }
 
   getPool() {
