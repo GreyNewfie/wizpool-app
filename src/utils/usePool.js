@@ -25,8 +25,8 @@ export default function usePool() {
   }, [pool]);
 
   const copyPool = () => {
-    const copyOfPool = new Pool('', []);
-    copyOfPool.updatePool(pool);
+    let copyOfPool = new Pool('', []);
+    copyOfPool.copyPool(pool);
     return copyOfPool;
   };
 
