@@ -3,7 +3,6 @@ import TeamsList from '../components/TeamsList';
 import usePool from '../utils/usePool';
 import classes from './ChooseTeamsPage.module.css';
 import { useParams } from 'react-router-dom';
-import useApi from '../utils/useApi';
 
 export default function ChooseTeamsPage() {
   const { id } = useParams();
