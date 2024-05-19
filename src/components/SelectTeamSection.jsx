@@ -1,29 +1,42 @@
-import classes from '../SelectedItemButton.module.css';
+import classes from './SelectTeamSection.module.css';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import usePool from '../utils/usePool';
+import Pool from '../utils/Pool';
 
 export default function SelectTeamSection(props) {
-  const [pool, setPool, copyPool] = usePool();
+  const { pool, setPool, copyPool, getPoolFromStorage } = usePool();
   const [isSelected, setIsSelected] = useState(false);
   const player = pool.players[props.playerIndex];
 
   const toggleSelect = (teamName) => {
-    if (player['nbaTeams'].includes(teamName)) {
-      setIsSelected(true);
-    } else {
-      updatePlayerTeams(teamName);
+    if (player['nbaTeams']?.includes(teamName)) {
       setIsSelected(true);
     }
   };
 
   const updatePlayerTeams = (teamName) => {
-    const updatedPool = copyPool(pool);
-    updatedPool.players[props.playerIndex]['nbaTeams'] = {
-      ...updatedPool.players[props.playerIndex]['nbaTeams'],
-      teamName,
-    };
+    // Getting pool from localStorage because state doesn't seem to be updating
+    // before the next team is selecting but the team is being added to localStorage
+    const { poolName, players } = getPoolFromStorage();
+    const updatedPool = new Pool(poolName, players);
+
+    // Log for debugging
+    console.log(
+      'Before update:',
+      updatedPool.players[props.playerIndex]['nbaTeams'],
+    );
+
+    updatedPool.updatePlayerNbaTeams(teamName, props.playerIndex);
+
+    // Log for debugging
+    console.log(
+      'After update:',
+      updatedPool.players[props.playerIndex]['nbaTeams'],
+    );
+
     setPool(updatedPool);
+    toggleSelect(teamName);
   };
 
   return (
@@ -31,7 +44,7 @@ export default function SelectTeamSection(props) {
       <p>{props.teamName}</p>
       <button
         className={`${classes['select-btn']} ${isSelected ? classes['selected'] : ''}`}
-        onClick={() => toggleSelect(props.teamName)}
+        onClick={() => updatePlayerTeams(props.teamName)}
       >
         {isSelected ? 'Selected' : 'Select'}
       </button>
@@ -42,5 +55,5 @@ export default function SelectTeamSection(props) {
 SelectTeamSection.propTypes = {
   teamName: PropTypes.string,
   index: PropTypes.number,
-  playerIndex: PropTypes.number,
+  playerIndex: PropTypes.string,
 };
