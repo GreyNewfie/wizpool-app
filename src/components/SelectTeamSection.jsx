@@ -9,8 +9,7 @@ const getInitialIsSelected = (player, teamName) => {
 };
 
 export default function SelectTeamSection(props) {
-  const { pool, setPool, copyPool, getPoolFromStorage } = usePool();
-  const player = pool.players[props.playerIndex];
+  const { pool, setPool } = usePool();
   const [isSelected, setIsSelected] = useState(
     getInitialIsSelected(pool.players[props.playerIndex], props.teamName),
   );
@@ -41,28 +40,6 @@ export default function SelectTeamSection(props) {
     }
     // Update the pool
     setPool(updatedPool);
-  };
-
-  const updatePlayerTeams = (teamName) => {
-    const { poolName, players } = getPoolFromStorage();
-    const updatedPool = new Pool(poolName, players);
-
-    // Log for debugging
-    console.log(
-      'Before update:',
-      updatedPool.players[props.playerIndex]['nbaTeams'],
-    );
-
-    updatedPool.updatePlayerNbaTeams(teamName, props.playerIndex);
-
-    // Log for debugging
-    console.log(
-      'After update:',
-      updatedPool.players[props.playerIndex]['nbaTeams'],
-    );
-
-    setPool(updatedPool);
-    setIsSelected(true);
   };
 
   return (
