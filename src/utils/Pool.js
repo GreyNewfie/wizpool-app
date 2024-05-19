@@ -17,7 +17,7 @@ export default class Pool {
     this.players[index] = { ...this.players[index], teamName };
   }
 
-  updatePool(pool) {
+  copyPool(pool) {
     this.poolName = pool.poolName;
     this.players = pool.players;
   }
