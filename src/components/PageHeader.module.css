@@ -10,16 +10,17 @@ div:has(.page-header) {
     justify-content: space-between;
 }
 
-.back-btn,
-.save-btn {
+.left-header-btn,
+.right-header-btn {
     background: transparent;
     border: none;
     font-size: 1rem;
     color: var(--secondary-text-color);
+    display: flex;
 }
 
-.back-btn:hover,
-.save-btn:hover {
+.left-header-btn:hover,
+.right-header-btn:hover {
     cursor: pointer;
     color: white;
 }

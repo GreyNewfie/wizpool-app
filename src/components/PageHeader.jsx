@@ -6,10 +6,14 @@ export default function PageHeader(props) {
   return (
     <div className={classes['page-header']}>
       <Link to={props.path}>
-        <button className={classes['back-btn']}>&#8592;</button>
+        <button className={classes['left-header-btn']}>
+          {props.leftBtnText}
+        </button>
       </Link>
       <h3>{props.headerText}</h3>
-      <button className={classes['save-btn']}>Save</button>
+      <button className={classes['right-header-btn']}>
+        {props.rightBtnText}
+      </button>
     </div>
   );
 }
@@ -17,4 +21,6 @@ export default function PageHeader(props) {
 PageHeader.propTypes = {
   path: PropTypes.string,
   headerText: PropTypes.string,
+  rightBtnText: PropTypes.string,
+  leftBtnText: PropTypes.any,
 };
