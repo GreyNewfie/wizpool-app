@@ -1,87 +1,4 @@
-/* eslint-disable no-unused-vars */
-const nflTeams = [
-  {
-    teamName: 'Buffalo Bills',
-    wins: 5,
-    losses: 3,
-    ties: 0,
-    gamesPlayed: 8,
-    gamesRemaining: 5,
-    teamLogo: '',
-  },
-  {
-    teamName: 'Detroit Lions',
-    wins: 4,
-    losses: 4,
-    ties: 0,
-    gamesPlayed: 8,
-    gamesRemaining: 5,
-    teamLogo: '',
-  },
-  {
-    teamName: 'Los Angeles Rams',
-    wins: 6,
-    losses: 2,
-    ties: 0,
-    gamesPlayed: 8,
-    gamesRemaining: 5,
-    teamLogo: '',
-  },
-  {
-    teamName: 'Los Vegas Raiders',
-    wins: 6,
-    losses: 2,
-    ties: 0,
-    gamesPlayed: 8,
-    gamesRemaining: 5,
-    teamLogo: '',
-  },
-  {
-    teamName: 'Kansas City Chiefs',
-    wins: 6,
-    losses: 2,
-    ties: 0,
-    gamesPlayed: 8,
-    gamesRemaining: 5,
-    teamLogo: '',
-  },
-  {
-    teamName: 'New England Patriots',
-    wins: 6,
-    losses: 2,
-    ties: 0,
-    gamesPlayed: 8,
-    gamesRemaining: 5,
-    teamLogo: '',
-  },
-  {
-    teamName: 'Cleveland Browns',
-    wins: 6,
-    losses: 2,
-    ties: 0,
-    gamesPlayed: 8,
-    gamesRemaining: 5,
-    teamLogo: '',
-  },
-  {
-    teamName: 'Minnesota Vikings',
-    wins: 6,
-    losses: 2,
-    ties: 0,
-    gamesPlayed: 8,
-    gamesRemaining: 5,
-    teamLogo: '',
-  },
-  {
-    teamName: 'Washington Commanders',
-    wins: 6,
-    losses: 2,
-    ties: 0,
-    gamesPlayed: 8,
-    gamesRemaining: 5,
-    teamLogo: '',
-  },
-];
+import { useEffect, useState } from 'react';
 
 const nbaData = [
   {
@@ -1016,29 +933,61 @@ const nbaData = [
   },
 ];
 
-const players = [
-  {
-    name: 'John Doe',
-    teamName: "John's Super Team",
-    icon: './public/team-icon-1-200x200.png',
-    playersTeams: ['Buffalo Bills', 'Detroit Lions', 'Los Angeles Rams'],
-  },
-  {
-    name: 'Jane Smith',
-    teamName: 'Great Janes',
-    icon: './public/team-icon-2-200x200.png',
-  },
-];
+// Hard coded NBA data to avoid api calls during testing
+const cache = {
+  nbaData: nbaData,
+};
 
-const standings = [
-  {
-    ranking: 1,
-    player: '',
-  },
-  {
-    ranking: 2,
-    player: '',
-  },
-];
+export default function useApiData() {
+  const [apiData, setApiData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-export { nflTeams, players };
+  const nbaStandingsUrl =
+    'https://api.sportsdata.io/v3/nba/scores/json/Standings/2024?key=b461640f8b2641b8bcaf42396b30ba9a';
+
+  const fecthData = async () => {
+    setLoading(true);
+    try {
+      let nbaData;
+      if (cache['nbaData']) {
+        nbaData = cache['nbaData'];
+        console.log('nbaData successfully loaded from cache');
+      } else {
+        const response = await fetch(nbaStandingsUrl);
+        console.log('API called from fetchData');
+
+        if (response.status === 200) {
+          nbaData = await response.json();
+          cache['nbaData'] = nbaData;
+        } else {
+          console.log('Server Error', response.statusText);
+          setLoading(false);
+          return;
+        }
+      }
+      setApiData(nbaData);
+    } catch (error) {
+      console.log('Fetch Error:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fecthData();
+  }, []);
+
+  const getAllNbaTeams = (apiData) => {
+    const nbaTeamsNames = apiData?.map((team) => {
+      const teamName = `${team.City} ${team.Name}`;
+      return teamName;
+    });
+    return nbaTeamsNames;
+  };
+
+  return {
+    apiData,
+    loading,
+    getAllNbaTeams: () => getAllNbaTeams(apiData),
+  };
+}

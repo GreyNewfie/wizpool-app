@@ -8,13 +8,12 @@ export default function ChooseTeamsPage() {
   const { id } = useParams();
   const { pool } = usePool();
   const player = pool.players[id];
-  console.log(player);
 
   return (
     <div className={classes['choose-teams']}>
       <PageHeader headerText="Choose Teams" path="/choose-player" />
       <h3>Select Teams for {pool.players[id].playerName}</h3>
-      <TeamsList playerId={id} />
+      <TeamsList playerIndex={id} />
     </div>
   );
 }

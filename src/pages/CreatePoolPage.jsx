@@ -2,11 +2,8 @@ import NextHeaderButton from '../components/NextHeaderButton';
 import PrimaryActionButton from '../components/PrimayActionButton';
 import UserTextInput from '../components/UserTextInput';
 import classes from './CreatePoolPage.module.css';
-import Pool from '../utils/Pool';
 import usePool from '../utils/usePool';
 import PlayersList from '../components/PlayersList';
-
-// Should I move this into usePool?
 
 export default function CreatePoolPage() {
   const { pool, setPool, copyPool } = usePool();

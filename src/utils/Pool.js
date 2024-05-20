@@ -17,7 +17,7 @@ export default class Pool {
     this.players[index] = { ...this.players[index], teamName };
   }
 
-  updatePool(pool) {
+  copyPool(pool) {
     this.poolName = pool.poolName;
     this.players = pool.players;
   }
@@ -26,8 +26,15 @@ export default class Pool {
     this.players = players;
   }
 
-  updatePlayersTeams(teams, playerIndex) {
-    this.players[playerIndex].teams = [...teams];
+  updatePlayerNbaTeams(nbaTeamName, playerIndex) {
+    if (this.players[playerIndex].nbaTeams) {
+      this.players[playerIndex].nbaTeams = [
+        ...this.players[playerIndex].nbaTeams,
+        nbaTeamName,
+      ];
+    } else {
+      this.players[playerIndex].nbaTeams = [nbaTeamName];
+    }
   }
 
   getPool() {

@@ -1,51 +1,41 @@
 import classes from './TeamsList.module.css';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
-import { nflTeams } from '../data';
-import usePool from '../utils/usePool';
-import Pool from '../utils/Pool';
+import useApi from '../utils/useApi';
+import SelectTeamSection from './SelectTeamSection';
 
-export default function TeamsList({ playerId }) {
-  const [selectedTeams, setSelectedTeams] = useState([]);
-  const { pool, setPool } = usePool();
-
-  const toggleSelect = (teamName) => {
-    if (selectedTeams.includes(teamName)) {
-      setSelectedTeams(selectedTeams.filter((team) => team !== teamName));
-    } else {
-      setSelectedTeams([...selectedTeams, teamName]);
+const updateNbaTeams = (nbaTeams, playerIndex) => {
+  // Get list of players
+  const pool = JSON.parse(localStorage.getItem('pool'));
+  // Get a list of teams each other player has selected
+  const pickedTeams = pool.players.flatMap((player) => {
+    // If the index is the current player index don't include teams
+    if (pool.players.indexOf(player) == playerIndex) {
+      return [];
     }
-  };
+    return player.nbaTeams;
+  });
+  // Remove those teams from the nbaTeamNames list
+  const updatedNbaTeams = nbaTeams.filter(
+    (teamName) => !pickedTeams.includes(teamName),
+  );
+  return updatedNbaTeams;
+};
 
-  function copyPool(pool) {
-    const copyOfPool = new Pool('', []);
-    copyOfPool.updatePool(pool);
-    return copyOfPool;
-  }
-
-  const updatePlayerTeams = () => {
-    const updatedPool = copyPool(pool);
-    updatedPool.players[playerId] = {
-      ...updatedPool.players[playerId],
-      playerTeams: selectedTeams,
-    };
-    setPool(updatedPool);
-  };
+export default function TeamsList({ playerIndex }) {
+  const { getAllNbaTeams } = useApi();
+  const nbaTeams = getAllNbaTeams().sort(); // Why is nbaTeams value [] when next line gets executed?
+  const updatedNbaTeams = updateNbaTeams(nbaTeams, playerIndex);
 
   return (
     <div className={classes['teams-list']}>
-      {nflTeams.map((team, index) => {
-        const isSelected = selectedTeams.includes(team.teamName);
+      {updatedNbaTeams.map((teamName, index) => {
         return (
-          <div key={index} className={classes['select-team-container']}>
-            <p>{team.teamName}</p>
-            <button
-              className={`${classes['select-btn']} ${isSelected ? classes['selected'] : ''}`}
-              onClick={() => toggleSelect(team.teamName)}
-            >
-              {isSelected ? 'Selected' : 'Select'}
-            </button>
-          </div>
+          <SelectTeamSection
+            key={index}
+            index={index}
+            teamName={teamName}
+            playerIndex={playerIndex}
+          />
         );
       })}
     </div>
@@ -53,5 +43,5 @@ export default function TeamsList({ playerId }) {
 }
 
 TeamsList.propTypes = {
-  playerId: PropTypes.string,
+  playerIndex: PropTypes.string,
 };
