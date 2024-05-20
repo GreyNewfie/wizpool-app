@@ -7,7 +7,6 @@ import { useParams } from 'react-router-dom';
 export default function ChooseTeamsPage() {
   const { id } = useParams();
   const { pool } = usePool();
-  const player = pool.players[id];
 
   return (
     <div className={classes['choose-teams']}>
