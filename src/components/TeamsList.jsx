@@ -23,7 +23,7 @@ const updateNbaTeams = (nbaTeams, playerIndex) => {
 
 export default function TeamsList({ playerIndex }) {
   const { getAllNbaTeams } = useApi();
-  const nbaTeams = getAllNbaTeams(); // Why is nbaTeams value [] when next line gets executed?
+  const nbaTeams = getAllNbaTeams().sort(); // Why is nbaTeams value [] when next line gets executed?
   const updatedNbaTeams = updateNbaTeams(nbaTeams, playerIndex);
 
   return (
