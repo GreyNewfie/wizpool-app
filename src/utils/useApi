@@ -933,6 +933,7 @@ const nbaData = [
   },
 ];
 
+// Hard coded NBA data to avoid api calls during testing
 const cache = {
   nbaData: nbaData,
 };
@@ -976,7 +977,7 @@ export default function useApiData() {
     fecthData();
   }, []);
 
-  const getAllNbaTeamNames = (apiData) => {
+  const getAllNbaTeams = (apiData) => {
     const nbaTeamsNames = apiData?.map((team) => {
       const teamName = `${team.City} ${team.Name}`;
       return teamName;
@@ -987,6 +988,6 @@ export default function useApiData() {
   return {
     apiData,
     loading,
-    getAllNbaTeamNames: () => getAllNbaTeamNames(apiData),
+    getAllNbaTeams: () => getAllNbaTeams(apiData),
   };
 }
