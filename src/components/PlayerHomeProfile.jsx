@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import classes from './PlayerHomeProfile.module.css';
+import PlayerWinsTracker from './PlayerWinsTracket';
 
 export default function PlayerHomeProfile(props) {
   const iconNum = props.playerIndex + 1;
@@ -19,6 +20,7 @@ export default function PlayerHomeProfile(props) {
               : `${props.player.name}'s Awesome Team`}
           </span>
         </div>
+        <PlayerWinsTracker player={props.player} />
       </div>
     </div>
   );
