@@ -1,6 +1,6 @@
 import classes from './TeamsList.module.css';
 import PropTypes from 'prop-types';
-import useApi from '../utils/useApi';
+import useApiData from '../utils/useApiData';
 import SelectTeamSection from './SelectTeamSection';
 
 const updateNbaTeams = (nbaTeams, playerIndex) => {
@@ -8,7 +8,7 @@ const updateNbaTeams = (nbaTeams, playerIndex) => {
   const pool = JSON.parse(localStorage.getItem('pool'));
   // Get a list of teams each other player has selected
   const pickedTeams = pool.players.flatMap((player) => {
-    // If the index is the current player index don't include teams
+    // If the index matches the current player's index don't include teams
     if (pool.players.indexOf(player) == playerIndex) {
       return [];
     }
@@ -22,8 +22,8 @@ const updateNbaTeams = (nbaTeams, playerIndex) => {
 };
 
 export default function TeamsList({ playerIndex }) {
-  const { getAllNbaTeams } = useApi();
-  const nbaTeams = getAllNbaTeams().sort(); // Why is nbaTeams value [] when next line gets executed?
+  const { getAllNbaTeams } = useApiData();
+  const nbaTeams = getAllNbaTeams().sort(); //**** Why is nbaTeams value [] when next line gets executed? ****
   const updatedNbaTeams = updateNbaTeams(nbaTeams, playerIndex);
 
   return (

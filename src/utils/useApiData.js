@@ -985,9 +985,24 @@ export default function useApiData() {
     return nbaTeamsNames;
   };
 
+  const getAllNbaTeamsData = (apiData) => {
+    const allNbaTeamsData = apiData?.map((team) => {
+      const nbaTeamData = {
+        teamId: team.Key,
+        city: team.City,
+        name: team.Name,
+        wins: team.Wins,
+        losses: team.Losses,
+      };
+      return nbaTeamData;
+    });
+    return allNbaTeamsData;
+  };
+
   return {
     apiData,
     loading,
     getAllNbaTeams: () => getAllNbaTeams(apiData),
+    getAllNbaTeamsData: () => getAllNbaTeamsData(apiData),
   };
 }
