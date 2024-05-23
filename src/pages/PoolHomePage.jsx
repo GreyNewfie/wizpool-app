@@ -9,7 +9,7 @@ export default function PoolHomePage() {
     <div className={classes['pool-home']}>
       <PageHeader headerText={pool.poolName} />
       <h3>Standings</h3>
-      <PlayerHomeProfile player={pool.players[0]} playerIndex={0} />
+      <PlayerHomeProfile player={pool.players[1]} playerIndex={1} />
     </div>
   );
 }

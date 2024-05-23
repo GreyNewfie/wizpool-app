@@ -6,15 +6,18 @@ import Pool from '../utils/Pool';
 import { useEffect } from 'react';
 
 const addPlayerTeamsData = (player, allNbaData) => {
-  const updatedPlayer = player;
+  if (allNbaData.length === 0) return;
+  const updatedPlayer = { ...player };
   const updatedNbaTeams = player.nbaTeams.flatMap((teamName) => {
+    // Check if teamId has been added (means data has already been added)
+    if (teamName.teamId) return;
     // Get city from teamName
-    const teamCity = teamName.split(' ')[0];
+    const teamCity = teamName?.split(' ')[0];
     // Get teamData based on teamCity
     const teamData = allNbaData.filter(
       (nbaTeamData) => nbaTeamData.city === teamCity,
     );
-    // Retunr teamData
+    // Return teamData
     return teamData;
   });
 
@@ -24,8 +27,8 @@ const addPlayerTeamsData = (player, allNbaData) => {
 
 const addUpdatedPlayerToPool = (updatedPlayer, pool) => {
   const updatedPool = new Pool(pool.poolName, pool.players);
-  const playerIndex = pool.players.findIndex(
-    (poolPlayer) => poolPlayer.playerName === updatedPlayer.playerName,
+  const playerIndex = updatedPool.players.findIndex(
+    (poolPlayer) => poolPlayer.playerName === updatedPlayer?.playerName,
   );
   updatedPool.players[playerIndex] = updatedPlayer;
   return updatedPool;
