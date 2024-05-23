@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import classes from './PlayerHomeProfile.module.css';
-import PlayerWinsTracker from './PlayerWinsTracket';
+import PlayerWinsTracker from './PlayerWinsTracker';
 
 export default function PlayerHomeProfile(props) {
   const iconNum = props.playerIndex + 1;
