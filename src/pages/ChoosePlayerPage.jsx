@@ -13,7 +13,7 @@ export default function ChoosePlayerPage() {
         leftBtnText={<ArrowBackIcon />}
       />
       <ChoosePlayerList />
-      <PrimaryLinkButton text="Next" />
+      <PrimaryLinkButton text="Next" path="/pool-home" />
     </div>
   );
 }
