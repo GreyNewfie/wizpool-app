@@ -24,12 +24,10 @@ const getAvailableNbaTeams = (nbaTeams, playerIndex) => {
 };
 
 export default function TeamsList({ playerIndex }) {
-  const { getAllNbaTeams, getAllNbaTeamsData, loading } = useApiData();
-  const nbaTeams = getAllNbaTeams().sort(); //**** Why is nbaTeams value [] when next line gets executed? ****
-  const nbaTeamsData = getAllNbaTeamsData();
-  const availableNbaTeams = getAvailableNbaTeams(nbaTeamsData, playerIndex);
+  const { getAllNbaTeamsData, loading } = useApiData();
   // *Q1* Should nbaTeams and updatedNbaTeams be in a useEffect(() => {}, [nbaTeams])
-  const updatedNbaTeams = getAvailableNbaTeams(nbaTeams, playerIndex);
+  const nbaTeams = getAllNbaTeamsData();
+  const availableNbaTeams = getAvailableNbaTeams(nbaTeams, playerIndex);
 
   if (loading) return <CircularIndeterminate />;
 
