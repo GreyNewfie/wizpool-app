@@ -934,6 +934,7 @@ const nbaData = [
 ];
 
 // Hard coded NBA data to avoid api calls during testing
+
 const cache = {
   nbaData: nbaData,
 };
@@ -941,6 +942,7 @@ const cache = {
 export default function useApiData() {
   const [apiData, setApiData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState();
 
   const nbaStandingsUrl =
     'https://api.sportsdata.io/v3/nba/scores/json/Standings/2024?key=b461640f8b2641b8bcaf42396b30ba9a';
@@ -961,15 +963,16 @@ export default function useApiData() {
           cache['nbaData'] = nbaData;
         } else {
           console.log('Server Error', response.statusText);
-          setLoading(false);
-          return;
+          throw new Error(response.statusText);
         }
       }
       setApiData(nbaData);
     } catch (error) {
       console.log('Fetch Error:', error);
+      setError(error);
     } finally {
-      setLoading(false);
+      // Artifical delay to test progress spinner indicator
+      setTimeout(() => setLoading(false), 1000);
     }
   };
 
@@ -1002,6 +1005,7 @@ export default function useApiData() {
   return {
     apiData,
     loading,
+    error,
     getAllNbaTeams: () => getAllNbaTeams(apiData),
     getAllNbaTeamsData: () => getAllNbaTeamsData(apiData),
   };

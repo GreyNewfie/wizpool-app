@@ -2,6 +2,7 @@ import classes from './TeamsList.module.css';
 import PropTypes from 'prop-types';
 import useApiData from '../utils/useApiData';
 import SelectTeamSection from './SelectTeamSection';
+import CircularIndeterminate from './Loading';
 
 const updateNbaTeams = (nbaTeams, playerIndex) => {
   // Get list of players
@@ -22,9 +23,12 @@ const updateNbaTeams = (nbaTeams, playerIndex) => {
 };
 
 export default function TeamsList({ playerIndex }) {
-  const { getAllNbaTeams } = useApiData();
+  const { getAllNbaTeams, loading } = useApiData();
   const nbaTeams = getAllNbaTeams().sort(); //**** Why is nbaTeams value [] when next line gets executed? ****
+  // *Q1* Should nbaTeams and updatedNbaTeams be in a useEffect(() => {}, [nbaTeams])
   const updatedNbaTeams = updateNbaTeams(nbaTeams, playerIndex);
+
+  if (loading) return <CircularIndeterminate />;
 
   return (
     <div className={classes['teams-list']}>
