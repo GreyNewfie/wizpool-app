@@ -25,9 +25,11 @@ const getAvailableNbaTeams = (nbaTeams, playerIndex) => {
 
 export default function TeamsList({ playerIndex }) {
   const { getAllNbaTeamsData, loading } = useApiData();
-  // *Q1* Should nbaTeams and updatedNbaTeams be in a useEffect(() => {}, [nbaTeams])
+  //*** Q1 *** Should nbaTeams and updatedNbaTeams be in a useEffect(() => {}, [nbaTeams])
   const nbaTeams = getAllNbaTeamsData();
-  const availableNbaTeams = getAvailableNbaTeams(nbaTeams, playerIndex);
+  const availableNbaTeams = getAvailableNbaTeams(nbaTeams, playerIndex).sort(
+    (team1, team2) => team1.city.localeCompare(team2.city),
+  );
 
   if (loading) return <CircularIndeterminate />;
 
