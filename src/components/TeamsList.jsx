@@ -1,39 +1,44 @@
 import classes from './TeamsList.module.css';
 import PropTypes from 'prop-types';
-import useApi from '../utils/useApi';
+import useApiData from '../utils/useApiData';
 import SelectTeamSection from './SelectTeamSection';
+import CircularIndeterminate from './Loading';
 
-const updateNbaTeams = (nbaTeams, playerIndex) => {
+const getAvailableNbaTeams = (nbaTeams, playerIndex) => {
   // Get list of players
   const pool = JSON.parse(localStorage.getItem('pool'));
   // Get a list of teams each other player has selected
-  const pickedTeams = pool.players.flatMap((player) => {
-    // If the index is the current player index don't include teams
-    if (pool.players.indexOf(player) == playerIndex) {
+  const selectedTeams = pool.players.flatMap((player) => {
+    // If the index matches the current player's index don't include teams
+    if (pool.players.indexOf(player) == playerIndex || !player.nbaTeams) {
       return [];
     }
     return player.nbaTeams;
   });
   // Remove those teams from the nbaTeamNames list
-  const updatedNbaTeams = nbaTeams.filter(
-    (teamName) => !pickedTeams.includes(teamName),
+  const availableNbaTeams = nbaTeams.filter(
+    (team) =>
+      !selectedTeams.some((selectedTeam) => selectedTeam.name === team.name),
   );
-  return updatedNbaTeams;
+  return availableNbaTeams;
 };
 
 export default function TeamsList({ playerIndex }) {
-  const { getAllNbaTeams } = useApi();
-  const nbaTeams = getAllNbaTeams().sort(); // Why is nbaTeams value [] when next line gets executed?
-  const updatedNbaTeams = updateNbaTeams(nbaTeams, playerIndex);
+  const { getAllNbaTeamsData, loading } = useApiData();
+  // *Q1* Should nbaTeams and updatedNbaTeams be in a useEffect(() => {}, [nbaTeams])
+  const nbaTeams = getAllNbaTeamsData();
+  const availableNbaTeams = getAvailableNbaTeams(nbaTeams, playerIndex);
+
+  if (loading) return <CircularIndeterminate />;
 
   return (
     <div className={classes['teams-list']}>
-      {updatedNbaTeams.map((teamName, index) => {
+      {availableNbaTeams.map((team, teamIndex) => {
         return (
           <SelectTeamSection
-            key={index}
-            index={index}
-            teamName={teamName}
+            key={teamIndex}
+            team={team}
+            teamName={team}
             playerIndex={playerIndex}
           />
         );

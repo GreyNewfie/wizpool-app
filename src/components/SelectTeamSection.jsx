@@ -4,17 +4,19 @@ import PropTypes from 'prop-types';
 import usePool from '../utils/usePool';
 import Pool from '../utils/Pool';
 
-const getInitialIsSelected = (player, teamName) => {
-  return player.nbaTeams?.includes(teamName) ? true : false;
+const isTeamSelected = (player, team) => {
+  return player.nbaTeams?.some((playerTeam) => playerTeam.name === team.name)
+    ? true
+    : false;
 };
 
 export default function SelectTeamSection(props) {
   const { pool, setPool } = usePool();
   const [isSelected, setIsSelected] = useState(
-    getInitialIsSelected(pool.players[props.playerIndex], props.teamName),
+    isTeamSelected(pool.players[props.playerIndex], props.team),
   );
 
-  const toggleSelect = (teamName) => {
+  const toggleSelect = (team) => {
     // Getting pool from localStorage because state doesn't seem to be updating
     // before the next team is selecting but the team is being added to localStorage
     const { poolName, players } = JSON.parse(localStorage.getItem('pool'));
@@ -22,10 +24,11 @@ export default function SelectTeamSection(props) {
     const playerTeams =
       updatedPool.players[props.playerIndex]['nbaTeams'] || [];
     // Check if team is already selected
-    if (playerTeams.includes(teamName)) {
+    // if (playerTeams.includes(teamName)) {
+    if (isTeamSelected(updatedPool.players[props.playerIndex], team)) {
       // If it is already selected remove the team from the player
       updatedPool.players[props.playerIndex].nbaTeams = playerTeams.filter(
-        (currentTeamName) => currentTeamName !== teamName,
+        (currentTeam) => currentTeam.name !== team.name,
       );
       // Update the isSelected value to false to update the button
       setIsSelected(false);
@@ -33,21 +36,20 @@ export default function SelectTeamSection(props) {
       // If it isn't already selected add the team to the player
       updatedPool.players[props.playerIndex]['nbaTeams'] = [
         ...playerTeams,
-        teamName,
+        team,
       ];
       // Update the isSelected value to true to udpate the button
       setIsSelected(true);
     }
-    // Update the pool
     setPool(updatedPool);
   };
 
   return (
-    <div key={props.index} className={classes['select-team-container']}>
-      <p>{props.teamName}</p>
+    <div key={props.teamIndex} className={classes['select-team-container']}>
+      <p>{`${props.team.city} ${props.team.name}`}</p>
       <button
         className={`${classes['select-btn']} ${isSelected ? classes['selected'] : ''}`}
-        onClick={() => toggleSelect(props.teamName)}
+        onClick={() => toggleSelect(props.team)}
       >
         {isSelected ? 'Selected' : 'Select'}
       </button>
@@ -56,7 +58,7 @@ export default function SelectTeamSection(props) {
 }
 
 SelectTeamSection.propTypes = {
-  teamName: PropTypes.string,
-  index: PropTypes.number,
+  team: PropTypes.object,
+  teamIndex: PropTypes.number,
   playerIndex: PropTypes.string,
 };
