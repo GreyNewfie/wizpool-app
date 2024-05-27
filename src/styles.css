@@ -100,6 +100,7 @@ div:has(.assign-teams-page) {
 
 .player-info {
     display: flex;
+    align-items: center;
     gap: .6rem;
 }
 

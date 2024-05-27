@@ -1,4 +1,16 @@
 .mobile-nav-menu {
     background-color: var(--input-background-color);
+    width: 100%;
     display: flex;
+    justify-content: space-around;
+}
+
+.nav-btn-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.mobile-nav-btn {
+    background-color: var(--input-background-color);
+    border: none;
 }

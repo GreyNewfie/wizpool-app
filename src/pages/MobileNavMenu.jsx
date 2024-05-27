@@ -8,20 +8,28 @@ import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 export default function MobileNavMenu() {
   return (
     <div className={classes['mobile-nav-menu']}>
-      <div className={classes['home-nav-container']}>
-        <button>{<HomeOutlinedIcon />}</button>
+      <div className={classes['nav-btn-container']}>
+        <button className={classes['mobile-nav-btn']}>
+          {<HomeOutlinedIcon />}
+        </button>
         <p>Home</p>
       </div>
-      <div className={classes['teams-nav-container']}>
-        <button>{<PeopleAltOutlinedIcon />}</button>
+      <div className={classes['nav-btn-container']}>
+        <button className={classes['mobile-nav-btn']}>
+          {<PeopleAltOutlinedIcon />}
+        </button>
         <p>Players</p>
       </div>
-      <div className={classes['picks-nav-container']}>
-        <button>{<CheckCircleOutlinedIcon />}</button>
+      <div className={classes['nav-btn-container']}>
+        <button className={classes['mobile-nav-btn']}>
+          {<CheckCircleOutlinedIcon />}
+        </button>
         <p>Picks</p>
       </div>
-      <div className={classes['settings-nav-container']}>
-        <button>{<SettingsOutlinedIcon />}</button>
+      <div className={classes['nav-btn-container']}>
+        <button className={classes['mobile-nav-btn']}>
+          {<SettingsOutlinedIcon />}
+        </button>
         <p>Settings</p>
       </div>
     </div>
