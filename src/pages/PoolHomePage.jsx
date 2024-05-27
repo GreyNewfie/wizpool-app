@@ -2,6 +2,7 @@ import PageHeader from '../components/PageHeader';
 import PlayerHomeProfile from '../components/PlayerHomeProfile';
 import classes from './PoolHomePage.module.css';
 import usePool from '../utils/usePool';
+import MobileNavMenu from './MobileNavMenu';
 
 const sortPlayersByWins = (players) => {
   const unsortedPlayers = [...players];
@@ -23,7 +24,7 @@ export default function PoolHomePage() {
   return (
     <div className={classes['pool-home']}>
       <PageHeader headerText={pool.poolName} />
-      <h3>Standings</h3>
+      <h3>Overall Standings</h3>
       {sortedPlayers.map((player, playerIndex) => (
         <PlayerHomeProfile
           key={playerIndex}
@@ -31,6 +32,7 @@ export default function PoolHomePage() {
           playerIndex={playerIndex}
         />
       ))}
+      <MobileNavMenu />
     </div>
   );
 }

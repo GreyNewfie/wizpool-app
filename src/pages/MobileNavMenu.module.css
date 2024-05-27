@@ -1,0 +1,4 @@
+.mobile-nav-menu {
+    background-color: var(--input-background-color);
+    display: flex;
+}
