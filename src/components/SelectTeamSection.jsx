@@ -22,9 +22,8 @@ export default function SelectTeamSection(props) {
     const updatedPool = new Pool(pool.poolName, pool.players);
     const playerTeams =
       updatedPool.players[props.playerIndex]['nbaTeams'] || [];
-    // Check if team is already selected
+    // Check if team is already selected, and if so, remove it from the player
     if (isTeamSelected(updatedPool.players[props.playerIndex], team)) {
-      // If it is already selected remove the team from the player
       updatedPool.players[props.playerIndex].nbaTeams = playerTeams.filter(
         (currentTeam) => currentTeam.name !== team.name,
       );
