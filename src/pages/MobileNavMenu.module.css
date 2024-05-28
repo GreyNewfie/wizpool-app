@@ -1,16 +1,27 @@
 .mobile-nav-menu {
     background-color: var(--input-background-color);
     width: 100%;
+    padding: .5rem;
     display: flex;
     justify-content: space-around;
 }
 
 .nav-btn-container {
+    font-size: .9rem;
+    color: var(--secondary-text-color);
     display: flex;
     flex-direction: column;
 }
 
 .mobile-nav-btn {
+    color: var(--secondary-text-color);
     background-color: var(--input-background-color);
     border: none;
+    cursor: pointer;
+}
+
+.nav-btn-container:hover .mobile-nav-btn,
+.nav-btn-container:hover {
+    color: white;
+    /* Change icon and text color to white on hover */
 }
