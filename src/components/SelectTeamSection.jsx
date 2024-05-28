@@ -19,12 +19,10 @@ export default function SelectTeamSection(props) {
   const toggleSelect = (team) => {
     // Getting pool from localStorage because state doesn't seem to be updating
     // before the next team is selecting but the team is being added to localStorage
-    const { poolName, players } = JSON.parse(localStorage.getItem('pool'));
-    const updatedPool = new Pool(poolName, players);
+    const updatedPool = new Pool(pool.poolName, pool.players);
     const playerTeams =
       updatedPool.players[props.playerIndex]['nbaTeams'] || [];
     // Check if team is already selected
-    // if (playerTeams.includes(teamName)) {
     if (isTeamSelected(updatedPool.players[props.playerIndex], team)) {
       // If it is already selected remove the team from the player
       updatedPool.players[props.playerIndex].nbaTeams = playerTeams.filter(
