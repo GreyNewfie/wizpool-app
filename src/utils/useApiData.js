@@ -962,13 +962,12 @@ export default function useApiData() {
           nbaData = await response.json();
           cache['nbaData'] = nbaData;
         } else {
-          console.log('Server Error', response.statusText);
           throw new Error(response.statusText);
         }
       }
       setApiData(nbaData);
     } catch (error) {
-      console.log('Fetch Error:', error);
+      console.log('Error:', error);
       setError(error);
     } finally {
       // Artifical delay to test progress spinner indicator
