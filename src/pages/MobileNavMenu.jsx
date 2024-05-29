@@ -18,7 +18,7 @@ export default function MobileNavMenu() {
         </Link>
       </div>
       <div className={classes['nav-btn-container']}>
-        <Link>
+        <Link to="/pool-players">
           <button className={classes['mobile-nav-btn']}>
             <PeopleAltOutlinedIcon />
           </button>
@@ -26,7 +26,7 @@ export default function MobileNavMenu() {
         </Link>
       </div>
       <div className={classes['nav-btn-container']}>
-        <Link>
+        <Link to="/pool-picks">
           <button className={classes['mobile-nav-btn']}>
             <CheckCircleOutlinedIcon />
           </button>
@@ -34,7 +34,7 @@ export default function MobileNavMenu() {
         </Link>
       </div>
       <div className={classes['nav-btn-container']}>
-        <Link>
+        <Link to="/pool-settings">
           <button className={classes['mobile-nav-btn']}>
             <SettingsOutlinedIcon />
           </button>
