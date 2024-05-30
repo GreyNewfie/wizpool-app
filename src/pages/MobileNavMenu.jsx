@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import classes from './MobileNavMenu.module.css';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
