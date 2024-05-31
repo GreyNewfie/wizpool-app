@@ -1,8 +1,26 @@
 .pool-home {
-    padding: 1.16rem;
+    height: 100vh;
+    padding-top: 1.16rem;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     gap: 2rem;
+}
+
+.pool-players {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 1.5rem;
+}
+
+.pool-home>h3 {
+    margin-right: auto;
+}
+
+/* Bottom Menu */
+.bottom-menu {
+    /* position: fixed; */
+    bottom: 0;
 }

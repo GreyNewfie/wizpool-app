@@ -24,15 +24,17 @@ export default function PoolHomePage() {
   return (
     <div className={classes['pool-home']}>
       <PageHeader headerText={pool.poolName} />
-      <h3>Overall Standings</h3>
-      {sortedPlayers.map((player, playerIndex) => (
-        <PlayerHomeProfile
-          key={playerIndex}
-          player={player}
-          playerIndex={playerIndex}
-        />
-      ))}
-      <MobileNavMenu />
+      <div className={classes['pool-players']}>
+        <h3>Overall Standings</h3>
+        {sortedPlayers.map((player, playerIndex) => (
+          <PlayerHomeProfile
+            key={playerIndex}
+            player={player}
+            playerIndex={playerIndex}
+          />
+        ))}
+      </div>
+      <MobileNavMenu className={classes['bottom-menu']} />
     </div>
   );
 }
