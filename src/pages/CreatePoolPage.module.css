@@ -33,8 +33,8 @@
     margin-top: 10px;
 }
 
-.add-player {
+.add-players {
     display: flex;
     flex-direction: column;
-    gap: .5rem;
+    gap: 1rem;
 }
