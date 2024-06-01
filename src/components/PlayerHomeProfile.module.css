@@ -1,0 +1,17 @@
+.player-home-profile {
+    width: 100%;
+}
+
+.player-container {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+}
+
+.player-info {
+    justify-self: flex-end;
+}
+
+.player-container div:last-child {
+    margin-left: auto;
+}
