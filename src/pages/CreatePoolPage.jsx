@@ -61,7 +61,7 @@ export default function CreatePoolPage() {
         />
       </div>
       <div className={classes['add-players-section']}>
-        <form className={classes['add-player']}>
+        <form className={classes['add-players']}>
           <h3 className="page-subsection-header">Add players to your pool</h3>
           <PlayersList
             players={pool.players}
