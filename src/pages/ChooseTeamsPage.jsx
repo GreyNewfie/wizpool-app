@@ -14,7 +14,7 @@ export default function ChooseTeamsPage() {
       <PageHeader
         headerText="Choose Teams"
         path="/choose-player"
-        leftBtnText={<ArrowBackIcon />}
+        leftBtnText=<ArrowBackIcon />
       />
       <h3>Select Teams for {pool.players[id].playerName}</h3>
       <TeamsList playerIndex={id} />
