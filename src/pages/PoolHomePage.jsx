@@ -1,5 +1,6 @@
 import PageHeader from '../components/PageHeader';
 import PlayerHomeProfile from '../components/PlayerHomeProfile';
+import PlayerWinsTracker from '../components/PlayerWinsTracker';
 import classes from './PoolHomePage.module.css';
 import usePool from '../utils/usePool';
 import MobileNavMenu from './MobileNavMenu';
@@ -26,13 +27,18 @@ export default function PoolHomePage() {
       <PageHeader headerText={pool.poolName} />
       <div className={classes['pool-players']}>
         <h3>Overall Standings</h3>
-        {sortedPlayers.map((player, playerIndex) => (
-          <PlayerHomeProfile
-            key={playerIndex}
-            player={player}
-            playerIndex={playerIndex}
-          />
-        ))}
+        {sortedPlayers.map((player, playerIndex) => {
+          return (
+            <div key={playerIndex} className={classes['player-container']}>
+              <PlayerHomeProfile
+                key={playerIndex}
+                player={player}
+                playerIndex={playerIndex}
+              />
+              <PlayerWinsTracker player={player} />
+            </div>
+          );
+        })}
       </div>
       <MobileNavMenu className={classes['bottom-menu']} />
     </div>
