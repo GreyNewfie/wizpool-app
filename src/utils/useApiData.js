@@ -950,17 +950,43 @@ export default function useApiData() {
   const fecthData = async () => {
     setLoading(true);
     try {
+      const storedData = JSON.parse(localStorage.getItem('storedData'));
+      const currentDate = new Date();
+      const currentDay = currentDate.getDate();
+      const currentMonth = currentDate.getMonth();
+      const currentYear = currentDate.getFullYear();
       let nbaData;
-      if (cache['nbaData']) {
-        nbaData = cache['nbaData'];
-        console.log('nbaData successfully loaded from cache');
+
+      // check is there is nbaData in localStorage and
+      // if it was stored today
+      if (
+        storedData &&
+        storedData.storedDate.day === currentDay &&
+        storedData.storedDate.month === currentMonth &&
+        storedData.storedDate.year === currentYear
+      ) {
+        //  if yes, check if time stamp is more than a day old
+        //    if no, use stored nbaData
+        //    if yes, go to else
+        // if there is no data in localStore go to else
+        nbaData = storedData.nbaData;
+        console.log('Using nbaData from localStorage');
       } else {
         const response = await fetch(nbaStandingsUrl);
         console.log('API called from fetchData');
 
         if (response.status === 200) {
           nbaData = await response.json();
-          cache['nbaData'] = nbaData;
+          // store data with time stamp in localStorage
+          const dataToStore = {
+            nbaData: nbaData,
+            storedDate: {
+              day: currentDay,
+              month: currentMonth,
+              year: currentYear,
+            },
+          };
+          localStorage.setItem('storedData', JSON.stringify(dataToStore));
         } else {
           throw new Error(response.statusText);
         }
