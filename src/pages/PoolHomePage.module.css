@@ -21,3 +21,9 @@
 .pool-home>h3 {
     margin-right: auto;
 }
+
+.player-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
