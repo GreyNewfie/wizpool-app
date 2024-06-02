@@ -22,6 +22,11 @@ export default class Pool {
     this.players = pool.players;
   }
 
+  clonePool() {
+    const clonedPool = new Pool(this.poolName, this.players);
+    return clonedPool;
+  }
+
   updatePlayers(players) {
     this.players = players;
   }

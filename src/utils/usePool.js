@@ -3,6 +3,7 @@ import Pool from './Pool';
 
 const getInitialPool = () => {
   const storedPool = JSON.parse(localStorage.getItem('pool'));
+  // if (storedPool) return new Pool(storedPool.poolName, storedPool.players);
   if (storedPool) return storedPool;
   if (!storedPool) return new Pool('', []);
 };
@@ -26,6 +27,7 @@ export default function usePool() {
   }, [pool]);
 
   const copyPool = () => {
+    // let copyOfPool = pool.clonePool();
     let copyOfPool = new Pool('', []);
     copyOfPool.copyPool(pool);
     return copyOfPool;
