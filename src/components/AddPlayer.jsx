@@ -1,10 +1,9 @@
 import PropTypes from 'prop-types';
 import UserTextInput from './UserTextInput';
-import classes from './AddPlayer.module.css';
 
 export default function AddPlayer(props) {
   return (
-    <div className={classes['player-input']}>
+    <>
       <UserTextInput
         id={`player-${props.playerId}-name`}
         name={`player-${props.playerId}-name`}
@@ -19,7 +18,7 @@ export default function AddPlayer(props) {
         placeholderText="Player's Team Name (optional)"
         handleChange={props.handleTeamNameChange}
       />
-    </div>
+    </>
   );
 }
 
