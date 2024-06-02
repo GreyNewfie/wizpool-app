@@ -19,8 +19,10 @@ export default function SelectTeamSection(props) {
   const toggleSelect = (team) => {
     // Getting pool from localStorage because state doesn't seem to be updating
     // before the next team is selecting but the team is being added to localStorage
+
     //*** Q2 Error that usePool() is not a func ***/
     // const updatedPool = pool.usePool();
+
     const { poolName, players } = JSON.parse(localStorage.getItem('pool'));
     const updatedPool = new Pool(poolName, players);
 
