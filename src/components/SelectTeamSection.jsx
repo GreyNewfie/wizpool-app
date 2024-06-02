@@ -45,7 +45,9 @@ export default function SelectTeamSection(props) {
       // Update the isSelected value to true to udpate the button
       setIsSelected(true);
     }
+    console.log('Pool before team added: ', pool);
     setPool(updatedPool);
+    console.log('Pool after team added: ', pool);
   };
 
   return (
