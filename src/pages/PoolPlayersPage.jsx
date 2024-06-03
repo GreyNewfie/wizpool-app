@@ -24,7 +24,7 @@ export default function PoolPlayersPage() {
                 player={player}
                 playerIndex={index}
               />
-              <button className={classes['view-tems-btn']}>View Teams</button>
+              <button className={classes['view-teams-btn']}>View Teams</button>
             </div>
           );
         })}

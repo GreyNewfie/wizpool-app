@@ -103,7 +103,7 @@ div:has(.pool-players) {
 .player-info {
     display: flex;
     align-items: center;
-    gap: .6rem;
+    gap: .8rem;
 }
 
 .player-info>div {

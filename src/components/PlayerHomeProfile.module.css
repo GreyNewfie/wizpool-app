@@ -1,7 +1,7 @@
 .player-home-profile {
     display: flex;
     align-items: center;
-    gap: .6rem;
+    gap: .8rem;
 }
 
 .profile-team-name {
