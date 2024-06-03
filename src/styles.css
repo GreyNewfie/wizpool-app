@@ -46,7 +46,8 @@ button {
 }
 
 div:has(#create-pool-container),
-div:has(.assign-teams-page) {
+div:has(.assign-teams-page),
+div:has(.pool-players) {
     display: flex;
     justify-content: center;
 }
