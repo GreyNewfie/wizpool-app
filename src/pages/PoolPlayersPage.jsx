@@ -1,7 +1,6 @@
 import PageHeader from '../components/PageHeader';
 import PlayerHomeProfile from '../components/PlayerHomeProfile';
 import MobileNavMenu from './MobileNavMenu';
-import PrimaryActionButton from '../components/PrimayActionButton';
 import usePool from '../utils/usePool';
 import classes from './PoolPlayersPage.module.css';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -19,12 +18,13 @@ export default function PoolPlayersPage() {
       <div className={classes['players-container']}>
         {pool.players.map((player, index) => {
           return (
-            <div key={index} className="player">
+            <div key={index} className={classes['player']}>
               <PlayerHomeProfile
                 key={index}
                 player={player}
                 playerIndex={index}
               />
+              <button className={classes['view-tems-btn']}>View Teams</button>
             </div>
           );
         })}

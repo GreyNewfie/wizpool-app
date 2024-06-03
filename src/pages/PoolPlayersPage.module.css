@@ -15,3 +15,9 @@
     flex-grow: 1;
     gap: 1.5rem;
 }
+
+.player {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
