@@ -6,7 +6,7 @@ import usePool from '../utils/usePool';
 import PlayersList from '../components/PlayersList';
 
 export default function CreatePoolPage() {
-  const { pool, setPool, copyPool } = usePool();
+  const { pool, setPool } = usePool();
 
   function addBlankPlayer() {
     const updatedPlayers = [...pool.players];

@@ -25,13 +25,6 @@ export default function usePool() {
     localStorage.setItem('pool', JSON.stringify(cleanedPool));
   }, [pool]);
 
-  const copyPool = () => {
-    // let copyOfPool = pool.clonePool();
-    let copyOfPool = new Pool('', []);
-    copyOfPool.copyPool(pool);
-    return copyOfPool;
-  };
-
   const getPoolFromStorage = () => {
     const storedPool = JSON.parse(localStorage.getItem('pool'));
     return storedPool;
@@ -40,7 +33,6 @@ export default function usePool() {
   return {
     pool,
     setPool,
-    copyPool,
     getPoolFromStorage,
   };
 }
