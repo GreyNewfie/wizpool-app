@@ -16,19 +16,19 @@ export default function CreatePoolPage() {
   }
 
   const handlePoolNameChange = (e) => {
-    const updatedPool = copyPool();
+    const updatedPool = pool.clonePool();
     updatedPool.setPoolName(e.target.value);
     setPool(updatedPool);
   };
 
   const handlePlayerNameChange = (e, index) => {
-    const updatedPool = copyPool();
+    const updatedPool = pool.clonePool();
     updatedPool.SetPlayerName(e.target.value, index);
     setPool(updatedPool);
   };
 
   const handleTeamNameChange = (e, index) => {
-    const updatedPool = copyPool();
+    const updatedPool = pool.clonePool();
     updatedPool.setTeamName(e.target.value, index);
     setPool(updatedPool);
   };
