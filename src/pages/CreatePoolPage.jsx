@@ -9,9 +9,8 @@ export default function CreatePoolPage() {
   const { pool, setPool } = usePool();
 
   function addBlankPlayer() {
-    const updatedPlayers = [...pool.players];
-    updatedPlayers.push({ playerName: '', teamName: '' });
-    const updatedPool = { ...pool, players: updatedPlayers };
+    const updatedPool = pool.clonePool();
+    updatedPool.players.push({ playerName: '', teamName: '' });
     setPool(updatedPool);
   }
 
