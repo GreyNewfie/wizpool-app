@@ -90,28 +90,6 @@ div:has(.pool-players) {
     gap: 1.5rem;
 }
 
-.player {
-    display: flex;
-    flex-direction: column;
-    gap: .5rem;
-}
-
-.team-icon {
-    width: 60px;
-}
-
-.player-info {
-    display: flex;
-    align-items: center;
-    gap: .8rem;
-}
-
-.player-info>div {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
 /*** ERROR PAGE ***/
 
 #error-page {

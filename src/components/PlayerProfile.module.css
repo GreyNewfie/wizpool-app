@@ -1,0 +1,25 @@
+.player {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.team-icon {
+    width: 60px;
+}
+
+.player-info {
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+}
+
+.player-info>div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.profile-team-name {
+    color: var(--secondary-text-color);
+}

@@ -1,19 +1,20 @@
 import PropTypes from 'prop-types';
 import PrimaryActionButton from './PrimayActionButton';
+import classes from './PlayerProfile.module.css';
 
 export default function PlayerProfile({ player, index }) {
   const iconNum = index + 1;
   return (
-    <div className="player">
-      <div className="player-info">
+    <div className={classes['player']}>
+      <div className={classes['player-info']}>
         <img
-          className="team-icon"
+          className={classes['team-icon']}
           src={`player-icon-${iconNum}-150x150.png`}
           alt="team icon"
         />
         <div>
-          <h5>{player.playerName}</h5>
-          <span className="profile-team-name">
+          <h4>{player.playerName}</h4>
+          <span className={classes['profile-team-name']}>
             {player.teamName
               ? player.teamName
               : `${player.name}'s Awesome Team`}
