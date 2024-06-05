@@ -6,7 +6,12 @@ import usePool from '../utils/usePool';
 import MobileNavMenu from './MobileNavMenu';
 
 const sortPlayersByWins = (players) => {
-  const unsortedPlayers = [...players];
+  const unsortedPlayers = players.map((player) => {
+    return {
+      ...player,
+      nbaTeams: player.nbaTeams || [],
+    };
+  });
   const sortedPlayers = unsortedPlayers.sort((player1, player2) => {
     const getTotalWins = (player) =>
       player.nbaTeams.reduce((totalWins, team) => totalWins + team.wins, 0);
