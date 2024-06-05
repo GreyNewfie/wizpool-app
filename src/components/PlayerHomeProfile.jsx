@@ -11,7 +11,7 @@ export default function PlayerHomeProfile(props) {
         alt="team icon"
       />
       <div className={classes['player-info']}>
-        <h5>{props.player.playerName}</h5>
+        <h4>{props.player.playerName}</h4>
         <p className={classes['profile-team-name']}>
           {props.player.teamName
             ? props.player.teamName
