@@ -1,0 +1,23 @@
+.player-teams-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.player-team {
+    display: flex;
+    gap: .7rem;
+}
+
+.team-logo {
+    width: 60px;
+    background-color: var(--secondary-text-color);
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.team-info p,
+.team-info span {
+    font-size: .9rem;
+    color: var(--secondary-text-color);
+}
