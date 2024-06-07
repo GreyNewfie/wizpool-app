@@ -1,7 +1,7 @@
 .pool-players {
     width: 100%;
     max-width: 360px;
-    height: 100vh;
+    /* height: 100vh; */
     padding: 1.16rem .75rem 0;
     align-items: center;
     flex-direction: column;
