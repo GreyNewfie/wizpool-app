@@ -19,8 +19,8 @@ export default function PoolPlayersPage() {
       <div className={classes['players-container']}>
         {pool.players.map((player, index) => {
           return (
-            <>
-              <div key={index} className={classes['player']}>
+            <div key={index} className={classes['player-container']}>
+              <div className={classes['player']}>
                 <PlayerHomeProfile
                   key={index}
                   player={player}
@@ -31,7 +31,7 @@ export default function PoolPlayersPage() {
                 </button>
               </div>
               <PlayerTeams player={player} />
-            </>
+            </div>
           );
         })}
       </div>
