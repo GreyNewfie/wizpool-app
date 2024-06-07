@@ -6,7 +6,7 @@ export default function PlayerHomeProfile(props) {
   return (
     <div className={classes['player-home-profile']}>
       <img
-        className="team-icon"
+        className={classes['team-icon']}
         src={`player-icon-${iconNum}-150x150.png`}
         alt="team icon"
       />

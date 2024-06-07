@@ -7,3 +7,7 @@
 .profile-team-name {
     color: var(--secondary-text-color);
 }
+
+.team-icon {
+    width: 60px;
+}
