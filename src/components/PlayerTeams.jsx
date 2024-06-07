@@ -6,20 +6,21 @@ export default function PlayerTeams({ player }) {
     <div className={classes['player-teams-container']}>
       <h4>Teams</h4>
       {player.nbaTeams.map((team) => {
+        const lowerCaseTeamId = team.teamId.toLowerCase();
         return (
           <div key={`team-${team.teamId}`} className={classes['player-team']}>
             <img
               className={classes['team-logo']}
-              src={`${team.teamId}-logo`}
-              alt={`${team.city} ${team.name} basketball team loto`}
+              src={`/nba-logos/${lowerCaseTeamId}-logo.png`}
+              alt={`${team.city} ${team.name} basketball team logo`}
             />
             <div className={classes['team-info']}>
-              <h4>
-                `${team.city} ${team.name}`
-              </h4>
-              <p>`${team.division} division`</p>
+              <h5>
+                {team.city} {team.name}
+              </h5>
+              <p>{team.division} division</p>
               <span className={classes['team-record']}>
-                `${team.wins}-${team.losses}`
+                {team.wins}-{team.losses}
               </span>
             </div>
           </div>

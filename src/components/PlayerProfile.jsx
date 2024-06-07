@@ -13,7 +13,7 @@ export default function PlayerProfile({ player, index }) {
           alt="team icon"
         />
         <div>
-          <h4>{player.playerName}</h4>
+          <h5>{player.playerName}</h5>
           <span className={classes['profile-team-name']}>
             {player.teamName
               ? player.teamName
