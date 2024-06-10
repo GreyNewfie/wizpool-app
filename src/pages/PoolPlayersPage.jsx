@@ -5,9 +5,15 @@ import usePool from '../utils/usePool';
 import classes from './PoolPlayersPage.module.css';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import PlayerTeams from '../components/PlayerTeams';
+import { useState } from 'react';
 
 export default function PoolPlayersPage() {
   const { pool } = usePool();
+  const [viewingTeamsFor, setViewingTeamsFor] = useState(null);
+
+  const toggleViewTeam = (index) => {
+    setViewingTeamsFor((prevIndex) => (prevIndex === index ? null : index));
+  };
 
   return (
     <div className={classes['pool-players']}>
@@ -26,11 +32,14 @@ export default function PoolPlayersPage() {
                   player={player}
                   playerIndex={index}
                 />
-                <button className={classes['view-teams-btn']}>
-                  View Teams
+                <button
+                  className={classes['view-teams-btn']}
+                  onClick={() => toggleViewTeam(index)}
+                >
+                  {viewingTeamsFor === index ? 'Hide Teams' : 'View Teams'}
                 </button>
               </div>
-              <PlayerTeams player={player} />
+              {viewingTeamsFor === index && <PlayerTeams player={player} />}
             </div>
           );
         })}
