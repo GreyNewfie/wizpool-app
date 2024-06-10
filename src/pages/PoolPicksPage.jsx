@@ -10,6 +10,7 @@ export default function PoolPicksPage() {
         leftBtnText=<ArrowBackIcon />
         path="/pool-home"
       />
+      <div className={classes['picks-container']}></div>
     </div>
   );
 }
