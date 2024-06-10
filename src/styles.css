@@ -19,9 +19,14 @@ h3 {
     font-weight: 500;
 }
 
-h5 {
+h4 {
     font-size: 1.1rem;
-    font-weight: 700;
+    font-weight: 600;
+}
+
+h5 {
+    font-size: 1rem;
+    font-weight: 500;
 }
 
 body {
@@ -46,7 +51,8 @@ button {
 }
 
 div:has(#create-pool-container),
-div:has(.assign-teams-page) {
+div:has(.assign-teams-page),
+div:has(.pool-players) {
     display: flex;
     justify-content: center;
 }
@@ -61,8 +67,6 @@ div:has(.assign-teams-page) {
 .header-logo {
     width: 300px;
 }
-
-
 
 /*** CREATE POOL PAGE ***/
 
@@ -87,28 +91,6 @@ div:has(.assign-teams-page) {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-}
-
-.player {
-    display: flex;
-    flex-direction: column;
-    gap: .5rem;
-}
-
-.team-icon {
-    width: 60px;
-}
-
-.player-info {
-    display: flex;
-    align-items: center;
-    gap: .6rem;
-}
-
-.player-info>div {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
 }
 
 /*** ERROR PAGE ***/

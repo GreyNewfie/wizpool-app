@@ -6,12 +6,12 @@ export default function PlayerHomeProfile(props) {
   return (
     <div className={classes['player-home-profile']}>
       <img
-        className="team-icon"
+        className={classes['team-icon']}
         src={`player-icon-${iconNum}-150x150.png`}
         alt="team icon"
       />
       <div className={classes['player-info']}>
-        <h5>{props.player.playerName}</h5>
+        <h4>{props.player.playerName}</h4>
         <p className={classes['profile-team-name']}>
           {props.player.teamName
             ? props.player.teamName

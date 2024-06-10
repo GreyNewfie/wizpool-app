@@ -6,29 +6,28 @@ import usePool from '../utils/usePool';
 import PlayersList from '../components/PlayersList';
 
 export default function CreatePoolPage() {
-  const { pool, setPool, copyPool } = usePool();
+  const { pool, setPool } = usePool();
 
   function addBlankPlayer() {
-    const updatedPlayers = [...pool.players];
-    updatedPlayers.push({ playerName: '', teamName: '' });
-    const updatedPool = { ...pool, players: updatedPlayers };
+    const updatedPool = pool.clonePool();
+    updatedPool.players.push({ playerName: '', teamName: '' });
     setPool(updatedPool);
   }
 
   const handlePoolNameChange = (e) => {
-    const updatedPool = copyPool();
+    const updatedPool = pool.clonePool();
     updatedPool.setPoolName(e.target.value);
     setPool(updatedPool);
   };
 
   const handlePlayerNameChange = (e, index) => {
-    const updatedPool = copyPool();
+    const updatedPool = pool.clonePool();
     updatedPool.SetPlayerName(e.target.value, index);
     setPool(updatedPool);
   };
 
   const handleTeamNameChange = (e, index) => {
-    const updatedPool = copyPool();
+    const updatedPool = pool.clonePool();
     updatedPool.setTeamName(e.target.value, index);
     setPool(updatedPool);
   };

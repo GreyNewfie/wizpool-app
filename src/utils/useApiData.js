@@ -78,6 +78,7 @@ export default function useApiData() {
         name: team.Name,
         wins: team.Wins,
         losses: team.Losses,
+        division: team.Division,
       };
       return nbaTeamData;
     });
