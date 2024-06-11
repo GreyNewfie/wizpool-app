@@ -6,6 +6,7 @@
 
 .player-team {
     display: flex;
+    align-items: center;
     gap: .7rem;
 }
 

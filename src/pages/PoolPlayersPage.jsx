@@ -4,7 +4,7 @@ import MobileNavMenu from './MobileNavMenu';
 import usePool from '../utils/usePool';
 import classes from './PoolPlayersPage.module.css';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import PlayerTeams from '../components/PlayerTeams';
+import DisplayTeams from '../components/DisplayTeams';
 import { useState } from 'react';
 
 export default function PoolPlayersPage() {
@@ -39,7 +39,9 @@ export default function PoolPlayersPage() {
                   {viewingTeamsFor === index ? 'Hide Teams' : 'View Teams'}
                 </button>
               </div>
-              {viewingTeamsFor === index && <PlayerTeams player={player} />}
+              {viewingTeamsFor === index && (
+                <DisplayTeams teams={player.nbaTeams || []} />
+              )}
             </div>
           );
         })}

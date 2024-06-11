@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
-import classes from './PlayerTeams.module.css';
+import classes from './DisplayTeams.module.css';
 
-export default function PlayerTeams({ player }) {
+export default function DisplayTeams({ teams }) {
   return (
     <div className={classes['player-teams-container']}>
       <h4>Teams</h4>
-      {player.nbaTeams.map((team) => {
+      {teams.map((team) => {
         const lowerCaseTeamId = team.teamId.toLowerCase();
         return (
           <div key={`team-${team.teamId}`} className={classes['player-team']}>
@@ -30,6 +30,6 @@ export default function PlayerTeams({ player }) {
   );
 }
 
-PlayerTeams.propTypes = {
-  player: PropTypes.object,
+DisplayTeams.propTypes = {
+  teams: PropTypes.array.isRequired,
 };
