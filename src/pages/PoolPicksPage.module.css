@@ -15,6 +15,10 @@
     gap: 1.5rem;
 }
 
+.picks-container>p {
+    color: var(--secondary-text-color);
+}
+
 .player-team-container {
     display: flex;
     justify-content: space-between;
