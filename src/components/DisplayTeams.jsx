@@ -4,7 +4,6 @@ import classes from './DisplayTeams.module.css';
 export default function DisplayTeams({ teams }) {
   return (
     <div className={classes['player-teams-container']}>
-      <h4>Teams</h4>
       {teams.map((team) => {
         const lowerCaseTeamId = team.teamId.toLowerCase();
         return (
