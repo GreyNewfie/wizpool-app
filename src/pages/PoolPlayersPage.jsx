@@ -40,7 +40,10 @@ export default function PoolPlayersPage() {
                 </button>
               </div>
               {viewingTeamsFor === index && (
-                <DisplayTeams teams={player.nbaTeams || []} />
+                <>
+                  <h4>Teams</h4>
+                  <DisplayTeams teams={player.nbaTeams || []} />
+                </>
               )}
             </div>
           );
