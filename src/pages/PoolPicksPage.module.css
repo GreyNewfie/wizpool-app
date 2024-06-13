@@ -14,3 +14,12 @@
     flex-grow: 1;
     gap: 1.5rem;
 }
+
+.player-team-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.player-team-container>h5 {
+    color: var(--secondary-text-color)
+}
