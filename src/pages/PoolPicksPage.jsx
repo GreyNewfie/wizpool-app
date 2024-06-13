@@ -10,7 +10,7 @@ export default function PoolPicksPage() {
 
   const getTeamsAndPlayers = () => {
     const clonedPool = pool.clonePool();
-    const TeamsWithPlayers = clonedPool.players.flatMap((player) => {
+    const teamsWithPlayers = clonedPool.players.flatMap((player) => {
       return player.nbaTeams.map((team) => {
         return {
           playerName: player.playerName,
@@ -18,7 +18,8 @@ export default function PoolPicksPage() {
         };
       });
     });
-    return TeamsWithPlayers;
+    teamsWithPlayers.sort((a, b) => b.team.wins - a.team.wins);
+    return teamsWithPlayers;
   };
 
   const teamsAndPlayersList = getTeamsAndPlayers();
