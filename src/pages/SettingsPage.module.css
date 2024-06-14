@@ -4,5 +4,35 @@
     padding: 1.16rem .75rem 0;
     align-items: center;
     flex-direction: column;
+    gap: 2rem;
+}
+
+.settings-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
     gap: 1.5rem;
+}
+
+.league-setting,
+.manage-players {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.league-info {
+    display: flex;
+    justify-content: space-between;
+    color: var(--secondary-text-color);
+}
+
+.modify-players>a {
+    text-decoration: none;
+    color: var(--secondary-text-color);
+    cursor: pointer;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
 }
