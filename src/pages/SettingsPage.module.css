@@ -15,7 +15,8 @@
 }
 
 .league-setting,
-.manage-players {
+.manage-players,
+.team-names {
     display: flex;
     flex-direction: column;
     gap: .5rem;
@@ -27,7 +28,7 @@
     color: var(--secondary-text-color);
 }
 
-.modify-players>a {
+.modify-setting>a {
     text-decoration: none;
     color: var(--secondary-text-color);
     cursor: pointer;

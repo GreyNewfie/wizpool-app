@@ -26,9 +26,18 @@ export default function SettingsPage() {
         </div>
         <div className={classes['manage-players']}>
           <h4>Manage Players</h4>
-          <div className={classes['modify-players']}>
+          <div className={classes['modify-setting']}>
             <Link to="/pool-home">
               <p>Add, remove or modify players</p>
+              <KeyboardArrowRightIcon />
+            </Link>
+          </div>
+        </div>
+        <div className={classes['team-names']}>
+          <h4>Team Names</h4>
+          <div className={classes['modify-setting']}>
+            <Link to="/pool-home">
+              <p>Change players team names</p>
               <KeyboardArrowRightIcon />
             </Link>
           </div>
