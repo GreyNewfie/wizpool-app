@@ -42,6 +42,15 @@ export default function SettingsPage() {
             </Link>
           </div>
         </div>
+        <div className={classes['reassign-teams']}>
+          <h4>Reassign Teams</h4>
+          <div className={classes['modify-setting']}>
+            <Link to="/pool-home">
+              <p>Rassign teams to players</p>
+              <KeyboardArrowRightIcon />
+            </Link>
+          </div>
+        </div>
       </div>
       <MobileNavMenu className={classes['bottom-menu']} />
     </div>

@@ -16,7 +16,8 @@
 
 .league-setting,
 .manage-players,
-.team-names {
+.team-names,
+.reassign-teams {
     display: flex;
     flex-direction: column;
     gap: .5rem;
