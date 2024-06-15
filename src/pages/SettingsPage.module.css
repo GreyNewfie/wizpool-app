@@ -1,0 +1,51 @@
+.pool-settings {
+    width: 100%;
+    max-width: 360px;
+    padding: 1.16rem .75rem 0;
+    align-items: center;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.settings-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.league-setting,
+.manage-players,
+.team-names,
+.reassign-teams {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.league-info {
+    display: flex;
+    justify-content: space-between;
+}
+
+.league-info,
+.modify-setting>a,
+.switch-container>p {
+    color: var(--secondary-text-color);
+}
+
+.modify-setting>a {
+    text-decoration: none;
+    cursor: pointer;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.switch-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: .5rem;
+}

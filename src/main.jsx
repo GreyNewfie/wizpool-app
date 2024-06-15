@@ -10,6 +10,7 @@ import ChooseTeamsPage from './pages/ChooseTeamsPage.jsx';
 import PoolHomePage from './pages/PoolHomePage.jsx';
 import PoolPlayersPage from './pages/PoolPlayersPage.jsx';
 import PoolPicksPage from './pages/PoolPicksPage.jsx';
+import SettingsPage from './pages/SettingsPage.jsx';
 
 const router = createBrowserRouter([
   {
@@ -45,6 +46,11 @@ const router = createBrowserRouter([
   {
     path: '/pool-picks',
     element: <PoolPicksPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: '/pool-settings',
+    element: <SettingsPage />,
     errorElement: <ErrorPage />,
   },
 ]);
