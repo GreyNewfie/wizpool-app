@@ -5,9 +5,16 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import usePool from '../utils/usePool';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Switch } from '@mui/material';
 
 export default function SettingsPage() {
   const { pool } = usePool();
+  const [currentMode, setCurrentMode] = useState('dark');
+
+  const handleChange = (event) => {
+    event.target.checked ? setCurrentMode('light') : setCurrentMode('dark');
+  };
 
   return (
     <div className={classes['pool-settings']}>
@@ -49,6 +56,41 @@ export default function SettingsPage() {
               <p>Rassign teams to players</p>
               <KeyboardArrowRightIcon />
             </Link>
+          </div>
+        </div>
+        <div className={classes['app-settings']}>
+          <h4>App Settings</h4>
+          <div className={classes['modify-setting']}>
+            <div className={classes['switch-container']}>
+              <p>
+                {currentMode === 'dark'
+                  ? 'Switch to Light Mode'
+                  : 'Switch to Dark Mode'}
+              </p>
+              <Switch
+                onChange={handleChange}
+                sx={{
+                  '& .MuiSwitch-switchBase.Mui-checked': {
+                    color: 'var(--primary-color)',
+                    '&:hover': {
+                      opacity: '.8',
+                    },
+                  },
+                  '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
+                    backgroundColor: 'var(--primary-color)',
+                  },
+                  '& .MuiSwitch-switchBase': {
+                    color: 'var(--secondary-text-color)',
+                    '&:hover': {
+                      opacity: '.8',
+                    },
+                  },
+                  '& .MuiSwitch-track': {
+                    backgroundColor: 'var(--secondary-text-color)',
+                  },
+                }}
+              />
+            </div>
           </div>
         </div>
       </div>

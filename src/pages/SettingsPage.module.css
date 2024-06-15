@@ -26,15 +26,26 @@
 .league-info {
     display: flex;
     justify-content: space-between;
+}
+
+.league-info,
+.modify-setting>a,
+.switch-container>p {
     color: var(--secondary-text-color);
 }
 
 .modify-setting>a {
     text-decoration: none;
-    color: var(--secondary-text-color);
     cursor: pointer;
     width: 100%;
     display: flex;
     justify-content: space-between;
     width: 100%;
+}
+
+.switch-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: .5rem;
 }
