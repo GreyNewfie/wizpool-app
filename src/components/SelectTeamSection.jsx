@@ -5,7 +5,7 @@ import usePool from '../utils/usePool';
 import Pool from '../utils/Pool';
 
 const isTeamSelected = (player, team) => {
-  return player.nbaTeams?.some((playerTeam) => playerTeam.name === team.name)
+  return player.teams?.some((playerTeam) => playerTeam.name === team.name)
     ? true
     : false;
 };
@@ -25,21 +25,17 @@ export default function SelectTeamSection(props) {
     /*** Q3 Issue to using pool object trying to update player ****/
     // const updatedPool = new Pool(pool.poolName, pool.players);
 
-    const playerTeams =
-      updatedPool.players[props.playerIndex]['nbaTeams'] || [];
+    const playerTeams = updatedPool.players[props.playerIndex]['teams'] || [];
     // Check if team is already selected, and if so, remove it from the player
     if (isTeamSelected(updatedPool.players[props.playerIndex], team)) {
-      updatedPool.players[props.playerIndex].nbaTeams = playerTeams.filter(
+      updatedPool.players[props.playerIndex].teams = playerTeams.filter(
         (currentTeam) => currentTeam.name !== team.name,
       );
       // Update the isSelected value to false to update the button
       setIsSelected(false);
     } else {
       // If it isn't already selected add the team to the player
-      updatedPool.players[props.playerIndex]['nbaTeams'] = [
-        ...playerTeams,
-        team,
-      ];
+      updatedPool.players[props.playerIndex]['teams'] = [...playerTeams, team];
       // Update the isSelected value to true to udpate the button
       setIsSelected(true);
     }

@@ -16,7 +16,7 @@ export default function useApiData() {
       const currentDay = currentDate.getDate();
       const currentMonth = currentDate.getMonth();
       const currentYear = currentDate.getFullYear();
-      let nbaData;
+      let data;
       // check if nbaData is in localStorage and was stored today
       if (
         storedData &&
@@ -25,7 +25,7 @@ export default function useApiData() {
         storedData.storedDate.year === currentYear
       ) {
         // if yes, use data from localStorage
-        nbaData = storedData.nbaData;
+        data = storedData.data;
         console.log('Using nbaData from localStorage');
       } else {
         // if no, fetch data from API and put it in localStorage
@@ -33,10 +33,10 @@ export default function useApiData() {
         console.log('API called from fetchData');
 
         if (response.status === 200) {
-          nbaData = await response.json();
+          data = await response.json();
           // store data with time stamp in localStorage
           const dataToStore = {
-            nbaData: nbaData,
+            data: data,
             storedDate: {
               day: currentDay,
               month: currentMonth,
@@ -48,7 +48,7 @@ export default function useApiData() {
           throw new Error(response.statusText);
         }
       }
-      setApiData(nbaData);
+      setApiData(data);
     } catch (error) {
       console.log('Error:', error);
       setError(error);
@@ -62,17 +62,17 @@ export default function useApiData() {
     fecthData();
   }, []);
 
-  const getAllNbaTeams = (apiData) => {
-    const nbaTeamsNames = apiData?.map((team) => {
+  const getAllTeams = (apiData) => {
+    const teamsNames = apiData?.map((team) => {
       const teamName = `${team.City} ${team.Name}`;
       return teamName;
     });
-    return nbaTeamsNames;
+    return teamsNames;
   };
 
-  const getAllNbaTeamsData = (apiData) => {
-    const allNbaTeamsData = apiData?.map((team) => {
-      const nbaTeamData = {
+  const getAllTeamsData = (apiData) => {
+    const allTeamsData = apiData?.map((team) => {
+      const teamData = {
         teamId: team.Key,
         city: team.City,
         name: team.Name,
@@ -80,16 +80,16 @@ export default function useApiData() {
         losses: team.Losses,
         division: team.Division,
       };
-      return nbaTeamData;
+      return teamData;
     });
-    return allNbaTeamsData;
+    return allTeamsData;
   };
 
   return {
     apiData,
     loading,
     error,
-    getAllNbaTeams: () => getAllNbaTeams(apiData),
-    getAllNbaTeamsData: () => getAllNbaTeamsData(apiData),
+    getAllTeams: () => getAllTeams(apiData),
+    getAllTeamsData: () => getAllTeamsData(apiData),
   };
 }
