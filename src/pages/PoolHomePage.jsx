@@ -9,12 +9,12 @@ const sortPlayersByWins = (players) => {
   const unsortedPlayers = players.map((player) => {
     return {
       ...player,
-      nbaTeams: player.nbaTeams || [],
+      teams: player.teams || [],
     };
   });
   const sortedPlayers = unsortedPlayers.sort((player1, player2) => {
     const getTotalWins = (player) =>
-      player.nbaTeams.reduce((totalWins, team) => totalWins + team.wins, 0);
+      player.teams.reduce((totalWins, team) => totalWins + team.wins, 0);
     const totalWinsPlayer1 = getTotalWins(player1);
     const totalWinsPlayer2 = getTotalWins(player2);
 

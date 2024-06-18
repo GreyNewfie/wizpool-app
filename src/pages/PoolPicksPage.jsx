@@ -11,7 +11,7 @@ export default function PoolPicksPage() {
   const getTeamsAndPlayers = () => {
     const clonedPool = pool.clonePool();
     const teamsWithPlayers = clonedPool.players.flatMap((player) => {
-      return player.nbaTeams.map((team) => {
+      return player.teams.map((team) => {
         return {
           playerName: player.playerName,
           team: team,

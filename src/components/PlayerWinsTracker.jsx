@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 // Function to calculate the total wins for a player
 const getPlayerWins = (player) => {
-  if (!player?.nbaTeams) return 0;
-  const wins = player.nbaTeams.reduce((wins, team) => {
+  if (!player?.teams) return 0;
+  const wins = player.teams.reduce((wins, team) => {
     if (team && team.wins != null) {
       return wins + team.wins;
     }
