@@ -9,7 +9,7 @@ export default function ManageTeamsPage() {
       <PageHeader
         headerText="Manage Players"
         leftBtnText=<ArrowBackIcon />
-        path="/pool-home"
+        path="/pool-settings"
       />
       <div className={classes['players-container']}></div>
       <MobileNavMenu className={classes['bottom-menu']} />
