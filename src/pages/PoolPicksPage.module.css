@@ -25,5 +25,7 @@
 }
 
 .player-team-container>h5 {
-    color: var(--secondary-text-color)
+    color: var(--secondary-text-color);
+    text-align: end;
+
 }
