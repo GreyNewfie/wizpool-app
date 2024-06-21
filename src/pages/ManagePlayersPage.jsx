@@ -4,6 +4,7 @@ import MobileNavMenu from './MobileNavMenu';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import PlayerHomeProfile from '../components/PlayerHomeProfile';
 import usePool from '../utils/usePool';
+import { Link } from 'react-router-dom';
 
 export default function ManageTeamsPage() {
   const {pool} = usePool();
@@ -23,6 +24,14 @@ export default function ManageTeamsPage() {
               player={player}
               playerIndex={index}
             />
+            <Link to='/edit-player'>            
+              <button 
+                className={classes['edit-btn']}
+                onClick={console.log("Edit player ${player.name}")}
+                >
+                  Edit
+                </button>
+            </Link>
           </div>
           )
           )

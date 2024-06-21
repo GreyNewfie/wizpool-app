@@ -30,7 +30,8 @@
 
 .view-teams-btn {
     font-family: inherit;
-    padding: .3rem 0.75rem;
+    font-size: .9rem;
+    padding: .2rem 0.75rem;
     border: none;
     border-radius: 15px;
     background-color: var(--input-background-color);
