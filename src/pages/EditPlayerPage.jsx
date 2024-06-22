@@ -10,7 +10,7 @@ export default function EditPlayerPage({ player }) {
       <PageHeader
         headerText="Edit Player"
         leftBtnText=<ArrowBackIcon />
-        path="/pool-settings"
+        path="/manage-players"
       />
       <MobileNavMenu className={classes['bottom-menu']} />
     </div>
