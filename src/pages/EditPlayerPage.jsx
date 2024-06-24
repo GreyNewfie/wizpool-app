@@ -4,7 +4,7 @@ import PageHeader from '../components/PageHeader';
 import MobileNavMenu from './MobileNavMenu';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-export default function EditPlayerPage({ player }) {
+export default function EditPlayerPage() {
   return (
     <div className={classes['edit-player-container']}>
       <PageHeader
