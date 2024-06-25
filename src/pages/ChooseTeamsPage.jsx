@@ -7,7 +7,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 export default function ChooseTeamsPage() {
   const { id } = useParams();
-  const { pool } = usePool();
+  const { pool, setPool } = usePool();
 
   return (
     <div className={classes['choose-teams']}>
@@ -17,7 +17,7 @@ export default function ChooseTeamsPage() {
         leftBtnText=<ArrowBackIcon />
       />
       <h3>Select Teams for {pool.players[id].playerName}</h3>
-      <TeamsList playerIndex={id} />
+      <TeamsList pool={pool} setPool={setPool} playerIndex={parseInt(id)} />
     </div>
   );
 }
