@@ -4,9 +4,7 @@ import useApiData from '../utils/useApiData';
 import SelectTeamSection from './SelectTeamSection';
 import CircularIndeterminate from './Loading';
 
-const getAvailableTeams = (teams, playerIndex) => {
-  // Get list of players
-  const pool = JSON.parse(localStorage.getItem('pool'));
+const getAvailableTeams = (pool, teams, playerIndex) => {
   // Get a list of teams each other player has selected
   const selectedTeams = pool.players.flatMap((player) => {
     // If the index matches the current player's index don't include teams
@@ -23,15 +21,18 @@ const getAvailableTeams = (teams, playerIndex) => {
   return availableTeams;
 };
 
-export default function TeamsList({ playerIndex }) {
+export default function TeamsList(props) {
   const { getAllTeamsData, loading } = useApiData();
+  const updatedPool = props.pool.clonePool();
 
   if (loading) return <CircularIndeterminate />;
 
   const allTeams = getAllTeamsData();
-  const availableTeams = getAvailableTeams(allTeams, playerIndex).sort(
-    (team1, team2) => team1.city.localeCompare(team2.city),
-  );
+  const availableTeams = getAvailableTeams(
+    updatedPool,
+    allTeams,
+    props.playerIndex,
+  ).sort((team1, team2) => team1.city.localeCompare(team2.city));
 
   return (
     <div className={classes['teams-list']}>
@@ -41,7 +42,9 @@ export default function TeamsList({ playerIndex }) {
             key={teamIndex}
             team={team}
             teamName={team}
-            playerIndex={playerIndex}
+            playerIndex={props.playerIndex}
+            updatedPool={updatedPool}
+            setPool={props.setPool}
           />
         );
       })}
@@ -50,5 +53,7 @@ export default function TeamsList({ playerIndex }) {
 }
 
 TeamsList.propTypes = {
-  playerIndex: PropTypes.string,
+  pool: PropTypes.object.isRequired,
+  setPool: PropTypes.func.isRequired,
+  playerIndex: PropTypes.number.isRequired,
 };
