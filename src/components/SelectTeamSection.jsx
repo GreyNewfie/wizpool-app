@@ -1,7 +1,6 @@
 import classes from './SelectTeamSection.module.css';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
-import Pool from '../utils/Pool';
 
 const isTeamSelected = (player, team) => {
   return player.teams?.some((playerTeam) => playerTeam.name === team.name)
