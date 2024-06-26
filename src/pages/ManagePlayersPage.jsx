@@ -7,7 +7,7 @@ import usePool from '../utils/usePool';
 import { useState } from 'react';
 import PlayerInput from '../components/PlayerInput';
 
-export default function ManageTeamsPage() {
+export default function ManagePlayersPage() {
   const { pool } = usePool();
   const [playerToEdit, setPlayerToEdit] = useState(null);
 

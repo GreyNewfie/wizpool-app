@@ -12,7 +12,6 @@ import PoolPlayersPage from './pages/PoolPlayersPage.jsx';
 import PoolPicksPage from './pages/PoolPicksPage.jsx';
 import SettingsPage from './pages/SettingsPage.jsx';
 import ManagePlayersPage from './pages/ManagePlayersPage.jsx';
-import EditPlayerPage from './pages/EditPlayerPage.jsx';
 
 const router = createBrowserRouter([
   {
@@ -58,11 +57,6 @@ const router = createBrowserRouter([
   {
     path: '/manage-players',
     element: <ManagePlayersPage />,
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: '/edit-player',
-    element: <EditPlayerPage />,
     errorElement: <ErrorPage />,
   },
 ]);
