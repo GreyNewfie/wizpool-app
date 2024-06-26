@@ -8,11 +8,23 @@ import { useState } from 'react';
 import PlayerInput from '../components/PlayerInput';
 
 export default function ManagePlayersPage() {
-  const { pool } = usePool();
+  const { pool, setPool } = usePool();
   const [playerToEdit, setPlayerToEdit] = useState(null);
 
   const togglePlayerToEdit = (index) => {
     setPlayerToEdit((prevIndex) => (prevIndex === index ? null : index));
+  };
+
+  const handlePlayerNameChange = (e, index) => {
+    const updatedPool = pool.clonePool();
+    updatedPool.SetPlayerName(e.target.value, index);
+    setPool(updatedPool);
+  };
+
+  const handleTeamNameChange = (e, index) => {
+    const updatedPool = pool.clonePool();
+    updatedPool.setTeamName(e.target.value, index);
+    setPool(updatedPool);
   };
 
   return (
@@ -28,7 +40,14 @@ export default function ManagePlayersPage() {
             {playerToEdit !== index && (
               <PlayerHomeProfile player={player} playerIndex={index} />
             )}
-            {playerToEdit === index && <PlayerInput player={player} />}
+            {playerToEdit === index && (
+              <PlayerInput
+                player={player}
+                index={index}
+                handleNameChange={handlePlayerNameChange}
+                handleTeamNameChange={handleTeamNameChange}
+              />
+            )}
             <button
               className={classes['edit-btn']}
               onClick={() => togglePlayerToEdit(index)}

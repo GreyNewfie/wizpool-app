@@ -1,41 +1,23 @@
 import PropTypes from 'prop-types';
 import UserTextInput from './UserTextInput';
 import classes from './AddPlayer.module.css';
-import usePool from '../utils/usePool';
 
-export default function PlayerInput({ player }) {
-  const { pool, setPool } = usePool();
-  const playerIndex = pool.players.findIndex(
-    (poolPlayer) => poolPlayer.playerName === player.playerName,
-  );
-
-  const handlePlayerNameChange = (e, index) => {
-    const updatedPool = pool.clonePool();
-    updatedPool.SetPlayerName(e.target.value, index);
-    setPool(updatedPool);
-  };
-
-  const handleTeamNameChange = (e, index) => {
-    const updatedPool = pool.clonePool();
-    updatedPool.setTeamName(e.target.value, index);
-    setPool(updatedPool);
-  };
-
+export default function PlayerInput(props) {
   return (
     <div className={classes['player-input']}>
       <UserTextInput
-        id={`player-${playerIndex}-name`}
-        name={`player-${playerIndex}-name`}
-        value={player.playerName}
+        id={`player-${props.index}-name`}
+        name={`player-${props.index}-name`}
+        value={props.player.playerName}
         placeholderText="Player's Name"
-        handleChange={handlePlayerNameChange}
+        handleChange={(e) => props.handleNameChange(e, props.index)}
       />
       <UserTextInput
-        id={`player-${playerIndex}-team-name`}
-        name={`player-${playerIndex}-team-name`}
-        value={player.teamName}
+        id={`player-${props.index}-team-name`}
+        name={`player-${props.index}-team-name`}
+        value={props.player.teamName}
         placeholderText="Player's Team Name (optional)"
-        handleChange={handleTeamNameChange}
+        handleChange={(e) => props.handleTeamNameChange(e, props.index)}
       />
     </div>
   );
@@ -43,4 +25,7 @@ export default function PlayerInput({ player }) {
 
 PlayerInput.propTypes = {
   player: PropTypes.object.isRequired,
+  index: PropTypes.number.isRequired,
+  handleNameChange: PropTypes.func.isRequired,
+  handleTeamNameChange: PropTypes.func.isRequired,
 };
