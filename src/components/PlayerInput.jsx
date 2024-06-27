@@ -1,21 +1,41 @@
 import PropTypes from 'prop-types';
 import UserTextInput from './UserTextInput';
-import classes from './AddPlayer.module.css';
+import classes from './PlayerInput.module.css';
+import usePool from '../utils/usePool';
 
-export default function PlayerInput(props) {
+export default function PlayerInput({ player }) {
+  const { pool, setPool } = usePool();
+  const playerIndex = pool.players.findIndex(
+    (poolPlayer) => poolPlayer.playerName === player.playerName,
+  );
+
+  const handlePlayerNameChange = (e, index) => {
+    const updatedPool = pool.clonePool();
+    updatedPool.SetPlayerName(e.target.value, index);
+    setPool(updatedPool);
+  };
+
+  const handleTeamNameChange = (e, index) => {
+    const updatedPool = pool.clonePool();
+    updatedPool.setTeamName(e.target.value, index);
+    setPool(updatedPool);
+  };
+
   return (
     <div className={classes['player-input']}>
       <UserTextInput
-        id={`player-${props.index}-name`}
-        name={`player-${props.index}-name`}
-        value={props.player.playerName}
+        className={classes['text-input']}
+        id={`player-${playerIndex}-name`}
+        name={`player-${playerIndex}-name`}
+        value={player.playerName}
         placeholderText="Player's Name"
         handleChange={(e) => props.handleNameChange(e, props.index)}
       />
       <UserTextInput
-        id={`player-${props.index}-team-name`}
-        name={`player-${props.index}-team-name`}
-        value={props.player.teamName}
+        className={classes['text-input']}
+        id={`player-${playerIndex}-team-name`}
+        name={`player-${playerIndex}-team-name`}
+        value={player.teamName}
         placeholderText="Player's Team Name (optional)"
         handleChange={(e) => props.handleTeamNameChange(e, props.index)}
       />
@@ -25,7 +45,4 @@ export default function PlayerInput(props) {
 
 PlayerInput.propTypes = {
   player: PropTypes.object.isRequired,
-  index: PropTypes.number.isRequired,
-  handleNameChange: PropTypes.func.isRequired,
-  handleTeamNameChange: PropTypes.func.isRequired,
 };
