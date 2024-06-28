@@ -1,0 +1,10 @@
+.player-input {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.text-input {
+  font-family: inherit;
+  padding: 0.5rem 0.75rem;
+}
