@@ -6,6 +6,7 @@ import PlayerHomeProfile from '../components/PlayerHomeProfile';
 import usePool from '../utils/usePool';
 import { useState } from 'react';
 import PlayerInput from '../components/PlayerInput';
+import PrimaryActionButton from '../components/PrimayActionButton';
 
 export default function ManagePlayersPage() {
   const { pool, setPool } = usePool();
@@ -26,6 +27,12 @@ export default function ManagePlayersPage() {
     updatedPool.setTeamName(e.target.value, index);
     setPool(updatedPool);
   };
+
+  function addBlankPlayer() {
+    const updatedPool = pool.clonePool();
+    updatedPool.players.push({ playerName: '', teamName: '' });
+    setPool(updatedPool);
+  }
 
   return (
     <div className={classes['manage-players']}>
@@ -56,7 +63,13 @@ export default function ManagePlayersPage() {
             </button>
           </div>
         ))}
+        <PrimaryActionButton
+          text="Add another player"
+          handleClick={addBlankPlayer}
+          optionalSymbol="+"
+        />
       </div>
+
       <MobileNavMenu className={classes['bottom-menu']} />
     </div>
   );
