@@ -30,7 +30,10 @@ export default function ManagePlayersPage() {
 
   function addBlankPlayer() {
     const updatedPool = pool.clonePool();
-    updatedPool.players.push({ playerName: '', teamName: '' });
+    updatedPool.players.push({
+      playerName: '',
+      teamName: '',
+    });
     setPool(updatedPool);
   }
 
