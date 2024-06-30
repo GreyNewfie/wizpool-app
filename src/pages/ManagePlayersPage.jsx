@@ -37,6 +37,14 @@ export default function ManagePlayersPage() {
     setPool(updatedPool);
   }
 
+  const deletePlayer = (player) => {
+    const updatedPool = pool.clonePool();
+    updatedPool.players = updatedPool.players.filter(
+      (poolPlayer) => poolPlayer.playerName !== player.playerName,
+    );
+    setPool(updatedPool);
+  };
+
   return (
     <div className={classes['manage-players']}>
       <PageHeader
@@ -58,12 +66,29 @@ export default function ManagePlayersPage() {
                 handleTeamNameChange={handleTeamNameChange}
               />
             )}
-            <button
-              className={classes['edit-btn']}
-              onClick={() => togglePlayerToEdit(index)}
-            >
-              {playerToEdit === index ? 'Save' : 'Edit'}
-            </button>
+            {playerToEdit === index ? (
+              <div className={classes['edit-player-btns']}>
+                <button
+                  className={classes['edit-btn']}
+                  onClick={() => togglePlayerToEdit(index)}
+                >
+                  Save
+                </button>
+                <button
+                  className={classes['delete-btn']}
+                  onClick={() => deletePlayer(player)}
+                >
+                  Delete
+                </button>
+              </div>
+            ) : (
+              <button
+                className={classes['edit-btn']}
+                onClick={() => togglePlayerToEdit(index)}
+              >
+                Edit
+              </button>
+            )}
           </div>
         ))}
         <PrimaryActionButton

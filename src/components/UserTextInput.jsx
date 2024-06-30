@@ -7,7 +7,6 @@ export default function UserTextInput(props) {
     classes['user-text-input'],
     props.className,
   );
-  console.log(inputClassName);
 
   return (
     <input
