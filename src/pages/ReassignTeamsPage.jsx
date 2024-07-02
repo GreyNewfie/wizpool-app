@@ -3,6 +3,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import PageHeader from '../components/PageHeader';
 import MobileNavMenu from './MobileNavMenu';
 import PlayerHomeProfile from '../components/PlayerHomeProfile';
+import TeamsList from '../components/TeamsList';
 import usePool from '../utils/usePool';
 import { useState } from 'react';
 
@@ -24,12 +25,20 @@ export default function ReassignTeamsPage() {
       <div className={classes['players-container']}>
         {pool.players.map((player, index) => {
           return (
-            <div key={index} className={classes['player']}>
-              <PlayerHomeProfile player={player} playerIndex={index} />
-              {playerToEdit !== index && (
-                <button className={classes['edit-btn']}>Edit</button>
+            <>
+              <div key={index} className={classes['player']}>
+                <PlayerHomeProfile player={player} playerIndex={index} />
+                <button
+                  className={classes['edit-btn']}
+                  onClick={() => togglePlayerToEdit(index)}
+                >
+                  {playerToEdit === index ? 'Save' : 'Edit'}
+                </button>
+              </div>
+              {playerToEdit === index && (
+                <TeamsList pool={pool} setPool={setPool} playerIndex={index} />
               )}
-            </div>
+            </>
           );
         })}
       </div>
