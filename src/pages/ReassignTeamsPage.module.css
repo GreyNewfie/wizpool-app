@@ -1,4 +1,4 @@
-.pool-players {
+.reassign-teams {
   width: 100%;
   max-width: 360px;
   padding: 1.16rem 0.75rem 0;
@@ -16,32 +16,30 @@
   gap: 1.5rem;
 }
 
-.player-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+.players-container > p {
+  color: var(--secondary-text-color);
 }
 
 .player {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
 }
 
-.view-teams-btn {
+.edit-btn {
   font-family: inherit;
   font-size: 0.9rem;
-  padding: 0.2rem 0.75rem;
+  padding: 0.2rem 1.5rem;
   border: none;
   border-radius: 15px;
   background-color: var(--input-background-color);
 }
 
-.view-teams-btn:hover {
+.edit-btn:hover {
   background-color: var(--primary-color);
   cursor: pointer;
 }
 
-.view-teams-btn:active {
+.edit-btn:active {
   opacity: 0.7;
 }

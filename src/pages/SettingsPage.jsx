@@ -43,7 +43,7 @@ export default function SettingsPage() {
         <div className={classes['reassign-teams']}>
           <h4>Reassign Teams</h4>
           <div className={classes['modify-setting']}>
-            <Link to="/pool-home">
+            <Link to="/reassign-teams">
               <p>Rassign teams to players</p>
               <KeyboardArrowRightIcon />
             </Link>
