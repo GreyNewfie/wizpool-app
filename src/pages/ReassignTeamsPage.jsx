@@ -23,6 +23,7 @@ export default function ReassignTeamsPage() {
         path="/pool-settings"
       />
       <div className={classes['players-container']}>
+        <p>{`Select edit to begin reassigning a player's teams`}</p>
         {pool.players.map((player, index) => {
           return (
             <>

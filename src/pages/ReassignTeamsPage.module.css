@@ -16,6 +16,10 @@
   gap: 1.5rem;
 }
 
+.players-container > p {
+  color: var(--secondary-text-color);
+}
+
 .player {
   display: flex;
   justify-content: space-between;
