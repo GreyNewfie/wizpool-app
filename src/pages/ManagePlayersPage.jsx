@@ -33,6 +33,7 @@ export default function ManagePlayersPage() {
     updatedPool.players.push({
       playerName: '',
       teamName: '',
+      teams: [],
     });
     setPool(updatedPool);
   }
