@@ -40,15 +40,6 @@ export default function SettingsPage() {
             </Link>
           </div>
         </div>
-        <div className={classes['team-names']}>
-          <h4>Team Names</h4>
-          <div className={classes['modify-setting']}>
-            <Link to="/pool-home">
-              <p>Change players team names</p>
-              <KeyboardArrowRightIcon />
-            </Link>
-          </div>
-        </div>
         <div className={classes['reassign-teams']}>
           <h4>Reassign Teams</h4>
           <div className={classes['modify-setting']}>
