@@ -4,7 +4,7 @@ import classes from './UserTextInput.module.css';
 import { useCallback, useState } from 'react';
 
 export default function UserTextInput(props) {
-  // localValue being used to show input value
+  // localValue being used to show input value immediately
   const [localValue, setLocalValue] = useState(props.value);
   const inputClassName = classNames(
     classes['user-text-input'],
@@ -19,7 +19,7 @@ export default function UserTextInput(props) {
     };
   }
 
-  // Using debounce on handleChange to delay setting state as user enters input value
+  // Using debounce on handleChange to delay updating state as user enters input value
   const debounceHandleChange = useCallback(debounce(props.handleChange), [
     props.handleChange,
   ]);
