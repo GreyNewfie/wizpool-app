@@ -11,7 +11,9 @@ export default function PlayerInput(props) {
         name={`player-${props.index}-name`}
         value={props.player.playerName}
         placeholderText="Player's Name"
-        handleChange={(e) => props.handleNameChange(e, props.index)}
+        handleChange={(e) =>
+          props.handleNameChange(e.target.value, props.index)
+        }
       />
       <UserTextInput
         className={classes['text-input']}
@@ -19,7 +21,9 @@ export default function PlayerInput(props) {
         name={`player-${props.index}-team-name`}
         value={props.player.teamName}
         placeholderText="Player's Team Name (optional)"
-        handleChange={(e) => props.handleTeamNameChange(e, props.index)}
+        handleChange={(e) =>
+          props.handleTeamNameChange(e.target.value, props.index)
+        }
       />
     </div>
   );

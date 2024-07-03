@@ -16,15 +16,15 @@ export default function ManagePlayersPage() {
     setPlayerToEdit((prevIndex) => (prevIndex === index ? null : index));
   };
 
-  const handlePlayerNameChange = (e, index) => {
+  const handlePlayerNameChange = (name, index) => {
     const updatedPool = pool.clonePool();
-    updatedPool.setPlayerName(e.target.value, index);
+    updatedPool.setPlayerName(name, index);
     setPool(updatedPool);
   };
 
-  const handleTeamNameChange = (e, index) => {
+  const handleTeamNameChange = (name, index) => {
     const updatedPool = pool.clonePool();
-    updatedPool.setTeamName(e.target.value, index);
+    updatedPool.setTeamName(name, index);
     setPool(updatedPool);
   };
 

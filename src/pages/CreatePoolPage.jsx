@@ -14,9 +14,9 @@ export default function CreatePoolPage() {
     setPool(updatedPool);
   }
 
-  const handlePoolNameChange = (e) => {
+  const handlePoolNameChange = (name) => {
     const updatedPool = pool.clonePool();
-    updatedPool.setPoolName(e.target.value);
+    updatedPool.setPoolName(name);
     setPool(updatedPool);
   };
 
@@ -56,7 +56,7 @@ export default function CreatePoolPage() {
           name="pool-name"
           value={pool.poolName}
           placeholderText="Pool Name"
-          handleChange={handlePoolNameChange}
+          handleChange={(e) => handlePoolNameChange(e.target.value)}
         />
       </div>
       <div className={classes['add-players-section']}>
