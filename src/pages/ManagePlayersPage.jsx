@@ -18,7 +18,7 @@ export default function ManagePlayersPage() {
 
   const handlePlayerNameChange = (e, index) => {
     const updatedPool = pool.clonePool();
-    updatedPool.SetPlayerName(e.target.value, index);
+    updatedPool.setPlayerName(e.target.value, index);
     setPool(updatedPool);
   };
 

@@ -9,7 +9,7 @@ export default class Pool {
     this.poolName = poolName;
   }
 
-  SetPlayerName(playerName, index) {
+  setPlayerName(playerName, index) {
     this.players[index] = { ...this.players[index], playerName };
   }
 

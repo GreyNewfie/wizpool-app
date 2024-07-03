@@ -10,8 +10,12 @@ export default function PlayersList(props) {
           playerId={0}
           playerName={props.players[0]?.playerName ?? ''}
           teamName={props.players[0]?.teamName ?? ''}
-          handlePlayerNameChange={(e) => props.handlePlayerNameChange(e, 0)}
-          handleTeamNameChange={(e) => props.handleTeamNameChange(e, 0)}
+          handlePlayerNameChange={(e) =>
+            props.handlePlayerNameChange(e.target.value, 0)
+          }
+          handleTeamNameChange={(e) =>
+            props.handleTeamNameChange(e.target.value, 0)
+          }
         />
       ) : (
         props.players.map((_, index) => {
@@ -22,9 +26,11 @@ export default function PlayersList(props) {
               playerName={props.players[index]?.playerName ?? ''}
               teamName={props.players[index]?.teamName ?? ''}
               handlePlayerNameChange={(e) =>
-                props.handlePlayerNameChange(e, index)
+                props.handlePlayerNameChange(e.target.value, index)
               }
-              handleTeamNameChange={(e) => props.handleTeamNameChange(e, index)}
+              handleTeamNameChange={(e) =>
+                props.handleTeamNameChange(e.target.value, index)
+              }
             />
           );
         })
