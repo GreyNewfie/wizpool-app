@@ -11,7 +11,7 @@ export default function UserTextInput(props) {
     props.className,
   );
 
-  function debounce(func, timeout = 300) {
+  function debounce(func, timeout = 400) {
     let timer;
     return (...args) => {
       clearTimeout(timer);
