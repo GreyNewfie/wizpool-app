@@ -17,10 +17,11 @@ export default class Pool {
     this.players[index] = { ...this.players[index], teamName };
   }
 
-  copyPool(pool) {
-    this.poolName = pool.poolName;
-    this.players = pool.players;
-  }
+  // Verify if this is being used and delete if not
+  // copyPool(pool) {
+  //   this.poolName = pool.poolName;
+  //   this.players = pool.players;
+  // }
 
   clonePool() {
     const clonedPlayers = this.players.map((player) => ({ ...player }));

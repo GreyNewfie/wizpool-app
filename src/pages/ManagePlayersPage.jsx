@@ -9,42 +9,48 @@ import PlayerInput from '../components/PlayerInput';
 import PrimaryActionButton from '../components/PrimayActionButton';
 
 export default function ManagePlayersPage() {
-  const { pool, setPool } = usePool();
+  const {
+    pool,
+    handlePlayerNameChange,
+    handleTeamNameChange,
+    addBlankPlayer,
+    deletePlayer,
+  } = usePool();
   const [playerToEdit, setPlayerToEdit] = useState(null);
 
   const togglePlayerToEdit = (index) => {
     setPlayerToEdit((prevIndex) => (prevIndex === index ? null : index));
   };
 
-  const handlePlayerNameChange = (name, index) => {
-    const updatedPool = pool.clonePool();
-    updatedPool.setPlayerName(name, index);
-    setPool(updatedPool);
-  };
+  // const handlePlayerNameChange = (name, index) => {
+  //   const updatedPool = pool.clonePool();
+  //   updatedPool.setPlayerName(name, index);
+  //   setPool(updatedPool);
+  // };
 
-  const handleTeamNameChange = (name, index) => {
-    const updatedPool = pool.clonePool();
-    updatedPool.setTeamName(name, index);
-    setPool(updatedPool);
-  };
+  // const handleTeamNameChange = (name, index) => {
+  //   const updatedPool = pool.clonePool();
+  //   updatedPool.setTeamName(name, index);
+  //   setPool(updatedPool);
+  // };
 
-  function addBlankPlayer() {
-    const updatedPool = pool.clonePool();
-    updatedPool.players.push({
-      playerName: '',
-      teamName: '',
-      teams: [],
-    });
-    setPool(updatedPool);
-  }
+  // function addBlankPlayer() {
+  //   const updatedPool = pool.clonePool();
+  //   updatedPool.players.push({
+  //     playerName: '',
+  //     teamName: '',
+  //     teams: [],
+  //   });
+  //   setPool(updatedPool);
+  // }
 
-  const deletePlayer = (player) => {
-    const updatedPool = pool.clonePool();
-    updatedPool.players = updatedPool.players.filter(
-      (poolPlayer) => poolPlayer.playerName !== player.playerName,
-    );
-    setPool(updatedPool);
-  };
+  // const deletePlayer = (player) => {
+  //   const updatedPool = pool.clonePool();
+  //   updatedPool.players = updatedPool.players.filter(
+  //     (poolPlayer) => poolPlayer.playerName !== player.playerName,
+  //   );
+  //   setPool(updatedPool);
+  // };
 
   return (
     <div className={classes['manage-players']}>
