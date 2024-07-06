@@ -22,36 +22,6 @@ export default function ManagePlayersPage() {
     setPlayerToEdit((prevIndex) => (prevIndex === index ? null : index));
   };
 
-  // const handlePlayerNameChange = (name, index) => {
-  //   const updatedPool = pool.clonePool();
-  //   updatedPool.setPlayerName(name, index);
-  //   setPool(updatedPool);
-  // };
-
-  // const handleTeamNameChange = (name, index) => {
-  //   const updatedPool = pool.clonePool();
-  //   updatedPool.setTeamName(name, index);
-  //   setPool(updatedPool);
-  // };
-
-  // function addBlankPlayer() {
-  //   const updatedPool = pool.clonePool();
-  //   updatedPool.players.push({
-  //     playerName: '',
-  //     teamName: '',
-  //     teams: [],
-  //   });
-  //   setPool(updatedPool);
-  // }
-
-  // const deletePlayer = (player) => {
-  //   const updatedPool = pool.clonePool();
-  //   updatedPool.players = updatedPool.players.filter(
-  //     (poolPlayer) => poolPlayer.playerName !== player.playerName,
-  //   );
-  //   setPool(updatedPool);
-  // };
-
   return (
     <div className={classes['manage-players']}>
       <PageHeader
