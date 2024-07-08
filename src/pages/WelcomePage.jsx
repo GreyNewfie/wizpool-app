@@ -1,8 +1,10 @@
+import { useTheme } from '../context/ThemeContext';
 import PrimaryLinkButton from '../components/PrimaryLinkButton';
 
 export default function Welcome() {
+  const { theme } = useTheme();
   return (
-    <div className="welcome-container">
+    <div className={`welcome-container ${theme}`}>
       <HeaderLogo />
       <TextCarrousel />
       <PrimaryLinkButton text={'Get Started'} path={'/create-pool'} />

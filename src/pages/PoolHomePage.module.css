@@ -1,29 +1,34 @@
 .pool-home {
-    width: 100%;
-    max-width: 360px;
-    height: 100vh;
-    padding: 1.16rem .75rem 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 2rem;
+  width: 100%;
+  max-width: 360px;
+  height: 100vh;
+  padding: 1.16rem 0.75rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 2rem;
 }
 
 .pool-players {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    gap: 1.5rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 1.5rem;
 }
 
-.pool-home>h3 {
-    margin-right: auto;
+.pool-home > h3 {
+  margin-right: auto;
 }
 
 .player-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.light {
+  background-color: white;
+  color: black;
 }
