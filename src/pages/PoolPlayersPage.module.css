@@ -34,11 +34,11 @@
   padding: 0.2rem 0.75rem;
   border: none;
   border-radius: 15px;
-  background-color: var(--input-background-color);
+  background-color: var(--primary-btn-bg-color);
 }
 
 .view-teams-btn:hover {
-  background-color: var(--primary-color);
+  background-color: var(--secondary-btn-bg-color);
   cursor: pointer;
 }
 

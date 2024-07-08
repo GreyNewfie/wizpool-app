@@ -1,22 +1,22 @@
 .select-team-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
 }
 
 .select-btn {
-    max-height: 24px;
-    padding: 4px 15px;
-    border-radius: 15px;
-    border: none;
+  max-height: 24px;
+  padding: 4px 15px;
+  border-radius: 15px;
+  border: none;
 }
 
 .select-btn:hover {
-    background-color: var(--input-background-color);
+  background-color: var(--input-bg-color);
 }
 
 .select-btn.selected {
-    color: var(--primary-color);
-    background-color: white;
+  color: var(--primary-color);
+  background-color: white;
 }

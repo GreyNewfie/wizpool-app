@@ -6,23 +6,32 @@
 
 :root {
   --main-bg-color: #1f201f;
+  --secondary-bg-color: #fff;
   --primary-color: #675b8d;
   --text-color: white;
+  --primary-text-color: #fff;
   --secondary-text-color: #b3b7b6;
-  --input-background-color: #2e2e33;
+  --third-text-color: #000;
+  --input-bg-color: #2e2e33;
+  --input-text-color: #fff;
   --bottom-menu-bg-color: #181918;
+  --primary-btn-bg-color: #2e2e33;
+  --secondary-btn-bg-color: #675b8d;
+  --third-btn-bg-color: #2e2e33;
   --primary-text-font: 'Poppins', sans-serif;
   --secondary-text-font: 'Roboto', sans-serif;
 }
 
 body.light {
   --main-bg-color: #fff;
-  --text-color: #000;
+  --primary-text-color: #000;
+  --secondary-text-color: #656565;
+  --primary-btn-bg-color: #675b8b;
+  --secondary-btn-bg-color: #2e2e33;
 }
 
 body.dark {
   --main-bg-color: #000;
-  --text-color: #fff;
 }
 
 h3 {
@@ -42,13 +51,13 @@ h5 {
 
 body {
   background-color: var(--main-bg-color);
-  color: var(--text-color);
+  color: var(--primary-text-color);
   font-family: var(--primary-text-font);
 }
 
 button {
-  background-color: var(--primary-color);
-  color: var(--text-color);
+  background-color: var(--primary-btn-bg-color);
+  color: #fff;
 }
 
 .welcome-container {
