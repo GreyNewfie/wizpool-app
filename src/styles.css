@@ -7,6 +7,7 @@
 :root {
   --main-bg-color: #1f201f;
   --primary-color: #675b8d;
+  --text-color: white;
   --secondary-text-color: #b3b7b6;
   --input-background-color: #2e2e33;
   --bottom-menu-bg-color: #181918;
@@ -14,14 +15,14 @@
   --secondary-text-font: 'Roboto', sans-serif;
 }
 
-.light {
-  background-color: white;
-  color: black;
+body.light {
+  --main-bg-color: #fff;
+  --text-color: #000;
 }
 
-.dark {
-  background-color: black;
-  color: white;
+body.dark {
+  --main-bg-color: #000;
+  --text-color: #fff;
 }
 
 h3 {
@@ -40,14 +41,14 @@ h5 {
 }
 
 body {
-  background-color: black;
-  color: white;
+  background-color: var(--main-bg-color);
+  color: var(--text-color);
   font-family: var(--primary-text-font);
 }
 
 button {
   background-color: var(--primary-color);
-  color: white;
+  color: var(--text-color);
 }
 
 .welcome-container {
