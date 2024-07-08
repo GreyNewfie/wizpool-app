@@ -4,6 +4,8 @@ import PlayerWinsTracker from '../components/PlayerWinsTracker';
 import classes from './PoolHomePage.module.css';
 import usePool from '../utils/usePool';
 import MobileNavMenu from './MobileNavMenu';
+import { useTheme } from '../context/ThemeContext';
+import classNames from 'classnames';
 
 const sortPlayersByWins = (players) => {
   const unsortedPlayers = players.map((player) => {
@@ -25,10 +27,14 @@ const sortPlayersByWins = (players) => {
 
 export default function PoolHomePage() {
   const { pool } = usePool();
+  const { theme } = useTheme();
   const sortedPlayers = sortPlayersByWins([...pool.players]);
+  const poolClasses = classNames(classes['pool-home'], classes[theme]);
+  console.log('poolClasses are', poolClasses);
+  console.log('Theme value is', theme);
 
   return (
-    <div className={classes['pool-home']}>
+    <div className={poolClasses}>
       <PageHeader headerText={pool.poolName} />
       <div className={classes['pool-players']}>
         <h3>Overall Standings</h3>

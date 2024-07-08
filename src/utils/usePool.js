@@ -34,6 +34,12 @@ export default function usePool() {
     return new Pool(storedPool.poolName, clonedPlayers);
   };
 
+  const handlePoolNameChange = (name) => {
+    const updatedPool = pool.clonePool();
+    updatedPool.setPoolName(name);
+    setPool(updatedPool);
+  };
+
   const handlePlayerNameChange = (name, index) => {
     const updatedPool = pool.clonePool();
     updatedPool.setPlayerName(name, index);
@@ -68,6 +74,7 @@ export default function usePool() {
     pool,
     setPool,
     getPoolFromStorage,
+    handlePoolNameChange,
     handlePlayerNameChange,
     handleTeamNameChange,
     addBlankPlayer,

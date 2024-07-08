@@ -1,8 +1,8 @@
 .user-text-input {
-    color: white;
-    font-size: 1rem;
-    padding: 1rem;
-    border-radius: 10px;
-    background-color: #2E2E33;
-    border: none;
+  color: var(--input-text-color);
+  font-size: 1rem;
+  padding: 1rem;
+  border-radius: 10px;
+  background-color: var(--input-bg-color);
+  border: none;
 }

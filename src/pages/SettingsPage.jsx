@@ -7,13 +7,17 @@ import usePool from '../utils/usePool';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { Switch } from '@mui/material';
+import { useTheme } from '../context/ThemeContext';
 
 export default function SettingsPage() {
   const { pool } = usePool();
-  const [currentMode, setCurrentMode] = useState('dark');
+  const { theme, setTheme } = useTheme();
+  const [currentMode, setCurrentMode] = useState(theme);
 
-  const handleChange = (event) => {
-    event.target.checked ? setCurrentMode('light') : setCurrentMode('dark');
+  const handleChange = (e) => {
+    const newMode = e.target.checked ? 'light' : 'dark';
+    setCurrentMode(newMode);
+    setTheme(newMode);
   };
 
   return (
@@ -59,6 +63,7 @@ export default function SettingsPage() {
                   : 'Switch to Dark Mode'}
               </p>
               <Switch
+                checked={theme === 'light'}
                 onChange={handleChange}
                 sx={{
                   '& .MuiSwitch-switchBase.Mui-checked': {
