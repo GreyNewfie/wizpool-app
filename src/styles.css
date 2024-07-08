@@ -11,13 +11,15 @@
   --text-color: white;
   --primary-text-color: #fff;
   --secondary-text-color: #b3b7b6;
-  --third-text-color: #000;
+  --third-text-color: #675b8b;
+  --alternate-text-color: #fff;
   --input-bg-color: #2e2e33;
   --input-text-color: #fff;
   --bottom-menu-bg-color: #181918;
   --primary-btn-bg-color: #2e2e33;
   --secondary-btn-bg-color: #675b8d;
-  --third-btn-bg-color: #2e2e33;
+  --third-btn-bg-color: #fff;
+  --fourth-btn-bg-color: #675b8b;
   --primary-text-font: 'Poppins', sans-serif;
   --secondary-text-font: 'Roboto', sans-serif;
 }
@@ -26,8 +28,12 @@ body.light {
   --main-bg-color: #fff;
   --primary-text-color: #000;
   --secondary-text-color: #656565;
+  --third-text-color: #fff;
+  --alternate-text-color: #fff;
   --primary-btn-bg-color: #675b8b;
   --secondary-btn-bg-color: #2e2e33;
+  --third-btn-bg-color: #2e2e33;
+  --fourth-btn-bg-color: #909090;
 }
 
 body.dark {
