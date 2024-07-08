@@ -1,105 +1,115 @@
 * {
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
 :root {
-    --main-bg-color: #1F201F;
-    --primary-color: #675b8d;
-    --secondary-text-color: #b3b7b6;
-    --input-background-color: #2E2E33;
-    --bottom-menu-bg-color: #181918;
-    --primary-text-font: 'Poppins', sans-serif;
-    --secondary-text-font: 'Roboto', sans-serif;
+  --main-bg-color: #1f201f;
+  --primary-color: #675b8d;
+  --secondary-text-color: #b3b7b6;
+  --input-background-color: #2e2e33;
+  --bottom-menu-bg-color: #181918;
+  --primary-text-font: 'Poppins', sans-serif;
+  --secondary-text-font: 'Roboto', sans-serif;
+}
+
+.light {
+  background-color: white;
+  color: black;
+}
+
+.dark {
+  background-color: black;
+  color: white;
 }
 
 h3 {
-    font-size: 1.3rem;
-    font-weight: 500;
+  font-size: 1.3rem;
+  font-weight: 500;
 }
 
 h4 {
-    font-size: 1.1rem;
-    font-weight: 600;
+  font-size: 1.1rem;
+  font-weight: 600;
 }
 
 h5 {
-    font-size: .9rem;
-    font-weight: 500;
+  font-size: 0.9rem;
+  font-weight: 500;
 }
 
 body {
-    background-color: black;
-    color: white;
-    font-family: var(--primary-text-font);
+  background-color: black;
+  color: white;
+  font-family: var(--primary-text-font);
 }
 
 button {
-    background-color: var(--primary-color);
-    color: white;
+  background-color: var(--primary-color);
+  color: white;
 }
 
 .welcome-container {
-    padding-top: 10px;
-    text-align: center;
-    gap: 45px;
+  padding-top: 10px;
+  text-align: center;
+  gap: 45px;
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 div:has(#create-pool-container),
 div:has(.assign-teams-page),
 div:has(.pool-players) {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .create-pool-container {
-    padding-top: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .header-logo {
-    width: 300px;
+  width: 300px;
 }
 
 /*** CREATE POOL PAGE ***/
 
 .secondary-text {
-    color: var(--secondary-text-color);
-    font-size: .9rem;
-    text-align: center;
+  color: var(--secondary-text-color);
+  font-size: 0.9rem;
+  text-align: center;
 }
 
 /**** CHOOSE PLAYER TO ASSIGN TEAMS PAGE ****/
 
 .assign-teams-page {
-    padding: 1.16rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 2rem;
+  padding: 1.16rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 2rem;
 }
 
 .select-player {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 /*** ERROR PAGE ***/
 
 #error-page {
-    height: 100vh;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 1rem;
+  height: 100vh;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
 }
