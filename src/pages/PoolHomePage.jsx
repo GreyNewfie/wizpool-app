@@ -4,7 +4,7 @@ import PlayerWinsTracker from '../components/PlayerWinsTracker';
 import classes from './PoolHomePage.module.css';
 import usePool from '../utils/usePool';
 import MobileNavMenu from './MobileNavMenu';
-import { useTheme } from '../context/ThemeContext';
+import useTheme from '../context/useTheme';
 import classNames from 'classnames';
 
 const sortPlayersByWins = (players) => {

@@ -7,7 +7,7 @@ import usePool from '../utils/usePool';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { Switch } from '@mui/material';
-import { useTheme } from '../context/ThemeContext';
+import useTheme from '../context/useTheme';
 
 export default function SettingsPage() {
   const { pool } = usePool();

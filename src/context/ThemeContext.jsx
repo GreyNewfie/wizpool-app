@@ -1,4 +1,5 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 
 export const ThemeContext = createContext();
 
@@ -22,13 +23,8 @@ const ThemeProvider = ({ children }) => {
   );
 };
 
-// Custom hook to throw an error if theme is undefined
-export const useTheme = () => {
-  const context = useContext(ThemeContext);
-  if (context === undefined) {
-    throw new Error('Context is undefined');
-  }
-  return context;
+ThemeProvider.propTypes = {
+  children: PropTypes.element,
 };
 
 export default ThemeProvider;
