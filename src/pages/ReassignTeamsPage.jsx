@@ -5,7 +5,7 @@ import MobileNavMenu from './MobileNavMenu';
 import PlayerHomeProfile from '../components/PlayerHomeProfile';
 import TeamsList from '../components/TeamsList';
 import usePool from '../utils/usePool';
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 
 export default function ReassignTeamsPage() {
   const { pool, setPool } = usePool();
@@ -26,7 +26,7 @@ export default function ReassignTeamsPage() {
         <p>{`Select edit to begin reassigning a player's teams`}</p>
         {pool.players.map((player, index) => {
           return (
-            <>
+            <Fragment key={index}>
               <div key={index} className={classes['player']}>
                 <PlayerHomeProfile player={player} playerIndex={index} />
                 <button
@@ -39,7 +39,7 @@ export default function ReassignTeamsPage() {
               {playerToEdit === index && (
                 <TeamsList pool={pool} setPool={setPool} playerIndex={index} />
               )}
-            </>
+            </Fragment>
           );
         })}
       </div>
