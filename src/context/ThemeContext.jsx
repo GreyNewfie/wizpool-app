@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 
 export const ThemeContext = createContext();
 
@@ -29,6 +30,10 @@ export const useTheme = () => {
     throw new Error('Context is undefined');
   }
   return context;
+};
+
+ThemeProvider.propTypes = {
+  children: PropTypes.element,
 };
 
 export default ThemeProvider;
