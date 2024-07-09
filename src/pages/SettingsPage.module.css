@@ -15,11 +15,12 @@
 }
 
 .league-setting,
-.manage-players,
-.reassign-teams {
+.manage-players > a,
+.reassign-teams > a,
+.app-settings {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.75rem;
 }
 
 .league-info {
@@ -28,23 +29,27 @@
 }
 
 .league-info,
-.modify-setting > a,
+.modify-setting,
 .switch-container > p {
   color: var(--secondary-text-color);
 }
 
-.modify-setting > a {
+.manage-players > a,
+.reassign-teams > a {
   text-decoration: none;
   cursor: pointer;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
 }
 
+.manage-players h4,
+.reassign-teams h4 {
+  color: var(--primary-text-color);
+}
+
+.league-info,
+.modify-setting,
 .switch-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 0.5rem;
+  gap: 1rem;
 }

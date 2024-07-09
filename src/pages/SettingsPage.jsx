@@ -36,22 +36,22 @@ export default function SettingsPage() {
           </div>
         </div>
         <div className={classes['manage-players']}>
-          <h4>Manage Players</h4>
-          <div className={classes['modify-setting']}>
-            <Link to="/manage-players">
+          <Link to="/manage-players">
+            <h4>Manage Players</h4>
+            <div className={classes['modify-setting']}>
               <p>Add, remove or modify players</p>
               <KeyboardArrowRightIcon />
-            </Link>
-          </div>
+            </div>
+          </Link>
         </div>
         <div className={classes['reassign-teams']}>
-          <h4>Reassign Teams</h4>
-          <div className={classes['modify-setting']}>
-            <Link to="/reassign-teams">
+          <Link to="/reassign-teams">
+            <h4>Reassign Teams</h4>
+            <div className={classes['modify-setting']}>
               <p>Rassign teams to players</p>
               <KeyboardArrowRightIcon />
-            </Link>
-          </div>
+            </div>
+          </Link>
         </div>
         <div className={classes['app-settings']}>
           <h4>App Settings</h4>
