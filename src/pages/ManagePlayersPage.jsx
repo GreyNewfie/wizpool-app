@@ -7,6 +7,8 @@ import usePool from '../utils/usePool';
 import { useState } from 'react';
 import PlayerInput from '../components/PlayerInput';
 import PrimaryActionButton from '../components/PrimayActionButton';
+import AlertDialog from '../components/ConfirmDialog';
+import ConfirmDialog from '../components/ConfirmDialog';
 
 export default function ManagePlayersPage() {
   const {
@@ -17,9 +19,26 @@ export default function ManagePlayersPage() {
     deletePlayer,
   } = usePool();
   const [playerToEdit, setPlayerToEdit] = useState(null);
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  const [playerToDelete, setPlayerToDelete] = useState(null);
 
   const togglePlayerToEdit = (index) => {
     setPlayerToEdit((prevIndex) => (prevIndex === index ? null : index));
+  };
+
+  const handleShowConfirmDialog = (player) => {
+    setPlayerToDelete(player);
+    setShowConfirmDialog(true);
+  };
+
+  const handleCloseConfirmDialog = () => {
+    setPlayerToDelete(null);
+    setShowConfirmDialog(false);
+  };
+
+  const handleDeletePlayer = () => {
+    deletePlayer(playerToDelete);
+    setShowConfirmDialog(false);
   };
 
   return (
@@ -53,7 +72,7 @@ export default function ManagePlayersPage() {
                 </button>
                 <button
                   className={classes['delete-btn']}
-                  onClick={() => deletePlayer(player)}
+                  onClick={() => handleShowConfirmDialog(player)}
                 >
                   Delete
                 </button>
@@ -76,6 +95,13 @@ export default function ManagePlayersPage() {
       </div>
 
       <MobileNavMenu className={classes['bottom-menu']} />
+
+      <ConfirmDialog
+        open={showConfirmDialog}
+        onClose={handleCloseConfirmDialog}
+        onConfirm={handleDeletePlayer}
+        playerName={playerToDelete?.playerName}
+      />
     </div>
   );
 }
