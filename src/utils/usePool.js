@@ -5,16 +5,16 @@ const getInitialPool = () => {
   const storedPool = JSON.parse(localStorage.getItem('pool'));
   if (storedPool) {
     const clonedPlayers = storedPool.players.map((player) => ({ ...player }));
-    return new Pool(storedPool.poolName, clonedPlayers);
+    return new Pool(storedPool.poolName, clonedPlayers, storedPool.league);
   }
-  return new Pool('', []);
+  return new Pool('', [], '');
 };
 
 const cleanPool = (pool) => {
   const updatedPlayers = pool.players.filter(
     (player) => player.playerName !== '',
   );
-  const cleanedPool = new Pool(pool.poolName, updatedPlayers);
+  const cleanedPool = new Pool(pool.poolName, updatedPlayers, pool.league);
   return cleanedPool;
 };
 
@@ -31,7 +31,13 @@ export default function usePool() {
   const getPoolFromStorage = () => {
     const storedPool = JSON.parse(localStorage.getItem('pool'));
     const clonedPlayers = storedPool.players.map((player) => ({ ...player }));
-    return new Pool(storedPool.poolName, clonedPlayers);
+    return new Pool(storedPool.poolName, clonedPlayers, storedPool.league);
+  };
+
+  const handleSetLeague = (league) => {
+    const updatedPool = pool.clonePool();
+    updatedPool.setLeague(league);
+    setPool(updatedPool);
   };
 
   const handlePoolNameChange = (name) => {
@@ -74,6 +80,7 @@ export default function usePool() {
     pool,
     setPool,
     getPoolFromStorage,
+    handleSetLeague,
     handlePoolNameChange,
     handlePlayerNameChange,
     handleTeamNameChange,
