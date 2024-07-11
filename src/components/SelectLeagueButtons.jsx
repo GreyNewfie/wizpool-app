@@ -1,13 +1,22 @@
+import { useState } from 'react';
 import classes from './SelectLeagueButtons.module.css';
 import PropTypes from 'prop-types';
 
 export default function SelectLeagueButtons({ onClick }) {
+  const [selectedLeague, setSelectedLeague] = useState('');
+
+  const handleClick = (league) => {
+    setSelectedLeague(league);
+    onClick(league);
+    console.log('Selected league is', league);
+  };
+
   return (
     <div className={classes['select-league-container']}>
       <button
-        className={classes['select-league-btn']}
+        className={`${classes['select-league-btn']} ${selectedLeague === 'nfl' ? classes['selected'] : ''}`}
         value={'nfl'}
-        onClick={(e) => onClick(e.target.value)}
+        onClick={() => handleClick('nfl')}
       >
         <img
           className={classes['league-logo']}
@@ -17,8 +26,8 @@ export default function SelectLeagueButtons({ onClick }) {
         NFL
       </button>
       <button
-        className={classes['select-league-btn']}
-        onClick={() => onClick('nba')}
+        className={`${classes['select-league-btn']} ${selectedLeague === 'nba' ? classes['selected'] : ''}`}
+        onClick={() => handleClick('nba')}
       >
         <img
           className={classes['league-logo']}
@@ -28,8 +37,8 @@ export default function SelectLeagueButtons({ onClick }) {
         NBA
       </button>
       <button
-        className={classes['select-league-btn']}
-        onClick={() => onClick('mlb')}
+        className={`${classes['select-league-btn']} ${selectedLeague === 'mlb' ? classes['selected'] : ''}`}
+        onClick={() => handleClick('mlb')}
       >
         <img
           className={classes['league-logo']}

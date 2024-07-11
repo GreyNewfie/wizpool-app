@@ -27,6 +27,10 @@
   opacity: 0.9;
 }
 
+.selected {
+  background-color: #483d71;
+}
+
 .league-logo {
   width: 50px;
 }
