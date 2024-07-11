@@ -1,0 +1,13 @@
+.choose-league-container {
+  width: 100%;
+  max-width: 360px;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.choose-league-page-header {
+  display: flex;
+  flex-direction: column;
+}
