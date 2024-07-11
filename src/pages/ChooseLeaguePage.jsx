@@ -1,8 +1,11 @@
 import classes from './ChooseLeaguePage.module.css';
 import NextHeaderButton from '../components/NextHeaderButton';
 import SelectLeagueButtons from '../components/SelectLeagueButtons';
+import usePool from '../utils/usePool';
 
 export default function ChooseLeaugePage() {
+  const { handleSetLeague } = usePool();
+
   return (
     <div
       id="choose-league-container"
@@ -16,7 +19,7 @@ export default function ChooseLeaugePage() {
       <div className={classes['instructions-container']}>
         <p>Choose MLB, NBA or NFL to begin creating your pool</p>
       </div>
-      <SelectLeagueButtons />
+      <SelectLeagueButtons onClick={handleSetLeague} />
     </div>
   );
 }
