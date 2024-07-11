@@ -1,12 +1,17 @@
 // eslint-disable-next-line no-unused-vars
 export default class Pool {
-  constructor(poolName, players) {
+  constructor(poolName, players, league) {
     this.poolName = poolName;
     this.players = players;
+    this.league = league;
   }
 
   setPoolName(poolName) {
     this.poolName = poolName;
+  }
+
+  setLeague(league) {
+    this.league = league;
   }
 
   setPlayerName(playerName, index) {
@@ -19,7 +24,7 @@ export default class Pool {
 
   clonePool() {
     const clonedPlayers = this.players.map((player) => ({ ...player }));
-    const clonedPool = new Pool(this.poolName, clonedPlayers);
+    const clonedPool = new Pool(this.poolName, clonedPlayers, this.league);
     return clonedPool;
   }
 
@@ -36,9 +41,5 @@ export default class Pool {
     } else {
       this.players[playerIndex].teams = [teamName];
     }
-  }
-
-  getPool() {
-    return this.poolName, this.players;
   }
 }
