@@ -14,7 +14,7 @@
   gap: 2rem;
 }
 
-.league-setting,
+.pool-info-container,
 .manage-players > a,
 .reassign-teams > a,
 .app-settings {
@@ -23,12 +23,13 @@
   gap: 0.75rem;
 }
 
-.league-info {
+.pool-info {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
-.league-info,
+.pool-info,
 .modify-setting,
 .switch-container > p {
   color: var(--secondary-text-color);
@@ -45,7 +46,8 @@
   color: var(--primary-text-color);
 }
 
-.league-info,
+.pool-name,
+.pool-league,
 .modify-setting,
 .switch-container {
   display: flex;
