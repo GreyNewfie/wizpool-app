@@ -103,7 +103,7 @@ export default function useApiData() {
       if (league === 'nfl') {
         const cityAndTeamName = splitTeamAndCity(team.Name);
         teamData = {
-          teamId: team.team,
+          teamId: team.Team,
           city: cityAndTeamName.city,
           name: cityAndTeamName.teamName,
           wins: team.Wins,
