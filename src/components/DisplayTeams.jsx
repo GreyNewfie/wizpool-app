@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import classes from './DisplayTeams.module.css';
 
-export default function DisplayTeams({ teams }) {
+export default function DisplayTeams({ league, teams }) {
   return (
     <div className={classes['player-teams-container']}>
       {teams.map((team) => {
@@ -10,8 +10,8 @@ export default function DisplayTeams({ teams }) {
           <div key={`team-${team.teamId}`} className={classes['player-team']}>
             <img
               className={classes['team-logo']}
-              src={`/nba-logos/${lowerCaseTeamId}-logo.png`}
-              alt={`${team.city} ${team.name} basketball team logo`}
+              src={`/${league}-logos/${lowerCaseTeamId}-logo.png`}
+              alt={`${team.city} ${team.name} ${league} team logo`}
             />
             <div className={classes['team-info']}>
               <h5>
@@ -31,4 +31,5 @@ export default function DisplayTeams({ teams }) {
 
 DisplayTeams.propTypes = {
   teams: PropTypes.array.isRequired,
+  league: PropTypes.string.isRequired,
 };
