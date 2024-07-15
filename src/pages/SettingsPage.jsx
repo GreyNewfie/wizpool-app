@@ -29,7 +29,7 @@ export default function SettingsPage() {
       />
       <div className={classes['settings-content']}>
         <div className={classes['pool-info-container']}>
-          <h4>Pool</h4>
+          <h4>Pool Info</h4>
           <div className={classes['pool-info']}>
             <div className={classes['pool-name']}>
               <p>Pool Name</p>
