@@ -8,6 +8,7 @@ import useTheme from '../context/useTheme';
 import classNames from 'classnames';
 import DesktopNavHeader from '../components/DesktopNavHeader';
 import { useState, useEffect } from 'react';
+import useIsDesktop from '../utils/useIsDesktop';
 
 const sortPlayersByWins = (players) => {
   const unsortedPlayers = players.map((player) => {
@@ -33,17 +34,7 @@ export default function PoolHomePage() {
   const sortedPlayers = sortPlayersByWins([...pool.players]);
   const poolClasses = classNames(classes['pool-home'], classes[theme]);
 
-  const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsDesktop(window.innerWidth >= 768);
-    };
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+  const isDesktop = useIsDesktop();
 
   return (
     <div className={classes['page-container']}>
