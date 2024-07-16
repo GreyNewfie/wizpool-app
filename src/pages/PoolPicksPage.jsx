@@ -36,7 +36,7 @@ export default function PoolPicksPage() {
         {teamsAndPlayersList.map((teamAndPlayer, index) => (
           <div key={index} className={classes['player-team-container']}>
             <DisplayTeams league={pool.league} teams={[teamAndPlayer.team]} />
-            <h5>{teamAndPlayer.playerName}</h5>
+            <h6>{teamAndPlayer.playerName}</h6>
           </div>
         ))}
       </div>

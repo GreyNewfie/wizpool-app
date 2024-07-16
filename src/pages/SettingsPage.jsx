@@ -29,7 +29,7 @@ export default function SettingsPage() {
       />
       <div className={classes['settings-content']}>
         <div className={classes['pool-info-container']}>
-          <h4>Pool Info</h4>
+          <h5>Pool Info</h5>
           <div className={classes['pool-info']}>
             <div className={classes['pool-name']}>
               <p>Pool Name</p>
@@ -43,7 +43,7 @@ export default function SettingsPage() {
         </div>
         <div className={classes['manage-players']}>
           <Link to="/manage-players">
-            <h4>Manage Players</h4>
+            <h5>Manage Players</h5>
             <div className={classes['modify-setting']}>
               <p>Add, remove or modify players</p>
               <KeyboardArrowRightIcon />
@@ -52,7 +52,7 @@ export default function SettingsPage() {
         </div>
         <div className={classes['reassign-teams']}>
           <Link to="/reassign-teams">
-            <h4>Reassign Teams</h4>
+            <h5>Reassign Teams</h5>
             <div className={classes['modify-setting']}>
               <p>Rassign teams to players</p>
               <KeyboardArrowRightIcon />
@@ -60,7 +60,7 @@ export default function SettingsPage() {
           </Link>
         </div>
         <div className={classes['app-settings']}>
-          <h4>App Settings</h4>
+          <h5>App Settings</h5>
           <div className={classes['modify-setting']}>
             <div className={classes['switch-container']}>
               <p>

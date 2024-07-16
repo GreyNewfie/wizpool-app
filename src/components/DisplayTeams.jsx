@@ -14,9 +14,9 @@ export default function DisplayTeams({ league, teams }) {
               alt={`${team.city} ${team.name} ${league} team logo`}
             />
             <div className={classes['team-info']}>
-              <h5>
+              <h6>
                 {team.city} {team.name}
-              </h5>
+              </h6>
               <p>{team.division} division</p>
               <span className={classes['team-record']}>
                 {team.wins}-{team.losses}
