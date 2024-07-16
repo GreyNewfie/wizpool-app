@@ -6,6 +6,8 @@ import usePool from '../utils/usePool';
 import MobileNavMenu from './MobileNavMenu';
 import useTheme from '../context/useTheme';
 import classNames from 'classnames';
+import DesktopNavHeader from '../components/DesktopNavHeader';
+import { useState, useEffect } from 'react';
 
 const sortPlayersByWins = (players) => {
   const unsortedPlayers = players.map((player) => {
@@ -31,25 +33,40 @@ export default function PoolHomePage() {
   const sortedPlayers = sortPlayersByWins([...pool.players]);
   const poolClasses = classNames(classes['pool-home'], classes[theme]);
 
+  const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 768);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
-    <div className={poolClasses}>
-      <PageHeader headerText={pool.poolName} />
-      <div className={classes['pool-players']}>
-        <h3>Overall Standings</h3>
-        {sortedPlayers.map((player, playerIndex) => {
-          return (
-            <div key={playerIndex} className={classes['player-container']}>
-              <PlayerHomeProfile
-                key={playerIndex}
-                player={player}
-                playerIndex={playerIndex}
-              />
-              <PlayerWinsTracker player={player} />
-            </div>
-          );
-        })}
+    <div className={classes['page-container']}>
+      {isDesktop && <DesktopNavHeader />}
+      <div className={poolClasses}>
+        <PageHeader headerText={pool.poolName} />
+        <div className={classes['pool-players']}>
+          <h3>Overall Standings</h3>
+          {sortedPlayers.map((player, playerIndex) => {
+            return (
+              <div key={playerIndex} className={classes['player-container']}>
+                <PlayerHomeProfile
+                  key={playerIndex}
+                  player={player}
+                  playerIndex={playerIndex}
+                />
+                <PlayerWinsTracker player={player} />
+              </div>
+            );
+          })}
+        </div>
+        {!isDesktop && <MobileNavMenu className={classes['bottom-menu']} />}
       </div>
-      <MobileNavMenu className={classes['bottom-menu']} />
     </div>
   );
 }
