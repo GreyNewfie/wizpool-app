@@ -42,7 +42,10 @@ export default function PoolPlayersPage() {
               {viewingTeamsFor === index && (
                 <>
                   <h4>Teams</h4>
-                  <DisplayTeams teams={player.teams || []} />
+                  <DisplayTeams
+                    league={pool.league}
+                    teams={player.teams || []}
+                  />
                 </>
               )}
             </div>

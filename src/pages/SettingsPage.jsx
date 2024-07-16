@@ -28,11 +28,17 @@ export default function SettingsPage() {
         path="/pool-home"
       />
       <div className={classes['settings-content']}>
-        <div className={classes['league-setting']}>
-          <h4>League</h4>
-          <div className={classes['league-info']}>
-            <p>League Name</p>
-            <p>{pool.poolName}</p>
+        <div className={classes['pool-info-container']}>
+          <h4>Pool Info</h4>
+          <div className={classes['pool-info']}>
+            <div className={classes['pool-name']}>
+              <p>Pool Name</p>
+              <p>{pool.poolName}</p>
+            </div>
+            <div className={classes['pool-league']}>
+              <p>Sports League</p>
+              <p>{pool.league.toUpperCase()}</p>
+            </div>
           </div>
         </div>
         <div className={classes['manage-players']}>

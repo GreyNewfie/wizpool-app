@@ -1,0 +1,36 @@
+.select-league-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.select-league-btn {
+  font-family: inherit;
+  font-size: 2rem;
+  font-weight: bold;
+  background-color: #675b8b;
+  border: none;
+  border-radius: 10px;
+  padding: 1rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.select-league-btn:hover {
+  opacity: 0.7;
+}
+
+.select-league-btn:active {
+  opacity: 0.9;
+}
+
+.selected {
+  background-color: #483d71;
+}
+
+.league-logo {
+  width: 50px;
+}

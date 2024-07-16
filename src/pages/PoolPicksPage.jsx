@@ -35,7 +35,7 @@ export default function PoolPicksPage() {
         <p>See which players have the teams with the most wins</p>
         {teamsAndPlayersList.map((teamAndPlayer, index) => (
           <div key={index} className={classes['player-team-container']}>
-            <DisplayTeams teams={[teamAndPlayer.team]} />
+            <DisplayTeams league={pool.league} teams={[teamAndPlayer.team]} />
             <h5>{teamAndPlayer.playerName}</h5>
           </div>
         ))}

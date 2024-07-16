@@ -14,11 +14,17 @@ import SettingsPage from './pages/SettingsPage.jsx';
 import ManagePlayersPage from './pages/ManagePlayersPage.jsx';
 import ReassignTeamsPage from './pages/ReassignTeamsPage.jsx';
 import ThemeProvider from './context/ThemeContext.jsx';
+import ChooseLeaguePage from './pages/ChooseLeaguePage.jsx';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: '/choose-league',
+    element: <ChooseLeaguePage />,
     errorElement: <ErrorPage />,
   },
   {

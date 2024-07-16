@@ -30,8 +30,6 @@ export default function PoolHomePage() {
   const { theme } = useTheme();
   const sortedPlayers = sortPlayersByWins([...pool.players]);
   const poolClasses = classNames(classes['pool-home'], classes[theme]);
-  console.log('poolClasses are', poolClasses);
-  console.log('Theme value is', theme);
 
   return (
     <div className={poolClasses}>

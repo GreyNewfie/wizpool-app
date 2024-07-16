@@ -76,18 +76,12 @@ button {
   align-items: center;
 }
 
+div:has(#choose-league-container),
 div:has(#create-pool-container),
 div:has(.assign-teams-page),
 div:has(.pool-players) {
   display: flex;
   justify-content: center;
-}
-
-.create-pool-container {
-  padding-top: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
 }
 
 .header-logo {
