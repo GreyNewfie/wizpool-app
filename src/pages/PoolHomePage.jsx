@@ -7,7 +7,6 @@ import MobileNavMenu from './MobileNavMenu';
 import useTheme from '../context/useTheme';
 import classNames from 'classnames';
 import DesktopNavHeader from '../components/DesktopNavHeader';
-import { useState, useEffect } from 'react';
 import useIsDesktop from '../utils/useIsDesktop';
 
 const sortPlayersByWins = (players) => {
@@ -33,7 +32,6 @@ export default function PoolHomePage() {
   const { theme } = useTheme();
   const sortedPlayers = sortPlayersByWins([...pool.players]);
   const poolClasses = classNames(classes['pool-home'], classes[theme]);
-
   const isDesktop = useIsDesktop();
 
   return (
