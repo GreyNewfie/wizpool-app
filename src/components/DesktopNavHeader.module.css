@@ -1,9 +1,13 @@
 .desktop-nav-header {
   width: 100%;
-  padding: 1rem 3%;
+  padding: 1rem 4%;
   display: flex;
   justify-content: space-between;
   align-items: end;
+}
+
+.logo {
+  width: 200px;
 }
 
 .nav-items {
@@ -20,8 +24,12 @@ a {
   cursor: pointer;
 }
 
+.nav-items a.active {
+  color: var(--primary-color);
+}
+
 a:hover {
-  color: var(--primary-text-color);
+  color: var(--secondary-color);
 }
 
 a:active {
