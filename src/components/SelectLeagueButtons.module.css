@@ -28,7 +28,7 @@
 }
 
 .selected {
-  background-color: #483d71;
+  background-color: var(--primary-btn-bg-color);
 }
 
 .league-logo {
