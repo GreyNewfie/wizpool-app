@@ -67,12 +67,12 @@ export default function SettingsPage() {
           <div className={classes['app-settings']}>
             <h5>App Settings</h5>
             <div className={classes['modify-setting']}>
+              <p>
+                {currentMode === 'dark'
+                  ? 'Switch to Light Mode'
+                  : 'Switch to Dark Mode'}
+              </p>
               <div className={classes['switch-container']}>
-                <p>
-                  {currentMode === 'dark'
-                    ? 'Switch to Light Mode'
-                    : 'Switch to Dark Mode'}
-                </p>
                 <Switch
                   checked={theme === 'light'}
                   onChange={handleChange}
