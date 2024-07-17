@@ -1,6 +1,13 @@
+.page-container {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .pool-players {
   width: 100%;
-  max-width: 360px;
+  max-width: 400px;
   padding: 1.16rem 0.75rem 0;
   margin-bottom: 5rem;
   align-items: center;

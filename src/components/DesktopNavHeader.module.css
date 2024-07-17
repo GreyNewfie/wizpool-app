@@ -1,0 +1,37 @@
+.desktop-nav-header {
+  width: 100%;
+  padding: 1rem 4%;
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+}
+
+.logo {
+  width: 200px;
+}
+
+.nav-items {
+  font-size: 1.1rem;
+  font-weight: 500;
+  justify-content: space-between;
+  display: flex;
+  gap: 1.5rem;
+}
+
+a {
+  color: var(--secondary-text-color);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.nav-items a.active {
+  color: var(--primary-color);
+}
+
+a:hover {
+  color: var(--secondary-color);
+}
+
+a:active {
+  opacity: 0.7;
+}

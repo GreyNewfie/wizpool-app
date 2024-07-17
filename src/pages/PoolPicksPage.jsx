@@ -4,9 +4,12 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import MobileNavMenu from './MobileNavMenu';
 import usePool from '../utils/usePool';
 import DisplayTeams from '../components/DisplayTeams';
+import useIsDesktop from '../utils/useIsDesktop';
+import DesktopNavHeader from '../components/DesktopNavHeader';
 
 export default function PoolPicksPage() {
   const { pool } = usePool();
+  const isDesktop = useIsDesktop();
 
   const getTeamsAndPlayers = () => {
     const clonedPool = pool.clonePool();
@@ -25,22 +28,25 @@ export default function PoolPicksPage() {
   const teamsAndPlayersList = getTeamsAndPlayers();
 
   return (
-    <div className={classes['pool-picks']}>
-      <PageHeader
-        headerText="Picked Teams"
-        leftBtnText=<ArrowBackIcon />
-        path="/pool-home"
-      />
-      <div className={classes['picks-container']}>
-        <p>See which players have the teams with the most wins</p>
-        {teamsAndPlayersList.map((teamAndPlayer, index) => (
-          <div key={index} className={classes['player-team-container']}>
-            <DisplayTeams league={pool.league} teams={[teamAndPlayer.team]} />
-            <h5>{teamAndPlayer.playerName}</h5>
-          </div>
-        ))}
+    <div className={classes['page-container']}>
+      {isDesktop && <DesktopNavHeader />}
+      <div className={classes['pool-picks']}>
+        <PageHeader
+          headerText="Picked Teams"
+          leftBtnText=<ArrowBackIcon />
+          path="/pool-home"
+        />
+        <div className={classes['picks-container']}>
+          <p>See which players have the teams with the most wins</p>
+          {teamsAndPlayersList.map((teamAndPlayer, index) => (
+            <div key={index} className={classes['player-team-container']}>
+              <DisplayTeams league={pool.league} teams={[teamAndPlayer.team]} />
+              <h6>{teamAndPlayer.playerName}</h6>
+            </div>
+          ))}
+        </div>
+        {!isDesktop && <MobileNavMenu className={classes['bottom-menu']} />}
       </div>
-      <MobileNavMenu className={classes['bottom-menu']} />
     </div>
   );
 }

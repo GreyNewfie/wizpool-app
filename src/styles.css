@@ -7,19 +7,20 @@
 :root {
   --main-bg-color: #1f201f;
   --secondary-bg-color: #fff;
-  --primary-color: #675b8d;
+  --primary-color: #6269a9;
+  --secondary-color: #e79d30;
   --text-color: white;
   --primary-text-color: #fff;
   --secondary-text-color: #b3b7b6;
-  --third-text-color: #675b8b;
+  --third-text-color: #6269a9;
   --alternate-text-color: #fff;
   --input-bg-color: #2e2e33;
   --input-text-color: #fff;
   --bottom-menu-bg-color: #181918;
   --primary-btn-bg-color: #2e2e33;
-  --secondary-btn-bg-color: #675b8d;
+  --secondary-btn-bg-color: #6269a9;
   --third-btn-bg-color: #fff;
-  --fourth-btn-bg-color: #675b8b;
+  --fourth-btn-bg-color: #6269a9;
   --primary-text-font: 'Poppins', sans-serif;
   --secondary-text-font: 'Roboto', sans-serif;
 }
@@ -30,7 +31,7 @@ body.light {
   --secondary-text-color: #656565;
   --third-text-color: #fff;
   --alternate-text-color: #fff;
-  --primary-btn-bg-color: #675b8b;
+  --primary-btn-bg-color: #6269a9;
   --secondary-btn-bg-color: #2e2e33;
   --third-btn-bg-color: #2e2e33;
   --fourth-btn-bg-color: #909090;
@@ -46,12 +47,17 @@ h3 {
 }
 
 h4 {
-  font-size: 1.1rem;
-  font-weight: 600;
+  font-size: 1.2rem;
+  font-weight: 500;
 }
 
 h5 {
-  font-size: 0.9rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+h6 {
+  font-size: 1rem;
   font-weight: 500;
 }
 
@@ -64,6 +70,10 @@ body {
 button {
   background-color: var(--primary-btn-bg-color);
   color: #fff;
+}
+
+input {
+  font-family: inherit;
 }
 
 .welcome-container {

@@ -10,7 +10,7 @@ export default function PageHeader(props) {
           {props.leftBtnText}
         </button>
       </Link>
-      <h4>{props.headerText}</h4>
+      <h3>{props.headerText}</h3>
       <button className={classes['right-header-btn']}>
         {props.rightBtnText}
       </button>

@@ -11,11 +11,11 @@ export default function PlayerHomeProfile(props) {
         alt="team icon"
       />
       <div className={classes['player-info']}>
-        <h4>
+        <h6>
           {props.player.playerName != ''
             ? props.player.playerName
             : 'New player'}
-        </h4>
+        </h6>
         <p className={classes['profile-team-name']}>
           {props.player.teamName
             ? props.player.teamName
