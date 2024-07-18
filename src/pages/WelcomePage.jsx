@@ -1,11 +1,19 @@
 import PrimaryLinkButton from '../components/PrimaryLinkButton';
+import usePool from '../utils/usePool';
 
 export default function Welcome() {
+  const { getPoolFromStorage } = usePool();
+  const isExistingPool = getPoolFromStorage();
+
   return (
     <div className={`welcome-container`}>
       <HeaderLogo />
       <TextCarrousel />
-      <PrimaryLinkButton text={'Get Started'} path={'/choose-league'} />
+      {isExistingPool ? (
+        <PrimaryLinkButton text="Go To Pool" path="/pool-home" />
+      ) : (
+        <PrimaryLinkButton text={'Get Started'} path={'/choose-league'} />
+      )}
     </div>
   );
 }

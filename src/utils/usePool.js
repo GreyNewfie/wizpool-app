@@ -30,6 +30,9 @@ export default function usePool() {
 
   const getPoolFromStorage = () => {
     const storedPool = JSON.parse(localStorage.getItem('pool'));
+    if (!storedPool) {
+      return null;
+    }
     const clonedPlayers = storedPool.players.map((player) => ({ ...player }));
     return new Pool(storedPool.poolName, clonedPlayers, storedPool.league);
   };
