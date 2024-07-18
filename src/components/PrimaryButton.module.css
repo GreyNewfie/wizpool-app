@@ -1,10 +1,16 @@
 .primary-button-container {
-  width: clamp(280px, 100%, 330px);
+  width: clamp(280px, 100%, 400px);
+}
+
+.primary-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .primary-button {
   position: relative;
-  width: clamp(280px, 100%, 330px);
+  width: clamp(280px, 100%, 350px);
   font-size: clamp(1rem, 1.1rem, 1.2rem);
   padding: 10px;
   font-family: inherit;
