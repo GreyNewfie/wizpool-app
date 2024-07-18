@@ -31,10 +31,6 @@
   gap: 1rem;
 }
 
-.add-players-section button {
-  margin-top: 10px;
-}
-
 .add-players {
   display: flex;
   flex-direction: column;

@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 
 export default function PrimaryActionButton(props) {
   return (
-    <div className="primary-button-container">
-      <Link to={props.path}>
+    <div className={classes['primary-button-container']}>
+      <Link to={props.path} className={classes['primary-link']}>
         <button
           className={classes['primary-button']}
           onClick={props.handleClick}
