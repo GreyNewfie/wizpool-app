@@ -4,6 +4,7 @@ import classes from './PageHeader.module.css';
 import Avatar from '@mui/material/Avatar';
 import { StyledEngineProvider } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
 
 const stringAvatar = (poolName) => {
   const poolInitialsArray = poolName.split(' ').map((word) => word[0]);
@@ -33,18 +34,20 @@ export default function PageHeader(props) {
       {/* Only show avatar if a pool name is specified to hide until pool is created */}
       {props.poolName && (
         /* Change the CSS injection order to override Material UI styles without requiring !important */
-        <IconButton
-          onClick={() => console.log('Icon button was clicked')}
-          aria-controls={open ? 'account-menu' : undefined}
-          aria-haspopup="true"
-          aria-expanded={open ? 'true' : undefined}
-        >
-          <StyledEngineProvider injectFirst>
-            <Avatar className={classes.avatar}>
-              {stringAvatar(props.poolName)}
-            </Avatar>
-          </StyledEngineProvider>
-        </IconButton>
+        <Tooltip title="Active Pool">
+          <IconButton
+            onClick={() => console.log('Icon button was clicked')}
+            aria-controls={open ? 'account-menu' : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? 'true' : undefined}
+          >
+            <StyledEngineProvider injectFirst>
+              <Avatar className={classes.avatar}>
+                {stringAvatar(props.poolName)}
+              </Avatar>
+            </StyledEngineProvider>
+          </IconButton>
+        </Tooltip>
       )}{' '}
     </div>
   );
