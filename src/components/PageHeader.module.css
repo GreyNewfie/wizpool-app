@@ -36,6 +36,7 @@ div:has(.page-header) {
 .avatar:hover {
   background-color: var(--third-btn-bg-color);
   color: var(--third-text-color);
+  cursor: pointer;
 }
 
 .avatar:active {
