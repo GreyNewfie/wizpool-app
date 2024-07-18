@@ -1,26 +1,43 @@
 div:has(.page-header) {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .page-header {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .left-header-btn,
 .right-header-btn {
-    background: transparent;
-    border: none;
-    font-size: 1rem;
-    color: var(--secondary-text-color);
-    display: flex;
+  background: transparent;
+  border: none;
+  font-size: 1rem;
+  color: var(--secondary-text-color);
+  display: flex;
 }
 
 .left-header-btn:hover,
 .right-header-btn:hover {
-    cursor: pointer;
-    color: white;
+  cursor: pointer;
+  color: white;
+}
+
+.avatar {
+  position: absolute;
+  right: 0;
+  background-color: var(--primary-color);
+  font-family: inherit;
+}
+
+.avatar:hover {
+  background-color: var(--third-btn-bg-color);
+  color: var(--third-text-color);
+}
+
+.avatar:active {
+  opacity: 0.7;
 }

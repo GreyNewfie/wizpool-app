@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import classes from './PageHeader.module.css';
+import Avatar from '@mui/material/Avatar';
+import { StyledEngineProvider } from '@mui/material/styles';
 
 export default function PageHeader(props) {
   return (
@@ -14,6 +16,10 @@ export default function PageHeader(props) {
       <button className={classes['right-header-btn']}>
         {props.rightBtnText}
       </button>
+      {/* Change the CSS injection order to override Material UI styles without requiring !important */}
+      <StyledEngineProvider injectFirst>
+        <Avatar className={classes.avatar}>TPL</Avatar>
+      </StyledEngineProvider>
     </div>
   );
 }
