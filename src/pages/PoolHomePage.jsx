@@ -38,7 +38,7 @@ export default function PoolHomePage() {
     <div className={classes['page-container']}>
       {isDesktop && <DesktopNavHeader />}
       <div className={poolClasses}>
-        <PageHeader headerText={pool.poolName} />
+        <PageHeader headerText={pool.poolName} poolName={pool.poolName} />
         <div className={classes['pool-players']}>
           <h3>Overall Standings</h3>
           {sortedPlayers.map((player, playerIndex) => {
