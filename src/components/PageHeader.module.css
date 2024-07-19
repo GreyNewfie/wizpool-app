@@ -26,9 +26,12 @@ div:has(.page-header) {
   color: white;
 }
 
-.avatar {
+.page-header > .icon-button {
   position: absolute;
   right: 0;
+}
+
+.avatar {
   background-color: var(--primary-color);
   font-family: inherit;
 }
@@ -41,4 +44,56 @@ div:has(.page-header) {
 
 .avatar:active {
   opacity: 0.7;
+}
+
+.menu {
+  margin-top: 1rem;
+}
+
+div:has(> ul) {
+  background-color: #1f201f;
+}
+
+.menu ul {
+  color: var(--text-color);
+  background-color: #1f201f;
+  border: var(--input-bg-color);
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+}
+
+.menuItem:hover {
+  color: var(--primary-color);
+  background-color: #656565;
+}
+
+.menuItem .menuItemAvatar {
+  width: 32px;
+  height: 32px;
+  margin-left: -0.3rem;
+  margin-right: 0.5rem;
+}
+
+.menuItem:hover .menuItemAvatar {
+  background-color: var(--primary-color);
+}
+
+.menuDivider {
+  color: var(--third-btn-bg-color);
+  margin: 0.5rem 0;
+}
+
+.menuListItemIcon {
+  min-width: 40px;
+}
+
+.menuListItemIconAdd {
+  color: var(--text-color);
+}
+
+.menuItem:hover .menuListItemIconAdd {
+  color: var(--primary-color);
 }
