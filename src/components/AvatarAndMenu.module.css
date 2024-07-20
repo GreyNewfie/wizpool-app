@@ -1,0 +1,63 @@
+.avatar {
+  background-color: var(--primary-color);
+  font-family: inherit;
+}
+
+.avatar:hover {
+  background-color: var(--third-btn-bg-color);
+  color: var(--third-text-color);
+  cursor: pointer;
+}
+
+.avatar:active {
+  opacity: 0.7;
+}
+
+div:has(> ul) {
+  background-color: #1f201f;
+  left: 262px !important;
+}
+
+.menu ul {
+  color: var(--text-color);
+  background-color: #1f201f;
+  border: var(--input-bg-color);
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+}
+
+.menuItem:hover {
+  color: var(--primary-color);
+}
+
+.menuItem .menuItemAvatar,
+.menuListItemIconAdd {
+  width: 32px;
+  height: 32px;
+  margin-left: -0.3rem;
+  margin-right: 0.5rem;
+}
+
+.menuItem:hover .menuItemAvatar {
+  background-color: var(--primary-color);
+}
+
+.menuDivider {
+  background-color: #656565;
+  margin: 0.5rem 0;
+}
+
+.menuListItemIcon {
+  min-width: 40px;
+}
+
+.menuListItemIconAdd {
+  color: var(--text-color);
+}
+
+.menuItem:hover .menuListItemIconAdd {
+  color: var(--primary-color);
+}
