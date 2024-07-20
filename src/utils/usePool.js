@@ -5,7 +5,12 @@ const getInitialPool = () => {
   const storedPool = JSON.parse(localStorage.getItem('pool'));
   if (storedPool) {
     const clonedPlayers = storedPool.players.map((player) => ({ ...player }));
-    return new Pool(storedPool.poolName, clonedPlayers, storedPool.league);
+    return new Pool(
+      storedPool.poolName,
+      clonedPlayers,
+      storedPool.league,
+      storedPool.id,
+    );
   }
   return new Pool('', [], '');
 };

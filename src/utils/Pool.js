@@ -1,9 +1,12 @@
+import { v4 as uuidv4 } from 'uuid';
+
 // eslint-disable-next-line no-unused-vars
 export default class Pool {
-  constructor(poolName, players, league) {
+  constructor(poolName, players, league, id = uuidv4()) {
     this.poolName = poolName;
     this.players = players;
     this.league = league;
+    this.id = id;
   }
 
   setPoolName(poolName) {
