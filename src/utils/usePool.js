@@ -19,19 +19,31 @@ const cleanPool = (pool) => {
   const updatedPlayers = pool.players.filter(
     (player) => player.playerName !== '',
   );
-  const cleanedPool = new Pool(pool.poolName, updatedPlayers, pool.league);
+  const cleanedPool = new Pool(
+    pool.poolName,
+    updatedPlayers,
+    pool.league,
+    pool.id,
+  );
   return cleanedPool;
 };
 
 export default function usePool() {
   const [pool, setPool] = useState(getInitialPool());
+  const [activePoolId, setActivePoolId] = useState(
+    localStorage.getItem('activePoolId') || null,
+  );
 
   useEffect(() => {
     // Remove possible blank players before adding to localStorage
     const cleanedPool = cleanPool(pool);
     console.log('Pool cleaned and passed to storage');
     localStorage.setItem('pool', JSON.stringify(cleanedPool));
-  }, [pool]);
+    if (activePoolId === null) {
+      setActivePoolId(cleanedPool.id);
+      localStorage.setItem('activePool', cleanedPool.id);
+    }
+  }, [pool, activePoolId]);
 
   const getPoolFromStorage = () => {
     const storedPool = JSON.parse(localStorage.getItem('pool'));
@@ -39,7 +51,17 @@ export default function usePool() {
       return null;
     }
     const clonedPlayers = storedPool.players.map((player) => ({ ...player }));
-    return new Pool(storedPool.poolName, clonedPlayers, storedPool.league);
+    return new Pool(
+      storedPool.poolName,
+      clonedPlayers,
+      storedPool.league,
+      storedPool.id,
+    );
+  };
+
+  const updateActivePoolId = (poolId) => {
+    setActivePoolId(poolId);
+    localStorage.setItem('activePool', poolId);
   };
 
   const handleSetLeague = (league) => {
@@ -94,5 +116,7 @@ export default function usePool() {
     handleTeamNameChange,
     addBlankPlayer,
     deletePlayer,
+    activePoolId,
+    updateActivePoolId,
   };
 }

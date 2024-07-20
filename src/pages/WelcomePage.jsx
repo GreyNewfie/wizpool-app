@@ -3,7 +3,7 @@ import usePool from '../utils/usePool';
 
 export default function Welcome() {
   const { getPoolFromStorage } = usePool();
-  const isExistingPool = getPoolFromStorage();
+  const isExistingPool = getPoolFromStorage()?.poolName || null;
 
   return (
     <div className={`welcome-container`}>

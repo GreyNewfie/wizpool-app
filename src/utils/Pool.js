@@ -27,7 +27,12 @@ export default class Pool {
 
   clonePool() {
     const clonedPlayers = this.players.map((player) => ({ ...player }));
-    const clonedPool = new Pool(this.poolName, clonedPlayers, this.league);
+    const clonedPool = new Pool(
+      this.poolName,
+      clonedPlayers,
+      this.league,
+      this.id,
+    );
     return clonedPool;
   }
 
