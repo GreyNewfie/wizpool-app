@@ -13,6 +13,11 @@
   opacity: 0.7;
 }
 
+.menu-header {
+  padding: 0 0.9rem;
+  color: var(--secondary-text-color);
+}
+
 div:has(> ul) {
   background-color: #1f201f;
   left: 262px !important;
@@ -37,7 +42,7 @@ div:has(> ul) {
 .menuListItemIconAdd {
   width: 32px;
   height: 32px;
-  margin-left: -0.3rem;
+  margin-left: -0.2rem;
   margin-right: 0.5rem;
 }
 

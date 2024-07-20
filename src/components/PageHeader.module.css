@@ -12,11 +12,6 @@ div:has(.page-header) {
   padding-top: 16px;
 }
 
-.menu-header {
-  padding: 0 1rem;
-  color: var(--secondary-text-color);
-}
-
 .left-header-btn,
 .right-header-btn {
   background: transparent;
