@@ -9,6 +9,12 @@ div:has(.page-header) {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding-top: 16px;
+}
+
+.menu-header {
+  padding: 0 1rem;
+  color: var(--secondary-text-color);
 }
 
 .left-header-btn,
@@ -46,12 +52,9 @@ div:has(.page-header) {
   opacity: 0.7;
 }
 
-.menu {
-  margin-top: 1rem;
-}
-
 div:has(> ul) {
   background-color: #1f201f;
+  left: 262px !important;
 }
 
 .menu ul {
@@ -67,10 +70,10 @@ div:has(> ul) {
 
 .menuItem:hover {
   color: var(--primary-color);
-  background-color: #656565;
 }
 
-.menuItem .menuItemAvatar {
+.menuItem .menuItemAvatar,
+.menuListItemIconAdd {
   width: 32px;
   height: 32px;
   margin-left: -0.3rem;
@@ -82,7 +85,7 @@ div:has(> ul) {
 }
 
 .menuDivider {
-  color: var(--third-btn-bg-color);
+  background-color: #656565;
   margin: 0.5rem 0;
 }
 

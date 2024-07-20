@@ -10,7 +10,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
 import ListItemIcon from '@mui/material/ListItemIcon';
-import PersonAdd from '@mui/icons-material/PersonAdd';
+import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 
 const stringAvatar = (poolName) => {
   const poolInitialsArray = poolName.split(' ').map((word) => word[0]);
@@ -98,18 +98,24 @@ export default function PageHeader(props) {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
+        <div className={classes['menu-header']}>
+          <h6>Active Pool</h6>
+        </div>
         <MenuItem className={classes.menuItem} onClick={handleClose}>
           <Avatar className={classes.menuItemAvatar} /> Profile
         </MenuItem>
+        <div className={classes['menu-header']}>
+          <h6>Other Pools</h6>
+        </div>
         <MenuItem className={classes.menuItem} onClick={handleClose}>
           <Avatar className={classes.menuItemAvatar} /> My account
         </MenuItem>
         <Divider className={classes.menuDivider} />
         <MenuItem className={classes.menuItem} onClick={handleClose}>
           <ListItemIcon className={classes.menuListItemIcon}>
-            <PersonAdd
+            <AddCircleOutlineOutlinedIcon
               className={classes.menuListItemIconAdd}
-              fontSize="small"
+              fontSize="large"
             />
           </ListItemIcon>
           Create a new pool
