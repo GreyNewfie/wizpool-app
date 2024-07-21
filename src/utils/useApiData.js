@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
+import usePool from './usePool';
 
 export default function useApiData() {
   const [apiData, setApiData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState();
-  const league = JSON.parse(localStorage.getItem('pool')).league;
+  const { pool } = usePool();
+  const league = pool.league;
 
   const nbaStandingsUrl =
     'https://api.sportsdata.io/v3/nba/scores/json/Standings/2024?key=b461640f8b2641b8bcaf42396b30ba9a';
@@ -15,6 +17,7 @@ export default function useApiData() {
 
   const fecthData = async () => {
     setLoading(true);
+    const league = pool.league;
     try {
       const storedData = JSON.parse(localStorage.getItem('storedData'));
       const currentDate = new Date();

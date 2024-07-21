@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react';
 import Pool from './Pool';
 
 const getInitialPool = () => {
-  const storedPool = JSON.parse(localStorage.getItem('pool'));
-  if (storedPool) {
+  const activePoolId = localStorage.getItem('activePoolId');
+  if (activePoolId) {
+    const storedPool = JSON.parse(localStorage.getItem(`pool-${activePoolId}`));
     const clonedPlayers = storedPool.players.map((player) => ({ ...player }));
     return new Pool(
       storedPool.poolName,
@@ -38,10 +39,13 @@ export default function usePool() {
     // Remove possible blank players before adding to localStorage
     const cleanedPool = cleanPool(pool);
     console.log('Pool cleaned and passed to storage');
-    localStorage.setItem('pool', JSON.stringify(cleanedPool));
+    const id = activePoolId || cleanedPool.id;
+    localStorage.setItem(`pool-${id}`, JSON.stringify(cleanedPool));
+
+    // Update activePoolId in state and local storage if it's null
     if (activePoolId === null) {
       setActivePoolId(cleanedPool.id);
-      localStorage.setItem('activePool', cleanedPool.id);
+      localStorage.setItem('activePoolId', cleanedPool.id);
     }
   }, [pool, activePoolId]);
 

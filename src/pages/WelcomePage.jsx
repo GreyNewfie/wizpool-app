@@ -2,8 +2,8 @@ import PrimaryLinkButton from '../components/PrimaryLinkButton';
 import usePool from '../utils/usePool';
 
 export default function Welcome() {
-  const { getPoolFromStorage } = usePool();
-  const isExistingPool = getPoolFromStorage()?.poolName || null;
+  const { pool } = usePool();
+  const isExistingPool = pool.poolName || null;
 
   return (
     <div className={`welcome-container`}>
