@@ -87,7 +87,7 @@ export default function AvatarAndMenu({ poolName }) {
           <h6>Active Pool</h6>
         </div>
         <MenuItem className={classes.menuItem} onClick={handleClose}>
-          <Avatar className={classes.menuItemAvatar} /> Profile
+          <Avatar className={classes.menuItemAvatar} /> {poolName}
         </MenuItem>
         <div className={classes['menu-header']}>
           <h6>Other Pools</h6>
