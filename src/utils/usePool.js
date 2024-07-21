@@ -49,20 +49,6 @@ export default function usePool() {
     }
   }, [pool, activePoolId]);
 
-  const getPoolFromStorage = () => {
-    const storedPool = JSON.parse(localStorage.getItem('pool'));
-    if (!storedPool) {
-      return null;
-    }
-    const clonedPlayers = storedPool.players.map((player) => ({ ...player }));
-    return new Pool(
-      storedPool.poolName,
-      clonedPlayers,
-      storedPool.league,
-      storedPool.id,
-    );
-  };
-
   const updateActivePoolId = (poolId) => {
     setActivePoolId(poolId);
     localStorage.setItem('activePool', poolId);
@@ -113,7 +99,6 @@ export default function usePool() {
   return {
     pool,
     setPool,
-    getPoolFromStorage,
     handleSetLeague,
     handlePoolNameChange,
     handlePlayerNameChange,
