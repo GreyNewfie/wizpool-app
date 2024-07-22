@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Pool from './Pool';
+import { useNavigate } from 'react-router-dom';
 
 const getInitialPool = () => {
   const activePoolId = localStorage.getItem('activePoolId');
@@ -34,6 +35,7 @@ export default function usePool() {
   const [activePoolId, setActivePoolId] = useState(
     localStorage.getItem('activePoolId') || null,
   );
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Remove possible blank players before adding to localStorage
@@ -52,6 +54,14 @@ export default function usePool() {
   const updateActivePoolId = (poolId) => {
     setActivePoolId(poolId);
     localStorage.setItem('activePool', poolId);
+  };
+
+  const createNewPool = () => {
+    const newPool = new Pool('', [], '');
+    setPool(newPool);
+    setActivePoolId(newPool.id);
+    localStorage.setItem(`pool-${newPool.id}`, newPool);
+    navigate('/choose-league');
   };
 
   const handleSetLeague = (league) => {
@@ -99,6 +109,7 @@ export default function usePool() {
   return {
     pool,
     setPool,
+    createNewPool,
     handleSetLeague,
     handlePoolNameChange,
     handlePlayerNameChange,

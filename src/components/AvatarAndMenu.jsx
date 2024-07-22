@@ -10,6 +10,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
+import usePool from '../utils/usePool';
 
 const stringAvatar = (poolName) => {
   const poolInitialsArray = poolName.split(' ').map((word) => word[0]);
@@ -25,6 +26,7 @@ const stringAvatar = (poolName) => {
 };
 
 export default function AvatarAndMenu({ poolName }) {
+  const { createNewPool } = usePool();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
@@ -34,6 +36,11 @@ export default function AvatarAndMenu({ poolName }) {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleCreateNewPool = () => {
+    handleClose();
+    createNewPool();
   };
 
   return (
@@ -96,7 +103,7 @@ export default function AvatarAndMenu({ poolName }) {
           <Avatar className={classes.menuItemAvatar} /> My account
         </MenuItem>
         <Divider className={classes.menuDivider} />
-        <MenuItem className={classes.menuItem} onClick={handleClose}>
+        <MenuItem className={classes.menuItem} onClick={handleCreateNewPool}>
           <ListItemIcon className={classes.menuListItemIcon}>
             <AddCircleOutlineOutlinedIcon
               className={classes.menuListItemIconAdd}
