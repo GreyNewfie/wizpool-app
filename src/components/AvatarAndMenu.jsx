@@ -86,7 +86,7 @@ export default function AvatarAndMenu({ poolName }) {
               display: 'block',
               position: 'absolute',
               top: 0,
-              right: 14,
+              right: 20,
               width: 10,
               height: 10,
               bgcolor: '#1f201f',

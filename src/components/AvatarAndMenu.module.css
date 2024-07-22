@@ -20,7 +20,6 @@
 
 div:has(> ul) {
   background-color: #1f201f;
-  left: 262px !important;
 }
 
 .menu ul {
