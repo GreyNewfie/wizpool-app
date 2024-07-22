@@ -29,7 +29,7 @@ const stringAvatar = (poolName) => {
 export default function AvatarAndMenu({ poolName }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  const { createNewPool } = usePool();
+  const { createNewPool, changePool } = usePool();
   const { getNonActivePools } = useStoredPools();
   const nonActivePools = getNonActivePools();
 
@@ -43,6 +43,11 @@ export default function AvatarAndMenu({ poolName }) {
 
   const handleCreateNewPool = () => {
     createNewPool();
+    handleClose();
+  };
+
+  const handleChangePool = (poolId) => {
+    changePool(poolId);
     handleClose();
   };
 
@@ -109,7 +114,7 @@ export default function AvatarAndMenu({ poolName }) {
             <MenuItem
               key={pool.id}
               className={classes.menuItem}
-              onClick={handleClose}
+              onClick={() => handleChangePool(pool.id)}
             >
               <Avatar className={classes.menuItemAvatar} />
               {pool.poolName}

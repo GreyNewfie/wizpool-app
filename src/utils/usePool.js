@@ -66,6 +66,26 @@ export default function usePool() {
     navigate('/choose-league');
   };
 
+  const changePool = (poolId) => {
+    const selectedPoolData = localStorage.getItem(`pool-${poolId}`);
+    if (selectedPoolData) {
+      const selectedPool = JSON.parse(selectedPoolData);
+      setPool(
+        new Pool(
+          selectedPool.poolName,
+          selectedPool.players,
+          selectedPool.league,
+          selectedPool.id,
+        ),
+      );
+      setActivePoolId(poolId);
+      localStorage.setItem('activePoolId', poolId);
+      navigate('/pool-home');
+    } else {
+      console.error(`Pool with ID ${poolId} not found.`);
+    }
+  };
+
   const handleSetLeague = (league) => {
     const updatedPool = pool.clonePool();
     updatedPool.setLeague(league);
@@ -112,6 +132,7 @@ export default function usePool() {
     pool,
     setPool,
     createNewPool,
+    changePool,
     handleSetLeague,
     handlePoolNameChange,
     handlePlayerNameChange,
