@@ -36,7 +36,7 @@ export default function PoolHomePage() {
 
   return (
     <div className={classes['page-container']}>
-      {isDesktop && <DesktopNavHeader />}
+      {isDesktop && <DesktopNavHeader poolName={pool.poolName} />}
       <div className={poolClasses}>
         <PageHeader headerText={pool.poolName} poolName={pool.poolName} />
         <div className={classes['pool-players']}>

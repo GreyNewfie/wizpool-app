@@ -20,7 +20,7 @@ export default function PoolPlayersPage() {
 
   return (
     <div className={classes['page-container']}>
-      {isDesktop && <DesktopNavHeader />}
+      {isDesktop && <DesktopNavHeader poolName={pool.poolName} />}
       <div className={classes['pool-players']}>
         <PageHeader
           headerText="Player's Teams"

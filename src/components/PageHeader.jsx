@@ -2,8 +2,10 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import classes from './PageHeader.module.css';
 import AvatarAndMenu from './AvatarAndMenu';
+import useIsDesktop from '../utils/useIsDesktop';
 
 export default function PageHeader(props) {
+  const isDesktop = useIsDesktop();
   return (
     <div className={classes['page-header']}>
       <Link to={props.path}>
@@ -16,7 +18,9 @@ export default function PageHeader(props) {
         {props.rightBtnText}
       </button>
       {/* Only show avatar if a pool name is specified to hide until pool is created */}
-      {props.poolName && <AvatarAndMenu poolName={props.poolName} />}
+      {props.poolName && !isDesktop && (
+        <AvatarAndMenu poolName={props.poolName} />
+      )}
     </div>
   );
 }

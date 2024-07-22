@@ -1,7 +1,11 @@
 import { NavLink } from 'react-router-dom';
 import classes from './DesktopNavHeader.module.css';
+import useIsDesktop from '../utils/useIsDesktop';
+import AvatarAndMenu from './AvatarAndMenu';
+import PropTypes from 'prop-types';
 
-export default function DesktopNavHeader() {
+export default function DesktopNavHeader({ poolName }) {
+  const isDesktop = useIsDesktop();
   return (
     <div className={classes['desktop-nav-header']}>
       <img
@@ -34,7 +38,12 @@ export default function DesktopNavHeader() {
         >
           Settings
         </NavLink>
+        {isDesktop && <AvatarAndMenu poolName={poolName} />}
       </div>
     </div>
   );
 }
+
+DesktopNavHeader.propTypes = {
+  poolName: PropTypes.string,
+};

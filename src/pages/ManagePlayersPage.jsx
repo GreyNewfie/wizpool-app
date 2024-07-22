@@ -45,7 +45,7 @@ export default function ManagePlayersPage() {
 
   return (
     <div className={classes['page-container']}>
-      {isDesktop && <DesktopNavHeader />}
+      {isDesktop && <DesktopNavHeader poolName={pool.poolName} />}
       <div className={classes['manage-players']}>
         <PageHeader
           headerText="Manage Players"
