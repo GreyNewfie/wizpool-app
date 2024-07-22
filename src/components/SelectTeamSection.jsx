@@ -37,10 +37,18 @@ export default function SelectTeamSection(props) {
   const [isSelected, setIsSelected] = useState(
     isTeamSelected(props.updatedPool.players[props.playerIndex], props.team),
   );
+  const lowerCaseTeamId = props.team.teamId.toLowerCase();
 
   return (
     <div key={props.teamIndex} className={classes['select-team-container']}>
-      <p>{`${props.team.city} ${props.team.name}`}</p>
+      <div className={classes['team-info-container']}>
+        <img
+          className={classes['select-team-icon']}
+          src={`/${props.league}-logos/${lowerCaseTeamId}-logo.png`}
+          alt={`${props.team.city} ${props.team.name} ${props.league} team logo`}
+        />
+        <p>{`${props.team.city} ${props.team.name}`}</p>
+      </div>
       <button
         className={`${classes['select-btn']} ${isSelected ? classes['selected'] : ''}`}
         onClick={() =>
@@ -60,6 +68,7 @@ export default function SelectTeamSection(props) {
 }
 
 SelectTeamSection.propTypes = {
+  league: PropTypes.string,
   team: PropTypes.object,
   teamIndex: PropTypes.number,
   playerIndex: PropTypes.number,

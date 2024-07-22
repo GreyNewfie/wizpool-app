@@ -40,6 +40,7 @@ export default function TeamsList(props) {
         return (
           <SelectTeamSection
             key={teamIndex}
+            league={props.pool.league}
             team={team}
             teamName={team}
             playerIndex={props.playerIndex}
