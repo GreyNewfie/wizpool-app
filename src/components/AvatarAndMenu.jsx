@@ -102,7 +102,14 @@ export default function AvatarAndMenu({ poolName }) {
           <h6>Active Pool</h6>
         </div>
         <MenuItem className={classes.menuItem} onClick={handleClose}>
-          <Avatar className={classes.menuItemAvatar} /> {poolName}
+          <ListItemIcon className={classes.menuListItemIcon}>
+            <img
+              className={classes['menu-list-icon-custom']}
+              src="./public/wizpool-trophy-no-bg-750x750.png"
+              alt="WizPool trophy logo"
+            />
+          </ListItemIcon>{' '}
+          {poolName}
         </MenuItem>
         {nonActivePools.length > 0 && (
           <div className={classes['menu-header']}>
@@ -116,7 +123,13 @@ export default function AvatarAndMenu({ poolName }) {
               className={classes.menuItem}
               onClick={() => handleChangePool(pool.id)}
             >
-              <Avatar className={classes.menuItemAvatar} />
+              <ListItemIcon className={classes.menuListItemIcon}>
+                <img
+                  className={classes['menu-list-icon-custom']}
+                  src="./public/wizpool-trophy-no-bg-750x750.png"
+                  alt="WizPool trophy logo"
+                />
+              </ListItemIcon>
               {pool.poolName}
             </MenuItem>
           );
