@@ -39,8 +39,8 @@ export default function AvatarAndMenu({ poolName }) {
   };
 
   const handleCreateNewPool = () => {
-    handleClose();
     createNewPool();
+    handleClose();
   };
 
   return (

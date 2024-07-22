@@ -40,16 +40,17 @@ export default function usePool() {
   useEffect(() => {
     // Remove possible blank players before adding to localStorage
     const cleanedPool = cleanPool(pool);
+    localStorage.setItem(`pool-${cleanedPool.id}`, JSON.stringify(cleanedPool));
     console.log('Pool cleaned and passed to storage');
-    const id = activePoolId || cleanedPool.id;
-    localStorage.setItem(`pool-${id}`, JSON.stringify(cleanedPool));
+  }, [pool]);
 
-    // Update activePoolId in state and local storage if it's null
-    if (activePoolId === null) {
-      setActivePoolId(cleanedPool.id);
-      localStorage.setItem('activePoolId', cleanedPool.id);
+  useEffect(() => {
+    if (activePoolId !== pool.id) {
+      setActivePoolId(pool.id);
+      localStorage.setItem('activePoolId', pool.id);
+      console.log('Stored active pool has been updated');
     }
-  }, [pool, activePoolId]);
+  }, [activePoolId, pool.id]);
 
   const updateActivePoolId = (poolId) => {
     setActivePoolId(poolId);
@@ -60,7 +61,8 @@ export default function usePool() {
     const newPool = new Pool('', [], '');
     setPool(newPool);
     setActivePoolId(newPool.id);
-    localStorage.setItem(`pool-${newPool.id}`, newPool);
+    localStorage.setItem(`pool-${newPool.id}`, JSON.stringify(newPool));
+    localStorage.setItem('activePoolId', newPool.id);
     navigate('/choose-league');
   };
 
