@@ -11,6 +11,7 @@ import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOu
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import usePool from '../utils/usePool';
+import useStoredPools from '../utils/useStoredPools';
 
 const stringAvatar = (poolName) => {
   const poolInitialsArray = poolName.split(' ').map((word) => word[0]);
@@ -26,9 +27,11 @@ const stringAvatar = (poolName) => {
 };
 
 export default function AvatarAndMenu({ poolName }) {
-  const { createNewPool } = usePool();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+  const { createNewPool } = usePool();
+  const { getNonActivePools } = useStoredPools();
+  const nonActivePools = getNonActivePools();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -96,12 +99,23 @@ export default function AvatarAndMenu({ poolName }) {
         <MenuItem className={classes.menuItem} onClick={handleClose}>
           <Avatar className={classes.menuItemAvatar} /> {poolName}
         </MenuItem>
-        <div className={classes['menu-header']}>
-          <h6>Other Pools</h6>
-        </div>
-        <MenuItem className={classes.menuItem} onClick={handleClose}>
-          <Avatar className={classes.menuItemAvatar} /> My account
-        </MenuItem>
+        {nonActivePools.length > 0 && (
+          <div className={classes['menu-header']}>
+            <h6>Other Pools</h6>
+          </div>
+        )}
+        {nonActivePools.map((pool) => {
+          return (
+            <MenuItem
+              key={pool.id}
+              className={classes.menuItem}
+              onClick={handleClose}
+            >
+              <Avatar className={classes.menuItemAvatar} />
+              {pool.poolName}
+            </MenuItem>
+          );
+        })}
         <Divider className={classes.menuDivider} />
         <MenuItem className={classes.menuItem} onClick={handleCreateNewPool}>
           <ListItemIcon className={classes.menuListItemIcon}>
