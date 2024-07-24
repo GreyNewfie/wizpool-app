@@ -10,7 +10,6 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import useStoredPools from '../utils/useStoredPools';
 
 const stringAvatar = (poolName) => {
   const poolInitialsArray = poolName.split(' ').map((word) => word[0]);
