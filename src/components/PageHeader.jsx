@@ -19,7 +19,12 @@ export default function PageHeader(props) {
       </button>
       {/* Only show avatar if a pool name is specified to hide until pool is created */}
       {props.poolName && !isDesktop && (
-        <AvatarAndMenu poolName={props.poolName} />
+        <AvatarAndMenu
+          poolName={props.poolName}
+          createNewPool={props.createNewPool}
+          changePool={props.changePool}
+          nonActivePools={props.nonActivePools}
+        />
       )}
     </div>
   );
@@ -31,4 +36,7 @@ PageHeader.propTypes = {
   rightBtnText: PropTypes.string,
   leftBtnText: PropTypes.any,
   poolName: PropTypes.string,
+  createNewPool: PropTypes.func,
+  changePool: PropTypes.func,
+  nonActivePools: PropTypes.array,
 };

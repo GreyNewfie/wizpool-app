@@ -8,6 +8,7 @@ import useTheme from '../context/useTheme';
 import classNames from 'classnames';
 import DesktopNavHeader from '../components/DesktopNavHeader';
 import useIsDesktop from '../utils/useIsDesktop';
+import useStoredPools from '../utils/useStoredPools';
 
 const sortPlayersByWins = (players) => {
   const unsortedPlayers = players.map((player) => {
@@ -28,17 +29,25 @@ const sortPlayersByWins = (players) => {
 };
 
 export default function PoolHomePage() {
-  const { pool } = usePool();
+  const { pool, changePool, createNewPool } = usePool();
   const { theme } = useTheme();
   const sortedPlayers = sortPlayersByWins([...pool.players]);
   const poolClasses = classNames(classes['pool-home'], classes[theme]);
   const isDesktop = useIsDesktop();
+  const { getNonActivePools } = useStoredPools();
+  const nonActivePools = getNonActivePools();
 
   return (
     <div className={classes['page-container']}>
       {isDesktop && <DesktopNavHeader poolName={pool.poolName} />}
       <div className={poolClasses}>
-        <PageHeader headerText={pool.poolName} poolName={pool.poolName} />
+        <PageHeader
+          headerText={pool.poolName}
+          poolName={pool.poolName}
+          createNewPool={createNewPool}
+          changePool={changePool}
+          nonActivePools={nonActivePools}
+        />
         <div className={classes['pool-players']}>
           <h3>Overall Standings</h3>
           {sortedPlayers.map((player, playerIndex) => {

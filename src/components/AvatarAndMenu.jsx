@@ -10,7 +10,6 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import usePool from '../utils/usePool';
 import useStoredPools from '../utils/useStoredPools';
 
 const stringAvatar = (poolName) => {
@@ -26,12 +25,9 @@ const stringAvatar = (poolName) => {
   return `${poolInitialsArray[0]}${poolInitialsArray[poolInitialsArray.length - 1]}`;
 };
 
-export default function AvatarAndMenu({ poolName }) {
+export default function AvatarAndMenu(props) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  const { createNewPool, changePool } = usePool();
-  const { getNonActivePools } = useStoredPools();
-  const nonActivePools = getNonActivePools();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -42,12 +38,12 @@ export default function AvatarAndMenu({ poolName }) {
   };
 
   const handleCreateNewPool = () => {
-    createNewPool();
+    props.createNewPool();
     handleClose();
   };
 
   const handleChangePool = (poolId) => {
-    changePool(poolId);
+    props.changePool(poolId);
     handleClose();
   };
 
@@ -65,7 +61,9 @@ export default function AvatarAndMenu({ poolName }) {
         {/* Change the CSS injection order to override Material UI styles without requiring !important */}
         <StyledEngineProvider injectFirst>
           <Tooltip title="Active Pool">
-            <Avatar className={classes.avatar}>{stringAvatar(poolName)}</Avatar>
+            <Avatar className={classes.avatar}>
+              {stringAvatar(props.poolName)}
+            </Avatar>
           </Tooltip>
         </StyledEngineProvider>
       </IconButton>
@@ -109,14 +107,14 @@ export default function AvatarAndMenu({ poolName }) {
               alt="WizPool trophy logo"
             />
           </ListItemIcon>{' '}
-          {poolName}
+          {props.poolName}
         </MenuItem>
-        {nonActivePools.length > 0 && (
+        {props.nonActivePools?.length > 0 && (
           <div className={classes['menu-header']}>
             <h6>Other Pools</h6>
           </div>
         )}
-        {nonActivePools.map((pool) => {
+        {props.nonActivePools?.map((pool) => {
           return (
             <MenuItem
               key={pool.id}
@@ -151,4 +149,7 @@ export default function AvatarAndMenu({ poolName }) {
 
 AvatarAndMenu.propTypes = {
   poolName: PropTypes.string,
+  nonActivePools: PropTypes.array,
+  createNewPool: PropTypes.func,
+  changePool: PropTypes.func,
 };
