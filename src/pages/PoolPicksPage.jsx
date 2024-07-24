@@ -29,7 +29,7 @@ export default function PoolPicksPage() {
 
   return (
     <div className={classes['page-container']}>
-      {isDesktop && <DesktopNavHeader />}
+      {isDesktop && <DesktopNavHeader poolName={pool.poolName} />}
       <div className={classes['pool-picks']}>
         <PageHeader
           headerText="Picked Teams"

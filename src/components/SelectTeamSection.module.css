@@ -5,6 +5,19 @@
   gap: 1rem;
 }
 
+.team-info-container {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+.select-team-icon {
+  width: 40px;
+  height: 40px;
+  background-color: var(--secondary-bg-color);
+  border-radius: 10px;
+  padding: 3px;
+}
+
 .select-btn {
   max-height: 24px;
   padding: 4px 15px;

@@ -1,0 +1,76 @@
+button {
+  font-family: inherit;
+}
+
+button > .avatar {
+  background-color: var(--primary-color);
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+.avatar:hover {
+  background-color: var(--secondary-color);
+  color: var(--primary-text-color);
+  cursor: pointer;
+}
+
+.avatar:active {
+  opacity: 0.7;
+}
+
+.menu-header {
+  padding: 0 0.9rem;
+  color: var(--secondary-text-color);
+}
+
+div:has(> ul) {
+  background-color: #1f201f;
+}
+
+.menu ul {
+  color: var(--text-color);
+  background-color: #1f201f;
+  border: var(--input-bg-color);
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.menuItem:hover {
+  color: var(--primary-color);
+}
+
+.menuItem:hover .menuItemAvatar {
+  background-color: var(--primary-color);
+}
+
+.menuDivider {
+  background-color: #656565;
+  margin: 0.5rem 0;
+}
+
+.menuListItemIcon {
+  min-width: 40px;
+}
+
+.menuListItemIconAdd {
+  color: var(--text-color);
+}
+
+.menuItem:hover .menuListItemIconAdd {
+  color: var(--primary-color);
+}
+
+.menu-list-icon-custom {
+  width: 40px;
+  height: 40px;
+  background-color: #fff;
+  border-radius: 50%;
+}
+
+.menuItem:hover .menu-list-icon-custom {
+  background-color: var(--primary-color);
+}

@@ -1,26 +1,33 @@
 div:has(.page-header) {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .page-header {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 16px;
 }
 
 .left-header-btn,
 .right-header-btn {
-    background: transparent;
-    border: none;
-    font-size: 1rem;
-    color: var(--secondary-text-color);
-    display: flex;
+  background: transparent;
+  border: none;
+  font-size: 1rem;
+  color: var(--secondary-text-color);
+  display: flex;
 }
 
 .left-header-btn:hover,
 .right-header-btn:hover {
-    cursor: pointer;
-    color: white;
+  cursor: pointer;
+  color: white;
+}
+
+.page-header > .icon-button {
+  position: absolute;
+  right: 0;
 }

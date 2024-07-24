@@ -25,7 +25,7 @@ export default function SettingsPage() {
 
   return (
     <div className={classes['page-container']}>
-      {isDesktop && <DesktopNavHeader />}
+      {isDesktop && <DesktopNavHeader poolName={pool.poolName} />}
       <div className={classes['pool-settings']}>
         <PageHeader
           headerText="Settings"

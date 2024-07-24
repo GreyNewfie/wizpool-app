@@ -20,7 +20,7 @@ export default function ReassignTeamsPage() {
 
   return (
     <div className={classes['page-container']}>
-      {isDesktop && <DesktopNavHeader />}
+      {isDesktop && <DesktopNavHeader poolName={pool.poolName} />}
       <div className={classes['reassign-teams']}>
         <PageHeader
           headerText="Rassign Teams"

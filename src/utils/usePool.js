@@ -1,11 +1,18 @@
 import { useState, useEffect } from 'react';
 import Pool from './Pool';
+import { useNavigate } from 'react-router-dom';
 
 const getInitialPool = () => {
-  const storedPool = JSON.parse(localStorage.getItem('pool'));
-  if (storedPool) {
+  const activePoolId = localStorage.getItem('activePoolId');
+  if (activePoolId) {
+    const storedPool = JSON.parse(localStorage.getItem(`pool-${activePoolId}`));
     const clonedPlayers = storedPool.players.map((player) => ({ ...player }));
-    return new Pool(storedPool.poolName, clonedPlayers, storedPool.league);
+    return new Pool(
+      storedPool.poolName,
+      clonedPlayers,
+      storedPool.league,
+      storedPool.id,
+    );
   }
   return new Pool('', [], '');
 };
@@ -14,24 +21,69 @@ const cleanPool = (pool) => {
   const updatedPlayers = pool.players.filter(
     (player) => player.playerName !== '',
   );
-  const cleanedPool = new Pool(pool.poolName, updatedPlayers, pool.league);
+  const cleanedPool = new Pool(
+    pool.poolName,
+    updatedPlayers,
+    pool.league,
+    pool.id,
+  );
   return cleanedPool;
 };
 
 export default function usePool() {
   const [pool, setPool] = useState(getInitialPool());
+  const [activePoolId, setActivePoolId] = useState(
+    localStorage.getItem('activePoolId') || null,
+  );
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Remove possible blank players before adding to localStorage
     const cleanedPool = cleanPool(pool);
+    localStorage.setItem(`pool-${cleanedPool.id}`, JSON.stringify(cleanedPool));
     console.log('Pool cleaned and passed to storage');
-    localStorage.setItem('pool', JSON.stringify(cleanedPool));
   }, [pool]);
 
-  const getPoolFromStorage = () => {
-    const storedPool = JSON.parse(localStorage.getItem('pool'));
-    const clonedPlayers = storedPool.players.map((player) => ({ ...player }));
-    return new Pool(storedPool.poolName, clonedPlayers, storedPool.league);
+  useEffect(() => {
+    if (activePoolId !== pool.id) {
+      setActivePoolId(pool.id);
+      localStorage.setItem('activePoolId', pool.id);
+      console.log('Stored active pool has been updated');
+    }
+  }, [activePoolId, pool.id]);
+
+  const updateActivePoolId = (poolId) => {
+    setActivePoolId(poolId);
+    localStorage.setItem('activePool', poolId);
+  };
+
+  const createNewPool = () => {
+    const newPool = new Pool('', [], '');
+    setPool(newPool);
+    setActivePoolId(newPool.id);
+    localStorage.setItem(`pool-${newPool.id}`, JSON.stringify(newPool));
+    localStorage.setItem('activePoolId', newPool.id);
+    navigate('/choose-league');
+  };
+
+  const changePool = (poolId) => {
+    const selectedPoolData = localStorage.getItem(`pool-${poolId}`);
+    if (selectedPoolData) {
+      const selectedPool = JSON.parse(selectedPoolData);
+      setPool(
+        new Pool(
+          selectedPool.poolName,
+          selectedPool.players,
+          selectedPool.league,
+          selectedPool.id,
+        ),
+      );
+      setActivePoolId(poolId);
+      localStorage.setItem('activePoolId', poolId);
+      navigate('/pool-home');
+    } else {
+      console.error(`Pool with ID ${poolId} not found.`);
+    }
   };
 
   const handleSetLeague = (league) => {
@@ -79,12 +131,15 @@ export default function usePool() {
   return {
     pool,
     setPool,
-    getPoolFromStorage,
+    createNewPool,
+    changePool,
     handleSetLeague,
     handlePoolNameChange,
     handlePlayerNameChange,
     handleTeamNameChange,
     addBlankPlayer,
     deletePlayer,
+    activePoolId,
+    updateActivePoolId,
   };
 }
