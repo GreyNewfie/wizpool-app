@@ -8,11 +8,14 @@ import usePool from '../utils/usePool';
 import { Fragment, useState } from 'react';
 import useIsDesktop from '../utils/useIsDesktop';
 import DesktopNavHeader from '../components/DesktopNavHeader';
+import useStoredPools from '../utils/useStoredPools';
 
 export default function ReassignTeamsPage() {
-  const { pool, setPool } = usePool();
+  const { pool, setPool, createNewPool, changePool } = usePool();
   const [playerToEdit, setPlayerToEdit] = useState(null);
   const isDesktop = useIsDesktop();
+  const { getNonActivePools } = useStoredPools();
+  const nonActivePools = getNonActivePools();
 
   const togglePlayerToEdit = (index) => {
     setPlayerToEdit((prevIndex) => (prevIndex === index ? null : index));
@@ -20,12 +23,23 @@ export default function ReassignTeamsPage() {
 
   return (
     <div className={classes['page-container']}>
-      {isDesktop && <DesktopNavHeader poolName={pool.poolName} />}
+      {isDesktop && (
+        <DesktopNavHeader
+          poolName={pool.poolName}
+          createNewPool={createNewPool}
+          changePool={changePool}
+          nonActivePools={nonActivePools}
+        />
+      )}
       <div className={classes['reassign-teams']}>
         <PageHeader
           headerText="Rassign Teams"
           leftBtnText=<ArrowBackIcon />
           path="/pool-settings"
+          poolName={pool.poolName}
+          createNewPool={createNewPool}
+          changePool={changePool}
+          nonActivePools={nonActivePools}
         />
         <div className={classes['players-container']}>
           <p>{`Select edit to begin reassigning a player's teams`}</p>
