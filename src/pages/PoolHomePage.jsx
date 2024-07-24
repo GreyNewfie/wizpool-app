@@ -39,7 +39,14 @@ export default function PoolHomePage() {
 
   return (
     <div className={classes['page-container']}>
-      {isDesktop && <DesktopNavHeader poolName={pool.poolName} />}
+      {isDesktop && (
+        <DesktopNavHeader
+          poolName={pool.poolName}
+          createNewPool={createNewPool}
+          changePool={changePool}
+          nonActivePools={nonActivePools}
+        />
+      )}
       <div className={poolClasses}>
         <PageHeader
           headerText={pool.poolName}
