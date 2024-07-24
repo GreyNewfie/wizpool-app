@@ -6,10 +6,13 @@ import usePool from '../utils/usePool';
 import DisplayTeams from '../components/DisplayTeams';
 import useIsDesktop from '../utils/useIsDesktop';
 import DesktopNavHeader from '../components/DesktopNavHeader';
+import useStoredPools from '../utils/useStoredPools';
 
 export default function PoolPicksPage() {
-  const { pool } = usePool();
+  const { pool, createNewPool, changePool } = usePool();
   const isDesktop = useIsDesktop();
+  const { getNonActivePools } = useStoredPools();
+  const nonActivePools = getNonActivePools();
 
   const getTeamsAndPlayers = () => {
     const clonedPool = pool.clonePool();
@@ -29,12 +32,23 @@ export default function PoolPicksPage() {
 
   return (
     <div className={classes['page-container']}>
-      {isDesktop && <DesktopNavHeader poolName={pool.poolName} />}
+      {isDesktop && (
+        <DesktopNavHeader
+          poolName={pool.poolName}
+          createNewPool={createNewPool}
+          changePool={changePool}
+          nonActivePools={nonActivePools}
+        />
+      )}
       <div className={classes['pool-picks']}>
         <PageHeader
           headerText="Picked Teams"
           leftBtnText=<ArrowBackIcon />
           path="/pool-home"
+          poolName={pool.poolName}
+          createNewPool={createNewPool}
+          changePool={changePool}
+          nonActivePools={nonActivePools}
         />
         <div className={classes['picks-container']}>
           <p>See which players have the teams with the most wins</p>

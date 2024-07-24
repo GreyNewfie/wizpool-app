@@ -10,12 +10,15 @@ import { Switch } from '@mui/material';
 import useTheme from '../context/useTheme';
 import useIsDesktop from '../utils/useIsDesktop';
 import DesktopNavHeader from '../components/DesktopNavHeader';
+import useStoredPools from '../utils/useStoredPools';
 
 export default function SettingsPage() {
-  const { pool } = usePool();
+  const { pool, createNewPool, changePool } = usePool();
   const { theme, setTheme } = useTheme();
   const [currentMode, setCurrentMode] = useState(theme);
   const isDesktop = useIsDesktop();
+  const { getNonActivePools } = useStoredPools();
+  const nonActivePools = getNonActivePools();
 
   const handleChange = (e) => {
     const newMode = e.target.checked ? 'light' : 'dark';
@@ -25,12 +28,23 @@ export default function SettingsPage() {
 
   return (
     <div className={classes['page-container']}>
-      {isDesktop && <DesktopNavHeader poolName={pool.poolName} />}
+      {isDesktop && (
+        <DesktopNavHeader
+          poolName={pool.poolName}
+          createNewPool={createNewPool}
+          changePool={changePool}
+          nonActivePools={nonActivePools}
+        />
+      )}
       <div className={classes['pool-settings']}>
         <PageHeader
           headerText="Settings"
           leftBtnText=<ArrowBackIcon />
           path="/pool-home"
+          poolName={pool.poolName}
+          createNewPool={createNewPool}
+          changePool={changePool}
+          nonActivePools={nonActivePools}
         />
         <div className={classes['settings-content']}>
           <div className={classes['pool-info-container']}>

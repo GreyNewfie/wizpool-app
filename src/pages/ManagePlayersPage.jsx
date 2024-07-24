@@ -10,10 +10,13 @@ import PrimaryActionButton from '../components/PrimayActionButton';
 import ConfirmDialog from '../components/ConfirmDialog';
 import useIsDesktop from '../utils/useIsDesktop';
 import DesktopNavHeader from '../components/DesktopNavHeader';
+import useStoredPools from '../utils/useStoredPools';
 
 export default function ManagePlayersPage() {
   const {
     pool,
+    createNewPool,
+    changePool,
     handlePlayerNameChange,
     handleTeamNameChange,
     addBlankPlayer,
@@ -23,6 +26,8 @@ export default function ManagePlayersPage() {
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [playerToDelete, setPlayerToDelete] = useState(null);
   const isDesktop = useIsDesktop();
+  const { getNonActivePools } = useStoredPools();
+  const nonActivePools = getNonActivePools();
 
   const togglePlayerToEdit = (index) => {
     setPlayerToEdit((prevIndex) => (prevIndex === index ? null : index));
@@ -45,12 +50,23 @@ export default function ManagePlayersPage() {
 
   return (
     <div className={classes['page-container']}>
-      {isDesktop && <DesktopNavHeader poolName={pool.poolName} />}
+      {isDesktop && (
+        <DesktopNavHeader
+          poolName={pool.poolName}
+          createNewPool={createNewPool}
+          changePool={changePool}
+          nonActivePools={nonActivePools}
+        />
+      )}
       <div className={classes['manage-players']}>
         <PageHeader
           headerText="Manage Players"
           leftBtnText=<ArrowBackIcon />
           path="/pool-settings"
+          poolName={pool.poolName}
+          createNewPool={createNewPool}
+          changePool={changePool}
+          nonActivePools={nonActivePools}
         />
         <div className={classes['players-container']}>
           {pool.players.map((player, index) => (
