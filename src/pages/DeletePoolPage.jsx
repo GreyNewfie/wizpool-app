@@ -39,7 +39,7 @@ export default function DeletePoolPage() {
                     src="./public/wizpool-trophy-icon-512x512.png"
                     alt="WizPool trophy icon"
                   />
-                  <h5>{pool.poolName}</h5>
+                  <h4>{pool.poolName}</h4>
                 </div>
                 <button className={classes['delete-btn']} onClick={deletePool}>
                   Delete

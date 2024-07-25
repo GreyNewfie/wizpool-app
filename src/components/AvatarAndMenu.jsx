@@ -11,6 +11,7 @@ import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOu
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 const stringAvatar = (poolName) => {
   const poolInitialsArray = poolName.split(' ').map((word) => word[0]);
@@ -146,15 +147,17 @@ export default function AvatarAndMenu(props) {
           </ListItemIcon>
           Create a new pool
         </MenuItem>
-        <MenuItem className={classes.menuItem} onClick={handleDeletePool}>
-          <ListItemIcon className={classes.menuListItemIcon}>
-            <RemoveCircleOutlineIcon
-              className={classes.menuListItemIconMinus}
-              fontSize="large"
-            />
-          </ListItemIcon>
-          Delete a pool
-        </MenuItem>
+        <Link className={classes['menu-item-link']} to={'/delete-pool'}>
+          <MenuItem className={classes.menuItem} onClick={handleDeletePool}>
+            <ListItemIcon className={classes.menuListItemIcon}>
+              <RemoveCircleOutlineIcon
+                className={classes.menuListItemIconMinus}
+                fontSize="large"
+              />
+            </ListItemIcon>
+            Delete a pool
+          </MenuItem>
+        </Link>
       </Menu>
     </>
   );

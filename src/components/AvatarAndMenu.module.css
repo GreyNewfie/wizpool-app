@@ -48,7 +48,7 @@ div:has(> ul) {
 }
 
 .menuDivider {
-  background-color: #656565;
+  background-color: var(--primary-color);
   margin: 0.5rem 0;
 }
 
@@ -76,4 +76,8 @@ div:has(> ul) {
 
 .menuItem:hover .menu-list-icon-custom {
   background-color: var(--primary-color);
+}
+
+.menu-item-link {
+  color: var(--text-color);
 }
