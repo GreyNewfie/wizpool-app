@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import classes from './UserTextInput.module.css';
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useRef, useEffect } from 'react';
 import debounce from '../utils/debounce';
 
 export default function UserTextInput(props) {
@@ -11,11 +11,18 @@ export default function UserTextInput(props) {
     classes['user-text-input'],
     props.className,
   );
+  const inputElement = useRef(null);
 
   // Using debounce on handleChange to delay updating state as user enters input value
   const debounceHandleChange = useCallback(debounce(props.handleChange), [
     props.handleChange,
   ]);
+
+  useEffect(() => {
+    if (props.autoFocus && inputElement.current) {
+      inputElement.current.focus();
+    }
+  }, [props.autoFocus]);
 
   const handleChange = (e) => {
     setLocalValue(e.target.value);
@@ -24,6 +31,7 @@ export default function UserTextInput(props) {
 
   return (
     <input
+      ref={inputElement}
       type="text"
       id={props.id}
       name={props.name}
@@ -31,6 +39,7 @@ export default function UserTextInput(props) {
       className={inputClassName}
       placeholder={props.placeholderText}
       onChange={handleChange}
+      autoFocus
     />
   );
 }
@@ -42,4 +51,5 @@ UserTextInput.propTypes = {
   value: PropTypes.string,
   handleChange: PropTypes.func.isRequired,
   className: PropTypes.string,
+  autoFocus: PropTypes.bool,
 };

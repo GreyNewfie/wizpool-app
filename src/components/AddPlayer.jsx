@@ -11,6 +11,7 @@ export default function AddPlayer(props) {
         value={props.playerName}
         placeholderText="Player's Name"
         handleChange={props.handlePlayerNameChange}
+        autoFocus={props.autoFocusPlayerName}
       />
       <UserTextInput
         id={`player-${props.playerId}-team-name`}
@@ -18,6 +19,7 @@ export default function AddPlayer(props) {
         value={props.teamName}
         placeholderText="Player's Team Name (optional)"
         handleChange={props.handleTeamNameChange}
+        autoFocus={props.autoFocusTeamName}
       />
     </div>
   );
@@ -29,4 +31,6 @@ AddPlayer.propTypes = {
   teamName: PropTypes.string.isRequired,
   handlePlayerNameChange: PropTypes.func.isRequired,
   handleTeamNameChange: PropTypes.func.isRequired,
+  autoFocusPlayerName: PropTypes.bool,
+  autoFocusTeamName: PropTypes.bool,
 };
