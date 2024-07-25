@@ -15,6 +15,7 @@ import ManagePlayersPage from './pages/ManagePlayersPage.jsx';
 import ReassignTeamsPage from './pages/ReassignTeamsPage.jsx';
 import ThemeProvider from './context/ThemeContext.jsx';
 import ChooseLeaguePage from './pages/ChooseLeaguePage.jsx';
+import DeletePoolPage from './pages/DeletePoolPage.jsx';
 
 const router = createBrowserRouter([
   {
@@ -70,6 +71,11 @@ const router = createBrowserRouter([
   {
     path: '/reassign-teams',
     element: <ReassignTeamsPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: '/delete-pool',
+    element: <DeletePoolPage />,
     errorElement: <ErrorPage />,
   },
 ]);
