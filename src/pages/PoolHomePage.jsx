@@ -29,7 +29,7 @@ const sortPlayersByWins = (players) => {
 };
 
 export default function PoolHomePage() {
-  const { pool, changePool, createNewPool } = usePool();
+  const { pool, changePool, createNewPool, deletePool } = usePool();
   const { theme } = useTheme();
   const sortedPlayers = sortPlayersByWins([...pool.players]);
   const poolClasses = classNames(classes['pool-home'], classes[theme]);
@@ -43,6 +43,7 @@ export default function PoolHomePage() {
         <DesktopNavHeader
           poolName={pool.poolName}
           createNewPool={createNewPool}
+          deletePool={deletePool}
           changePool={changePool}
           nonActivePools={nonActivePools}
         />
