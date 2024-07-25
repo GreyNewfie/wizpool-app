@@ -66,6 +66,18 @@ export default function usePool() {
     navigate('/choose-league');
   };
 
+  const deletePool = (poolId) => {
+    const poolToDelete = localStorage.getItem(`pool-${poolId}`);
+    if (!poolToDelete) {
+      return console.error('Unable to get pool to delete');
+    }
+    // Check if active pool matches poolToDelete
+    // If it's the same pool, switch activePoolId and pool to another pool
+    // if there are no other pools?
+    // delete pool from localStorage
+    localStorage.removeItem(`pool-${poolId}`);
+  };
+
   const changePool = (poolId) => {
     const selectedPoolData = localStorage.getItem(`pool-${poolId}`);
     if (selectedPoolData) {
@@ -132,6 +144,7 @@ export default function usePool() {
     pool,
     setPool,
     createNewPool,
+    deletePool,
     changePool,
     handleSetLeague,
     handlePoolNameChange,
