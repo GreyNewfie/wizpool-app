@@ -118,7 +118,8 @@ export default function ManagePlayersPage() {
           open={showConfirmDialog}
           onClose={handleCloseConfirmDialog}
           onConfirm={handleDeletePlayer}
-          playerName={playerToDelete?.playerName}
+          itemName={playerToDelete?.playerName}
+          dialogTitle="Confirm Delete Player"
         />
       </div>
     </div>
