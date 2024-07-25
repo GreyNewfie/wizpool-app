@@ -39,6 +39,7 @@ export default function usePool() {
     localStorage.getItem('activePoolId') || null,
   );
   const navigate = useNavigate();
+  const { getNonActivePools } = useStoredPools();
 
   useEffect(() => {
     // Remove possible blank players before adding to localStorage
@@ -69,18 +70,6 @@ export default function usePool() {
     navigate('/choose-league');
   };
 
-  const deletePool = (poolId) => {
-    const poolToDelete = localStorage.getItem(`pool-${poolId}`);
-    if (!poolToDelete) {
-      return console.error('Unable to get pool to delete');
-    }
-    // Check if active pool matches poolToDelete
-    // If it's the same pool, switch activePoolId and pool to another pool
-    // if there are no other pools?
-    // delete pool from localStorage
-    localStorage.removeItem(`pool-${poolId}`);
-  };
-
   const changePool = (poolId) => {
     const selectedPoolData = localStorage.getItem(`pool-${poolId}`);
     if (selectedPoolData) {
@@ -99,6 +88,30 @@ export default function usePool() {
     } else {
       console.error(`Pool with ID ${poolId} not found.`);
     }
+  };
+
+  const deletePool = (poolId) => {
+    const poolToDelete = JSON.parse(localStorage.getItem(`pool-${poolId}`));
+    const nonActivePools = getNonActivePools();
+
+    if (!poolToDelete) {
+      return console.error('Unable to get pool to delete');
+    }
+    // Check if active pool matches poolToDelete
+    if (poolId === activePoolId) {
+      // check if there are other pools to display, and if so change to the first option
+      if (nonActivePools.length > 0) {
+        changePool(nonActivePools[0].id);
+        localStorage.removeItem(`pool-${poolId}`);
+      } else {
+        // If there are no other pools take the user to create a new pool
+        createNewPool();
+        localStorage.removeItem(`pool-${poolId}`);
+      }
+    } else {
+      localStorage.removeItem(`pool-${poolId}`);
+    }
+    setPool(getInitialPool());
   };
 
   const handleSetLeague = (league) => {
