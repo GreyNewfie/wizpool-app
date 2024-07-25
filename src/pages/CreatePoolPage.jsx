@@ -20,10 +20,7 @@ export default function CreatePoolPage() {
       className={classes['create-pool-container']}
     >
       <div className={classes['create-pool-page-header']}>
-        <NextHeaderButton
-          path="/choose-player"
-          handleClick={() => console.log('Button clicked')}
-        />
+        <NextHeaderButton path="/choose-player" />
         <h1>Create a pool</h1>
       </div>
       <div className={classes['choose-pool-name']}>

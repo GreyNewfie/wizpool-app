@@ -24,7 +24,6 @@ export default function PlayerProfile({ player, index }) {
       <PrimaryActionButton
         text={`Assign Teams to ${player.playerName}`}
         path={`/choose-teams/${index}`}
-        handleClick={() => console.log(player.name)}
       />
     </div>
   );

@@ -11,7 +11,8 @@ export default function ConfirmDialog({
   open,
   onConfirm,
   onClose,
-  playerName,
+  dialogTitle,
+  itemName,
 }) {
   return (
     <Fragment>
@@ -21,10 +22,10 @@ export default function ConfirmDialog({
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{'Delete Player'}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">{dialogTitle}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Are you sure you want to delete {playerName}?
+            Are you sure you want to delete {itemName}?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -42,5 +43,6 @@ ConfirmDialog.propTypes = {
   open: PropTypes.bool,
   onConfirm: PropTypes.func,
   onClose: PropTypes.func,
-  playerName: PropTypes.string,
+  itemName: PropTypes.string,
+  dialogTitle: PropTypes.string,
 };

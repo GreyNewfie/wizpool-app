@@ -42,6 +42,7 @@ export default function DesktopNavHeader(props) {
           <AvatarAndMenu
             poolName={props.poolName}
             createNewPool={props.createNewPool}
+            deletePool={props.deletePool}
             changePool={props.changePool}
             nonActivePools={props.nonActivePools}
           />
@@ -54,6 +55,7 @@ export default function DesktopNavHeader(props) {
 DesktopNavHeader.propTypes = {
   poolName: PropTypes.string,
   createNewPool: PropTypes.func,
+  deletePool: PropTypes.func,
   changePool: PropTypes.func,
   nonActivePools: PropTypes.array,
 };

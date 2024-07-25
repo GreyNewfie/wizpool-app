@@ -1,18 +1,21 @@
 import { useState, useEffect } from 'react';
 import Pool from './Pool';
 import { useNavigate } from 'react-router-dom';
+import useStoredPools from './useStoredPools';
 
 const getInitialPool = () => {
   const activePoolId = localStorage.getItem('activePoolId');
   if (activePoolId) {
     const storedPool = JSON.parse(localStorage.getItem(`pool-${activePoolId}`));
-    const clonedPlayers = storedPool.players.map((player) => ({ ...player }));
-    return new Pool(
-      storedPool.poolName,
-      clonedPlayers,
-      storedPool.league,
-      storedPool.id,
-    );
+    if (storedPool) {
+      const clonedPlayers = storedPool.players.map((player) => ({ ...player }));
+      return new Pool(
+        storedPool.poolName,
+        clonedPlayers,
+        storedPool.league,
+        storedPool.id,
+      );
+    }
   }
   return new Pool('', [], '');
 };
@@ -36,6 +39,7 @@ export default function usePool() {
     localStorage.getItem('activePoolId') || null,
   );
   const navigate = useNavigate();
+  const { getNonActivePools } = useStoredPools();
 
   useEffect(() => {
     // Remove possible blank players before adding to localStorage
@@ -86,6 +90,30 @@ export default function usePool() {
     }
   };
 
+  const deletePool = (poolId) => {
+    const poolToDelete = JSON.parse(localStorage.getItem(`pool-${poolId}`));
+    const nonActivePools = getNonActivePools();
+
+    if (!poolToDelete) {
+      return console.error('Unable to get pool to delete');
+    }
+    // Check if active pool matches poolToDelete
+    if (poolId === activePoolId) {
+      // check if there are other pools to display, and if so change to the first option
+      if (nonActivePools.length > 0) {
+        changePool(nonActivePools[0].id);
+        localStorage.removeItem(`pool-${poolId}`);
+      } else {
+        // If there are no other pools take the user to create a new pool
+        createNewPool();
+        localStorage.removeItem(`pool-${poolId}`);
+      }
+    } else {
+      localStorage.removeItem(`pool-${poolId}`);
+    }
+    setPool(getInitialPool());
+  };
+
   const handleSetLeague = (league) => {
     const updatedPool = pool.clonePool();
     updatedPool.setLeague(league);
@@ -132,6 +160,7 @@ export default function usePool() {
     pool,
     setPool,
     createNewPool,
+    deletePool,
     changePool,
     handleSetLeague,
     handlePoolNameChange,

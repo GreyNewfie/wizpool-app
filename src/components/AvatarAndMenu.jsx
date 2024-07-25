@@ -8,8 +8,10 @@ import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 const stringAvatar = (poolName) => {
   const poolInitialsArray = poolName.split(' ').map((word) => word[0]);
@@ -44,6 +46,10 @@ export default function AvatarAndMenu(props) {
   const handleChangePool = (poolId) => {
     props.changePool(poolId);
     handleClose();
+  };
+
+  const handleDeletePool = () => {
+    handleClose;
   };
 
   return (
@@ -102,7 +108,7 @@ export default function AvatarAndMenu(props) {
           <ListItemIcon className={classes.menuListItemIcon}>
             <img
               className={classes['menu-list-icon-custom']}
-              src="./public/wizpool-trophy-no-bg-750x750.png"
+              src="./public/wizpool-trophy-icon-512x512.png"
               alt="WizPool trophy logo"
             />
           </ListItemIcon>{' '}
@@ -123,7 +129,7 @@ export default function AvatarAndMenu(props) {
               <ListItemIcon className={classes.menuListItemIcon}>
                 <img
                   className={classes['menu-list-icon-custom']}
-                  src="./public/wizpool-trophy-no-bg-750x750.png"
+                  src="./public/wizpool-trophy-icon-512x512.png"
                   alt="WizPool trophy logo"
                 />
               </ListItemIcon>
@@ -141,6 +147,17 @@ export default function AvatarAndMenu(props) {
           </ListItemIcon>
           Create a new pool
         </MenuItem>
+        <Link className={classes['menu-item-link']} to={'/delete-pool'}>
+          <MenuItem className={classes.menuItem} onClick={handleDeletePool}>
+            <ListItemIcon className={classes.menuListItemIcon}>
+              <RemoveCircleOutlineIcon
+                className={classes.menuListItemIconMinus}
+                fontSize="large"
+              />
+            </ListItemIcon>
+            Delete a pool
+          </MenuItem>
+        </Link>
       </Menu>
     </>
   );
@@ -150,5 +167,6 @@ AvatarAndMenu.propTypes = {
   poolName: PropTypes.string,
   nonActivePools: PropTypes.array,
   createNewPool: PropTypes.func,
+  deletePool: PropTypes.func,
   changePool: PropTypes.func,
 };
