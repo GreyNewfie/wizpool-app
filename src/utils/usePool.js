@@ -1,18 +1,21 @@
 import { useState, useEffect } from 'react';
 import Pool from './Pool';
 import { useNavigate } from 'react-router-dom';
+import useStoredPools from './useStoredPools';
 
 const getInitialPool = () => {
   const activePoolId = localStorage.getItem('activePoolId');
   if (activePoolId) {
     const storedPool = JSON.parse(localStorage.getItem(`pool-${activePoolId}`));
-    const clonedPlayers = storedPool.players.map((player) => ({ ...player }));
-    return new Pool(
-      storedPool.poolName,
-      clonedPlayers,
-      storedPool.league,
-      storedPool.id,
-    );
+    if (storedPool) {
+      const clonedPlayers = storedPool.players.map((player) => ({ ...player }));
+      return new Pool(
+        storedPool.poolName,
+        clonedPlayers,
+        storedPool.league,
+        storedPool.id,
+      );
+    }
   }
   return new Pool('', [], '');
 };
