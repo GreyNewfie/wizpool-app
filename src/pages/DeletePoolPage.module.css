@@ -21,6 +21,10 @@
   gap: 2rem;
 }
 
+.all-pools > p {
+  color: var(--secondary-text-color);
+}
+
 .pool {
   display: flex;
   justify-content: space-between;
