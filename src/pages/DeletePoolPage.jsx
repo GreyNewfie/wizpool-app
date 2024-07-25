@@ -8,9 +8,16 @@ import DesktopNavHeader from '../components/DesktopNavHeader';
 
 export default function DeletePoolPage() {
   const { pool, createNewPool, deletePool, changePool } = usePool();
-  const { pools, getNonActivePools } = useStoredPools();
+  const { storedPools, getNonActivePools, refreshStoredPools } =
+    useStoredPools();
   const nonActivePools = getNonActivePools();
   const isDesktop = useIsDesktop();
+
+  const handleDeletePool = (poolId) => {
+    deletePool(poolId);
+    refreshStoredPools();
+  };
+
   return (
     <div className={classes['page-container']}>
       {isDesktop && (
@@ -30,18 +37,21 @@ export default function DeletePoolPage() {
           nonActivePools={nonActivePools}
         />
         <div className={classes['all-pools']}>
-          {pools.map((pool) => {
+          {storedPools.map((storedpool) => {
             return (
-              <div key={pool.id} className={classes.pool}>
+              <div key={storedpool.id} className={classes.pool}>
                 <div className={classes['pool-profile']}>
                   <img
                     className={classes['wizpool-icon']}
                     src="./public/wizpool-trophy-icon-512x512.png"
                     alt="WizPool trophy icon"
                   />
-                  <h4>{pool.poolName}</h4>
+                  <h4>{storedpool.poolName}</h4>
                 </div>
-                <button className={classes['delete-btn']} onClick={deletePool}>
+                <button
+                  className={classes['delete-btn']}
+                  onClick={() => handleDeletePool(storedpool.id)}
+                >
                   Delete
                 </button>
               </div>
