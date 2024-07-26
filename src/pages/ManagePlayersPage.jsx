@@ -1,6 +1,6 @@
 import classes from './ManagePlayersPage.module.css';
 import PageHeader from '../components/PageHeader';
-import MobileNavMenu from './MobileNavMenu';
+import MobileNavMenu from '../components/MobileNavMenu';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import PlayerHomeProfile from '../components/PlayerHomeProfile';
 import usePool from '../utils/usePool';
