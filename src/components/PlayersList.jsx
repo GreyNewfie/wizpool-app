@@ -16,6 +16,8 @@ export default function PlayersList(props) {
           handleTeamNameChange={(e) =>
             props.handleTeamNameChange(e.target.value, 0)
           }
+          autoFocusPlayerName={true}
+          autoFocusTeamName={false}
         />
       ) : (
         props.players.map((_, index) => {
@@ -31,6 +33,10 @@ export default function PlayersList(props) {
               handleTeamNameChange={(e) =>
                 props.handleTeamNameChange(e.target.value, index)
               }
+              autoFocusPlayerName={
+                !props.players[index]?.playerName ? true : false
+              }
+              autoFocusTeamName={false}
             />
           );
         })

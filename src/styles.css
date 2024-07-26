@@ -88,7 +88,6 @@ input {
 
 div:has(#choose-league-container),
 div:has(#create-pool-container),
-div:has(.assign-teams-page),
 div:has(.pool-players) {
   display: flex;
   justify-content: center;
@@ -104,23 +103,6 @@ div:has(.pool-players) {
   color: var(--secondary-text-color);
   font-size: 0.9rem;
   text-align: center;
-}
-
-/**** CHOOSE PLAYER TO ASSIGN TEAMS PAGE ****/
-
-.assign-teams-page {
-  padding: 1.16rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-.select-player {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
 }
 
 /*** ERROR PAGE ***/

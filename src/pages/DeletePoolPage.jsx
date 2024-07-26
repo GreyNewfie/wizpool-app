@@ -3,7 +3,7 @@ import useStoredPools from '../utils/useStoredPools';
 import classes from './DeletePoolPage.module.css';
 import PageHeader from '../components/PageHeader';
 import useIsDesktop from '../utils/useIsDesktop';
-import MobileNavMenu from './MobileNavMenu';
+import MobileNavMenu from '../components/MobileNavMenu';
 import DesktopNavHeader from '../components/DesktopNavHeader';
 import ConfirmDialog from '../components/ConfirmDialog';
 import { useState } from 'react';

@@ -3,7 +3,7 @@ import PlayerHomeProfile from '../components/PlayerHomeProfile';
 import PlayerWinsTracker from '../components/PlayerWinsTracker';
 import classes from './PoolHomePage.module.css';
 import usePool from '../utils/usePool';
-import MobileNavMenu from './MobileNavMenu';
+import MobileNavMenu from '../components/MobileNavMenu';
 import useTheme from '../context/useTheme';
 import classNames from 'classnames';
 import DesktopNavHeader from '../components/DesktopNavHeader';

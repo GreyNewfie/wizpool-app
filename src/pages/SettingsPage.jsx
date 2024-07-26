@@ -1,6 +1,6 @@
 import classes from './SettingsPage.module.css';
 import PageHeader from '../components/PageHeader';
-import MobileNavMenu from './MobileNavMenu';
+import MobileNavMenu from '../components/MobileNavMenu';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import usePool from '../utils/usePool';

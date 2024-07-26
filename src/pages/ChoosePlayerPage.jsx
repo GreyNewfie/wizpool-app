@@ -1,19 +1,30 @@
-import PrimaryLinkButton from '../components/PrimaryLinkButton';
-import PageHeader from '../components/PageHeader';
 import ChoosePlayerList from '../components/ChoosePlayerList';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import BackHeaderButton from '../components/BackHeaderButton';
+import NextHeaderButton from '../components/NextHeaderButton';
+import classes from './ChoosePlayerPage.module.css';
+import usePool from '../utils/usePool';
+import { useEffect, useState } from 'react';
 
 export default function ChoosePlayerPage() {
+  const { pool } = usePool();
+  const [areTeamsSelected, setAreTeamsSelected] = useState(false);
+
+  useEffect(() => {
+    const playersHaveTeams = () => {
+      return pool.players.every((player) => player.teams?.length > 0);
+    };
+
+    setAreTeamsSelected(playersHaveTeams());
+  }, [pool.players]);
+
   return (
-    <div className="assign-teams-page">
-      <PageHeader
-        headerText="Assign Teams"
-        path="/create-pool"
-        rightBtnText="Save"
-        leftBtnText={<ArrowBackIcon />}
-      />
-      <ChoosePlayerList />
-      <PrimaryLinkButton text="Next" path="/pool-home" />
+    <div className={classes['assign-teams-page']}>
+      <div className={classes['assign-teams-page-header']}>
+        <BackHeaderButton path="/create-pool" />
+        <h2>Assign Teams</h2>
+        <NextHeaderButton path="/pool-home" disabled={!areTeamsSelected} />
+      </div>
+      <ChoosePlayerList poolPlayers={pool.players} />
     </div>
   );
 }
