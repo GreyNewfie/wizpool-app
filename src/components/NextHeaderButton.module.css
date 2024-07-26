@@ -3,6 +3,7 @@
   border: none;
   font-size: 1rem;
   color: var(--secondary-text-color);
+  align-self: flex-end;
 }
 
 .right-header-btn:hover {
@@ -10,11 +11,8 @@
   color: white;
 }
 
-.right-header-btn {
-  align-self: flex-end;
-}
-
 .right-header-btn.disabled {
   opacity: 0.7;
   cursor: not-allowed;
+  color: var(--secondary-text-color);
 }
