@@ -1,39 +1,44 @@
 .mobile-nav-menu {
-    position: fixed;
-    bottom: 0;
-    background-color: var(--bottom-menu-bg-color);
-    width: 100%;
-    padding: .6rem 0;
-    display: flex;
-    justify-content: space-around;
+  position: fixed;
+  bottom: 0;
+  background-color: var(--bottom-menu-bg-color);
+  width: 100%;
+  padding: 0.6rem 0;
+  display: flex;
+  justify-content: space-around;
 }
 
 .nav-btn-container {
-    font-size: .9rem;
-    color: var(--secondary-text-color);
-    display: flex;
+  font-size: 0.9rem;
+  color: var(--secondary-text-color);
+  display: flex;
 }
 
 .nav-btn-container a {
-    text-decoration: none;
-    color: var(--secondary-text-color);
-    display: flex;
-    flex-direction: column;
+  text-decoration: none;
+  color: var(--secondary-text-color);
+  display: flex;
+  flex-direction: column;
 }
 
 .mobile-nav-btn {
-    color: var(--secondary-text-color);
-    background-color: var(--bottom-menu-bg-color);
-    border: none;
-    cursor: pointer;
+  color: var(--secondary-text-color);
+  background-color: var(--bottom-menu-bg-color);
+  border: none;
+  cursor: pointer;
+}
+
+.nav-btn-container a.active .mobile-nav-btn,
+.nav-btn-container a.active p {
+  color: var(--primary-color);
 }
 
 .nav-btn-container:hover .mobile-nav-btn,
 .nav-btn-container:hover p {
-    color: white;
+  color: var(--secondary-color);
 }
 
 .nav-btn-container:active .mobile-nav-btn,
 .nav-btn-container:active p {
-    opacity: .5;
+  opacity: 0.5;
 }

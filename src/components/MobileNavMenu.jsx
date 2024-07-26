@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import classes from './MobileNavMenu.module.css';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
@@ -9,36 +9,48 @@ export default function MobileNavMenu() {
   return (
     <div className={classes['mobile-nav-menu']}>
       <div className={classes['nav-btn-container']}>
-        <Link to="/pool-home">
+        <NavLink
+          to="/pool-home"
+          className={({ isActive }) => (isActive ? classes.active : '')}
+        >
           <button className={classes['mobile-nav-btn']}>
             <HomeOutlinedIcon />
           </button>
           <p>Home</p>
-        </Link>
+        </NavLink>
       </div>
       <div className={classes['nav-btn-container']}>
-        <Link to="/pool-players">
+        <NavLink
+          to="/pool-players"
+          className={({ isActive }) => (isActive ? classes.active : '')}
+        >
           <button className={classes['mobile-nav-btn']}>
             <PeopleAltOutlinedIcon />
           </button>
           <p>Players</p>
-        </Link>
+        </NavLink>
       </div>
       <div className={classes['nav-btn-container']}>
-        <Link to="/pool-picks">
+        <NavLink
+          to="/pool-picks"
+          className={({ isActive }) => (isActive ? classes.active : '')}
+        >
           <button className={classes['mobile-nav-btn']}>
             <CheckCircleOutlinedIcon />
           </button>
           <p>Picks</p>
-        </Link>
+        </NavLink>
       </div>
       <div className={classes['nav-btn-container']}>
-        <Link to="/pool-settings">
+        <NavLink
+          to="/pool-settings"
+          className={({ isActive }) => (isActive ? classes.active : '')}
+        >
           <button className={classes['mobile-nav-btn']}>
             <SettingsOutlinedIcon />
           </button>
           <p>Settings</p>
-        </Link>
+        </NavLink>
       </div>
     </div>
   );
