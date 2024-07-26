@@ -114,7 +114,7 @@ export default function usePool() {
     setPool(getInitialPool());
   };
 
-  const handleSetLeague = (league) => {
+  const setLeague = (league) => {
     const updatedPool = pool.clonePool();
     updatedPool.setLeague(league);
     setPool(updatedPool);
@@ -162,7 +162,7 @@ export default function usePool() {
     createNewPool,
     deletePool,
     changePool,
-    handleSetLeague,
+    setLeague,
     handlePoolNameChange,
     handlePlayerNameChange,
     handleTeamNameChange,

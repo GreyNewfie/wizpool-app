@@ -1,15 +1,20 @@
 .right-header-btn {
-    background: transparent;
-    border: none;
-    font-size: 1rem;
-    color: var(--secondary-text-color);
+  background: transparent;
+  border: none;
+  font-size: 1rem;
+  color: var(--secondary-text-color);
 }
 
 .right-header-btn:hover {
-    cursor: pointer;
-    color: white;
+  cursor: pointer;
+  color: white;
 }
 
-a:has(.right-header-btn) {
-    align-self: flex-end;
+.right-header-btn {
+  align-self: flex-end;
+}
+
+.right-header-btn.disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
 }

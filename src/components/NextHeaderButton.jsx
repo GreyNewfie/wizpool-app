@@ -1,22 +1,28 @@
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import classes from './NextHeaderButton.module.css';
+import classNames from 'classnames';
 
-export default function NextHeaderButton({ handleClick, path }) {
+export default function NextHeaderButton({ path, disabled }) {
+  const navigate = useNavigate();
+  const buttonClass = classNames(classes['right-header-btn'], {
+    [classes.disabled]: disabled,
+  });
+
+  const handleNextClick = () => {
+    if (!disabled) {
+      navigate(path);
+    }
+  };
+
   return (
-    <Link to={path}>
-      <button
-        className={classes['right-header-btn']}
-        type="submit"
-        onClick={handleClick}
-      >
-        Next
-      </button>
-    </Link>
+    <button className={buttonClass} type="submit" onClick={handleNextClick}>
+      Next
+    </button>
   );
 }
 
 NextHeaderButton.propTypes = {
-  handleClick: PropTypes.func,
   path: PropTypes.string,
+  disabled: PropTypes.bool,
 };
