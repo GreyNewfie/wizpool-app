@@ -1,0 +1,25 @@
+#root:has(> .assign-teams-page) {
+  display: flex;
+  justify-content: center;
+}
+
+.assign-teams-page-header {
+  width: 100%;
+  max-width: 330px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.assign-teams-page-header > button {
+  align-self: center;
+}
+
+.assign-teams-page {
+  padding: 1.16rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 2rem;
+}

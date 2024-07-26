@@ -1,19 +1,17 @@
-import PrimaryLinkButton from '../components/PrimaryLinkButton';
-import PageHeader from '../components/PageHeader';
 import ChoosePlayerList from '../components/ChoosePlayerList';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import BackHeaderButton from '../components/BackHeaderButton';
+import NextHeaderButton from '../components/NextHeaderButton';
+import classes from './ChoosePlayerPage.module.css';
 
 export default function ChoosePlayerPage() {
   return (
-    <div className="assign-teams-page">
-      <PageHeader
-        headerText="Assign Teams"
-        path="/create-pool"
-        rightBtnText="Save"
-        leftBtnText={<ArrowBackIcon />}
-      />
+    <div className={classes['assign-teams-page']}>
+      <div className={classes['assign-teams-page-header']}>
+        <BackHeaderButton path="/create-pool" />
+        <h2>Assign Teams</h2>
+        <NextHeaderButton path="/choose-player" />
+      </div>
       <ChoosePlayerList />
-      <PrimaryLinkButton text="Next" path="/pool-home" />
     </div>
   );
 }
