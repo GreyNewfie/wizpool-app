@@ -50,7 +50,7 @@ const getStandingSuffix = (standing) => {
 };
 
 const getPlayerStandings = (sortedPlayers) => {
-  const playerStandings = [];
+  const playerStandings = {};
   let currentStanding = 1;
   let playerAIndex = 0;
 
@@ -67,14 +67,13 @@ const getPlayerStandings = (sortedPlayers) => {
     // if a > b, a receives the standing
     if (playerAWins === playerBWins && playerBIndex < sortedPlayers.length) {
       // if a = b, a and b are set to current standing
-      playerStandings.push(
-        { [playerA.playerName]: `${currentStanding}${standingSuffix}` },
-        { [playerB.playerName]: `${currentStanding}${standingSuffix}` },
-      );
+      playerStandings[playerA.playerName] =
+        `${currentStanding}${standingSuffix}`;
+      playerStandings[playerB.playerName] =
+        `${currentStanding}${standingSuffix}`;
     } else {
-      playerStandings.push({
-        [playerA.playerName]: `${currentStanding}${standingSuffix}`,
-      });
+      playerStandings[playerA.playerName] =
+        `${currentStanding}${standingSuffix}`;
     }
     // b is set to a
     playerAIndex++;
@@ -117,6 +116,7 @@ export default function PoolHomePage() {
         <div className={classes['pool-players']}>
           <h3>Overall Standings</h3>
           {sortedPlayers.map((player, playerIndex) => {
+            const playerStanding = playerStandings[player.playerName];
             return (
               <div key={playerIndex} className={classes['player-container']}>
                 <PlayerHomeProfile
@@ -124,7 +124,7 @@ export default function PoolHomePage() {
                   player={player}
                   playerIndex={playerIndex}
                 />
-                <PlayerWinsTracker player={player} />
+                <PlayerWinsTracker player={player} standing={playerStanding} />
               </div>
             );
           })}
