@@ -13,16 +13,18 @@ const getPlayerWins = (player) => {
   return wins;
 };
 
-export default function PlayerWinsTracker({ player }) {
+export default function PlayerWinsTracker({ player, standing }) {
   const playerWins = getPlayerWins(player);
 
   return (
     <div className={classes['wins-tracker-container']}>
-      <span className={classes['wins-tracker']}>{`${playerWins} Wins`}</span>
+      <p className={classes['player-standing']}>{`${standing}`}</p>
+      <p className={classes['player-wins']}>{`${playerWins} Wins`}</p>
     </div>
   );
 }
 
 PlayerWinsTracker.propTypes = {
   player: PropTypes.object.isRequired,
+  standing: PropTypes.string,
 };
