@@ -27,6 +27,11 @@
   --secondary-text-font: 'Roboto', sans-serif;
 }
 
+#root {
+  display: flex;
+  justify-content: center;
+}
+
 body.light {
   --main-bg-color: #fff;
   --primary-text-color: #000;

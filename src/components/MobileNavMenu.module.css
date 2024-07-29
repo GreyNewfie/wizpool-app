@@ -1,5 +1,6 @@
 .mobile-nav-menu {
   position: fixed;
+  left: 0;
   bottom: 0;
   background-color: var(--bottom-menu-bg-color);
   width: 100%;
