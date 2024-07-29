@@ -69,6 +69,7 @@ export default function ManagePlayersPage() {
           nonActivePools={nonActivePools}
         />
         <div className={classes['players-container']}>
+          <p>{`Edit player names or team names`}</p>
           {pool.players.map((player, index) => (
             <div key={index} className={classes['player']}>
               {playerToEdit !== index && (
