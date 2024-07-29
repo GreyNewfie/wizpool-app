@@ -42,6 +42,7 @@ export default function PoolPlayersPage() {
           nonActivePools={nonActivePools}
         />
         <div className={classes['players-container']}>
+          <p>{`View each player's teams with season record`}</p>
           {pool.players.map((player, index) => {
             return (
               <div key={index} className={classes['player-container']}>

@@ -28,6 +28,7 @@ div:has(.page-header) {
 }
 
 .page-header h3 {
+  width: max-content;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);

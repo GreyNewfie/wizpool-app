@@ -22,6 +22,10 @@
   gap: 1.5rem;
 }
 
+.players-container > p {
+  color: var(--secondary-text-color);
+}
+
 .player-container {
   display: flex;
   flex-direction: column;

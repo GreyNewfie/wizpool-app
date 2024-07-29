@@ -22,10 +22,15 @@
   gap: 1.5rem;
 }
 
+.players-container > p {
+  color: var(--secondary-text-color);
+}
+
 .player {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 1rem;
 }
 
 .edit-player-btns {
