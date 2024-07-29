@@ -76,16 +76,6 @@ input {
   font-family: inherit;
 }
 
-.welcome-container {
-  padding-top: 10px;
-  text-align: center;
-  gap: 45px;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 div:has(#choose-league-container),
 div:has(#create-pool-container),
 div:has(.pool-players) {
@@ -95,14 +85,6 @@ div:has(.pool-players) {
 
 .header-logo {
   width: 300px;
-}
-
-/*** CREATE POOL PAGE ***/
-
-.secondary-text {
-  color: var(--secondary-text-color);
-  font-size: 0.9rem;
-  text-align: center;
 }
 
 /*** ERROR PAGE ***/

@@ -1,12 +1,13 @@
 import PrimaryLinkButton from '../components/PrimaryLinkButton';
 import usePool from '../utils/usePool';
+import classes from './WelcomePage.module.css';
 
 export default function Welcome() {
   const { pool } = usePool();
   const isExistingPool = pool.poolName || null;
 
   return (
-    <div className={`welcome-container`}>
+    <div className={classes[`welcome-container`]}>
       <HeaderLogo />
       <TextCarrousel />
       {isExistingPool ? (
