@@ -6,3 +6,28 @@
   background-color: var(--input-bg-color);
   border: none;
 }
+
+/* Override Chrome and other browsers styling for auto-fill */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  appearance: menulist-button !important;
+  background-image: none !important;
+  background-color: var(--input-bg-color) !important;
+  color: var(--input-text-color) !important;
+  -webkit-text-fill-color: var(--input-text-color) !important;
+  -webkit-box-shadow: 0 0 0px 1000px var(--input-bg-color) inset !important;
+  box-shadow: 0 0 0px 1000px var(--input-bg-color) inset !important;
+}
+
+input:autofill,
+input:autofill:hover,
+input:autofill:focus,
+input:autofill:active {
+  appearance: menulist-button !important;
+  background-image: none !important;
+  background-color: var(--input-bg-color) !important;
+  color: var(--input-text-color) !important;
+  -webkit-text-fill-color: var(--input-text-color) !important;
+}
