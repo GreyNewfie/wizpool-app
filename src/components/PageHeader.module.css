@@ -27,6 +27,13 @@ div:has(.page-header) {
   color: white;
 }
 
+.page-header h3 {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+}
+
 .page-header > .icon-button {
   position: absolute;
   right: 0;
