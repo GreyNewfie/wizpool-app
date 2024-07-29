@@ -6,8 +6,16 @@ export default function PlayerHomeProfile(props) {
   return (
     <div className={classes['player-home-profile']}>
       <img
-        className={classes['team-icon']}
-        src={`player-icon-${iconNum}-150x150.png`}
+        className={
+          props.playerStanding === '1st'
+            ? classes['first-place-icon']
+            : props.playerStanding === '2nd'
+              ? classes['second-place-icon']
+              : props.playerStanding === '3rd'
+                ? classes['third-place-icon']
+                : classes['team-icon']
+        }
+        src={`wizpool-trophy-icon-512x512.png`}
         alt="team icon"
       />
       <div className={classes['player-info']}>
@@ -31,4 +39,5 @@ export default function PlayerHomeProfile(props) {
 PlayerHomeProfile.propTypes = {
   player: PropTypes.object,
   playerIndex: PropTypes.number,
+  playerStanding: PropTypes.string,
 };

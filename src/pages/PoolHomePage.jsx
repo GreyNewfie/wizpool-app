@@ -123,6 +123,7 @@ export default function PoolHomePage() {
                   key={playerIndex}
                   player={player}
                   playerIndex={playerIndex}
+                  playerStanding={playerStanding}
                 />
                 <PlayerWinsTracker player={player} standing={playerStanding} />
               </div>
