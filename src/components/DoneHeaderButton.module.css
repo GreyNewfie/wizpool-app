@@ -1,4 +1,4 @@
-.right-header-btn {
+.done-header-btn {
   background-color: var(---primary-btn-bg-color);
   border: 1px solid var(--secondary-text-color);
   border-radius: 10px;
@@ -9,17 +9,17 @@
   align-self: flex-end;
 }
 
-.right-header-btn:hover {
+.done-header-btn:hover {
   cursor: pointer;
   color: white;
   border: 1px solid var(--primary-color);
 }
 
-.right-header-btn:active {
+.done-header-btn:active {
   opacity: 0.7;
 }
 
-.right-header-btn.disabled {
+.done-header-btn.disabled {
   opacity: 0.7;
   cursor: not-allowed;
 }

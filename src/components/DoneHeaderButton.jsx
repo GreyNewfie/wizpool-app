@@ -15,7 +15,7 @@ export default function DoneHeaderButton({ path }) {
       type="submit"
       onClick={handleNextClick}
     >
-      Next
+      Done
     </button>
   );
 }
