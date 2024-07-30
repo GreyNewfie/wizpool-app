@@ -18,7 +18,7 @@ export default function SelectLeagueButtons({ handleSetLeague }) {
       >
         <img
           className={classes['league-logo']}
-          src="../public/nfl-logos/nfl-logo.png"
+          src="/nfl-logos/nfl-logo.png"
           alt="National Football League shield logo"
         />
         NFL
@@ -29,7 +29,7 @@ export default function SelectLeagueButtons({ handleSetLeague }) {
       >
         <img
           className={classes['league-logo']}
-          src="../public/nba-logos/nba-logo.png"
+          src="/nba-logos/nba-logo.png"
           alt="National Basketball Association logo"
         />
         NBA
@@ -40,7 +40,7 @@ export default function SelectLeagueButtons({ handleSetLeague }) {
       >
         <img
           className={classes['league-logo']}
-          src="../public/mlb-logos/mlb-logo.png"
+          src="/mlb-logos/mlb-logo.png"
           alt="Major League Baseball logo"
         />
         MLB
