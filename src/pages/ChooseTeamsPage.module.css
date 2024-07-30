@@ -1,9 +1,26 @@
-.choose-teams {
+#root:has(> .choose-teams-page) {
+  display: flex;
+  justify-content: center;
+}
+
+.choose-teams-page {
   padding: 1.16rem;
 
   display: flex;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
   flex-direction: column;
   gap: 2rem;
+}
+
+.choose-teams-page-header {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.choose-teams-page-header > button {
+  align-self: center;
 }

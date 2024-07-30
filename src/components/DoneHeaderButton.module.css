@@ -1,0 +1,25 @@
+.done-header-btn {
+  background-color: var(---primary-btn-bg-color);
+  border: 1px solid var(--secondary-text-color);
+  border-radius: 10px;
+  padding: 0.2rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--secondary-text-color);
+  align-self: flex-end;
+}
+
+.done-header-btn:hover {
+  cursor: pointer;
+  color: white;
+  border: 1px solid var(--primary-color);
+}
+
+.done-header-btn:active {
+  opacity: 0.7;
+}
+
+.done-header-btn.disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
