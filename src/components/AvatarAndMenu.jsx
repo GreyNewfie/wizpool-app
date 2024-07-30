@@ -108,7 +108,7 @@ export default function AvatarAndMenu(props) {
           <ListItemIcon className={classes.menuListItemIcon}>
             <img
               className={classes['menu-list-icon-custom']}
-              src="./public/wizpool-trophy-icon-512x512.png"
+              src="/wizpool-trophy-icon-512x512.png"
               alt="WizPool trophy logo"
             />
           </ListItemIcon>{' '}
@@ -129,7 +129,7 @@ export default function AvatarAndMenu(props) {
               <ListItemIcon className={classes.menuListItemIcon}>
                 <img
                   className={classes['menu-list-icon-custom']}
-                  src="./public/wizpool-trophy-icon-512x512.png"
+                  src="/wizpool-trophy-icon-512x512.png"
                   alt="WizPool trophy logo"
                 />
               </ListItemIcon>

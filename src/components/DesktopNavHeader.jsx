@@ -10,7 +10,7 @@ export default function DesktopNavHeader(props) {
     <div className={classes['desktop-nav-header']}>
       <img
         className={classes['logo']}
-        src="/public/wizpool-wordmark-230x70.png"
+        src="/wizpool-wordmark-230x70.png"
         alt="WizPool logo"
       />
       <div className={classes['nav-items']}>
