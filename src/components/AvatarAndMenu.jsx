@@ -109,7 +109,7 @@ export default function AvatarAndMenu(props) {
           <ListItemIcon className={classes.menuListItemIcon}>
             <img
               className={classes['menu-list-icon-custom']}
-              src="/wizpool-trophy-icon-512x512.png"
+              src={addBasePath('/wizpool-trophy-icon-512x512.png')}
               alt="WizPool trophy logo"
             />
           </ListItemIcon>{' '}
