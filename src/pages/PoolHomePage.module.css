@@ -16,6 +16,12 @@
   gap: 2rem;
 }
 
+/* Override pageHeader styling for this page because it doesn't contain any other elements */
+.pool-home div:first-child > h3 {
+  position: static;
+  transform: none;
+}
+
 .pool-players {
   width: 100%;
   display: flex;
