@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import classes from './DisplayTeams.module.css';
+import addBasePath from '../utils/addBasePath';
 
 export default function DisplayTeams({ league, teams }) {
   return (
@@ -10,7 +11,7 @@ export default function DisplayTeams({ league, teams }) {
           <div key={`team-${team.teamId}`} className={classes['player-team']}>
             <img
               className={classes['team-logo']}
-              src={`/${league}-logos/${lowerCaseTeamId}-logo.png`}
+              src={addBasePath(`/${league}-logos/${lowerCaseTeamId}-logo.png`)}
               alt={`${team.city} ${team.name} ${league} team logo`}
             />
             <div className={classes['team-info']}>
