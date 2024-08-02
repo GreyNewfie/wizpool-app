@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 export default function ChoosePlayerList({ poolPlayers }) {
   return (
     <div className={classes['select-player']}>
-      <h3>Select a player to assign teams</h3>
+      <h3>Assign teams to each player</h3>
       {poolPlayers.map((player, index) => {
         return <PlayerProfile key={index} player={player} index={index} />;
       })}
