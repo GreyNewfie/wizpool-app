@@ -5,6 +5,7 @@ import addBasePath from '../utils/addBasePath';
 
 export default function PlayerProfile({ player, index }) {
   const iconNum = index + 1;
+  const hasTeams = player.teams?.length > 0;
   return (
     <div className={classes['player']}>
       <div className={classes['player-info']}>
@@ -22,10 +23,18 @@ export default function PlayerProfile({ player, index }) {
           </span>
         </div>
       </div>
-      <PrimaryActionButton
-        text={`Assign Teams to ${player.playerName}`}
-        path={`/choose-teams/${index}`}
-      />
+      {!hasTeams ? (
+        <PrimaryActionButton
+          text={`Assign Teams to ${player.playerName}`}
+          path={`/choose-teams/${index}`}
+        />
+      ) : (
+        <PrimaryActionButton
+          text={`Edit Teams for ${player.playerName}`}
+          path={`/choose-teams/${index}`}
+          hasTeams={hasTeams}
+        />
+      )}{' '}
     </div>
   );
 }

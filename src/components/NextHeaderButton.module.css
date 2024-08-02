@@ -11,8 +11,9 @@
 
 .right-header-btn:hover {
   cursor: pointer;
-  color: white;
+  color: var(--darkest-purple);
   border: 1px solid var(--primary-color);
+  background-color: var(--third-color);
 }
 
 .right-header-btn:active {
