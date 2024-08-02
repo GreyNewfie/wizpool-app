@@ -6,9 +6,10 @@
 }
 
 .player-standing {
-  color: var(--secondary-text-color);
+  color: var(--primary-text-color);
 }
 
 .player-wins {
   font-size: 1.1rem;
+  color: var(--secondary-text-color);
 }
