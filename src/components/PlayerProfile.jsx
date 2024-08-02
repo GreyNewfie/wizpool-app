@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import PrimaryActionButton from './PrimayActionButton';
 import classes from './PlayerProfile.module.css';
+import addBasePath from '../utils/addBasePath';
 
 export default function PlayerProfile({ player, index }) {
   const iconNum = index + 1;
@@ -9,7 +10,7 @@ export default function PlayerProfile({ player, index }) {
       <div className={classes['player-info']}>
         <img
           className={classes['team-icon']}
-          src={`player-icon-${iconNum}-150x150.png`}
+          src={addBasePath(`player-icon-${iconNum}-150x150.png`)}
           alt="team icon"
         />
         <div>

@@ -3,6 +3,7 @@ import classes from './DesktopNavHeader.module.css';
 import useIsDesktop from '../utils/useIsDesktop';
 import AvatarAndMenu from './AvatarAndMenu';
 import PropTypes from 'prop-types';
+import addBasePath from '../utils/addBasePath';
 
 export default function DesktopNavHeader(props) {
   const isDesktop = useIsDesktop();
@@ -10,7 +11,7 @@ export default function DesktopNavHeader(props) {
     <div className={classes['desktop-nav-header']}>
       <img
         className={classes['logo']}
-        src="/wizpool-wordmark-230x70.png"
+        src={addBasePath('/wizpool-wordmark-230x70.png')}
         alt="WizPool logo"
       />
       <div className={classes['nav-items']}>

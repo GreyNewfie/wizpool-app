@@ -1,6 +1,7 @@
 import PrimaryLinkButton from '../components/PrimaryLinkButton';
 import usePool from '../utils/usePool';
 import classes from './WelcomePage.module.css';
+import addBasePath from '../utils/addBasePath';
 
 export default function Welcome() {
   const { pool } = usePool();
@@ -24,7 +25,7 @@ function HeaderLogo() {
     <div className="header-logo-container">
       <img
         className="header-logo"
-        src="/wizpool-stacked-no-bg-750x650.png"
+        src={addBasePath('/wizpool-stacked-no-bg-750x650.png')}
         alt="a trophy with a wizard hat on top"
       />
     </div>

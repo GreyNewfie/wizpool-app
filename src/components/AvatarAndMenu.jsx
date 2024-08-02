@@ -12,6 +12,7 @@ import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import addBasePath from '../utils/addBasePath';
 
 const stringAvatar = (poolName) => {
   const poolInitialsArray = poolName.split(' ').map((word) => word[0]);
@@ -108,7 +109,7 @@ export default function AvatarAndMenu(props) {
           <ListItemIcon className={classes.menuListItemIcon}>
             <img
               className={classes['menu-list-icon-custom']}
-              src="/wizpool-trophy-icon-512x512.png"
+              src={addBasePath('/wizpool-trophy-icon-512x512.png')}
               alt="WizPool trophy logo"
             />
           </ListItemIcon>{' '}
@@ -129,7 +130,7 @@ export default function AvatarAndMenu(props) {
               <ListItemIcon className={classes.menuListItemIcon}>
                 <img
                   className={classes['menu-list-icon-custom']}
-                  src="/wizpool-trophy-icon-512x512.png"
+                  src={addBasePath('/wizpool-trophy-icon-512x512.png')}
                   alt="WizPool trophy logo"
                 />
               </ListItemIcon>
