@@ -21,6 +21,7 @@
 
 .primary-button:hover {
   cursor: pointer;
+  color: var(--fourth-color);
   background-color: var(--primary-btn-bg-color);
 }
 
@@ -31,4 +32,9 @@
 .plus-symbol {
   position: absolute;
   left: 5%;
+}
+
+.has-teams {
+  color: var(--darkest-purple);
+  background-color: var(--third-color);
 }
