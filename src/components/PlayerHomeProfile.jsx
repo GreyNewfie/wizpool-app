@@ -3,7 +3,6 @@ import classes from './PlayerHomeProfile.module.css';
 import addBasePath from '../utils/addBasePath';
 
 export default function PlayerHomeProfile(props) {
-  const iconNum = props.playerIndex + 1;
   return (
     <div className={classes['player-home-profile']}>
       <img
@@ -20,12 +19,12 @@ export default function PlayerHomeProfile(props) {
         alt="team icon"
       />
       <div className={classes['player-info']}>
-        <h6>
+        <h6 className={classes['player-name']}>
           {props.player.playerName != ''
             ? props.player.playerName
             : 'New player'}
         </h6>
-        <p className={classes['profile-team-name']}>
+        <p className={classes['team-name']}>
           {props.player.teamName
             ? props.player.teamName
             : props.player.playerName != ''
@@ -39,6 +38,5 @@ export default function PlayerHomeProfile(props) {
 
 PlayerHomeProfile.propTypes = {
   player: PropTypes.object,
-  playerIndex: PropTypes.number,
   playerStanding: PropTypes.string,
 };
