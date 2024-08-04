@@ -14,9 +14,15 @@ export default function PlayerProfile({ player, index }) {
           src={addBasePath(`player-icon-${iconNum}-150x150.png`)}
           alt="team icon"
         />
-        <div>
-          <h5>{player.playerName}</h5>
-          <span className={classes['profile-team-name']}>
+        <div className={classes['profile-container']}>
+          <h5
+            className={`${classes['player-name']} ${classes['truncated-text']}`}
+          >
+            {player.playerName}
+          </h5>
+          <span
+            className={`${classes['team-name']} ${classes['truncated-text']}`}
+          >
             {player.teamName
               ? player.teamName
               : `${player.name}'s Awesome Team`}
