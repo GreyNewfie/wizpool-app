@@ -12,11 +12,14 @@
   position: relative;
   width: clamp(280px, 100%, 350px);
   font-size: clamp(1rem, 1.1rem, 1.2rem);
-  padding: 10px;
+  padding: 10px 2rem;
   font-family: inherit;
   border: none;
   border-radius: 25px;
   background-color: var(--secondary-btn-bg-color);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-wrap: nowrap;
 }
 
 .primary-button:hover {
