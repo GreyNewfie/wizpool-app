@@ -1,8 +1,12 @@
 .primary-button-container {
-  width: clamp(280px, 100%, 400px);
+  /* width: clamp(280px, 100%, 400px); */
+  display: flex;
+  justify-content: center;
 }
 
 .primary-link {
+  width: clamp(280px, 100%, 350px);
+
   display: flex;
   justify-content: center;
   align-items: center;

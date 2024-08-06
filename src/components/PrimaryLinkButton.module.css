@@ -1,0 +1,45 @@
+.primary-button-container {
+  width: clamp(280px, 100%, 400px);
+}
+
+.primary-link {
+  width: clamp(280px, 100%, 350px);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.primary-button {
+  position: relative;
+  width: clamp(280px, 100%, 350px);
+  font-size: clamp(1rem, 1.1rem, 1.2rem);
+  padding: 10px 2rem;
+  font-family: inherit;
+  border: none;
+  border-radius: 25px;
+  background-color: var(--secondary-btn-bg-color);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-wrap: nowrap;
+}
+
+.primary-button:hover {
+  cursor: pointer;
+  color: var(--fourth-color);
+  background-color: var(--primary-btn-bg-color);
+}
+
+.primary-button:active {
+  opacity: 0.7;
+}
+
+.plus-symbol {
+  position: absolute;
+  left: 5%;
+}
+
+.has-teams {
+  color: var(--darkest-purple);
+  background-color: var(--third-color);
+}
