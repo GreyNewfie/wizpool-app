@@ -20,7 +20,7 @@ export default function CreatePoolPage() {
   useEffect(() => {
     const checkPoolCreated = () => {
       let playersHaveNames =
-        pool.players[0].playerName?.replace(/[^a-zA-z]/g, '').length > 0;
+        pool.players[0]?.playerName?.replace(/[^a-zA-z]/g, '').length > 0;
       let poolHasName = pool.poolName?.replace(/[^a-zA-Z]/g, '').length > 0;
       return playersHaveNames && poolHasName;
     };
