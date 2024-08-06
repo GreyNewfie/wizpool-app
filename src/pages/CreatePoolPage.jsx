@@ -4,6 +4,7 @@ import UserTextInput from '../components/UserTextInput';
 import classes from './CreatePoolPage.module.css';
 import usePool from '../utils/usePool';
 import PlayersList from '../components/PlayersList';
+import { useState, useEffect } from 'react';
 
 export default function CreatePoolPage() {
   const {
@@ -14,13 +15,25 @@ export default function CreatePoolPage() {
     handleTeamNameChange,
   } = usePool();
 
+  const [isPoolCreated, setIsPoolCreated] = useState(false);
+
+  useEffect(() => {
+    const checkPoolCreated = () => {
+      let playersHaveNames =
+        pool.players[0].playerName?.replace(/[^a-zA-z]/g, '').length > 0;
+      let poolHasName = pool.poolName?.replace(/[^a-zA-Z]/g, '').length > 0;
+      return playersHaveNames && poolHasName;
+    };
+    setIsPoolCreated(checkPoolCreated());
+  }, [pool.players, pool.poolName]);
+
   return (
     <div
       id="create-pool-container"
       className={classes['create-pool-container']}
     >
       <div className={classes['create-pool-page-header']}>
-        <NextHeaderButton path="/choose-player" />
+        <NextHeaderButton path="/choose-player" disabled={!isPoolCreated} />
         <h1>Create a pool</h1>
       </div>
       <div className={classes['choose-pool-name']}>
