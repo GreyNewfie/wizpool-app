@@ -36,6 +36,7 @@ export default function CreatePoolPage() {
           value={pool.poolName}
           placeholderText="Pool Name"
           handleChange={(e) => handlePoolNameChange(e.target.value)}
+          autoFocus={true}
         />
       </div>
       <div className={classes['add-players-section']}>
