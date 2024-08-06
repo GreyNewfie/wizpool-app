@@ -5,7 +5,7 @@
 }
 
 .assign-teams-page {
-  width: clamp(320px, 100%, 500px);
+  width: clamp(320px, 100%, 480px);
   padding: 1.16rem;
   display: flex;
   justify-content: center;

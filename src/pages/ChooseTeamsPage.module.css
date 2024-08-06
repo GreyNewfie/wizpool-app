@@ -5,7 +5,7 @@
 
 .choose-teams-page {
   padding: 1.16rem;
-  width: clamp(320px, 100%, 500px);
+  width: clamp(320px, 100%, 480px);
 
   display: flex;
   justify-content: center;
