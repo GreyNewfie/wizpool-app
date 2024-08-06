@@ -28,9 +28,13 @@
 .player-team-container {
   display: flex;
   justify-content: space-between;
+  gap: 2rem;
 }
 
-.player-team-container > h5 {
+.player-team-container > h6 {
   color: var(--secondary-text-color);
   text-align: end;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-wrap: nowrap;
 }
