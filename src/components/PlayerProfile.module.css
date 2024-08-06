@@ -1,25 +1,36 @@
 .player {
-    display: flex;
-    flex-direction: column;
-    gap: .5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .team-icon {
-    width: 60px;
+  width: 60px;
 }
 
 .player-info {
-    display: flex;
-    align-items: center;
-    gap: .8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
 }
 
-.player-info>div {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+.profile-container {
+  max-width: 74%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.profile-team-name {
-    color: var(--secondary-text-color);
+.player-name {
+  width: 100%;
+}
+
+.team-name {
+  color: var(--secondary-text-color);
+}
+
+.truncated-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

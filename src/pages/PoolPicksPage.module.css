@@ -6,8 +6,7 @@
 }
 
 .pool-picks {
-  width: 100%;
-  max-width: 400px;
+  width: clamp(320px, 100%, 480px);
   padding: 1.16rem 0.75rem 0;
   align-items: center;
   flex-direction: column;
@@ -29,9 +28,13 @@
 .player-team-container {
   display: flex;
   justify-content: space-between;
+  gap: 2rem;
 }
 
-.player-team-container > h5 {
+.player-team-container > h6 {
   color: var(--secondary-text-color);
   text-align: end;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-wrap: nowrap;
 }

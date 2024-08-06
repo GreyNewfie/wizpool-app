@@ -6,8 +6,7 @@
 }
 
 .reassign-teams {
-  width: 100%;
-  max-width: 400px;
+  width: clamp(320px, 100%, 480px);
   padding: 1.16rem 0.75rem 0;
   margin-bottom: 5rem;
   align-items: center;

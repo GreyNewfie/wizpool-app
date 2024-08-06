@@ -6,8 +6,7 @@
 }
 
 .pool-players {
-  width: 100%;
-  max-width: 400px;
+  width: clamp(320px, 100%, 480px);
   padding: 1.16rem 0.75rem 0;
   margin-bottom: 5rem;
   align-items: center;
@@ -24,12 +23,6 @@
 
 .players-container > p {
   color: var(--secondary-text-color);
-}
-
-.player-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
 }
 
 .player {
