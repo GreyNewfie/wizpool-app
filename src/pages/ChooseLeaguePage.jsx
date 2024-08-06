@@ -24,7 +24,10 @@ export default function ChooseLeaugePage() {
       </div>
 
       <div className={classes['instructions-container']}>
-        <p>Choose MLB, NBA or NFL to begin creating your pool</p>
+        <p>
+          Choose MLB, NBA or NFL to begin creating your pool. Stats will be for
+          the current season, or most recently completed season.
+        </p>
       </div>
       <SelectLeagueButtons handleSetLeague={handleSetLeague} />
     </div>
