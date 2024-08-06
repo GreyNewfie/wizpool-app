@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import classes from './PrimaryButton.module.css';
+import classes from './PrimaryActionButton.module.css';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 
