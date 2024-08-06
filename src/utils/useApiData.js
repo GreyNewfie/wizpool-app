@@ -35,7 +35,6 @@ export default function useApiData() {
       ) {
         // if yes, use data from localStorage
         data = storedData.data;
-        console.log('Using data from localStorage');
       } else {
         let url;
         switch (league) {

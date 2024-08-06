@@ -45,7 +45,6 @@ export default function usePool() {
     // Remove possible blank players before adding to localStorage
     const cleanedPool = cleanPool(pool);
     localStorage.setItem(`pool-${cleanedPool.id}`, JSON.stringify(cleanedPool));
-    console.log('Pool cleaned and passed to storage');
   }, [pool]);
 
   useEffect(() => {

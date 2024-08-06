@@ -92,7 +92,6 @@ export default function PoolHomePage() {
   const { getNonActivePools } = useStoredPools();
   const nonActivePools = getNonActivePools();
   const playerStandings = getPlayerStandings(sortedPlayers);
-  console.log(playerStandings);
 
   return (
     <div className={classes['page-container']}>
