@@ -8,81 +8,113 @@ export default function useApiData() {
   const { pool } = usePool();
   const league = pool.league;
 
-  const nbaStandingsUrl =
-    'https://api.sportsdata.io/v3/nba/scores/json/Standings/2024?key=b461640f8b2641b8bcaf42396b30ba9a';
-  const mlbStandingsUrl =
-    'https://api.sportsdata.io/v3/mlb/scores/json/Standings/2024?key=52a40f632efb4cb5820c9dd879fbdd0d';
-  const nflStandingsUrl =
-    'https://api.sportsdata.io/v3/nfl/scores/json/Standings/2023?key=e51892e63199402da350f44a963a7a81';
-
-  const fecthData = async () => {
+  const fetchData = async (url) => {
     setLoading(true);
-    const league = pool.league;
+    let data;
     try {
-      const storedData = JSON.parse(localStorage.getItem('storedData'));
-      const currentDate = new Date();
-      const currentDay = currentDate.getDate();
-      const currentMonth = currentDate.getMonth();
-      const currentYear = currentDate.getFullYear();
-      let data;
-      // check if nbaData is in localStorage and was stored today
-      if (
-        storedData &&
-        storedData.storedDate.day === currentDay &&
-        storedData.storedDate.month === currentMonth &&
-        storedData.storedDate.year === currentYear &&
-        storedData.sportsLeague === league
-      ) {
-        // if yes, use data from localStorage
-        data = storedData.data;
+      const response = await fetch(url);
+      console.log('API called from fetchData');
+      if (response.status === 200) {
+        data = await response.json();
       } else {
-        let url;
-        switch (league) {
-          case 'nba':
-            url = nbaStandingsUrl;
-            break;
-          case 'mlb':
-            url = mlbStandingsUrl;
-            break;
-          case 'nfl':
-            url = nflStandingsUrl;
-            break;
-          default:
-            throw new Error('No pool league found');
-        }
-        // if no, fetch data from API and put it in localStorage
-        const response = await fetch(url);
-        console.log('API called from fetchData');
-
-        if (response.status === 200) {
-          data = await response.json();
-          // store data with time stamp in localStorage
-          const dataToStore = {
-            data: data,
-            storedDate: {
-              day: currentDay,
-              month: currentMonth,
-              year: currentYear,
-            },
-            sportsLeague: league,
-          };
-          localStorage.setItem('storedData', JSON.stringify(dataToStore));
-        } else {
-          throw new Error(response.statusText);
-        }
+        throw new Error(response.statusText);
       }
-      setApiData(data);
     } catch (error) {
       console.log('Error:', error);
       setError(error);
     } finally {
-      // Artifical delay to test progress spinner indicator
       setTimeout(() => setLoading(false), 1000);
+    }
+    return data;
+  };
+
+  const getUrl = (league, season) => {
+    let url;
+    switch (league) {
+      case 'nba':
+        url = `https://api.sportsdata.io/v3/nba/scores/json/Standings/${season}?key=b461640f8b2641b8bcaf42396b30ba9a`;
+        break;
+      case 'mlb':
+        url = `https://api.sportsdata.io/v3/mlb/scores/json/Standings/${season}?key=52a40f632efb4cb5820c9dd879fbdd0d`;
+        break;
+      case 'nfl':
+        url = `https://api.sportsdata.io/v3/nfl/scores/json/Standings/${season}?key=e51892e63199402da350f44a963a7a81`;
+        break;
+      default:
+        throw new Error('No league specified');
+    }
+    return url;
+  };
+
+  const getLeagueData = async (league) => {
+    let season;
+    let data;
+    let url;
+    // get current month and day
+    const currentDate = new Date();
+    const currentDay = currentDate.getDate();
+    const currentMonth = currentDate.getMonth();
+    // check if date is later than 8/2 (NFL season begins week of 9/2)
+    if (currentDay >= 2 && currentMonth >= 8) {
+      // if yes, set season to current year, get url, fetch data and check that data array is not empty
+      season = currentDate.getFullYear();
+      url = getUrl(league, season);
+      data = await fetchData(url);
+      // check that data array is not empty
+      if (data && data.length > 0) {
+        // if not empty, return data
+        return data;
+        // if empty, set season to previous year, fetch data and return data
+      } else if (data && data.length === 0) {
+        season = currentDate.getFullYear() - 1;
+        url = getUrl(league, season);
+        data = await fetchData(url);
+        return data;
+      }
+      // if no, set season to last year
+    } else {
+      season = currentDate.getFullYear() - 1;
     }
   };
 
+  const getApiData = async () => {
+    const league = pool.league;
+    let data = [];
+    const storedData = JSON.parse(localStorage.getItem('storedData'));
+    const currentDate = new Date();
+    const currentDay = currentDate.getDate();
+    const currentMonth = currentDate.getMonth();
+    const currentYear = currentDate.getFullYear();
+    // check if stored data and was stored today
+    if (
+      storedData?.data.length > 0 &&
+      storedData.storedDate.day === currentDay &&
+      storedData.storedDate.month === currentMonth &&
+      storedData.storedDate.year === currentYear &&
+      storedData.sportsLeague === league
+    ) {
+      // if yes, use data from localStorage
+      data = storedData.data;
+    } else {
+      // if no, fetch data from API
+      data = await getLeagueData(league);
+      // store data with time stamp in localStorage
+      const dataToStore = {
+        data: data,
+        storedDate: {
+          day: currentDay,
+          month: currentMonth,
+          year: currentYear,
+        },
+        sportsLeague: league,
+      };
+      localStorage.setItem('storedData', JSON.stringify(dataToStore));
+    }
+    setApiData(data);
+  };
+
   useEffect(() => {
-    fecthData();
+    getApiData();
   }, []);
 
   const getAllTeams = (apiData) => {
