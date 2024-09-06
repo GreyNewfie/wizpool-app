@@ -73,7 +73,7 @@ export default function useApiData() {
     const currentDate = new Date();
     const currentDay = currentDate.getDate();
     const currentMonth = currentDate.getMonth();
-    // check if day and month are later than the leageue's approximate season start date
+    // check if day and month are later than MLB's and NFL's approximate season start date
     if (
       currentDay >= approxSeasonStartDay &&
       currentMonth >= approxSeasonStartMonth &&
@@ -97,14 +97,16 @@ export default function useApiData() {
         season = currentDate.getFullYear() - 1;
       }
     }
-
+    // check if day and month are later than the NBA's approximate season start date
     if (
       currentDay >= approxSeasonStartDay &&
       currentMonth >= approxSeasonStartMonth &&
       league === 'nba'
     ) {
+      // if yes, set season to next year (API works differently for NBA)
       season = currentDate.getFullYear() + 1;
     } else {
+      // if no, set season to current year
       season = currentDate.getFullYear();
     }
 
