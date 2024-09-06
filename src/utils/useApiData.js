@@ -76,7 +76,8 @@ export default function useApiData() {
     // check if day and month are later than the leageue's approximate season start date
     if (
       currentDay >= approxSeasonStartDay &&
-      currentMonth >= approxSeasonStartMonth
+      currentMonth >= approxSeasonStartMonth &&
+      league !== 'nba'
     ) {
       // if yes, set season to current year, get url, fetch data and check that data array is not empty
       season = currentDate.getFullYear();
@@ -92,8 +93,21 @@ export default function useApiData() {
       }
       // if no, set season to last year
     } else {
-      season = currentDate.getFullYear() - 1;
+      if (league === 'mlb' || league === 'nfl') {
+        season = currentDate.getFullYear() - 1;
+      }
     }
+
+    if (
+      currentDay >= approxSeasonStartDay &&
+      currentMonth >= approxSeasonStartMonth &&
+      league === 'nba'
+    ) {
+      season = currentDate.getFullYear() + 1;
+    } else {
+      season = currentDate.getFullYear();
+    }
+
     url = getUrl(league, season);
     data = await fetchData(url);
     return data;
