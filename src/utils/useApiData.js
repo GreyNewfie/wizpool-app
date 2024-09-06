@@ -28,7 +28,7 @@ export default function useApiData() {
     return data;
   };
 
-  const getUrl = (league, season) => {
+  const getUpdatedUrl = (league, season) => {
     let url;
     switch (league) {
       case 'nba':
@@ -81,7 +81,7 @@ export default function useApiData() {
     ) {
       // if yes, set season to current year, get url, fetch data and check that data array is not empty
       season = currentDate.getFullYear();
-      url = getUrl(league, season);
+      url = getUpdatedUrl(league, season);
       data = await fetchData(url);
       // check that data array is not empty
       if (data && data.length > 0) {
@@ -110,7 +110,7 @@ export default function useApiData() {
       season = currentDate.getFullYear();
     }
 
-    url = getUrl(league, season);
+    url = getUpdatedUrl(league, season);
     data = await fetchData(url);
     return data;
   };
@@ -155,8 +155,29 @@ export default function useApiData() {
     getApiData();
   }, []);
 
-  const getAllTeams = (apiData) => {
-    const teamsNames = apiData?.map((team) => {
+  const getAllTeams = (league) => {
+    // set api url based on league
+    let url;
+    switch (league) {
+      case 'nba':
+        url =
+          'https://api.sportsdata.io/v3/nba/scores/json/teams?key=b461640f8b2641b8bcaf42396b30ba9a';
+        break;
+      case 'mlb':
+        url =
+          'https://api.sportsdata.io/v3/mlb/scores/json/teams?key=52a40f632efb4cb5820c9dd879fbdd0d';
+        break;
+      case 'nfl':
+        url =
+          'https://api.sportsdata.io/v3/nfl/scores/json/Teams?key=e51892e63199402da350f44a963a7a81';
+        break;
+      default:
+        throw new Error('No league specified');
+    }
+    // fetch league's teams data
+    const teamsData = fetchData(url);
+    // get list of team names
+    const teamsNames = teamsData?.map((team) => {
       const teamName = `${team.City} ${team.Name}`;
       return teamName;
     });
@@ -201,7 +222,7 @@ export default function useApiData() {
     apiData,
     loading,
     error,
-    getAllTeams: () => getAllTeams(apiData),
+    getAllTeams,
     getAllTeamsData: () => getAllTeamsData(apiData),
   };
 }
