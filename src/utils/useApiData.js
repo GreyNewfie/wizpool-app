@@ -50,12 +50,34 @@ export default function useApiData() {
     let season;
     let data;
     let url;
+    let approxSeasonStartDay;
+    let approxSeasonStartMonth;
+    // league season start dates
+    switch (league) {
+      case 'nba':
+        approxSeasonStartDay = 10;
+        approxSeasonStartMonth = 9;
+        break;
+      case 'mlb':
+        approxSeasonStartDay = 20;
+        approxSeasonStartMonth = 2;
+        break;
+      case 'nfl':
+        approxSeasonStartDay = 9;
+        approxSeasonStartMonth = 8;
+        break;
+      default:
+        throw new Error('No league specified');
+    }
     // get current month and day
     const currentDate = new Date();
     const currentDay = currentDate.getDate();
     const currentMonth = currentDate.getMonth();
-    // check if date is later than 8/2 (NFL season begins week of 9/2)
-    if (currentDay >= 2 && currentMonth >= 8) {
+    // check if day and month are later than the leageue's approximate season start date
+    if (
+      currentDay >= approxSeasonStartDay &&
+      currentMonth >= approxSeasonStartMonth
+    ) {
       // if yes, set season to current year, get url, fetch data and check that data array is not empty
       season = currentDate.getFullYear();
       url = getUrl(league, season);
@@ -67,14 +89,14 @@ export default function useApiData() {
         // if empty, set season to previous year, fetch data and return data
       } else if (data && data.length === 0) {
         season = currentDate.getFullYear() - 1;
-        url = getUrl(league, season);
-        data = await fetchData(url);
-        return data;
       }
       // if no, set season to last year
     } else {
       season = currentDate.getFullYear() - 1;
     }
+    url = getUrl(league, season);
+    data = await fetchData(url);
+    return data;
   };
 
   const getApiData = async () => {
@@ -87,7 +109,7 @@ export default function useApiData() {
     const currentYear = currentDate.getFullYear();
     // check if stored data and was stored today
     if (
-      storedData?.data.length > 0 &&
+      storedData?.data?.length > 0 &&
       storedData.storedDate.day === currentDay &&
       storedData.storedDate.month === currentMonth &&
       storedData.storedDate.year === currentYear &&
@@ -96,7 +118,7 @@ export default function useApiData() {
       // if yes, use data from localStorage
       data = storedData.data;
     } else {
-      // if no, fetch data from API
+      // if no, fetchn updated data from API
       data = await getLeagueData(league);
       // store data with time stamp in localStorage
       const dataToStore = {
