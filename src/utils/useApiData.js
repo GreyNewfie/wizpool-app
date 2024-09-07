@@ -83,6 +83,8 @@ export default function useApiData() {
       season = currentDate.getFullYear();
       url = getUpdatedUrl(league, season);
       data = await fetchData(url);
+      console.log('fetchData called in getLeagueData');
+
       // check that data array is not empty
       if (data && data.length > 0) {
         // if not empty, return data
@@ -112,6 +114,7 @@ export default function useApiData() {
 
     url = getUpdatedUrl(league, season);
     data = await fetchData(url);
+    console.log('fetchData called in getLeagueData');
     return data;
   };
 
@@ -123,7 +126,7 @@ export default function useApiData() {
     const currentDay = currentDate.getDate();
     const currentMonth = currentDate.getMonth();
     const currentYear = currentDate.getFullYear();
-    // check if stored data and was stored today
+    // Check if stored data and was stored today
     if (
       storedData?.data?.length > 0 &&
       storedData.storedDate.day === currentDay &&
@@ -131,12 +134,12 @@ export default function useApiData() {
       storedData.storedDate.year === currentYear &&
       storedData.sportsLeague === league
     ) {
-      // if yes, use data from localStorage
+      // If yes, use data from localStorage
       data = storedData.data;
     } else {
-      // if no, fetchn updated data from API
+      // If no, fetch updated data from API
       data = await getLeagueData(league);
-      // store data with time stamp in localStorage
+      // Store data with time stamp in localStorage
       const dataToStore = {
         data: data,
         storedDate: {
@@ -153,6 +156,7 @@ export default function useApiData() {
 
   useEffect(() => {
     getApiData();
+    console.log('getApiData called by useEffect');
   }, []);
 
   const getAllTeams = async (league) => {
