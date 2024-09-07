@@ -155,8 +155,8 @@ export default function useApiData() {
     getApiData();
   }, []);
 
-  const getAllTeams = (league) => {
-    // set api url based on league
+  const getAllTeams = async (league) => {
+    // Set api url based on league
     let url;
     switch (league) {
       case 'nba':
@@ -174,14 +174,42 @@ export default function useApiData() {
       default:
         throw new Error('No league specified');
     }
-    // fetch league's teams data
-    const teamsData = fetchData(url);
-    // get list of team names
-    const teamsNames = teamsData?.map((team) => {
-      const teamName = `${team.City} ${team.Name}`;
-      return teamName;
+    const currentDate = new Date();
+    const currentDay = currentDate.getDate();
+    const currentMonth = currentDate.getMonth();
+    const currentYear = currentDate.getFullYear();
+
+    // Check If league's teams names are already stored in localStorage for this league and date
+    const storedData = JSON.parse(localStorage.getItem('leagueTeams'));
+    if (
+      storedData &&
+      storedData.league === league &&
+      storedData.storedDate.day === currentDay &&
+      storedData.storedDate.month === currentMonth &&
+      storedData.storedDate.year === currentYear
+    ) {
+      return storedData.teamsNames;
+    }
+    // If not storedData, fetch league's teams names and store in localStorage
+    const teamsData = await fetchData(url);
+    console.log('fetchData called from getAllTeams');
+    // Get list of team names
+    const teams = teamsData?.map((team) => {
+      const teamObj = { teamId: team.Key, city: team.City, name: team.Name };
+      return teamObj;
     });
-    return teamsNames;
+    // Store list of team names in localStorage
+    const leagueTeams = {
+      teams: teams,
+      league: league,
+      storedDate: {
+        day: currentDay,
+        month: currentMonth,
+        year: currentYear,
+      },
+    };
+    localStorage.setItem('leagueTeams', JSON.stringify(leagueTeams));
+    return teams;
   };
 
   const getAllTeamsData = (apiData) => {
@@ -222,7 +250,7 @@ export default function useApiData() {
     apiData,
     loading,
     error,
-    getAllTeams,
+    getAllTeams: () => getAllTeams(league),
     getAllTeamsData: () => getAllTeamsData(apiData),
   };
 }
