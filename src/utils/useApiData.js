@@ -8,9 +8,14 @@ export default function useApiData() {
   const { pool } = usePool();
   const league = pool.league;
 
+  useEffect(() => {
+    getApiData();
+  }, []);
+
   const fetchData = async (url) => {
     setLoading(true);
     let data;
+
     try {
       const response = await fetch(url);
       console.log('API called from fetchData');
@@ -25,6 +30,7 @@ export default function useApiData() {
     } finally {
       setTimeout(() => setLoading(false), 1000);
     }
+
     return data;
   };
 
@@ -154,11 +160,6 @@ export default function useApiData() {
     setApiData(data);
   };
 
-  useEffect(() => {
-    getApiData();
-    console.log('getApiData called by useEffect');
-  }, []);
-
   const getAllTeams = async (league) => {
     // Set api url based on league
     let url;
@@ -184,36 +185,43 @@ export default function useApiData() {
     const currentYear = currentDate.getFullYear();
 
     // Check If league's teams names are already stored in localStorage for this league and date
-    const storedData = JSON.parse(localStorage.getItem('leagueTeams'));
+    const storedLeagueTeams = JSON.parse(localStorage.getItem('leagueTeams'));
     if (
-      storedData &&
-      storedData.league === league &&
-      storedData.storedDate.day === currentDay &&
-      storedData.storedDate.month === currentMonth &&
-      storedData.storedDate.year === currentYear
+      storedLeagueTeams &&
+      storedLeagueTeams.league === league &&
+      storedLeagueTeams.storedDate.day === currentDay &&
+      storedLeagueTeams.storedDate.month === currentMonth &&
+      storedLeagueTeams.storedDate.year === currentYear
     ) {
-      return storedData.teamsNames;
+      console.log('League teams found in localStorage');
+      return storedLeagueTeams.teams;
     }
+
     // If not storedData, fetch league's teams names and store in localStorage
-    const teamsData = await fetchData(url);
+    const leagueTeams = await fetchData(url);
     console.log('fetchData called from getAllTeams');
-    // Get list of team names
-    const teams = teamsData?.map((team) => {
-      const teamObj = { teamId: team.Key, city: team.City, name: team.Name };
-      return teamObj;
-    });
-    // Store list of team names in localStorage
-    const leagueTeams = {
-      teams: teams,
-      league: league,
-      storedDate: {
-        day: currentDay,
-        month: currentMonth,
-        year: currentYear,
-      },
-    };
-    localStorage.setItem('leagueTeams', JSON.stringify(leagueTeams));
-    return teams;
+    if (leagueTeams) {
+      // Get list of team names
+      const teamsList = leagueTeams?.map((team) => ({
+        teamId: team.Key,
+        city: team.City,
+        name: team.Name,
+      }));
+      // Store list of team names in localStorage
+      const TeamsToStore = {
+        teams: teamsList,
+        league: league,
+        storedDate: {
+          day: currentDay,
+          month: currentMonth,
+          year: currentYear,
+        },
+      };
+      localStorage.setItem('leagueTeams', JSON.stringify(TeamsToStore));
+      console.log('League teams stored in localStorage');
+
+      return teamsList;
+    }
   };
 
   const getAllTeamsData = (apiData) => {
