@@ -9,25 +9,10 @@ import classNames from 'classnames';
 import DesktopNavHeader from '../components/DesktopNavHeader';
 import useIsDesktop from '../utils/useIsDesktop';
 import useStoredPools from '../utils/useStoredPools';
+import { useEffect } from 'react';
 
 const getTotalWins = (player) =>
   player.teams.reduce((totalWins, team) => totalWins + team.wins, 0);
-
-const sortPlayersByWins = (players) => {
-  const unsortedPlayers = players.map((player) => {
-    return {
-      ...player,
-      teams: player.teams || [],
-    };
-  });
-  const sortedPlayers = unsortedPlayers.sort((player1, player2) => {
-    const totalWinsPlayer1 = getTotalWins(player1);
-    const totalWinsPlayer2 = getTotalWins(player2);
-
-    return totalWinsPlayer2 - totalWinsPlayer1;
-  });
-  return sortedPlayers;
-};
 
 const getStandingSuffix = (standing) => {
   const standingDigits = [...standing.toString()].map(Number);
@@ -84,7 +69,14 @@ const getPlayerStandings = (sortedPlayers) => {
 };
 
 export default function PoolHomePage() {
-  const { pool, changePool, createNewPool, deletePool } = usePool();
+  const {
+    pool,
+    changePool,
+    createNewPool,
+    deletePool,
+    sortPlayersByWins,
+    updatePlayersTeamsRecords,
+  } = usePool();
   const { theme } = useTheme();
   const sortedPlayers = sortPlayersByWins([...pool.players]);
   const poolClasses = classNames(classes['pool-home'], classes[theme]);
@@ -92,6 +84,10 @@ export default function PoolHomePage() {
   const { getNonActivePools } = useStoredPools();
   const nonActivePools = getNonActivePools();
   const playerStandings = getPlayerStandings(sortedPlayers);
+
+  useEffect(() => {
+    updatePlayersTeamsRecords();
+  }, []);
 
   return (
     <div className={classes['page-container']}>
