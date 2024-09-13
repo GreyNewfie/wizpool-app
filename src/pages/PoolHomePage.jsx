@@ -49,14 +49,31 @@ const getPlayerStandings = (sortedPlayers) => {
       playerBIndex < sortedPlayers.length ? getTotalWins(playerB) : null;
 
     // Compare players a and b
-    // if a > b, a receives the standing
+    // if a = b, both are set to the current standing
     if (playerAWins === playerBWins && playerBIndex < sortedPlayers.length) {
+      // Check if playerA already has a standing
+      if (playerStandings[playerA.playerName]) {
+        // playerA already has a standing and is tied with playerB, playerB is set to PlayerA's standing
+        playerStandings[playerB.playerName] =
+          `${playerStandings[playerA.playerName]}`;
+        // Move to the next player, but keep the current standing
+        playerAIndex++;
+        // Exit loop
+        continue;
+      }
       // if a = b, a and b are set to current standing
       playerStandings[playerA.playerName] =
-        `${currentStanding}${standingSuffix}`;
+        `T-${currentStanding}${standingSuffix}`;
+      playerStandings[playerB.playerName] =
+        `T-${currentStanding}${standingSuffix}`;
+      // Else check if playerA already has a standing
+    } else if (playerStandings[playerA.playerName] && playerB !== undefined) {
+      // If yes, playerB is set to current standing
       playerStandings[playerB.playerName] =
         `${currentStanding}${standingSuffix}`;
-    } else {
+      // Ensure player doesn't already have a standing
+    } else if (!playerStandings[playerA.playerName]) {
+      // Players are already sorted by wins, so a has more wins and is set to current standing
       playerStandings[playerA.playerName] =
         `${currentStanding}${standingSuffix}`;
     }
