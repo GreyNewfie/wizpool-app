@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import useApiData from '../utils/useApiData';
 import SelectTeamSection from './SelectTeamSection';
 import CircularIndeterminate from './Loading';
+import { useState, useEffect } from 'react';
 
 const getAvailableTeams = (pool, teams, playerIndex) => {
   // Get a list of teams each other player has selected
@@ -22,12 +23,35 @@ const getAvailableTeams = (pool, teams, playerIndex) => {
 };
 
 export default function TeamsList(props) {
-  const { getAllTeamsData, loading } = useApiData();
+  const { getAllTeams, loading } = useApiData();
+  const [allTeams, setAllTeams] = useState(null);
+  const [isFetchingTeams, setIsFetching] = useState(false);
   const updatedPool = props.pool.clonePool();
+
+  const fetchTeamsData = async () => {
+    setIsFetching(true);
+    try {
+      const teams = await getAllTeams(props.pool.league);
+      setAllTeams(teams);
+    } catch (error) {
+      console.log('Error fetching teams:', error);
+    } finally {
+      setIsFetching(false);
+    }
+  };
+
+  useEffect(() => {
+    if (!allTeams && !isFetchingTeams) {
+      fetchTeamsData();
+    }
+  }, [allTeams, isFetchingTeams]);
 
   if (loading) return <CircularIndeterminate />;
 
-  const allTeams = getAllTeamsData();
+  // Ensure teams are available before rendering
+  if (!allTeams) return null;
+
+  // Filter the available teams based on other players' selected teams
   const availableTeams = getAvailableTeams(
     updatedPool,
     allTeams,

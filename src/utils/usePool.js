@@ -41,12 +41,14 @@ export default function usePool() {
   const navigate = useNavigate();
   const { getNonActivePools } = useStoredPools();
 
+  // Update localStorage when pool changes
   useEffect(() => {
     // Remove possible blank players before adding to localStorage
     const cleanedPool = cleanPool(pool);
     localStorage.setItem(`pool-${cleanedPool.id}`, JSON.stringify(cleanedPool));
   }, [pool]);
 
+  // Update active pool when it changes
   useEffect(() => {
     if (activePoolId !== pool.id) {
       setActivePoolId(pool.id);
@@ -155,6 +157,68 @@ export default function usePool() {
     setPool(updatedPool);
   };
 
+  const sortPlayersByWins = (players) => {
+    const getTotalWins = (player) =>
+      player.teams.reduce((totalWins, team) => totalWins + team.wins, 0);
+
+    const unsortedPlayers = players.map((player) => {
+      return {
+        ...player,
+        teams: player.teams || [],
+      };
+    });
+    const sortedPlayers = unsortedPlayers.sort((player1, player2) => {
+      const totalWinsPlayer1 = getTotalWins(player1);
+      const totalWinsPlayer2 = getTotalWins(player2);
+
+      return totalWinsPlayer2 - totalWinsPlayer1;
+    });
+    return sortedPlayers;
+  };
+
+  const updatePlayersTeamsRecords = () => {
+    // Clone pool
+    const updatedPool = pool.clonePool();
+    const apiData = JSON.parse(localStorage.getItem('storedData'));
+    // Check if apiData exists
+    if (!apiData || apiData?.data.length === 0) {
+      console.log('No API data found in local storage.');
+      return;
+    }
+    // Iterate through players
+    updatedPool.players.forEach((player) => {
+      // Iterate through player's teams
+      player.teams?.forEach((team) => {
+        // Check league to determine how to reference team data
+        if (pool.league === 'nfl') {
+          // Find team record
+          const teamRecord = apiData.data.find(
+            (data) => data.Name === `${team.city} ${team.name}`,
+          );
+          if (teamRecord) {
+            // Update player's team's record
+            team.wins = teamRecord.Wins;
+            team.losses = teamRecord.Losses;
+            team.division = teamRecord.Division;
+          }
+        } else {
+          // Find team record
+          const teamRecord = apiData.data.find(
+            (data) => data.Name === team.name,
+          );
+          if (teamRecord) {
+            // Update player's team's record
+            team.wins = teamRecord.Wins;
+            team.losses = teamRecord.Losses;
+            team.division = teamRecord.Division;
+          }
+        }
+      });
+    });
+    // Update pool
+    setPool(updatedPool);
+  };
+
   return {
     pool,
     setPool,
@@ -169,5 +233,7 @@ export default function usePool() {
     deletePlayer,
     activePoolId,
     updateActivePoolId,
+    sortPlayersByWins,
+    updatePlayersTeamsRecords,
   };
 }
