@@ -54,14 +54,24 @@ const getPlayerStandings = (sortedPlayers) => {
       // Check if playerA already has a standing
       if (playerStandings[playerA.playerName]) {
         // playerA already has a standing and is tied with playerB, playerB is set to PlayerA's standing
-        playerStandings[playerB.playerName] =
-          `${playerStandings[playerA.playerName]}`;
+        // Check if playerA's standing has a tied suffix, if not, add it
+        if (playerStandings[playerA.playerName].startsWith('T-')) {
+          // Add playerB's standing to playerA
+          playerStandings[playerB.playerName] =
+            `${playerStandings[playerA.playerName]}`;
+        } else {
+          // Add T- to playerA, and add playerA's standing to playerB
+          playerStandings[playerA.playerName] =
+            `T-${playerStandings[playerA.playerName]}`;
+          playerStandings[playerB.playerName] =
+            `${playerStandings[playerA.playerName]}`;
+        }
         // Move to the next player, but keep the current standing
         playerAIndex++;
         // Exit loop
         continue;
       }
-      // if a = b, a and b are set to current standing
+      // If a = b, a and b are set to current standing
       playerStandings[playerA.playerName] =
         `T-${currentStanding}${standingSuffix}`;
       playerStandings[playerB.playerName] =
