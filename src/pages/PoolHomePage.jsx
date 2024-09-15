@@ -37,59 +37,61 @@ const getStandingSuffix = (standing) => {
 const getPlayerStandings = (sortedPlayers) => {
   const playerStandings = {};
   let currentStanding = 1;
-  let playerAIndex = 0;
+  let currentIndex = 0;
 
-  for (let i = 0; i < sortedPlayers.length; i++) {
-    let standingSuffix = getStandingSuffix(currentStanding);
-    let playerBIndex = playerAIndex + 1;
-    let playerA = sortedPlayers[playerAIndex];
-    let playerB = sortedPlayers[playerBIndex];
+  const assignStanding = (player, standing, isTied = false) => {
+    const suffix = getStandingSuffix(standing);
+    playerStandings[player.playerName] =
+      `${isTied ? 'T-' : ''}${standing}${suffix}`;
+  };
+
+  while (currentIndex < sortedPlayers.length) {
+    let playerA = sortedPlayers[currentIndex];
     let playerAWins = getTotalWins(playerA);
-    let playerBWins =
-      playerBIndex < sortedPlayers.length ? getTotalWins(playerB) : null;
+    const nextIndex = currentIndex + 1;
 
-    // Compare players a and b
-    // if a = b, both are set to the current standing
-    if (playerAWins === playerBWins && playerBIndex < sortedPlayers.length) {
-      // Check if playerA already has a standing
-      if (playerStandings[playerA.playerName]) {
-        // playerA already has a standing and is tied with playerB, playerB is set to PlayerA's standing
-        // Check if playerA's standing has a tied suffix, if not, add it
-        if (playerStandings[playerA.playerName].startsWith('T-')) {
-          // Add playerB's standing to playerA
+    if (nextIndex < sortedPlayers.length) {
+      const playerB = sortedPlayers[nextIndex];
+      const playerBWins = getTotalWins(playerB);
+
+      // Compare players a and b
+      // Check if playeA and playerB have the same number of wins
+      if (playerAWins === playerBWins) {
+        // If yes, check if playerA already has a standing
+        if (playerStandings[playerA.playerName]) {
+          // If yes, check if playerA's standing has a tied suffix
+          if (!playerStandings[playerA.playerName].startsWith('T-')) {
+            // If no, add T- to playerA's standing
+            playerStandings[playerB.playerName] =
+              `T-${playerStandings[playerA.playerName]}`;
+          }
+          // dd playerA's standing to playerB
           playerStandings[playerB.playerName] =
             `${playerStandings[playerA.playerName]}`;
         } else {
-          // Add T- to playerA, and add playerA's standing to playerB
-          playerStandings[playerA.playerName] =
-            `T-${playerStandings[playerA.playerName]}`;
-          playerStandings[playerB.playerName] =
-            `${playerStandings[playerA.playerName]}`;
+          // If playerA doesn't have a standing assign current standing to both players
+          assignStanding(playerA, currentStanding, true);
+          assignStanding(playerB, currentStanding, true);
         }
         // Move to the next player, but keep the current standing
-        playerAIndex++;
-        // Exit loop
-        continue;
+        currentIndex++;
+      } else {
+        if (!playerStandings[playerA.playerName]) {
+          // If no, assign current standing to playerA
+          assignStanding(playerA, currentStanding);
+        }
+        playerStandings[playerB.playerName] = assignStanding(
+          playerB,
+          currentStanding + 1,
+        );
       }
-      // If a = b, a and b are set to current standing
-      playerStandings[playerA.playerName] =
-        `T-${currentStanding}${standingSuffix}`;
-      playerStandings[playerB.playerName] =
-        `T-${currentStanding}${standingSuffix}`;
-      // Else check if playerA already has a standing
-    } else if (playerStandings[playerA.playerName] && playerB !== undefined) {
-      // If yes, playerB is set to current standing
-      playerStandings[playerB.playerName] =
-        `${currentStanding}${standingSuffix}`;
-      // Ensure player doesn't already have a standing
-    } else if (!playerStandings[playerA.playerName]) {
-      // Players are already sorted by wins, so a has more wins and is set to current standing
-      playerStandings[playerA.playerName] =
-        `${currentStanding}${standingSuffix}`;
+    } else {
+      // Last player in the list, assign standing if not already assigned
+      if (!playerStandings[playerA.playerName]) {
+        assignStanding(playerA, currentStanding);
+      }
     }
-    // b is set to a
-    playerAIndex++;
-    // standing is set to 2
+    currentIndex++;
     currentStanding++;
   }
   return playerStandings;
