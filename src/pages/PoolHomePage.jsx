@@ -75,15 +75,13 @@ const getPlayerStandings = (sortedPlayers) => {
         }
         // Move to the next player, but keep the current standing
         currentIndex++;
+        continue;
       } else {
+        // If not tied, check if playerA already has a standing
         if (!playerStandings[playerA.playerName]) {
           // If no, assign current standing to playerA
           assignStanding(playerA, currentStanding);
         }
-        playerStandings[playerB.playerName] = assignStanding(
-          playerB,
-          currentStanding + 1,
-        );
       }
     } else {
       // Last player in the list, assign standing if not already assigned
