@@ -9,19 +9,19 @@ MVP Features:
 - Allow user to assign teams to each player
 - Dashboard that displays all teams' current point totals and standings
 - A page for each player/team showing their NFL teams, their wins-loss record and their cumulative points totals
-- Works for the NFL
+- Works for the NFL, NBA, MLB
 
 Additional Features:
 
 - Allow organizer to randomly generate a team name for each player
 - Invite players to join the pool and have individual logins
-- Work for multiple sports leagues (NBA, NHL, MLB)
+- Add NHL as a fourth league option
 - Allow the user to choose or edit their team name
 - Live draft that allows players to choose teams in real time
 - Allow user to decide what order players draft teams
-- Page showing last week's NFL results
+- Page showing last week's results
 - Page showing each players cumulative result, wins & losses, from the previous week - who won this week
 
 Target Audience
 
-- NFL fans that have a season long wins pool that would like to have an easier way to track their pool and standings.
+- NFL, NBA and MLB fans that have a season long wins pool that would like to have an easier way to track their pool and standings.
