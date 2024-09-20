@@ -1,15 +1,15 @@
-// {
-//   "version": 2,
-//   "builds": [
-//     {
-//       "src": "src",
-//       "use": "@vercel/static-build"
-//     }
-//   ],
-//   "routes": [
-//     {
-//       "src": "/(.*)",
-//       "dest": "dist/$1"
-//     }
-//   ]
-// }
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "src",
+      "use": "@vercel/static-build"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "dist/$1"
+    }
+  ]
+}
