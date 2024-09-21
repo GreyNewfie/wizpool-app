@@ -7,7 +7,6 @@ import MobileNavMenu from '../components/MobileNavMenu';
 import DesktopNavHeader from '../components/DesktopNavHeader';
 import ConfirmDialog from '../components/ConfirmDialog';
 import { useState } from 'react';
-import addBasePath from '../utils/addBasePath';
 
 export default function DeletePoolPage() {
   const { pool, createNewPool, deletePool, changePool } = usePool();
@@ -64,7 +63,7 @@ export default function DeletePoolPage() {
                 <div className={classes['pool-profile']}>
                   <img
                     className={classes['wizpool-icon']}
-                    src={addBasePath('/wizpool-trophy-icon-512x512.png')}
+                    src="./wizpool-trophy-icon-512x512.png"
                     alt="WizPool trophy icon"
                   />
                   <h4>{storedPool.poolName}</h4>

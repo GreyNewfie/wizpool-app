@@ -1,7 +1,6 @@
 import PrimaryLinkButton from '../components/PrimaryLinkButton';
 import usePool from '../utils/usePool';
 import classes from './WelcomePage.module.css';
-// import addBasePath from '../utils/addBasePath';
 
 export default function Welcome() {
   const { pool } = usePool();
