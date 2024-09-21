@@ -31,12 +31,12 @@ export default function PlayerProfile({ player, index }) {
       {!hasTeams ? (
         <PrimaryActionButton
           text={`Assign Teams to ${player.playerName}`}
-          path={`./choose-teams/${index}`}
+          path={`/choose-teams/${index}`}
         />
       ) : (
         <PrimaryActionButton
           text={`Edit Teams for ${player.playerName}`}
-          path={`./choose-teams/${index}`}
+          path={`/choose-teams/${index}`}
           hasTeams={hasTeams}
         />
       )}{' '}

@@ -44,7 +44,7 @@ export default function SelectTeamSection(props) {
       <div className={classes['team-info-container']}>
         <img
           className={classes['select-team-icon']}
-          src={`./${props.league}-logos/${lowerCaseTeamId}-logo.png`}
+          src={`/wizpool-app/${props.league}-logos/${lowerCaseTeamId}-logo.png`}
           alt={`${props.team.city} ${props.team.name} ${props.league} team logo`}
         />
         <p>{`${props.team.city} ${props.team.name}`}</p>
