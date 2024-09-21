@@ -80,7 +80,7 @@ const router = createBrowserRouter(
       errorElement: <ErrorPage />,
     },
   ],
-  { basename: '/wizpool-app/' },
+  { basename: import.meta.env.BASE_URL },
 );
 
 ReactDOM.createRoot(document.getElementById('root')).render(
