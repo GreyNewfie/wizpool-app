@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import classes from './SelectLeagueButtons.module.css';
 import PropTypes from 'prop-types';
-import addBasePath from '../utils/addBasePath';
 
 export default function SelectLeagueButtons({ handleSetLeague }) {
   const [selectedLeague, setSelectedLeague] = useState('');
@@ -19,7 +18,7 @@ export default function SelectLeagueButtons({ handleSetLeague }) {
       >
         <img
           className={classes['league-logo']}
-          src={addBasePath('/nfl-logos/nfl-logo.png')}
+          src="./nfl-logos/nfl-logo.png"
           alt="National Football League shield logo"
         />
         NFL
@@ -30,7 +29,7 @@ export default function SelectLeagueButtons({ handleSetLeague }) {
       >
         <img
           className={classes['league-logo']}
-          src={addBasePath('/nba-logos/nba-logo.png')}
+          src="./nba-logos/nba-logo.png"
           alt="National Basketball Association logo"
         />
         NBA
@@ -41,7 +40,7 @@ export default function SelectLeagueButtons({ handleSetLeague }) {
       >
         <img
           className={classes['league-logo']}
-          src={addBasePath('/mlb-logos/mlb-logo.png')}
+          src="./mlb-logos/mlb-logo.png"
           alt="Major League Baseball logo"
         />
         MLB
