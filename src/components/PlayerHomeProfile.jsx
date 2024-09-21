@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import classes from './PlayerHomeProfile.module.css';
-import addBasePath from '../utils/addBasePath';
 
 export default function PlayerHomeProfile(props) {
   return (
@@ -16,8 +15,8 @@ export default function PlayerHomeProfile(props) {
                 ? classes['third-place-icon']
                 : classes['team-icon']
         }
-        src={addBasePath(`wizpool-trophy-icon-512x512.png`)}
-        alt="team icon"
+        src="./wizpool-trophy-icon-512x512.png"
+        alt="team profile image"
       />
       <div className={classes['player-info']}>
         <h6 className={classes['player-name']}>

@@ -1,7 +1,6 @@
 import classes from './SelectTeamSection.module.css';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import addBasePath from '../utils/addBasePath';
 
 const isTeamSelected = (player, team) => {
   return player.teams?.some((playerTeam) => playerTeam.name === team.name)
@@ -45,9 +44,7 @@ export default function SelectTeamSection(props) {
       <div className={classes['team-info-container']}>
         <img
           className={classes['select-team-icon']}
-          src={addBasePath(
-            `/${props.league}-logos/${lowerCaseTeamId}-logo.png`,
-          )}
+          src={`/wizpool-app/${props.league}-logos/${lowerCaseTeamId}-logo.png`}
           alt={`${props.team.city} ${props.team.name} ${props.league} team logo`}
         />
         <p>{`${props.team.city} ${props.team.name}`}</p>
