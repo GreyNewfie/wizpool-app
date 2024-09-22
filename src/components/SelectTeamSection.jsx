@@ -38,14 +38,14 @@ export default function SelectTeamSection(props) {
     isTeamSelected(props.updatedPool.players[props.playerIndex], props.team),
   );
   const lowerCaseTeamId = props.team.teamId.toLowerCase();
-  const baseUrl = process.env.VITE_BASE_PATH || '/wizpool-app/';
+  const baseUrl = import.meta.env.VITE_BASE_PATH || '/wizpool-app/';
 
   return (
     <div key={props.teamIndex} className={classes['select-team-container']}>
       <div className={classes['team-info-container']}>
         <img
           className={classes['select-team-icon']}
-          src={`${baseUrl}/${props.league}-logos/${lowerCaseTeamId}-logo.png`}
+          src={`${baseUrl}${props.league}-logos/${lowerCaseTeamId}-logo.png`}
           alt={`${props.team.city} ${props.team.name} ${props.league} team logo`}
         />
         <p>{`${props.team.city} ${props.team.name}`}</p>
