@@ -188,29 +188,29 @@ export default function usePool() {
     // Iterate through players
     updatedPool.players.forEach((player) => {
       // Iterate through player's teams
-      player.teams?.forEach((team) => {
+      player.teams?.forEach((playerTeam) => {
         // Check league to determine how to reference team data
         if (pool.league === 'nfl') {
           // Find team record
           const teamRecord = apiData.data.find(
-            (data) => data.Name === `${team.city} ${team.name}`,
+            (dataTeam) => dataTeam.name === `${playerTeam.name}`,
           );
           if (teamRecord) {
             // Update player's team's record
-            team.wins = teamRecord.Wins;
-            team.losses = teamRecord.Losses;
-            team.division = teamRecord.Division;
+            playerTeam.wins = teamRecord.wins;
+            playerTeam.losses = teamRecord.losses;
+            playerTeam.division = teamRecord.division;
           }
         } else {
           // Find team record
           const teamRecord = apiData.data.find(
-            (data) => data.Name === team.name,
+            (dataTeam) => dataTeam.name === playerTeam.name,
           );
           if (teamRecord) {
             // Update player's team's record
-            team.wins = teamRecord.Wins;
-            team.losses = teamRecord.Losses;
-            team.division = teamRecord.Division;
+            playerTeam.wins = teamRecord.wins;
+            playerTeam.losses = teamRecord.losses;
+            playerTeam.division = teamRecord.division;
           }
         }
       });
