@@ -18,7 +18,7 @@ export default function useApiData() {
 
     try {
       const response = await fetch(url);
-      console.log('API called from fetchData');
+      console.log('Backend API called from fetchData');
       if (response.status === 200) {
         data = await response.json();
       } else {
@@ -28,28 +28,20 @@ export default function useApiData() {
       console.log('Error:', error);
       setError(error);
     } finally {
-      setTimeout(() => setLoading(false), 1000);
+      setLoading(false);
     }
 
     return data;
   };
 
   const getUpdatedUrl = (league, season) => {
-    let url;
-    switch (league) {
-      case 'nba':
-        url = `https://api.sportsdata.io/v3/nba/scores/json/Standings/${season}?key=b461640f8b2641b8bcaf42396b30ba9a`;
-        break;
-      case 'mlb':
-        url = `https://api.sportsdata.io/v3/mlb/scores/json/Standings/${season}?key=52a40f632efb4cb5820c9dd879fbdd0d`;
-        break;
-      case 'nfl':
-        url = `https://api.sportsdata.io/v3/nfl/scores/json/Standings/${season}?key=e51892e63199402da350f44a963a7a81`;
-        break;
-      default:
-        throw new Error('No league specified');
+    const url = `http://localhost:3030/api/${league}_data`;
+    if (season === 2024) {
+      return url;
+    } else {
+      console.log('Season needs to be updated');
+      return url;
     }
-    return url;
   };
 
   const getLeagueData = async (league) => {
@@ -262,7 +254,7 @@ export default function useApiData() {
     apiData,
     loading,
     error,
-    getAllTeams: () => getAllTeams(league),
-    getAllTeamsData: () => getAllTeamsData(apiData),
+    getAllTeams,
+    getAllTeamsData,
   };
 }
