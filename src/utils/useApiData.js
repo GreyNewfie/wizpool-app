@@ -6,7 +6,6 @@ export default function useApiData() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState();
   const { pool } = usePool();
-  const league = pool.league;
 
   useEffect(() => {
     getApiData();
@@ -216,45 +215,10 @@ export default function useApiData() {
     }
   };
 
-  const getAllTeamsData = (apiData) => {
-    function splitTeamAndCity(fullTeamName) {
-      const words = fullTeamName.split(' ');
-      const teamName = words.pop();
-      const city = words.join(' ');
-      return { city, teamName };
-    }
-    const allTeamsData = apiData?.map((team) => {
-      let teamData;
-      if (league === 'nfl') {
-        const cityAndTeamName = splitTeamAndCity(team.Name);
-        teamData = {
-          teamId: team.Team,
-          city: cityAndTeamName.city,
-          name: cityAndTeamName.teamName,
-          wins: team.Wins,
-          losses: team.Losses,
-          division: `${team.Conference} ${team.Division}`,
-        };
-      } else {
-        teamData = {
-          teamId: team.Key,
-          city: team.City,
-          name: team.Name,
-          wins: team.Wins,
-          losses: team.Losses,
-          division: team.Division,
-        };
-      }
-      return teamData;
-    });
-    return allTeamsData;
-  };
-
   return {
     apiData,
     loading,
     error,
     getAllTeams,
-    getAllTeamsData,
   };
 }
