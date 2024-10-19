@@ -181,7 +181,7 @@ export default function usePool() {
     const updatedPool = pool.clonePool();
     const apiData = JSON.parse(localStorage.getItem('storedData'));
     // Check if apiData exists
-    if (!apiData || apiData?.data.length === 0) {
+    if (!apiData || !apiData.data || apiData?.data?.length === 0) {
       console.log('No API data found in local storage.');
       return;
     }
