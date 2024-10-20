@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import PrimaryActionButton from './PrimayActionButton';
+import PrimaryActionButton from './PrimaryActionButton';
 import classes from './PlayerProfile.module.css';
 
 export default function PlayerProfile({ player, index }) {

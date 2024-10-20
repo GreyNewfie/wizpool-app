@@ -1,5 +1,5 @@
 import NextHeaderButton from '../components/NextHeaderButton';
-import PrimaryActionButton from '../components/PrimayActionButton';
+import PrimaryActionButton from '../components/PrimaryActionButton';
 import UserTextInput from '../components/UserTextInput';
 import classes from './CreatePoolPage.module.css';
 import usePool from '../utils/usePool';
