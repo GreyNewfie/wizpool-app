@@ -1,6 +1,7 @@
 import ChoosePlayerList from '../components/ChoosePlayerList';
 import BackHeaderButton from '../components/BackHeaderButton';
 import NextHeaderButton from '../components/NextHeaderButton';
+import PrimaryActionButton from '../components/PrimayActionButton';
 import classes from './ChoosePlayerPage.module.css';
 import usePool from '../utils/usePool';
 import { useEffect, useState } from 'react';
@@ -25,6 +26,7 @@ export default function ChoosePlayerPage() {
         <NextHeaderButton path="/pool-home" disabled={!areTeamsSelected} />
       </div>
       <ChoosePlayerList poolPlayers={pool.players} />
+      <PrimaryActionButton text="Create Pool" disabled={!areTeamsSelected} />
     </div>
   );
 }
