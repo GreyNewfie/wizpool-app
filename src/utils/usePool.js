@@ -3,7 +3,8 @@ import Pool from './Pool';
 import { useNavigate } from 'react-router-dom';
 import useStoredPools from './useStoredPools';
 // import { create } from '@mui/material/styles/createTransitions';
-import { createPool } from '../services/poolService';
+import { createPool, createPlayers } from '../services/poolService';
+import { v4 as uuidv4 } from 'uuid';
 
 const getInitialPool = () => {
   const activePoolId = localStorage.getItem('activePoolId');
@@ -24,7 +25,7 @@ const getInitialPool = () => {
 
 const cleanPool = (pool) => {
   const updatedPlayers = pool.players.filter(
-    (player) => player.playerName !== '',
+    (player) => player.playerName.trim() !== '',
   );
   const cleanedPool = new Pool(
     pool.poolName,
@@ -78,6 +79,8 @@ export default function usePool() {
     try {
       const poolResponse = await createPool(poolToStore);
       console.log(poolResponse.message);
+      const playerResponse = await createPlayers(poolToStore.players);
+      console.log('Players stored:', playerResponse);
     } catch (error) {
       console.error('Error storing pool and related data:', error);
     }
@@ -157,6 +160,7 @@ export default function usePool() {
       playerName: '',
       teamName: '',
       teams: [],
+      id: uuidv4(),
     });
     setPool(updatedPool);
   };
