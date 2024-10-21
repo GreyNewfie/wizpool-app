@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import Pool from './Pool';
 import { useNavigate } from 'react-router-dom';
 import useStoredPools from './useStoredPools';
+// import { create } from '@mui/material/styles/createTransitions';
+import { createPool } from '../services/poolService';
 
 const getInitialPool = () => {
   const activePoolId = localStorage.getItem('activePoolId');
@@ -69,6 +71,16 @@ export default function usePool() {
     localStorage.setItem(`pool-${newPool.id}`, JSON.stringify(newPool));
     localStorage.setItem('activePoolId', newPool.id);
     navigate('/choose-league');
+  };
+
+  const storePoolToDb = async () => {
+    const poolToStore = pool.clonePool();
+    try {
+      const poolResponse = await createPool(poolToStore);
+      console.log(poolResponse.message);
+    } catch (error) {
+      console.error('Error storing pool and related data:', error);
+    }
   };
 
   const changePool = (poolId) => {
@@ -235,5 +247,6 @@ export default function usePool() {
     updateActivePoolId,
     sortPlayersByWins,
     updatePlayersTeamsRecords,
+    storePoolToDb,
   };
 }
