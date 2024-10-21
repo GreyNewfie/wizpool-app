@@ -3,7 +3,11 @@ import Pool from './Pool';
 import { useNavigate } from 'react-router-dom';
 import useStoredPools from './useStoredPools';
 // import { create } from '@mui/material/styles/createTransitions';
-import { createPool, createPlayers } from '../services/poolService';
+import {
+  createPool,
+  createPlayers,
+  createPoolPlayers,
+} from '../services/poolService';
 import { v4 as uuidv4 } from 'uuid';
 
 const getInitialPool = () => {
@@ -81,6 +85,8 @@ export default function usePool() {
       console.log(poolResponse.message);
       const playerResponse = await createPlayers(poolToStore.players);
       console.log('Players stored:', playerResponse);
+      const poolPlayersResponse = await createPoolPlayers(poolToStore);
+      console.log('Pool players stored:', poolPlayersResponse);
     } catch (error) {
       console.error('Error storing pool and related data:', error);
     }
