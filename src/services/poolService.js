@@ -26,3 +26,29 @@ export async function createPool(pool) {
     throw error;
   }
 }
+
+export async function createPlayer(player) {
+  const payload = {
+    id: player.id,
+    name: player.name,
+  };
+
+  try {
+    const response = await fetch(`${BASE_URL}/players`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to store player');
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Error storing player to DB:', error);
+    throw error;
+  }
+}
