@@ -27,28 +27,31 @@ export async function createPool(pool) {
   }
 }
 
-export async function createPlayer(player) {
-  const payload = {
-    id: player.id,
-    name: player.name,
-  };
+export async function createPlayers(players) {
+  const playerPromises = players.map(async (player) => {
+    const payload = {
+      id: player.id,
+      name: player.playerName,
+    };
 
-  try {
-    const response = await fetch(`${BASE_URL}/players`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(payload),
-    });
+    try {
+      const response = await fetch(`${BASE_URL}/players`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
 
-    if (!response.ok) {
-      throw new Error('Failed to store player');
+      if (!response.ok) {
+        throw new Error('Failed to store player');
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error('Error storing player to DB:', error);
+      throw error;
     }
-
-    return await response.json();
-  } catch (error) {
-    console.error('Error storing player to DB:', error);
-    throw error;
-  }
+  });
+  return await Promise.all(playerPromises);
 }
