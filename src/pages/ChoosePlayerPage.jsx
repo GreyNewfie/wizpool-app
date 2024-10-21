@@ -7,7 +7,7 @@ import usePool from '../utils/usePool';
 import { useEffect, useState } from 'react';
 
 export default function ChoosePlayerPage() {
-  const { pool } = usePool();
+  const { pool, storePoolToDb } = usePool();
   const [areTeamsSelected, setAreTeamsSelected] = useState(false);
 
   useEffect(() => {
@@ -18,6 +18,10 @@ export default function ChoosePlayerPage() {
     setAreTeamsSelected(playersHaveTeams());
   }, [pool.players]);
 
+  const createPool = () => {
+    storePoolToDb();
+  };
+
   return (
     <div className={classes['assign-teams-page']}>
       <div className={classes['assign-teams-page-header']}>
@@ -26,7 +30,12 @@ export default function ChoosePlayerPage() {
         <NextHeaderButton path="/pool-home" disabled={!areTeamsSelected} />
       </div>
       <ChoosePlayerList poolPlayers={pool.players} />
-      <PrimaryActionButton text="Create Pool" disabled={!areTeamsSelected} />
+      <PrimaryActionButton
+        text="Create Pool"
+        handleClick={createPool}
+        path={'/pool-home'}
+        disabled={!areTeamsSelected}
+      />
     </div>
   );
 }
