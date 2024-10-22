@@ -86,3 +86,38 @@ export async function createPoolPlayers(pool) {
   });
   return await Promise.all(playerPromises);
 }
+
+export async function createPlayerTeams(pool) {
+  const allPlayerTeamsPromises = pool.players.map(async (player) => {
+    const playerTeamsPromises = player.teams.map(async (team) => {
+      const payload = {
+        player_id: player.id,
+        team_key: team.teamId,
+        pool_id: pool.id,
+      };
+
+      console.log('Payload for createPlayerTeams:', payload);
+
+      try {
+        const response = await fetch(`${BASE_URL}/player_teams`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(payload),
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to POST player's teams");
+        }
+
+        return await response.json();
+      } catch (error) {
+        console.error("Error with POSt request to store player's teams");
+        throw error;
+      }
+    });
+    return await Promise.all(playerTeamsPromises);
+  });
+  return await Promise.all(allPlayerTeamsPromises);
+}

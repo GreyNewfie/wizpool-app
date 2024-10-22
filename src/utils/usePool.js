@@ -7,6 +7,7 @@ import {
   createPool,
   createPlayers,
   createPoolPlayers,
+  createPlayerTeams,
 } from '../services/poolService';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -87,6 +88,8 @@ export default function usePool() {
       console.log('Players stored:', playerResponse);
       const poolPlayersResponse = await createPoolPlayers(poolToStore);
       console.log('Pool players stored:', poolPlayersResponse);
+      const playerTeamsResponse = await createPlayerTeams(poolToStore);
+      console.log("All player's teams stored:", playerTeamsResponse);
     } catch (error) {
       console.error('Error storing pool and related data:', error);
     }
