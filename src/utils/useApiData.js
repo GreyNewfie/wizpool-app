@@ -153,63 +153,17 @@ export default function useApiData() {
 
   const getAllTeams = async (league) => {
     // Set api url based on league
-    let url;
-    switch (league) {
-      case 'nba':
-        url =
-          'https://api.sportsdata.io/v3/nba/scores/json/teams?key=b461640f8b2641b8bcaf42396b30ba9a';
-        break;
-      case 'mlb':
-        url =
-          'https://api.sportsdata.io/v3/mlb/scores/json/teams?key=52a40f632efb4cb5820c9dd879fbdd0d';
-        break;
-      case 'nfl':
-        url =
-          'https://api.sportsdata.io/v3/nfl/scores/json/Teams?key=e51892e63199402da350f44a963a7a81';
-        break;
-      default:
-        throw new Error('No league specified');
-    }
-    const currentDate = new Date();
-    const currentDay = currentDate.getDate();
-    const currentMonth = currentDate.getMonth();
-    const currentYear = currentDate.getFullYear();
-
-    // Check If league's teams names are already stored in localStorage for this league and date
-    const storedLeagueTeams = JSON.parse(localStorage.getItem('leagueTeams'));
-    if (
-      storedLeagueTeams &&
-      storedLeagueTeams.league === league &&
-      storedLeagueTeams.storedDate.day === currentDay &&
-      storedLeagueTeams.storedDate.month === currentMonth &&
-      storedLeagueTeams.storedDate.year === currentYear
-    ) {
-      console.log('League teams found in localStorage');
-      return storedLeagueTeams.teams;
-    }
+    const url = `http://localhost:3030/api/${league}_data`;
 
     // If not storedData, fetch league's teams names and store in localStorage
-    const leagueTeams = await fetchData(url);
-    console.log('fetchData called from getAllTeams');
-    if (leagueTeams) {
+    const leagueData = await fetchData(url);
+    if (leagueData) {
       // Get list of team names
-      const teamsList = leagueTeams?.map((team) => ({
-        teamId: team.Key,
-        city: team.City,
-        name: team.Name,
+      const teamsList = leagueData?.map((team) => ({
+        teamId: team.key,
+        city: team.city,
+        name: team.name,
       }));
-      // Store list of team names in localStorage
-      const TeamsToStore = {
-        teams: teamsList,
-        league: league,
-        storedDate: {
-          day: currentDay,
-          month: currentMonth,
-          year: currentYear,
-        },
-      };
-      localStorage.setItem('leagueTeams', JSON.stringify(TeamsToStore));
-      console.log('League teams stored in localStorage');
 
       return teamsList;
     }
