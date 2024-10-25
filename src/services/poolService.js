@@ -121,3 +121,14 @@ export async function createPlayerTeams(pool) {
   });
   return await Promise.all(allPlayerTeamsPromises);
 }
+
+export async function fetchPooolById(poolId) {
+  try {
+    const response = await fetch(`${BASE_URL}/pools/${poolId}`);
+    console.log('Response from fetchPoolById: ', response);
+    return response;
+  } catch (error) {
+    console.error('Error fetching pool from database: ', error);
+    return error;
+  }
+}
