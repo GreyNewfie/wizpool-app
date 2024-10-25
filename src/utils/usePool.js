@@ -65,11 +65,6 @@ export default function usePool() {
     }
   }, [activePoolId, pool.id]);
 
-  const updateActivePoolId = (poolId) => {
-    setActivePoolId(poolId);
-    localStorage.setItem('activePool', poolId);
-  };
-
   const createNewPool = () => {
     const newPool = new Pool('', [], '');
     setPool(newPool);
@@ -257,7 +252,6 @@ export default function usePool() {
     addBlankPlayer,
     deletePlayer,
     activePoolId,
-    updateActivePoolId,
     sortPlayersByWins,
     updatePlayersTeamsRecords,
     storePoolToDb,
