@@ -196,43 +196,30 @@ export default function usePool() {
     return sortedPlayers;
   };
 
-  const updatePlayersTeamsRecords = () => {
+  const updatePlayersTeamsRecords = async (leagueData) => {
     // Clone pool
     const updatedPool = pool.clonePool();
-    const apiData = JSON.parse(localStorage.getItem('storedData'));
     // Check if apiData exists
-    if (!apiData || !apiData.data || apiData?.data?.length === 0) {
-      console.log('No API data found in local storage.');
-      return;
+    if (leagueData === null) {
+      throw new Error('League data is not available');
     }
+
     // Iterate through players
     updatedPool.players.forEach((player) => {
       // Iterate through player's teams
       player.teams?.forEach((playerTeam) => {
-        // Check league to determine how to reference team data
-        if (pool.league === 'nfl') {
-          // Find team record
-          const teamRecord = apiData.data.find(
-            (dataTeam) => dataTeam.name === `${playerTeam.name}`,
-          );
-          if (teamRecord) {
-            // Update player's team's record
-            playerTeam.wins = teamRecord.wins;
-            playerTeam.losses = teamRecord.losses;
-            playerTeam.division = teamRecord.division;
-          }
-        } else {
-          // Find team record
-          const teamRecord = apiData.data.find(
-            (dataTeam) => dataTeam.name === playerTeam.name,
-          );
-          if (teamRecord) {
-            // Update player's team's record
-            playerTeam.wins = teamRecord.wins;
-            playerTeam.losses = teamRecord.losses;
-            playerTeam.division = teamRecord.division;
-          }
-        }
+        // Find team record
+        const teamRecord = leagueData.find(
+          (dataTeam) => dataTeam.name === `${playerTeam.name}`,
+        );
+        if (!teamRecord)
+          return console.error(`Team record not found for ${playerTeam.name}`);
+
+        // Update player's team's record
+        playerTeam.wins = teamRecord.wins;
+        playerTeam.losses = teamRecord.losses;
+        playerTeam.division = teamRecord.division;
+        playerTeam.conference = teamRecord.conference;
       });
     });
     // Update pool
