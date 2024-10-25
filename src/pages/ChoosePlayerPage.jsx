@@ -18,8 +18,12 @@ export default function ChoosePlayerPage() {
     setAreTeamsSelected(playersHaveTeams());
   }, [pool.players]);
 
-  const createPool = () => {
-    storePoolToDb();
+  const createPool = async () => {
+    try {
+      await storePoolToDb();
+    } catch (error) {
+      console.error('Error storing pool:', error);
+    }
   };
 
   return (
