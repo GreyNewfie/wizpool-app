@@ -1,15 +1,9 @@
-import { useEffect, useState } from 'react';
-import usePool from './usePool';
+import { useState } from 'react';
 
 export default function useApiData() {
   const [apiData, setApiData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState();
-  const { pool } = usePool();
-
-  useEffect(() => {
-    getApiData();
-  }, []);
 
   const fetchData = async (url) => {
     setLoading(true);
@@ -115,40 +109,21 @@ export default function useApiData() {
     return data;
   };
 
-  const getApiData = async () => {
-    const league = pool.league;
-    let data = [];
-    const storedData = JSON.parse(localStorage.getItem('storedData'));
-    const currentDate = new Date();
-    const currentDay = currentDate.getDate();
-    const currentMonth = currentDate.getMonth();
-    const currentYear = currentDate.getFullYear();
-    // Check if stored data and was stored today
-    if (
-      storedData?.data?.length > 0 &&
-      storedData.storedDate.day === currentDay &&
-      storedData.storedDate.month === currentMonth &&
-      storedData.storedDate.year === currentYear &&
-      storedData.sportsLeague === league
-    ) {
-      // If yes, use data from localStorage
-      data = storedData.data;
-    } else {
-      // If no, fetch updated data from API
-      data = await getLeagueData(league);
-      // Store data with time stamp in localStorage
-      const dataToStore = {
-        data: data,
-        storedDate: {
-          day: currentDay,
-          month: currentMonth,
-          year: currentYear,
-        },
-        sportsLeague: league,
-      };
-      localStorage.setItem('storedData', JSON.stringify(dataToStore));
+  const getApiLeagueData = async (league) => {
+    const url = `http://localhost:3030/api/${league}_data`;
+
+    try {
+      const leagueDataFromDb = await fetchData(url);
+
+      if (!leagueDataFromDb) {
+        throw new Error('League data not found.');
+      }
+
+      setApiData(leagueDataFromDb);
+      return leagueDataFromDb;
+    } catch (error) {
+      console.error('Error retrieving league data: ', error);
     }
-    setApiData(data);
   };
 
   const getAllTeams = async (league) => {
@@ -174,5 +149,6 @@ export default function useApiData() {
     loading,
     error,
     getAllTeams,
+    getApiLeagueData,
   };
 }
