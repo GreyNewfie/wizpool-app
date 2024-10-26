@@ -18,7 +18,7 @@ export default function ChoosePlayerPage() {
     setAreTeamsSelected(playersHaveTeams());
   }, [pool.players]);
 
-  const createPool = async () => {
+  const storePool = async () => {
     try {
       await storePoolToDb();
     } catch (error) {
@@ -36,7 +36,7 @@ export default function ChoosePlayerPage() {
       <ChoosePlayerList poolPlayers={pool.players} />
       <PrimaryActionButton
         text="Create Pool"
-        handleClick={createPool}
+        handleClick={storePool}
         path={'/pool-home'}
         disabled={!areTeamsSelected}
       />
