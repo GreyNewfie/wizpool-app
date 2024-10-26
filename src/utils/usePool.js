@@ -2,6 +2,14 @@ import { useState, useEffect } from 'react';
 import Pool from './Pool';
 import { useNavigate } from 'react-router-dom';
 import useStoredPools from './useStoredPools';
+// import { create } from '@mui/material/styles/createTransitions';
+import {
+  createPool,
+  createPlayers,
+  createPoolPlayers,
+  createPlayerTeams,
+} from '../services/poolService';
+import { v4 as uuidv4 } from 'uuid';
 
 const getInitialPool = () => {
   const activePoolId = localStorage.getItem('activePoolId');
@@ -22,7 +30,7 @@ const getInitialPool = () => {
 
 const cleanPool = (pool) => {
   const updatedPlayers = pool.players.filter(
-    (player) => player.playerName !== '',
+    (player) => player.playerName.trim() !== '',
   );
   const cleanedPool = new Pool(
     pool.poolName,
@@ -57,11 +65,6 @@ export default function usePool() {
     }
   }, [activePoolId, pool.id]);
 
-  const updateActivePoolId = (poolId) => {
-    setActivePoolId(poolId);
-    localStorage.setItem('activePool', poolId);
-  };
-
   const createNewPool = () => {
     const newPool = new Pool('', [], '');
     setPool(newPool);
@@ -69,6 +72,22 @@ export default function usePool() {
     localStorage.setItem(`pool-${newPool.id}`, JSON.stringify(newPool));
     localStorage.setItem('activePoolId', newPool.id);
     navigate('/choose-league');
+  };
+
+  const storePoolToDb = async () => {
+    const poolToStore = pool.clonePool();
+    try {
+      const poolResponse = await createPool(poolToStore);
+      console.log(poolResponse.message);
+      const playerResponse = await createPlayers(poolToStore.players);
+      console.log('Players stored:', playerResponse);
+      const poolPlayersResponse = await createPoolPlayers(poolToStore);
+      console.log('Pool players stored:', poolPlayersResponse);
+      const playerTeamsResponse = await createPlayerTeams(poolToStore);
+      console.log("All player's teams stored:", playerTeamsResponse);
+    } catch (error) {
+      console.error('Error storing pool and related data:', error);
+    }
   };
 
   const changePool = (poolId) => {
@@ -145,6 +164,7 @@ export default function usePool() {
       playerName: '',
       teamName: '',
       teams: [],
+      id: uuidv4(),
     });
     setPool(updatedPool);
   };
@@ -176,43 +196,30 @@ export default function usePool() {
     return sortedPlayers;
   };
 
-  const updatePlayersTeamsRecords = () => {
+  const updatePlayersTeamsRecords = async (leagueData) => {
     // Clone pool
     const updatedPool = pool.clonePool();
-    const apiData = JSON.parse(localStorage.getItem('storedData'));
     // Check if apiData exists
-    if (!apiData || !apiData.data || apiData?.data?.length === 0) {
-      console.log('No API data found in local storage.');
-      return;
+    if (leagueData === null) {
+      throw new Error('League data is not available');
     }
+
     // Iterate through players
     updatedPool.players.forEach((player) => {
       // Iterate through player's teams
       player.teams?.forEach((playerTeam) => {
-        // Check league to determine how to reference team data
-        if (pool.league === 'nfl') {
-          // Find team record
-          const teamRecord = apiData.data.find(
-            (dataTeam) => dataTeam.name === `${playerTeam.name}`,
-          );
-          if (teamRecord) {
-            // Update player's team's record
-            playerTeam.wins = teamRecord.wins;
-            playerTeam.losses = teamRecord.losses;
-            playerTeam.division = teamRecord.division;
-          }
-        } else {
-          // Find team record
-          const teamRecord = apiData.data.find(
-            (dataTeam) => dataTeam.name === playerTeam.name,
-          );
-          if (teamRecord) {
-            // Update player's team's record
-            playerTeam.wins = teamRecord.wins;
-            playerTeam.losses = teamRecord.losses;
-            playerTeam.division = teamRecord.division;
-          }
-        }
+        // Find team record
+        const teamRecord = leagueData.find(
+          (dataTeam) => dataTeam.name === `${playerTeam.name}`,
+        );
+        if (!teamRecord)
+          return console.error(`Team record not found for ${playerTeam.name}`);
+
+        // Update player's team's record
+        playerTeam.wins = teamRecord.wins;
+        playerTeam.losses = teamRecord.losses;
+        playerTeam.division = teamRecord.division;
+        playerTeam.conference = teamRecord.conference;
       });
     });
     // Update pool
@@ -232,8 +239,8 @@ export default function usePool() {
     addBlankPlayer,
     deletePlayer,
     activePoolId,
-    updateActivePoolId,
     sortPlayersByWins,
     updatePlayersTeamsRecords,
+    storePoolToDb,
   };
 }

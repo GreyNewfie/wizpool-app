@@ -1,5 +1,5 @@
 import NextHeaderButton from '../components/NextHeaderButton';
-import PrimaryActionButton from '../components/PrimayActionButton';
+import PrimaryActionButton from '../components/PrimaryActionButton';
 import UserTextInput from '../components/UserTextInput';
 import classes from './CreatePoolPage.module.css';
 import usePool from '../utils/usePool';
@@ -17,7 +17,15 @@ export default function CreatePoolPage() {
 
   const [isPoolCreated, setIsPoolCreated] = useState(false);
 
+  // Add blank player if pool has no players, ensures first player is assigned an id
   useEffect(() => {
+    if (pool.players.length === 0) {
+      addBlankPlayer();
+    }
+  }, [pool.players, addBlankPlayer]);
+
+  useEffect(() => {
+    // Check if players have names and pool has a name
     const checkPoolCreated = () => {
       let playersHaveNames =
         pool.players[0]?.playerName?.replace(/[^a-zA-z]/g, '').length > 0;

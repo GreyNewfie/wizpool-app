@@ -24,3 +24,8 @@
 .assign-teams-page-header > button {
   align-self: center;
 }
+
+/* Adjust the width of the Create Pool button */
+[class*='assign-teams-page'] > div:last-of-type {
+  width: clamp(200px, 100%, 350px);
+}

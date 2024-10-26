@@ -9,7 +9,8 @@ import classNames from 'classnames';
 import DesktopNavHeader from '../components/DesktopNavHeader';
 import useIsDesktop from '../utils/useIsDesktop';
 import useStoredPools from '../utils/useStoredPools';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import useApiData from '../utils/useApiData';
 
 const getTotalWins = (player) =>
   player.teams.reduce((totalWins, team) => totalWins + team.wins, 0);
@@ -104,6 +105,7 @@ export default function PoolHomePage() {
     sortPlayersByWins,
     updatePlayersTeamsRecords,
   } = usePool();
+  const { getApiLeagueData } = useApiData();
   const { theme } = useTheme();
   const sortedPlayers = sortPlayersByWins([...pool.players]);
   const poolClasses = classNames(classes['pool-home'], classes[theme]);
@@ -111,10 +113,22 @@ export default function PoolHomePage() {
   const { getNonActivePools } = useStoredPools();
   const nonActivePools = getNonActivePools();
   const playerStandings = getPlayerStandings(sortedPlayers);
+  const [leagueData, setLeagueData] = useState(null);
 
   useEffect(() => {
-    updatePlayersTeamsRecords();
+    const fetchApiData = async () => {
+      const apiData = await getApiLeagueData(pool.league);
+      setLeagueData(apiData);
+    };
+
+    if (!leagueData) fetchApiData();
   }, []);
+
+  useEffect(() => {
+    if (leagueData !== null) {
+      updatePlayersTeamsRecords(leagueData);
+    }
+  }, [leagueData]);
 
   return (
     <div className={classes['page-container']}>

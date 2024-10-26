@@ -6,7 +6,7 @@ import PlayerHomeProfile from '../components/PlayerHomeProfile';
 import usePool from '../utils/usePool';
 import { useState } from 'react';
 import PlayerInput from '../components/PlayerInput';
-import PrimaryActionButton from '../components/PrimayActionButton';
+import PrimaryActionButton from '../components/PrimaryActionButton';
 import ConfirmDialog from '../components/ConfirmDialog';
 import useIsDesktop from '../utils/useIsDesktop';
 import DesktopNavHeader from '../components/DesktopNavHeader';

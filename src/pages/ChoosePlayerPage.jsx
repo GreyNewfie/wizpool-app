@@ -1,12 +1,13 @@
 import ChoosePlayerList from '../components/ChoosePlayerList';
 import BackHeaderButton from '../components/BackHeaderButton';
 import NextHeaderButton from '../components/NextHeaderButton';
+import PrimaryActionButton from '../components/PrimaryActionButton';
 import classes from './ChoosePlayerPage.module.css';
 import usePool from '../utils/usePool';
 import { useEffect, useState } from 'react';
 
 export default function ChoosePlayerPage() {
-  const { pool } = usePool();
+  const { pool, storePoolToDb } = usePool();
   const [areTeamsSelected, setAreTeamsSelected] = useState(false);
 
   useEffect(() => {
@@ -17,6 +18,14 @@ export default function ChoosePlayerPage() {
     setAreTeamsSelected(playersHaveTeams());
   }, [pool.players]);
 
+  const storePool = async () => {
+    try {
+      await storePoolToDb();
+    } catch (error) {
+      console.error('Error storing pool:', error);
+    }
+  };
+
   return (
     <div className={classes['assign-teams-page']}>
       <div className={classes['assign-teams-page-header']}>
@@ -25,6 +34,12 @@ export default function ChoosePlayerPage() {
         <NextHeaderButton path="/pool-home" disabled={!areTeamsSelected} />
       </div>
       <ChoosePlayerList poolPlayers={pool.players} />
+      <PrimaryActionButton
+        text="Create Pool"
+        handleClick={storePool}
+        path={'/pool-home'}
+        disabled={!areTeamsSelected}
+      />
     </div>
   );
 }
