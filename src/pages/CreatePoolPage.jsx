@@ -5,6 +5,7 @@ import classes from './CreatePoolPage.module.css';
 import usePool from '../utils/usePool';
 import PlayersList from '../components/PlayersList';
 import { useState, useEffect } from 'react';
+import CircularIndeterminate from '../components/Loading';
 
 export default function CreatePoolPage() {
   const {
@@ -19,12 +20,15 @@ export default function CreatePoolPage() {
 
   // Add blank player if pool has no players, ensures first player is assigned an id
   useEffect(() => {
+    if (!pool) return;
+
     if (pool.players.length === 0) {
       addBlankPlayer();
     }
-  }, [pool.players, addBlankPlayer]);
+  }, [pool, addBlankPlayer]);
 
   useEffect(() => {
+    if (!pool) return;
     // Check if players have names and pool has a name
     const checkPoolCreated = () => {
       let playersHaveNames =
@@ -33,7 +37,11 @@ export default function CreatePoolPage() {
       return playersHaveNames && poolHasName;
     };
     setIsPoolCreated(checkPoolCreated());
-  }, [pool.players, pool.poolName]);
+  }, [pool]);
+
+  if (!pool) {
+    return <CircularIndeterminate />;
+  }
 
   return (
     <div

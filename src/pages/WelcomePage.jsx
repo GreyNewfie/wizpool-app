@@ -4,7 +4,7 @@ import classes from './WelcomePage.module.css';
 
 export default function Welcome() {
   const { pool } = usePool();
-  const isExistingPool = pool.poolName || null;
+  const isExistingPool = pool?.poolName !== '' ? true : null;
 
   return (
     <div className={classes[`welcome-container`]}>

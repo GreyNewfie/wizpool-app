@@ -5,18 +5,20 @@ import PrimaryActionButton from '../components/PrimaryActionButton';
 import classes from './ChoosePlayerPage.module.css';
 import usePool from '../utils/usePool';
 import { useEffect, useState } from 'react';
+import CircularIndeterminate from '../components/Loading';
 
 export default function ChoosePlayerPage() {
   const { pool, storePoolToDb } = usePool();
   const [areTeamsSelected, setAreTeamsSelected] = useState(false);
 
   useEffect(() => {
+    if (!pool) return;
     const playersHaveTeams = () => {
       return pool.players.every((player) => player.teams?.length > 0);
     };
 
     setAreTeamsSelected(playersHaveTeams());
-  }, [pool.players]);
+  }, [pool]);
 
   const storePool = async () => {
     try {
@@ -25,6 +27,10 @@ export default function ChoosePlayerPage() {
       console.error('Error storing pool:', error);
     }
   };
+
+  if (!pool) {
+    return <CircularIndeterminate />;
+  }
 
   return (
     <div className={classes['assign-teams-page']}>
