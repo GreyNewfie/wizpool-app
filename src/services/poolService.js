@@ -122,13 +122,39 @@ export async function createPlayerTeams(pool) {
   return await Promise.all(allPlayerTeamsPromises);
 }
 
-export async function fetchPooolById(poolId) {
+export async function fetchPoolById(poolId) {
   try {
     const response = await fetch(`${BASE_URL}/pools/${poolId}`);
-    console.log('Response from fetchPoolById: ', response);
-    return response;
+
+    // If the pool isn't in the database, return undefined
+    if (response.status === 404) {
+      console.log("Pool isn't stored in the database");
+      return undefined;
+    }
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch pool: ', response.statusText);
+    }
+
+    const poolData = await response.json();
+    return poolData;
   } catch (error) {
     console.error('Error fetching pool from database: ', error);
-    return error;
+    throw error;
+  }
+}
+
+export async function fetchPlayersInPool(poolId) {
+  try {
+    const response = await fetch(`${BASE_URL}/pool_players/${poolId}`);
+
+    if (!response.ok)
+      throw new Error('Failed to fetch players in pool: ', response.statusText);
+
+    const poolPlayers = response.json();
+    return poolPlayers;
+  } catch (error) {
+    console.error('Error fetching players in pool: ', error);
+    throw error;
   }
 }
