@@ -22,15 +22,6 @@ export default function CreatePoolPage() {
   const pool = useSelector((state) => state.pool);
   const [isPoolCreated, setIsPoolCreated] = useState(false);
 
-  // Add blank player if pool has no players, ensures first player is assigned an id
-  useEffect(() => {
-    if (!pool) return;
-
-    if (pool.players.length === 0) {
-      addBlankPlayer();
-    }
-  }, [pool, addBlankPlayer]);
-
   useEffect(() => {
     if (!pool) return;
     // Check if players have names and pool has a name
