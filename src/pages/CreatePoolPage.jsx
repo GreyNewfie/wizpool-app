@@ -2,22 +2,18 @@ import NextHeaderButton from '../components/NextHeaderButton';
 import PrimaryActionButton from '../components/PrimaryActionButton';
 import UserTextInput from '../components/UserTextInput';
 import classes from './CreatePoolPage.module.css';
-import usePool from '../utils/usePool';
 import PlayersList from '../components/PlayersList';
 import { useState, useEffect } from 'react';
 import CircularIndeterminate from '../components/Loading';
 import { useSelector, useDispatch } from 'react-redux';
-import { addPlayer, setPoolName } from '../state/poolSlice';
+import {
+  addPlayer,
+  setPoolName,
+  setPlayerName,
+  setTeamName,
+} from '../state/poolSlice';
 
 export default function CreatePoolPage() {
-  const {
-    pool,
-    addBlankPlayer,
-    handlePoolNameChange,
-    handlePlayerNameChange,
-    handleTeamNameChange,
-  } = usePool();
-
   const dispatch = useDispatch();
   const pool = useSelector((state) => state.pool);
   const [isPoolCreated, setIsPoolCreated] = useState(false);
