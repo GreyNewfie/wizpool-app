@@ -43,6 +43,14 @@ export default function CreatePoolPage() {
     setIsPoolCreated(checkPoolCreated());
   }, [pool]);
 
+  const handleAddBlankPlayer = () => {
+    dispatch(addPlayer({ name: '', teamName: '', teams: [] }));
+  };
+
+  const handlePoolNameChange = (value) => {
+    dispatch(setPoolName(value));
+  };
+
   if (!pool) {
     return <CircularIndeterminate />;
   }
@@ -86,7 +94,7 @@ export default function CreatePoolPage() {
         </span>
         <PrimaryActionButton
           text="Add another player"
-          handleClick={addBlankPlayer}
+          handleClick={handleAddBlankPlayer}
           optionalSymbol="+"
         />
       </div>
