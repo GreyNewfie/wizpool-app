@@ -14,7 +14,12 @@ const poolSlice = createSlice({
     setPool: (state, action) => {
       return { ...state, ...action.payload };
     },
+    setLeague: (state, action) => {
+      return { ...state, league: action.payload };
+    },
   },
 });
+
+export const { setPool, setLeague } = poolSlice.actions;
 
 export default poolSlice.reducer;
