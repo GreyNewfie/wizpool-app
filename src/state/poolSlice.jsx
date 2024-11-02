@@ -4,7 +4,14 @@ import { v4 as uuid } from 'uuid';
 const initialState = {
   id: '',
   league: '',
-  players: [],
+  players: [
+    {
+      id: uuid(),
+      name: '',
+      teamName: '',
+      teams: [],
+    },
+  ],
   name: '',
 };
 
@@ -24,9 +31,32 @@ const poolSlice = createSlice({
     addPlayer: (state, action) => {
       state.players.push({ ...action.payload, id: uuid() });
     },
+    setPlayerName: (state, action) => {
+      const { name, index } = action.payload;
+      const player = state.players[index];
+
+      if (player) {
+        player.name = name;
+      }
+    },
+    setTeamName: (state, action) => {
+      const { teamName, index } = action.payload;
+      const player = state.players[index];
+
+      if (player) {
+        player.teamName = teamName;
+      }
+    },
   },
 });
 
-export const { setPool, setLeague, setPoolName, addPlayer } = poolSlice.actions;
+export const {
+  setPool,
+  setLeague,
+  setPoolName,
+  addPlayer,
+  setPlayerName,
+  setTeamName,
+} = poolSlice.actions;
 
 export default poolSlice.reducer;
