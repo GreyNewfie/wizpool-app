@@ -6,6 +6,8 @@ import usePool from '../utils/usePool';
 import PlayersList from '../components/PlayersList';
 import { useState, useEffect } from 'react';
 import CircularIndeterminate from '../components/Loading';
+import { useSelector, useDispatch } from 'react-redux';
+import { addPlayer, setPoolName } from '../state/poolSlice';
 
 export default function CreatePoolPage() {
   const {
@@ -16,6 +18,8 @@ export default function CreatePoolPage() {
     handleTeamNameChange,
   } = usePool();
 
+  const dispatch = useDispatch();
+  const pool = useSelector((state) => state.pool);
   const [isPoolCreated, setIsPoolCreated] = useState(false);
 
   // Add blank player if pool has no players, ensures first player is assigned an id
