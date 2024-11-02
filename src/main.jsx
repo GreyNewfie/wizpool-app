@@ -16,6 +16,8 @@ import ReassignTeamsPage from './pages/ReassignTeamsPage.jsx';
 import ThemeProvider from './context/ThemeContext.jsx';
 import ChooseLeaguePage from './pages/ChooseLeaguePage.jsx';
 import DeletePoolPage from './pages/DeletePoolPage.jsx';
+import { Provider } from 'react-redux';
+import store from './state/store';
 
 const router = createBrowserRouter(
   [
@@ -85,8 +87,10 @@ const router = createBrowserRouter(
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <ThemeProvider>
-      <RouterProvider router={router} />
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider>
+        <RouterProvider router={router} />
+      </ThemeProvider>
+    </Provider>
   </React.StrictMode>,
 );
