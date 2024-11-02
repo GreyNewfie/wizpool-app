@@ -42,6 +42,14 @@ export default function CreatePoolPage() {
     dispatch(setPoolName(value));
   };
 
+  const handlePlayerNameChange = (value, index) => {
+    dispatch(setPlayerName({ name: value, index }));
+  };
+
+  const handleTeamNameChange = (value, index) => {
+    dispatch(setTeamName({ teamName: value, index }));
+  };
+
   if (!pool) {
     return <CircularIndeterminate />;
   }
