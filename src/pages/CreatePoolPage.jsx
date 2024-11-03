@@ -4,7 +4,6 @@ import UserTextInput from '../components/UserTextInput';
 import classes from './CreatePoolPage.module.css';
 import PlayersList from '../components/PlayersList';
 import { useState, useEffect } from 'react';
-import CircularIndeterminate from '../components/Loading';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   addPlayer,
@@ -20,13 +19,14 @@ export default function CreatePoolPage() {
 
   useEffect(() => {
     if (!pool) return;
-    // Check if players have names and pool has a name
+    // Check if first player has name and pool has a name
     const checkPoolCreated = () => {
       let playersHaveNames =
-        pool.players[0]?.playerName?.replace(/[^a-zA-z]/g, '').length > 0;
-      let poolHasName = pool.poolName?.replace(/[^a-zA-Z]/g, '').length > 0;
+        pool.players[0].name.replace(/[^a-zA-z]/g, '').length > 0;
+      let poolHasName = pool.name.replace(/[^a-zA-Z]/g, '').length > 0;
       return playersHaveNames && poolHasName;
     };
+    // Set isPoolCreated to toggle next button
     setIsPoolCreated(checkPoolCreated());
   }, [pool]);
 
@@ -45,10 +45,6 @@ export default function CreatePoolPage() {
   const handleTeamNameChange = (value, index) => {
     dispatch(setTeamName({ teamName: value, index }));
   };
-
-  if (!pool) {
-    return <CircularIndeterminate />;
-  }
 
   return (
     <div
@@ -69,7 +65,7 @@ export default function CreatePoolPage() {
         <UserTextInput
           id="pool-name"
           name="pool-name"
-          value={pool.poolName}
+          value={pool.name}
           placeholderText="Pool Name"
           handleChange={(e) => handlePoolNameChange(e.target.value)}
           autoFocus={true}
