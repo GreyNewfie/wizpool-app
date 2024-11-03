@@ -1,8 +1,14 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { v4 as uuid } from 'uuid';
+import {
+  createPool,
+  createPlayers,
+  createPlayerTeams,
+  createPoolPlayers,
+} from '../services/poolService';
 
 const initialState = {
-  id: '',
+  id: uuid(),
   league: '',
   players: [
     {
@@ -14,6 +20,22 @@ const initialState = {
   ],
   name: '',
 };
+
+export const storePoolAsync = createAsyncThunk(
+  'pool/storePoolAsync',
+  async (_, { getState, rejectWithValue }) => {
+    const pool = getState().pool;
+    try {
+      await createPool(pool);
+      await createPlayers(pool.players);
+      await createPoolPlayers(pool);
+      await createPlayerTeams(pool);
+    } catch (error) {
+      console.error('Error storing pool data:', error);
+      return rejectWithValue(error.message);
+    }
+  },
+);
 
 const poolSlice = createSlice({
   name: 'pool',
@@ -47,6 +69,20 @@ const poolSlice = createSlice({
         player.teamName = teamName;
       }
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(storePoolAsync.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(storePoolAsync.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(storePoolAsync.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
   },
 });
 
