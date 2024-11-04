@@ -4,7 +4,6 @@ import NextHeaderButton from '../components/NextHeaderButton';
 import PrimaryActionButton from '../components/PrimaryActionButton';
 import classes from './ChoosePlayerPage.module.css';
 import { useEffect, useState } from 'react';
-import CircularIndeterminate from '../components/Loading';
 import { useSelector, useDispatch } from 'react-redux';
 import { storePoolAsync } from '../state/poolSlice';
 
@@ -34,7 +33,7 @@ export default function ChoosePlayerPage() {
         <h2>Assign Teams</h2>
         <NextHeaderButton path="/pool-home" disabled={!areTeamsSelected} />
       </div>
-      <ChoosePlayerList poolPlayers={pool.players} />
+      <ChoosePlayerList />
       <PrimaryActionButton
         text="Create Pool"
         handleClick={handleStorePool}
