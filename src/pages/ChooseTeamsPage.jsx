@@ -1,14 +1,15 @@
 import TeamsList from '../components/TeamsList';
-import usePool from '../utils/usePool';
 import classes from './ChooseTeamsPage.module.css';
 import { useParams } from 'react-router-dom';
 import BackHeaderButton from '../components/BackHeaderButton';
 import DoneHeaderButton from '../components/DoneHeaderButton';
 import CircularIndeterminate from '../components/Loading';
+import { useSelector } from 'react-redux';
+import { setPool } from '../state/poolSlice';
 
 export default function ChooseTeamsPage() {
   const { id } = useParams();
-  const { pool, setPool } = usePool();
+  const pool = useSelector((state) => state.pool);
 
   if (!pool) {
     return <CircularIndeterminate />;
