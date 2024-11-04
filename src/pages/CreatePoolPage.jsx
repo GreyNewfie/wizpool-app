@@ -10,6 +10,7 @@ import {
   setPoolName,
   setPlayerName,
   setTeamName,
+  removeEmptyPlayers,
 } from '../state/poolSlice';
 
 export default function CreatePoolPage() {
@@ -52,7 +53,11 @@ export default function CreatePoolPage() {
       className={classes['create-pool-container']}
     >
       <div className={classes['create-pool-page-header']}>
-        <NextHeaderButton path="/choose-player" disabled={!isPoolCreated} />
+        <NextHeaderButton
+          path="/choose-player"
+          disabled={!isPoolCreated}
+          optionalFunction={() => dispatch(removeEmptyPlayers())}
+        />
         <h1>Create a pool</h1>
       </div>
       <div className={classes['choose-pool-name']}>
@@ -75,7 +80,6 @@ export default function CreatePoolPage() {
         <form className={classes['add-players']}>
           <h3 className="page-subsection-header">Add players to your pool</h3>
           <PlayersList
-            players={pool.players}
             handlePlayerNameChange={handlePlayerNameChange}
             handleTeamNameChange={handleTeamNameChange}
           />

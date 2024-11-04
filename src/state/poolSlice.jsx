@@ -83,6 +83,11 @@ const poolSlice = createSlice({
         player.teams = player.teams.filter((t) => t.teamId !== team.teamId);
       }
     },
+    removeEmptyPlayers: (state) => {
+      state.players = state.players.filter(
+        (player) => player.name.trim() !== '',
+      );
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -109,6 +114,7 @@ export const {
   setTeamName,
   addTeamToPlayer,
   removeTeamFromPlayer,
+  removeEmptyPlayers,
 } = poolSlice.actions;
 
 export default poolSlice.reducer;

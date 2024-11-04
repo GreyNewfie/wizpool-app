@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import classes from './NextHeaderButton.module.css';
 import classNames from 'classnames';
 
-export default function NextHeaderButton({ path, disabled }) {
+export default function NextHeaderButton({ path, disabled, optionalFunction }) {
   const navigate = useNavigate();
   const buttonClass = classNames(classes['right-header-btn'], {
     [classes.disabled]: disabled,
@@ -11,6 +11,7 @@ export default function NextHeaderButton({ path, disabled }) {
 
   const handleNextClick = () => {
     if (!disabled) {
+      if (optionalFunction) optionalFunction();
       navigate(path);
     }
   };
@@ -25,4 +26,5 @@ export default function NextHeaderButton({ path, disabled }) {
 NextHeaderButton.propTypes = {
   path: PropTypes.string,
   disabled: PropTypes.bool,
+  optionalFunction: PropTypes.func,
 };
