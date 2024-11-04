@@ -69,6 +69,20 @@ const poolSlice = createSlice({
         player.teamName = teamName;
       }
     },
+    addTeamToPlayer: (state, action) => {
+      const { team, playerIndex } = action.payload;
+      const player = state.players[playerIndex];
+      if (player) {
+        player.teams = [...player.teams, team];
+      }
+    },
+    removeTeamFromPlayer: (state, action) => {
+      const { team, playerIndex } = action.payload;
+      const player = state.players[playerIndex];
+      if (player) {
+        player.teams = player.teams.filter((t) => t.teamId !== team.teamId);
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -93,6 +107,8 @@ export const {
   addPlayer,
   setPlayerName,
   setTeamName,
+  addTeamToPlayer,
+  removeTeamFromPlayer,
 } = poolSlice.actions;
 
 export default poolSlice.reducer;
