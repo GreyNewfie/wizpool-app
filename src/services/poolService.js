@@ -3,7 +3,7 @@ const BASE_URL = 'http://localhost:3030/api';
 export async function createPool(pool) {
   const payload = {
     id: pool.id,
-    name: pool.poolName,
+    name: pool.name,
     league: pool.league,
   };
 
@@ -31,7 +31,7 @@ export async function createPlayers(players) {
   const playerPromises = players.map(async (player) => {
     const payload = {
       id: player.id,
-      name: player.playerName,
+      name: player.name,
     };
 
     try {
@@ -60,7 +60,7 @@ export async function createPoolPlayers(pool) {
   const playerPromises = pool.players.map(async (player) => {
     const payload = {
       pool_id: pool.id,
-      pool_name: pool.poolName,
+      pool_name: pool.name,
       player_id: player.id,
       player_team_name: player.teamName,
     };
