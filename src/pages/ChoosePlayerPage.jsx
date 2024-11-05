@@ -24,6 +24,7 @@ export default function ChoosePlayerPage() {
 
   const handleStorePool = async () => {
     dispatch(storePoolAsync());
+    localStorage.setItem('activePoolId', pool.id);
   };
 
   return (
