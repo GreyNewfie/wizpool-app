@@ -1,15 +1,17 @@
 import classes from './ChooseLeaguePage.module.css';
 import NextHeaderButton from '../components/NextHeaderButton';
 import SelectLeagueButtons from '../components/SelectLeagueButtons';
-import usePool from '../utils/usePool';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { setLeague } from '../state/poolSlice';
 
 export default function ChooseLeaugePage() {
-  const { setLeague } = usePool();
+  const dispatch = useDispatch();
+
   const [isLeagueSelected, setIsLeagueSelected] = useState(false);
 
   const handleSetLeague = (league) => {
-    setLeague(league);
+    dispatch(setLeague(league));
     setIsLeagueSelected(true);
   };
 
