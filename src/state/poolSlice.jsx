@@ -1,4 +1,8 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import {
+  createSlice,
+  createAsyncThunk,
+  createSelector,
+} from '@reduxjs/toolkit';
 import { v4 as uuid } from 'uuid';
 import {
   createPool,
@@ -104,6 +108,22 @@ const poolSlice = createSlice({
       });
   },
 });
+
+export const selectSortedPlayersByWins = createSelector(
+  (state) => state.pool.players,
+  (players) => {
+    players
+      .map((player) => ({
+        ...player,
+        teams: player.teams || [],
+      }))
+      .sort((player1, player2) => {
+        const getTotalWins = (player) =>
+          player.teams.reduce((totalWins, team) => totalWins + team.wins, 0);
+        return getTotalWins(player2) - getTotalWins(player1);
+      });
+  },
+);
 
 export const {
   setPool,
