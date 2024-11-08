@@ -158,3 +158,21 @@ export async function fetchPlayersInPool(poolId) {
     throw error;
   }
 }
+
+export async function fetchCompletePool(poolId) {
+  try {
+    const response = await fetch(`${BASE_URL}/complete_pools/${poolId}`);
+
+    if (!response.ok)
+      throw new Error(
+        `Failed to fetch pool with id ${poolId}: `,
+        response.statusText,
+      );
+
+    const pool = await response.json();
+    return pool;
+  } catch (error) {
+    console.error(`Error fetching pool with id ${poolId}: `, error);
+    throw error;
+  }
+}
