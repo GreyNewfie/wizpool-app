@@ -2,15 +2,18 @@ import PageHeader from '../components/PageHeader';
 import PlayerHomeProfile from '../components/PlayerHomeProfile';
 import PlayerWinsTracker from '../components/PlayerWinsTracker';
 import classes from './PoolHomePage.module.css';
-import usePool from '../utils/usePool';
 import MobileNavMenu from '../components/MobileNavMenu';
 import useTheme from '../context/useTheme';
 import classNames from 'classnames';
 import DesktopNavHeader from '../components/DesktopNavHeader';
 import useIsDesktop from '../utils/useIsDesktop';
 import useStoredPools from '../utils/useStoredPools';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import useApiData from '../utils/useApiData';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectSortedPlayersByWins, setPool } from '../state/poolSlice';
+import { fetchCompletePool } from '../services/poolService';
+import CircularIndeterminate from '../components/Loading';
 
 const getTotalWins = (player) =>
   player.teams.reduce((totalWins, team) => totalWins + team.wins, 0);
@@ -36,6 +39,8 @@ const getStandingSuffix = (standing) => {
 };
 
 const getPlayerStandings = (sortedPlayers) => {
+  if (!sortedPlayers) return [];
+
   const playerStandings = {};
   let currentStanding = 1;
   let currentIndex = 0;
@@ -97,38 +102,61 @@ const getPlayerStandings = (sortedPlayers) => {
 };
 
 export default function PoolHomePage() {
-  const {
-    pool,
-    changePool,
-    createNewPool,
-    deletePool,
-    sortPlayersByWins,
-    updatePlayersTeamsRecords,
-  } = usePool();
-  const { getApiLeagueData } = useApiData();
+  // const {
+  //   changePool,
+  //   createNewPool,
+  //   deletePool,
+  //   sortPlayersByWins,
+  //   updatePlayersTeamsRecords,
+  // } = usePool();
   const { theme } = useTheme();
-  const sortedPlayers = sortPlayersByWins([...pool.players]);
+  const { getApiLeagueData } = useApiData();
+  const { getNonActivePools } = useStoredPools();
+
+  const dispatch = useDispatch();
+  const pool = useSelector((state) => state.pool);
+  const sortedPlayers = useSelector(selectSortedPlayersByWins);
   const poolClasses = classNames(classes['pool-home'], classes[theme]);
   const isDesktop = useIsDesktop();
-  const { getNonActivePools } = useStoredPools();
   const nonActivePools = getNonActivePools();
   const playerStandings = getPlayerStandings(sortedPlayers);
-  const [leagueData, setLeagueData] = useState(null);
 
   useEffect(() => {
-    const fetchApiData = async () => {
-      const apiData = await getApiLeagueData(pool.league);
-      setLeagueData(apiData);
+    const fetchData = async () => {
+      const activePoolId = localStorage.getItem('activePoolId');
+      if (!activePoolId) return;
+
+      const poolData = await fetchCompletePool(activePoolId);
+      const leagueData = await getApiLeagueData(poolData.league);
+
+      // Update teams with additional league data
+      const updatedPlayers = poolData.players.map((player) => {
+        const updatedTeams = player.teams.map((team) => {
+          const teamData = leagueData.find(
+            (dataTeam) => dataTeam.key === team.key,
+          );
+          return teamData ? { ...team, ...teamData } : team;
+        });
+        return { ...player, teams: updatedTeams };
+      });
+      dispatch(setPool({ ...poolData, players: updatedPlayers }));
     };
 
-    if (!leagueData) fetchApiData();
+    fetchData();
+    console.log('poolData:', pool);
   }, []);
 
-  useEffect(() => {
-    if (leagueData !== null) {
-      updatePlayersTeamsRecords(leagueData);
-    }
-  }, [leagueData]);
+  const createNewPool = () => {};
+
+  const deletePool = () => {};
+
+  const changePool = () => {
+    console.log('changePool');
+  };
+
+  if (!sortedPlayers) {
+    return <CircularIndeterminate />;
+  }
 
   return (
     <div className={classes['page-container']}>
@@ -143,8 +171,8 @@ export default function PoolHomePage() {
       )}
       <div className={poolClasses}>
         <PageHeader
-          headerText={pool.poolName}
-          poolName={pool.poolName}
+          headerText={pool.name}
+          poolName={pool.name}
           createNewPool={createNewPool}
           changePool={changePool}
           nonActivePools={nonActivePools}
