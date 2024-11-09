@@ -112,7 +112,7 @@ const poolSlice = createSlice({
 export const selectSortedPlayersByWins = createSelector(
   (state) => state.pool.players,
   (players) => {
-    players
+    return players
       .map((player) => ({
         ...player,
         teams: player.teams || [],
