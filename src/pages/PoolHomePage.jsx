@@ -47,8 +47,7 @@ const getPlayerStandings = (sortedPlayers) => {
 
   const assignStanding = (player, standing, isTied = false) => {
     const suffix = getStandingSuffix(standing);
-    playerStandings[player.playerName] =
-      `${isTied ? 'T-' : ''}${standing}${suffix}`;
+    playerStandings[player.name] = `${isTied ? 'T-' : ''}${standing}${suffix}`;
   };
 
   while (currentIndex < sortedPlayers.length) {
@@ -64,16 +63,15 @@ const getPlayerStandings = (sortedPlayers) => {
       // Check if playeA and playerB have the same number of wins
       if (playerAWins === playerBWins) {
         // If yes, check if playerA already has a standing
-        if (playerStandings[playerA.playerName]) {
+        if (playerStandings[playerA.name]) {
           // If yes, check if playerA's standing has a tied suffix
-          if (!playerStandings[playerA.playerName].startsWith('T-')) {
+          if (!playerStandings[playerA.name].startsWith('T-')) {
             // If no, add T- to playerA's standing
-            playerStandings[playerB.playerName] =
-              `T-${playerStandings[playerA.playerName]}`;
+            playerStandings[playerB.name] =
+              `T-${playerStandings[playerA.name]}`;
           }
           // dd playerA's standing to playerB
-          playerStandings[playerB.playerName] =
-            `${playerStandings[playerA.playerName]}`;
+          playerStandings[playerB.name] = `${playerStandings[playerA.name]}`;
         } else {
           // If playerA doesn't have a standing assign current standing to both players
           assignStanding(playerA, currentStanding, true);
@@ -84,14 +82,14 @@ const getPlayerStandings = (sortedPlayers) => {
         continue;
       } else {
         // If not tied, check if playerA already has a standing
-        if (!playerStandings[playerA.playerName]) {
+        if (!playerStandings[playerA.name]) {
           // If no, assign current standing to playerA
           assignStanding(playerA, currentStanding);
         }
       }
     } else {
       // Last player in the list, assign standing if not already assigned
-      if (!playerStandings[playerA.playerName]) {
+      if (!playerStandings[playerA.name]) {
         assignStanding(playerA, currentStanding);
       }
     }
@@ -102,13 +100,6 @@ const getPlayerStandings = (sortedPlayers) => {
 };
 
 export default function PoolHomePage() {
-  // const {
-  //   changePool,
-  //   createNewPool,
-  //   deletePool,
-  //   sortPlayersByWins,
-  //   updatePlayersTeamsRecords,
-  // } = usePool();
   const { theme } = useTheme();
   const { getApiLeagueData } = useApiData();
   const { getNonActivePools } = useStoredPools();
@@ -180,7 +171,7 @@ export default function PoolHomePage() {
         <div className={classes['pool-players']}>
           <h3>Overall Standings</h3>
           {sortedPlayers.map((player, playerIndex) => {
-            const playerStanding = playerStandings[player.playerName];
+            const playerStanding = playerStandings[player.name];
             return (
               <div key={playerIndex} className={classes['player-container']}>
                 <PlayerHomeProfile
