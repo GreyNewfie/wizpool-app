@@ -1,4 +1,6 @@
-const BASE_URL = 'http://localhost:3030/api';
+import { getApiBaseUrl } from '../config/config';
+
+const BASE_URL = getApiBaseUrl();
 
 export async function createPool(pool) {
   const payload = {

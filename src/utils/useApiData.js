@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import { getApiBaseUrl } from '../config/config';
+
+const BASE_URL = getApiBaseUrl();
 
 export default function useApiData() {
   const [apiData, setApiData] = useState([]);
@@ -28,7 +31,7 @@ export default function useApiData() {
   };
 
   const getUpdatedUrl = (league, season) => {
-    const url = `http://localhost:3030/api/${league}_data`;
+    const url = `${BASE_URL}/${league}_data`;
     if (season === 2024) {
       return url;
     } else {
@@ -110,7 +113,11 @@ export default function useApiData() {
   };
 
   const getApiLeagueData = async (league) => {
-    const url = `http://localhost:3030/api/${league}_data`;
+    if (!league) {
+      throw new Error('League is required to get league data');
+    }
+
+    const url = `${BASE_URL}/${league}_data`;
 
     try {
       const leagueDataFromDb = await fetchData(url);
@@ -131,7 +138,7 @@ export default function useApiData() {
       throw new Error('League is required to get all teams');
     }
     // Set api url based on league
-    const url = `http://localhost:3030/api/${league}_data`;
+    const url = `${BASE_URL}/${league}_data`;
 
     // If not storedData, fetch league's teams names and store in localStorage
     const leagueData = await fetchData(url);
