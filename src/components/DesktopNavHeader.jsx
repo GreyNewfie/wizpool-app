@@ -3,9 +3,11 @@ import classes from './DesktopNavHeader.module.css';
 import useIsDesktop from '../utils/useIsDesktop';
 import AvatarAndMenu from './AvatarAndMenu';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
 export default function DesktopNavHeader(props) {
   const isDesktop = useIsDesktop();
+  const pool = useSelector((state) => state.pool);
   return (
     <div className={classes['desktop-nav-header']}>
       <img
@@ -40,7 +42,7 @@ export default function DesktopNavHeader(props) {
         </NavLink>
         {isDesktop && (
           <AvatarAndMenu
-            poolName={props.poolName}
+            poolName={pool.name}
             createNewPool={props.createNewPool}
             deletePool={props.deletePool}
             changePool={props.changePool}
@@ -53,7 +55,6 @@ export default function DesktopNavHeader(props) {
 }
 
 DesktopNavHeader.propTypes = {
-  poolName: PropTypes.string,
   createNewPool: PropTypes.func,
   deletePool: PropTypes.func,
   changePool: PropTypes.func,
