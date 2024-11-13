@@ -145,15 +145,18 @@ export default function PoolHomePage() {
     console.log('changePool');
   };
 
-  if (!sortedPlayers) {
-    return <CircularIndeterminate />;
+  if (!pool.name || !sortedPlayers) {
+    return (
+      <div className={classes['page-loading-container']}>
+        <CircularIndeterminate />
+      </div>
+    );
   }
 
   return (
     <div className={classes['page-container']}>
       {isDesktop && (
         <DesktopNavHeader
-          poolName={pool.poolName}
           createNewPool={createNewPool}
           deletePool={deletePool}
           changePool={changePool}
