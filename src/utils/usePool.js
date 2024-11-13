@@ -125,9 +125,9 @@ export default function usePool() {
     }
   };
 
-  const clearPoolFromLocal = (poolId) => {
-    localStorage.removeItem(`pool-${poolId}`);
-  };
+  // const clearPoolFromLocal = (poolId) => {
+  //   localStorage.removeItem(`pool-${poolId}`);
+  // };
 
   const changePool = (poolId) => {
     const selectedPoolData = localStorage.getItem(`pool-${poolId}`);
