@@ -1,10 +1,11 @@
 import PrimaryLinkButton from '../components/PrimaryLinkButton';
 import usePool from '../utils/usePool';
 import classes from './WelcomePage.module.css';
+import { useSelector } from 'react-redux';
 
 export default function Welcome() {
-  const { pool } = usePool();
-  const isExistingPool = pool.poolName || null;
+  const pool = useSelector((state) => state.pool);
+  const isExistingPool = pool.name !== '' ? true : null;
 
   return (
     <div className={classes[`welcome-container`]}>

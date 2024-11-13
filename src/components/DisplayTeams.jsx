@@ -5,9 +5,9 @@ export default function DisplayTeams({ league, teams }) {
   return (
     <div className={classes['player-teams-container']}>
       {teams.map((team) => {
-        const lowerCaseTeamId = team.teamId.toLowerCase();
+        const lowerCaseTeamId = team.key.toLowerCase();
         return (
-          <div key={`team-${team.teamId}`} className={classes['player-team']}>
+          <div key={`team-${team.key}`} className={classes['player-team']}>
             <img
               className={classes['team-logo']}
               src={`./${league}-logos/${lowerCaseTeamId}-logo.png`}

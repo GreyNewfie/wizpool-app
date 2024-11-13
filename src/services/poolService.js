@@ -3,7 +3,7 @@ const BASE_URL = 'http://localhost:3030/api';
 export async function createPool(pool) {
   const payload = {
     id: pool.id,
-    name: pool.poolName,
+    name: pool.name,
     league: pool.league,
   };
 
@@ -31,7 +31,7 @@ export async function createPlayers(players) {
   const playerPromises = players.map(async (player) => {
     const payload = {
       id: player.id,
-      name: player.playerName,
+      name: player.name,
     };
 
     try {
@@ -60,7 +60,7 @@ export async function createPoolPlayers(pool) {
   const playerPromises = pool.players.map(async (player) => {
     const payload = {
       pool_id: pool.id,
-      pool_name: pool.poolName,
+      pool_name: pool.name,
       player_id: player.id,
       player_team_name: player.teamName,
     };
@@ -122,13 +122,57 @@ export async function createPlayerTeams(pool) {
   return await Promise.all(allPlayerTeamsPromises);
 }
 
-export async function fetchPooolById(poolId) {
+export async function fetchPoolById(poolId) {
   try {
     const response = await fetch(`${BASE_URL}/pools/${poolId}`);
-    console.log('Response from fetchPoolById: ', response);
-    return response;
+
+    // If the pool isn't in the database, return undefined
+    if (response.status === 404) {
+      console.log("Pool isn't stored in the database");
+      return undefined;
+    }
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch pool: ', response.statusText);
+    }
+
+    const poolData = await response.json();
+    return poolData;
   } catch (error) {
     console.error('Error fetching pool from database: ', error);
-    return error;
+    throw error;
+  }
+}
+
+export async function fetchPlayersInPool(poolId) {
+  try {
+    const response = await fetch(`${BASE_URL}/pool_players/${poolId}`);
+
+    if (!response.ok)
+      throw new Error('Failed to fetch players in pool: ', response.statusText);
+
+    const poolPlayers = response.json();
+    return poolPlayers;
+  } catch (error) {
+    console.error('Error fetching players in pool: ', error);
+    throw error;
+  }
+}
+
+export async function fetchCompletePool(poolId) {
+  try {
+    const response = await fetch(`${BASE_URL}/complete_pools/${poolId}`);
+
+    if (!response.ok)
+      throw new Error(
+        `Failed to fetch pool with id ${poolId}: `,
+        response.statusText,
+      );
+
+    const pool = await response.json();
+    return pool;
+  } catch (error) {
+    console.error(`Error fetching pool with id ${poolId}: `, error);
+    throw error;
   }
 }

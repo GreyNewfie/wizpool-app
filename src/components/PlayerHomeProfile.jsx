@@ -20,15 +20,13 @@ export default function PlayerHomeProfile(props) {
       />
       <div className={classes['player-info']}>
         <h6 className={classes['player-name']}>
-          {props.player.playerName != ''
-            ? props.player.playerName
-            : 'New player'}
+          {props.player.name != '' ? props.player.name : 'New player'}
         </h6>
         <p className={classes['team-name']}>
           {props.player.teamName
             ? props.player.teamName
-            : props.player.playerName != ''
-              ? `${props.player.playerName}'s Awesome Team`
+            : props.player.name != ''
+              ? `${props.player.name}'s Awesome Team`
               : `New team`}
         </p>
       </div>

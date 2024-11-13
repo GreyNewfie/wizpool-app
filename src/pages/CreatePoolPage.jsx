@@ -2,38 +2,50 @@ import NextHeaderButton from '../components/NextHeaderButton';
 import PrimaryActionButton from '../components/PrimaryActionButton';
 import UserTextInput from '../components/UserTextInput';
 import classes from './CreatePoolPage.module.css';
-import usePool from '../utils/usePool';
 import PlayersList from '../components/PlayersList';
 import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  addPlayer,
+  setPoolName,
+  setPlayerName,
+  setTeamName,
+  removeEmptyPlayers,
+} from '../state/poolSlice';
 
 export default function CreatePoolPage() {
-  const {
-    pool,
-    addBlankPlayer,
-    handlePoolNameChange,
-    handlePlayerNameChange,
-    handleTeamNameChange,
-  } = usePool();
-
+  const dispatch = useDispatch();
+  const pool = useSelector((state) => state.pool);
   const [isPoolCreated, setIsPoolCreated] = useState(false);
 
-  // Add blank player if pool has no players, ensures first player is assigned an id
   useEffect(() => {
-    if (pool.players.length === 0) {
-      addBlankPlayer();
-    }
-  }, [pool.players, addBlankPlayer]);
-
-  useEffect(() => {
-    // Check if players have names and pool has a name
+    if (!pool) return;
+    // Check if first player has name and pool has a name
     const checkPoolCreated = () => {
       let playersHaveNames =
-        pool.players[0]?.playerName?.replace(/[^a-zA-z]/g, '').length > 0;
-      let poolHasName = pool.poolName?.replace(/[^a-zA-Z]/g, '').length > 0;
+        pool.players[0].name.replace(/[^a-zA-z]/g, '').length > 0;
+      let poolHasName = pool.name.replace(/[^a-zA-Z]/g, '').length > 0;
       return playersHaveNames && poolHasName;
     };
+    // Set isPoolCreated to toggle next button
     setIsPoolCreated(checkPoolCreated());
-  }, [pool.players, pool.poolName]);
+  }, [pool]);
+
+  const handleAddBlankPlayer = () => {
+    dispatch(addPlayer({ name: '', teamName: '', teams: [] }));
+  };
+
+  const handlePoolNameChange = (value) => {
+    dispatch(setPoolName(value));
+  };
+
+  const handlePlayerNameChange = (value, index) => {
+    dispatch(setPlayerName({ name: value, index }));
+  };
+
+  const handleTeamNameChange = (value, index) => {
+    dispatch(setTeamName({ teamName: value, index }));
+  };
 
   return (
     <div
@@ -41,7 +53,11 @@ export default function CreatePoolPage() {
       className={classes['create-pool-container']}
     >
       <div className={classes['create-pool-page-header']}>
-        <NextHeaderButton path="/choose-player" disabled={!isPoolCreated} />
+        <NextHeaderButton
+          path="/choose-player"
+          disabled={!isPoolCreated}
+          optionalFunction={() => dispatch(removeEmptyPlayers())}
+        />
         <h1>Create a pool</h1>
       </div>
       <div className={classes['choose-pool-name']}>
@@ -54,7 +70,7 @@ export default function CreatePoolPage() {
         <UserTextInput
           id="pool-name"
           name="pool-name"
-          value={pool.poolName}
+          value={pool.name}
           placeholderText="Pool Name"
           handleChange={(e) => handlePoolNameChange(e.target.value)}
           autoFocus={true}
@@ -64,7 +80,6 @@ export default function CreatePoolPage() {
         <form className={classes['add-players']}>
           <h3 className="page-subsection-header">Add players to your pool</h3>
           <PlayersList
-            players={pool.players}
             handlePlayerNameChange={handlePlayerNameChange}
             handleTeamNameChange={handleTeamNameChange}
           />
@@ -74,7 +89,7 @@ export default function CreatePoolPage() {
         </span>
         <PrimaryActionButton
           text="Add another player"
-          handleClick={addBlankPlayer}
+          handleClick={handleAddBlankPlayer}
           optionalSymbol="+"
         />
       </div>

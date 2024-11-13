@@ -127,6 +127,9 @@ export default function useApiData() {
   };
 
   const getAllTeams = async (league) => {
+    if (!league) {
+      throw new Error('League is required to get all teams');
+    }
     // Set api url based on league
     const url = `http://localhost:3030/api/${league}_data`;
 
@@ -139,7 +142,6 @@ export default function useApiData() {
         city: team.city,
         name: team.name,
       }));
-
       return teamsList;
     }
   };

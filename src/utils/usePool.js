@@ -8,62 +8,97 @@ import {
   createPlayers,
   createPoolPlayers,
   createPlayerTeams,
+  fetchPoolById,
 } from '../services/poolService';
 import { v4 as uuidv4 } from 'uuid';
 
-const getInitialPool = () => {
+const getInitialPool = async () => {
   const activePoolId = localStorage.getItem('activePoolId');
   if (activePoolId) {
-    const storedPool = JSON.parse(localStorage.getItem(`pool-${activePoolId}`));
-    if (storedPool) {
-      const clonedPlayers = storedPool.players.map((player) => ({ ...player }));
+    // Check if pool is stored in the database, and if so return it
+    const poolFromDb = await fetchPoolById(activePoolId);
+    if (poolFromDb) {
+      console.log('Pool is set from database');
+      return new Pool(poolFromDb.name, [], poolFromDb.league, poolFromDb.id);
+    }
+
+    // Check if pool is stored in local storage, and if so return it
+    const poolFromLocalStorage = JSON.parse(
+      localStorage.getItem(`pool-${activePoolId}`),
+    );
+    if (poolFromLocalStorage) {
+      console.log('Pool is set from local storage');
+      const clonedPlayers = poolFromLocalStorage.players.map((player) => ({
+        ...player,
+      }));
       return new Pool(
-        storedPool.poolName,
+        poolFromLocalStorage.poolName,
         clonedPlayers,
-        storedPool.league,
-        storedPool.id,
+        poolFromLocalStorage.league,
+        poolFromLocalStorage.id,
       );
     }
   }
+  // Return blank pool if no pool is found
   return new Pool('', [], '');
 };
 
 const cleanPool = (pool) => {
-  const updatedPlayers = pool.players.filter(
-    (player) => player.playerName.trim() !== '',
-  );
-  const cleanedPool = new Pool(
-    pool.poolName,
-    updatedPlayers,
-    pool.league,
-    pool.id,
-  );
-  return cleanedPool;
+  if (pool?.players?.length > 0) {
+    const updatedPlayers = pool.players.filter(
+      (player) => player.playerName.trim() !== '',
+    );
+    const cleanedPool = new Pool(
+      pool.poolName,
+      updatedPlayers,
+      pool.league,
+      pool.id,
+    );
+    return cleanedPool;
+  }
+  return pool;
 };
 
 export default function usePool() {
-  const [pool, setPool] = useState(getInitialPool());
+  const [pool, setPool] = useState();
   const [activePoolId, setActivePoolId] = useState(
     localStorage.getItem('activePoolId') || null,
   );
   const navigate = useNavigate();
   const { getNonActivePools } = useStoredPools();
 
+  // Fetch initial pool data when the component mounts
+  useEffect(() => {
+    const initializePool = async () => {
+      const initialPool = await getInitialPool();
+      if (initialPool) {
+        setPool(initialPool);
+      }
+    };
+
+    initializePool();
+  }, []);
+
   // Update localStorage when pool changes
   useEffect(() => {
     // Remove possible blank players before adding to localStorage
-    const cleanedPool = cleanPool(pool);
-    localStorage.setItem(`pool-${cleanedPool.id}`, JSON.stringify(cleanedPool));
-  }, [pool]);
+    if (activePoolId === pool?.id) {
+      const cleanedPool = cleanPool(pool);
+      localStorage.setItem(
+        `pool-${cleanedPool.id}`,
+        JSON.stringify(cleanedPool),
+      );
+    }
+  }, [activePoolId, pool]);
 
   // Update active pool when it changes
   useEffect(() => {
-    if (activePoolId !== pool.id) {
+    if (pool && activePoolId !== pool?.id && pool?.name !== '') {
       setActivePoolId(pool.id);
       localStorage.setItem('activePoolId', pool.id);
       console.log('Stored active pool has been updated');
     }
-  }, [activePoolId, pool.id]);
+  }, [activePoolId, pool]);
 
   const createNewPool = () => {
     const newPool = new Pool('', [], '');
@@ -89,6 +124,10 @@ export default function usePool() {
       console.error('Error storing pool and related data:', error);
     }
   };
+
+  // const clearPoolFromLocal = (poolId) => {
+  //   localStorage.removeItem(`pool-${poolId}`);
+  // };
 
   const changePool = (poolId) => {
     const selectedPoolData = localStorage.getItem(`pool-${poolId}`);

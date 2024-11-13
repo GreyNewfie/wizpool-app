@@ -1,18 +1,15 @@
 import PlayerProfile from './PlayerProfile';
 import classes from './ChoosePlayerList.module.css';
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
-export default function ChoosePlayerList({ poolPlayers }) {
+export default function ChoosePlayerList() {
+  const pool = useSelector((state) => state.pool);
   return (
     <div className={classes['select-player']}>
       <h3>Assign teams to each player</h3>
-      {poolPlayers.map((player, index) => {
+      {pool.players.map((player, index) => {
         return <PlayerProfile key={index} player={player} index={index} />;
       })}
     </div>
   );
 }
-
-ChoosePlayerList.propTypes = {
-  poolPlayers: PropTypes.array,
-};
