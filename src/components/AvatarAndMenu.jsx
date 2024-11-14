@@ -12,8 +12,9 @@ import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-
+import { useSelector } from 'react-redux';
 const stringAvatar = (poolName) => {
+  if (!poolName) return '?';
   const poolInitialsArray = poolName.split(' ').map((word) => word[0]);
   const length = poolInitialsArray.length;
   // Show 1 initial for pool names with 1 word, 3 initials for names with 3 words and 2 initials for all others
@@ -27,6 +28,7 @@ const stringAvatar = (poolName) => {
 };
 
 export default function AvatarAndMenu(props) {
+  const pool = useSelector((state) => state.pool);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
@@ -112,7 +114,7 @@ export default function AvatarAndMenu(props) {
               alt="WizPool trophy logo"
             />
           </ListItemIcon>{' '}
-          {props.poolName}
+          {pool.name}
         </MenuItem>
         {props.nonActivePools?.length > 0 && (
           <div className={classes['menu-header']}>
@@ -133,7 +135,7 @@ export default function AvatarAndMenu(props) {
                   alt="WizPool trophy logo"
                 />
               </ListItemIcon>
-              {pool.poolName}
+              {pool.name}
             </MenuItem>
           );
         })}
@@ -164,7 +166,6 @@ export default function AvatarAndMenu(props) {
 }
 
 AvatarAndMenu.propTypes = {
-  poolName: PropTypes.string,
   nonActivePools: PropTypes.array,
   createNewPool: PropTypes.func,
   deletePool: PropTypes.func,
