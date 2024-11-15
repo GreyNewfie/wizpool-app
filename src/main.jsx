@@ -19,6 +19,7 @@ import DeletePoolPage from './pages/DeletePoolPage.jsx';
 import { Provider } from 'react-redux';
 import store from './state/store';
 import { ClerkProvider } from '@clerk/clerk-react';
+import ProtectedRoute from './components/ProtectedRoute.jsx';
 // Import your publishable key
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
@@ -35,57 +36,101 @@ const router = createBrowserRouter(
     },
     {
       path: '/choose-league',
-      element: <ChooseLeaguePage />,
+      element: (
+        <ProtectedRoute>
+          <ChooseLeaguePage />
+        </ProtectedRoute>
+      ),
       errorElement: <ErrorPage />,
     },
     {
       path: '/create-pool',
-      element: <CreatePoolPage />,
+      element: (
+        <ProtectedRoute>
+          <CreatePoolPage />
+        </ProtectedRoute>
+      ),
       errorElement: <ErrorPage />,
     },
     {
       path: '/choose-player',
-      element: <ChoosePlayerPage />,
+      element: (
+        <ProtectedRoute>
+          <ChoosePlayerPage />
+        </ProtectedRoute>
+      ),
       errorElement: <ErrorPage />,
     },
     {
       path: '/choose-teams/:id',
-      element: <ChooseTeamsPage />,
+      element: (
+        <ProtectedRoute>
+          <ChooseTeamsPage />
+        </ProtectedRoute>
+      ),
       errorElement: <ErrorPage />,
     },
     {
       path: '/pool-home',
-      element: <PoolHomePage />,
+      element: (
+        <ProtectedRoute>
+          <PoolHomePage />
+        </ProtectedRoute>
+      ),
       errorElement: <ErrorPage />,
     },
     {
       path: '/pool-players',
-      element: <PoolPlayersPage />,
+      element: (
+        <ProtectedRoute>
+          <PoolPlayersPage />
+        </ProtectedRoute>
+      ),
       errorElement: <ErrorPage />,
     },
     {
       path: '/pool-picks',
-      element: <PoolPicksPage />,
+      element: (
+        <ProtectedRoute>
+          <PoolPicksPage />
+        </ProtectedRoute>
+      ),
       errorElement: <ErrorPage />,
     },
     {
       path: '/pool-settings',
-      element: <SettingsPage />,
+      element: (
+        <ProtectedRoute>
+          <SettingsPage />
+        </ProtectedRoute>
+      ),
       errorElement: <ErrorPage />,
     },
     {
       path: '/manage-players',
-      element: <ManagePlayersPage />,
+      element: (
+        <ProtectedRoute>
+          <ManagePlayersPage />
+        </ProtectedRoute>
+      ),
       errorElement: <ErrorPage />,
     },
     {
       path: '/reassign-teams',
-      element: <ReassignTeamsPage />,
+      element: (
+        <ProtectedRoute>
+          <ReassignTeamsPage />
+        </ProtectedRoute>
+      ),
       errorElement: <ErrorPage />,
     },
     {
       path: '/delete-pool',
-      element: <DeletePoolPage />,
+      element: (
+        <ProtectedRoute>
+          <DeletePoolPage />
+        </ProtectedRoute>
+      ),
       errorElement: <ErrorPage />,
     },
   ],
