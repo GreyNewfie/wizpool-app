@@ -13,3 +13,23 @@
     padding: 60px 30px 0;
   }
 }
+
+.sign-in-btn {
+  width: 100%;
+  max-width: 300px;
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  background: var(--secondary-btn-bg-color);
+  color: var(--primary-text-color);
+  font-size: inherit;
+  border: none;
+}
+
+.sign-in-btn:hover {
+  background: var(--third-btn-bg-color);
+  color: var(--third-text-color);
+}
+
+.sign-in-btn:active {
+  opacity: 0.7;
+}
