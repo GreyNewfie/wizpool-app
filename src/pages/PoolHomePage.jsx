@@ -8,12 +8,13 @@ import classNames from 'classnames';
 import DesktopNavHeader from '../components/DesktopNavHeader';
 import useIsDesktop from '../utils/useIsDesktop';
 import useStoredPools from '../utils/useStoredPools';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import useApiData from '../utils/useApiData';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectSortedPlayersByWins, setPool } from '../state/poolSlice';
 import { fetchCompletePool } from '../services/poolService';
 import CircularIndeterminate from '../components/Loading';
+import { useState } from 'react';
 
 const getTotalWins = (player) =>
   player.teams.reduce((totalWins, team) => totalWins + team.wins, 0);
@@ -104,6 +105,9 @@ export default function PoolHomePage() {
   const { getApiLeagueData } = useApiData();
   const { getNonActivePools } = useStoredPools();
 
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   const dispatch = useDispatch();
   const pool = useSelector((state) => state.pool);
   const sortedPlayers = useSelector(selectSortedPlayersByWins);
@@ -111,30 +115,96 @@ export default function PoolHomePage() {
   const isDesktop = useIsDesktop();
   const nonActivePools = getNonActivePools();
   const playerStandings = getPlayerStandings(sortedPlayers);
+  const fetchRef = useRef({
+    controller: null,
+    isInitialMount: true,
+    isLoading: false,
+  });
 
   useEffect(() => {
+    let isMounted = true;
+    const controller = new AbortController();
+
     const fetchData = async () => {
       const activePoolId = localStorage.getItem('activePoolId');
-      if (!activePoolId) return;
+      if (!activePoolId) {
+        setIsLoading(false);
+        return;
+      }
 
-      const poolData = await fetchCompletePool(activePoolId);
-      const leagueData = await getApiLeagueData(poolData.league);
+      try {
+        setIsLoading(true);
+        setError(null);
 
-      // Update teams with additional league data
-      const updatedPlayers = poolData.players.map((player) => {
-        const updatedTeams = player.teams.map((team) => {
-          const teamData = leagueData.find(
-            (dataTeam) => dataTeam.key === team.key,
-          );
-          return teamData ? { ...team, ...teamData } : team;
+        const poolData = await fetchCompletePool(activePoolId, {
+          maxRetries: 3,
+          retryDelay: 1000,
+          signal: controller.signal,
+          initialDelay: 500,
         });
-        return { ...player, teams: updatedTeams };
-      });
-      dispatch(setPool({ ...poolData, players: updatedPlayers }));
+
+        if (!isMounted) return;
+
+        if (!poolData) {
+          setError('Pool not found');
+          return;
+        }
+
+        const leagueData = await getApiLeagueData(poolData.league);
+
+        if (!isMounted) return;
+
+        const updatedPlayers = poolData.players.map((player) => {
+          const updatedTeams = player.teams.map((team) => {
+            const teamData = leagueData.find(
+              (dataTeam) => dataTeam.key === team.key,
+            );
+            return {
+              ...team,
+              ...(teamData || {}),
+              wins: teamData?.wins || 0,
+              losses: teamData?.losses || 0,
+              ties: teamData?.ties || 0,
+            };
+          });
+          return {
+            ...player,
+            teams: updatedTeams,
+            totalWins: updatedTeams.reduce(
+              (sum, team) => sum + (team.wins || 0),
+              0,
+            ),
+          };
+        });
+
+        dispatch(setPool({ ...poolData, players: updatedPlayers }));
+      } catch (error) {
+        if (error.name === 'AbortError') {
+          console.log('Request aborted');
+          return;
+        }
+        if (isMounted) {
+          console.error('Error fetching pool data:', error);
+          setError(error.message);
+        }
+      } finally {
+        if (isMounted && fetchRef.current.isLoading) {
+          fetchRef.current.isLoading = false;
+          setIsLoading(false);
+        }
+      }
     };
 
     fetchData();
-    console.log('poolData:', pool);
+
+    return () => {
+      isMounted = false;
+      if (fetchRef.current.controller) {
+        fetchRef.current.controller.abort();
+        fetchRef.current.isLoading = false;
+        setIsLoading(false);
+      }
+    };
   }, []);
 
   const createNewPool = () => {};
@@ -145,10 +215,18 @@ export default function PoolHomePage() {
     console.log('changePool');
   };
 
-  if (!pool.name || !sortedPlayers) {
+  if (isLoading && fetchRef.current.isLoading) {
     return (
       <div className={classes['page-loading-container']}>
         <CircularIndeterminate />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className={classes['page-loading-container']}>
+        <p>Error: {error}</p>
       </div>
     );
   }
