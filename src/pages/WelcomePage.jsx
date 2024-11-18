@@ -27,6 +27,7 @@ export default function Welcome() {
     if (user) {
       dispatch(fetchUserPoolsAsync(user.id));
       console.log('User is signed in: ', user);
+      console.log('User pools: ', userPools);
     }
   }, [user, dispatch]);
 
@@ -62,7 +63,7 @@ export default function Welcome() {
       <SignedIn>
         {poolLoading && <CircularIndeterminate />}
         <PrimaryLinkButton
-          text={currentPool.name ? 'Go To Pool' : 'Create Pool'}
+          text={userPools.length > 0 ? 'Go To Pool' : 'Create Pool'}
           handleClick={handleGoToPool}
         />
       </SignedIn>
