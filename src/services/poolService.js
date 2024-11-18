@@ -259,3 +259,18 @@ export async function fetchCompletePool(poolId, options = {}) {
 
   throw lastError || new Error('Failed to fetch pool after all retries');
 }
+
+export async function fetchUserPools(userId) {
+  try {
+    const response = await fetch(`${BASE_URL}/pools/user/${userId}`);
+
+    if (!response.ok)
+      throw new Error('Failed to fetch user pools: ', response.statusText);
+
+    const userPools = await response.json();
+    return userPools;
+  } catch (error) {
+    console.error('Error fetching user pools: ', error);
+    throw error;
+  }
+}
