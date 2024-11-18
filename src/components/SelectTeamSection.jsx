@@ -2,11 +2,7 @@ import classes from './SelectTeamSection.module.css';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  setPool,
-  addTeamToPlayer,
-  removeTeamFromPlayer,
-} from '../state/poolSlice';
+import { addTeamToPlayer, removeTeamFromPlayer } from '../state/poolSlice';
 
 const isTeamSelected = (player, team) => {
   return player.teams?.some((playerTeam) => playerTeam.name === team.name)
