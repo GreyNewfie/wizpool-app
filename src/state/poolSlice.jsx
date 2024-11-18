@@ -18,6 +18,7 @@ const initialState = {
     },
   ],
   name: '',
+  userId: '',
 };
 
 export const storePoolAsync = createAsyncThunk(
@@ -49,6 +50,26 @@ export const storePoolAsync = createAsyncThunk(
       return fetchedPool;
     } catch (error) {
       console.error('Error in pool creation process:', error);
+      throw error;
+    }
+  },
+);
+
+export const fetchPoolByIdAsync = createAsyncThunk(
+  'pool/fetchPoolByIdAsync',
+  async (poolId) => {
+    try {
+      const pool = await fetchCompletePool(poolId, {
+        maxRetries: 3,
+        retryDelay: 1000,
+        initialDelay: 500,
+      });
+
+      if (!pool) throw new Error('Failed to fetch pool');
+
+      return pool;
+    } catch (error) {
+      console.error('Error in fetch pool by id process:', error);
       throw error;
     }
   },
@@ -105,20 +126,35 @@ const poolSlice = createSlice({
         (player) => player.name.trim() !== '',
       );
     },
-  },
-  extraReducers: (builder) => {
-    builder
-      .addCase(storePoolAsync.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(storePoolAsync.fulfilled, (state) => {
-        state.loading = false;
-      })
-      .addCase(storePoolAsync.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      });
+    setUserId: (state, action) => {
+      return { ...state, userId: action.payload };
+    },
+    extraReducers: (builder) => {
+      builder
+        .addCase(storePoolAsync.pending, (state) => {
+          state.loading = true;
+          state.error = null;
+        })
+        .addCase(storePoolAsync.fulfilled, (state) => {
+          state.loading = false;
+        })
+        .addCase(storePoolAsync.rejected, (state, action) => {
+          state.loading = false;
+          state.error = action.error.message;
+        })
+        .addCase(fetchPoolByIdAsync.pending, (state) => {
+          state.loading = true;
+          state.error = null;
+        })
+        .addCase(fetchPoolByIdAsync.fulfilled, (state, action) => {
+          state.loading = false;
+          return action.payload;
+        })
+        .addCase(fetchPoolByIdAsync.rejected, (state, action) => {
+          state.loading = false;
+          state.error = action.error.message;
+        });
+    },
   },
 });
 
@@ -148,6 +184,7 @@ export const {
   addTeamToPlayer,
   removeTeamFromPlayer,
   removeEmptyPlayers,
+  setUserId,
 } = poolSlice.actions;
 
 export default poolSlice.reducer;
