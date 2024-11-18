@@ -13,7 +13,7 @@ export default function PrimaryActionButton(props) {
     [classes['disabled']]: props.disabled,
   });
 
-  return (
+  return props.path ? (
     <div className={classes['primary-button-container']}>
       <Link to={props.path} className={linkClasses}>
         <button className={btnClasses} onClick={props.handleClick}>
@@ -21,6 +21,13 @@ export default function PrimaryActionButton(props) {
           <span>{props.text}</span>
         </button>
       </Link>
+    </div>
+  ) : (
+    <div className={classes['primary-button-container']}>
+      <button className={btnClasses} onClick={props.handleClick}>
+        <span className={classes['plus-symbol']}>{props.optionalSymbol}</span>
+        <span>{props.text}</span>
+      </button>
     </div>
   );
 }

@@ -5,10 +5,14 @@ import PrimaryActionButton from '../components/PrimaryActionButton';
 import classes from './ChoosePlayerPage.module.css';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { storePoolAsync } from '../state/poolSlice';
+import { storePoolAsync, setUserId } from '../state/poolSlice';
+import { useUser } from '@clerk/clerk-react';
+import { useNavigate } from 'react-router-dom';
 
 export default function ChoosePlayerPage() {
+  const { user } = useUser();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const pool = useSelector((state) => state.pool);
   const [areTeamsSelected, setAreTeamsSelected] = useState(false);
 
@@ -23,8 +27,20 @@ export default function ChoosePlayerPage() {
   }, [pool]);
 
   const handleStorePool = async () => {
-    dispatch(storePoolAsync());
-    localStorage.setItem('activePoolId', pool.id);
+    try {
+      // Add user id to pool before storing
+      dispatch(setUserId(user.id));
+      // Wait for the pool to be stored
+      const result = await dispatch(storePoolAsync()).unwrap();
+      console.log('Pool stored: ', result);
+
+      localStorage.setItem('activePoolId', pool.id);
+      localStorage.setItem('userId', user.id);
+
+      navigate('/pool-home');
+    } catch (error) {
+      console.error('Failed to create pool: ', error);
+    }
   };
 
   return (
@@ -38,7 +54,6 @@ export default function ChoosePlayerPage() {
       <PrimaryActionButton
         text="Create Pool"
         handleClick={handleStorePool}
-        path={'/pool-home'}
         disabled={!areTeamsSelected}
       />
     </div>
