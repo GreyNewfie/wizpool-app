@@ -6,6 +6,7 @@ export async function createPool(pool) {
     id: pool.id,
     name: pool.name,
     league: pool.league,
+    userId: pool.userId,
     players: pool.players.map((player) => ({
       id: player.id,
       name: player.name,
