@@ -8,16 +8,12 @@ import classNames from 'classnames';
 import DesktopNavHeader from '../components/DesktopNavHeader';
 import useIsDesktop from '../utils/useIsDesktop';
 import useStoredPools from '../utils/useStoredPools';
-import { useEffect, useRef } from 'react';
-import useApiData from '../utils/useApiData';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectSortedPlayersByWins, setPool } from '../state/poolSlice';
 import { fetchCompletePool } from '../services/poolService';
 import CircularIndeterminate from '../components/Loading';
 import { useState } from 'react';
-
-const getTotalWins = (player) =>
-  player.teams.reduce((totalWins, team) => totalWins + team.wins, 0);
 
 const getStandingSuffix = (standing) => {
   const standingDigits = [...standing.toString()].map(Number);
@@ -53,12 +49,12 @@ const getPlayerStandings = (sortedPlayers) => {
 
   while (currentIndex < sortedPlayers.length) {
     let playerA = sortedPlayers[currentIndex];
-    let playerAWins = getTotalWins(playerA);
+    let playerAWins = playerA.totalWins;
     const nextIndex = currentIndex + 1;
 
     if (nextIndex < sortedPlayers.length) {
       const playerB = sortedPlayers[nextIndex];
-      const playerBWins = getTotalWins(playerB);
+      const playerBWins = playerB.totalWins;
 
       // Compare players a and b
       // Check if playeA and playerB have the same number of wins
@@ -71,7 +67,7 @@ const getPlayerStandings = (sortedPlayers) => {
             playerStandings[playerB.name] =
               `T-${playerStandings[playerA.name]}`;
           }
-          // dd playerA's standing to playerB
+          // Add playerA's standing to playerB
           playerStandings[playerB.name] = `${playerStandings[playerA.name]}`;
         } else {
           // If playerA doesn't have a standing assign current standing to both players
@@ -102,7 +98,6 @@ const getPlayerStandings = (sortedPlayers) => {
 
 export default function PoolHomePage() {
   const { theme } = useTheme();
-  const { getApiLeagueData } = useApiData();
   const { getNonActivePools } = useStoredPools();
 
   const [isLoading, setIsLoading] = useState(true);
@@ -115,11 +110,6 @@ export default function PoolHomePage() {
   const isDesktop = useIsDesktop();
   const nonActivePools = getNonActivePools();
   const playerStandings = getPlayerStandings(sortedPlayers);
-  const fetchRef = useRef({
-    controller: null,
-    isInitialMount: true,
-    isLoading: false,
-  });
 
   useEffect(() => {
     let isMounted = true;
@@ -132,15 +122,21 @@ export default function PoolHomePage() {
         return;
       }
 
+      // Check if pool is already set in state and has players
+      if (pool.id === activePoolId && pool.players?.length > 0) {
+        setIsLoading(false);
+        return;
+      }
+
       try {
         setIsLoading(true);
         setError(null);
 
         const poolData = await fetchCompletePool(activePoolId, {
           maxRetries: 3,
-          retryDelay: 1000,
+          retryDelay: 500,
           signal: controller.signal,
-          initialDelay: 500,
+          initialDelay: 300,
         });
 
         if (!isMounted) return;
@@ -150,34 +146,7 @@ export default function PoolHomePage() {
           return;
         }
 
-        const leagueData = await getApiLeagueData(poolData.league);
-
-        if (!isMounted) return;
-
-        const updatedPlayers = poolData.players.map((player) => {
-          const updatedTeams = player.teams.map((team) => {
-            const teamData = leagueData.find(
-              (dataTeam) => dataTeam.key === team.key,
-            );
-            return {
-              ...team,
-              ...(teamData || {}),
-              wins: teamData?.wins || 0,
-              losses: teamData?.losses || 0,
-              ties: teamData?.ties || 0,
-            };
-          });
-          return {
-            ...player,
-            teams: updatedTeams,
-            totalWins: updatedTeams.reduce(
-              (sum, team) => sum + (team.wins || 0),
-              0,
-            ),
-          };
-        });
-
-        dispatch(setPool({ ...poolData, players: updatedPlayers }));
+        dispatch(setPool(poolData));
       } catch (error) {
         if (error.name === 'AbortError') {
           console.log('Request aborted');
@@ -188,8 +157,7 @@ export default function PoolHomePage() {
           setError(error.message);
         }
       } finally {
-        if (isMounted && fetchRef.current.isLoading) {
-          fetchRef.current.isLoading = false;
+        if (isMounted) {
           setIsLoading(false);
         }
       }
@@ -199,13 +167,10 @@ export default function PoolHomePage() {
 
     return () => {
       isMounted = false;
-      if (fetchRef.current.controller) {
-        fetchRef.current.controller.abort();
-        fetchRef.current.isLoading = false;
-        setIsLoading(false);
-      }
+      controller.abort();
+      setIsLoading(false);
     };
-  }, []);
+  }, [dispatch, pool.id, pool.players?.length]);
 
   const createNewPool = () => {};
 
@@ -215,7 +180,7 @@ export default function PoolHomePage() {
     console.log('changePool');
   };
 
-  if (isLoading && fetchRef.current.isLoading) {
+  if (isLoading) {
     return (
       <div className={classes['page-loading-container']}>
         <CircularIndeterminate />
