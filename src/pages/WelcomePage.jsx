@@ -19,7 +19,7 @@ export default function Welcome() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userPools = useSelector((state) => state.userPools.pools);
-  const currentPool = useSelector((state) => state.pool);
+  const userPoolsLoading = useSelector((state) => state.userPools.loading);
   const poolLoading = useSelector((state) => state.pool.loading);
 
   useEffect(() => {
@@ -31,15 +31,31 @@ export default function Welcome() {
     }
   }, [user, dispatch]);
 
+  useEffect(() => {
+    // If user has pools then set the most recent pool as the active pool
+    const initializePool = async () => {
+      if (userPools.length > 0 && !userPoolsLoading) {
+        const mostRecentPool = userPools[0]; // TODO: sort pools by most recently updated
+
+        try {
+          // Fetch complete pool data with team stats
+          await dispatch(fetchPoolByIdAsync(mostRecentPool.id)).unwrap();
+
+          // Store active pool ID in localStorage
+          localStorage.setItem('activePoolId', mostRecentPool.id);
+          localStorage.setItem('userId', user.id);
+        } catch (error) {
+          console.error('Error initializing pool: ', error);
+        }
+      }
+    };
+
+    initializePool();
+  }, [userPools, userPoolsLoading, user, dispatch]);
+
   const handleGoToPool = () => {
     // If user has pools then navigate to pool home
     if (userPools.length > 0) {
-      const mostRecentPool = userPools[0]; // TODO: sort pools by most recently updated
-
-      if (currentPool.id !== mostRecentPool.id) {
-        dispatch(fetchPoolByIdAsync(mostRecentPool.id));
-      }
-
       navigate('/pool-home');
     } else {
       navigate('/choose-league');
@@ -61,11 +77,13 @@ export default function Welcome() {
         </SignInButton>
       </SignedOut>
       <SignedIn>
-        {poolLoading && <CircularIndeterminate />}
-        <PrimaryLinkButton
-          text={userPools.length > 0 ? 'Go To Pool' : 'Create Pool'}
-          handleClick={handleGoToPool}
-        />
+        {(poolLoading || userPoolsLoading) && <CircularIndeterminate />}
+        {!poolLoading && !userPoolsLoading && (
+          <PrimaryLinkButton
+            text={userPools.length > 0 ? 'Go To Pool' : 'Create Pool'}
+            handleClick={handleGoToPool}
+          />
+        )}
       </SignedIn>
     </div>
   );
