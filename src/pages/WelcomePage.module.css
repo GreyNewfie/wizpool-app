@@ -33,3 +33,9 @@
 .sign-in-btn:active {
   opacity: 0.7;
 }
+
+.welcome-header {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
