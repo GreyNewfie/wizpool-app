@@ -61,8 +61,8 @@ export const fetchPoolByIdAsync = createAsyncThunk(
     try {
       const pool = await fetchCompletePool(poolId, {
         maxRetries: 3,
-        retryDelay: 1000,
-        initialDelay: 500,
+        retryDelay: 500,
+        initialDelay: 300,
       });
 
       if (!pool) throw new Error('Failed to fetch pool');
@@ -129,32 +129,36 @@ const poolSlice = createSlice({
     setUserId: (state, action) => {
       return { ...state, userId: action.payload };
     },
-    extraReducers: (builder) => {
-      builder
-        .addCase(storePoolAsync.pending, (state) => {
-          state.loading = true;
-          state.error = null;
-        })
-        .addCase(storePoolAsync.fulfilled, (state) => {
-          state.loading = false;
-        })
-        .addCase(storePoolAsync.rejected, (state, action) => {
-          state.loading = false;
-          state.error = action.error.message;
-        })
-        .addCase(fetchPoolByIdAsync.pending, (state) => {
-          state.loading = true;
-          state.error = null;
-        })
-        .addCase(fetchPoolByIdAsync.fulfilled, (state, action) => {
-          state.loading = false;
-          return action.payload;
-        })
-        .addCase(fetchPoolByIdAsync.rejected, (state, action) => {
-          state.loading = false;
-          state.error = action.error.message;
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(storePoolAsync.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(storePoolAsync.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(storePoolAsync.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(fetchPoolByIdAsync.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchPoolByIdAsync.fulfilled, (state, action) => {
+        // Instead of returning the action payload, we'll merge it with the current state
+        Object.assign(state, {
+          ...action.payload,
+          loading: false,
+          error: true,
         });
-    },
+      })
+      .addCase(fetchPoolByIdAsync.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      });
   },
 });
 
@@ -167,9 +171,7 @@ export const selectSortedPlayersByWins = createSelector(
         teams: player.teams || [],
       }))
       .sort((player1, player2) => {
-        const getTotalWins = (player) =>
-          player.teams.reduce((totalWins, team) => totalWins + team.wins, 0);
-        return getTotalWins(player2) - getTotalWins(player1);
+        return player2.totalWins - player1.totalWins;
       });
   },
 );
