@@ -1,5 +1,4 @@
 import { getApiBaseUrl } from '../config/config';
-
 const BASE_URL = getApiBaseUrl();
 
 export async function createPool(pool) {
@@ -7,10 +6,21 @@ export async function createPool(pool) {
     id: pool.id,
     name: pool.name,
     league: pool.league,
+    userId: pool.userId,
+    players: pool.players.map((player) => ({
+      id: player.id,
+      name: player.name,
+      teamName: player.teamName || '',
+      teams: player.teams.map((team) => ({
+        key: team.teamId,
+      })),
+    })),
   };
 
   try {
-    const response = await fetch(`${BASE_URL}/pools`, {
+    console.log('Payload for createPool:', payload);
+
+    const response = await fetch(`${BASE_URL}/complete_pools`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -19,7 +29,18 @@ export async function createPool(pool) {
     });
 
     if (!response.ok) {
+      const errorData = await response.json();
+      console.error('Server error details:', errorData);
       throw new Error('Failed to store pool');
+    }
+
+    // Wait for a moment to ensure the pool is stored in the database
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    // Verify that the pool was created by trying to fetch it
+    const verifyResponse = await fetch(`${BASE_URL}/complete_pools/${pool.id}`);
+    if (!verifyResponse.ok) {
+      throw new Error('Pool creation verification failed');
     }
 
     return await response.json();
@@ -161,20 +182,96 @@ export async function fetchPlayersInPool(poolId) {
   }
 }
 
-export async function fetchCompletePool(poolId) {
-  try {
-    const response = await fetch(`${BASE_URL}/complete_pools/${poolId}`);
+export async function fetchCompletePool(poolId, options = {}) {
+  const {
+    maxRetries = 3,
+    retryDelay = 1000,
+    initialDelay = 0,
+    signal,
+  } = options;
 
-    if (!response.ok)
-      throw new Error(
-        `Failed to fetch pool with id ${poolId}: `,
-        response.statusText,
+  // Wait for initial delay if specified
+  if (initialDelay > 0) {
+    await new Promise((resolve, reject) => {
+      const timeout = setTimeout(resolve, initialDelay);
+      if (signal) {
+        signal.addEventListener('abort', () => {
+          clearTimeout(timeout);
+          reject(new DOMException('Aborted', 'AbortError'));
+        });
+      }
+    });
+  }
+
+  let lastError = null;
+
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      console.log(
+        `Attempt ${attempt}/${maxRetries} - Fetching pool ID: ${poolId}`,
       );
 
-    const pool = await response.json();
-    return pool;
+      const response = await fetch(`${BASE_URL}/complete_pools/${poolId}`, {
+        signal,
+      });
+
+      if (!response.ok) {
+        if (response.status === 404 && attempt < maxRetries) {
+          console.log(
+            `Pool not found on attempt ${attempt}, waiting ${retryDelay}ms...`,
+          );
+          await new Promise((resolve, reject) => {
+            const timeout = setTimeout(resolve, retryDelay);
+            if (signal) {
+              signal.addEventListener('abort', () => {
+                clearTimeout(timeout);
+                reject(new DOMException('Aborted', 'AbortError'));
+              });
+            }
+          });
+          continue;
+        }
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log('Successfully fetched pool data');
+      return data;
+    } catch (error) {
+      if (error.name === 'AbortError') {
+        throw error;
+      }
+      lastError = error;
+      if (attempt === maxRetries) {
+        console.error('All retry attempts failed:', error);
+        throw error;
+      }
+      await new Promise((resolve, reject) => {
+        const timeout = setTimeout(resolve, retryDelay);
+        if (signal) {
+          signal.addEventListener('abort', () => {
+            clearTimeout(timeout);
+            reject(new DOMException('Aborted', 'AbortError'));
+          });
+        }
+      });
+    }
+  }
+
+  throw lastError || new Error('Failed to fetch pool after all retries');
+}
+
+export async function fetchUserPools(userId) {
+  try {
+    const response = await fetch(`${BASE_URL}/pools/user/${userId}`);
+
+    if (!response.ok)
+      throw new Error('Failed to fetch user pools: ', response.statusText);
+
+    const userPools = await response.json();
+    return userPools;
   } catch (error) {
-    console.error(`Error fetching pool with id ${poolId}: `, error);
+    console.error('Error fetching user pools: ', error);
     throw error;
   }
 }

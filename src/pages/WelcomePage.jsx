@@ -1,21 +1,90 @@
 import PrimaryLinkButton from '../components/PrimaryLinkButton';
-import usePool from '../utils/usePool';
 import classes from './WelcomePage.module.css';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { fetchUserPoolsAsync } from '../state/userPoolsSlice';
+import { fetchPoolByIdAsync } from '../state/poolSlice';
+import { useEffect } from 'react';
+import CircularIndeterminate from '../components/Loading';
+import {
+  SignedOut,
+  SignInButton,
+  SignedIn,
+  useUser,
+  UserButton,
+} from '@clerk/clerk-react';
 
 export default function Welcome() {
-  const pool = useSelector((state) => state.pool);
-  const isExistingPool = pool.name !== '' ? true : null;
+  const { user } = useUser();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const userPools = useSelector((state) => state.userPools.pools);
+  const userPoolsLoading = useSelector((state) => state.userPools.loading);
+  const poolLoading = useSelector((state) => state.pool.loading);
+
+  useEffect(() => {
+    // If user then fetch user pools
+    if (user) {
+      dispatch(fetchUserPoolsAsync(user.id));
+      console.log('User is signed in: ', user);
+      console.log('User pools: ', userPools);
+    }
+  }, [user, dispatch]);
+
+  useEffect(() => {
+    // If user has pools then set the most recent pool as the active pool
+    const initializePool = async () => {
+      if (userPools.length > 0 && !userPoolsLoading) {
+        const mostRecentPool = userPools[0]; // TODO: sort pools by most recently updated
+
+        try {
+          // Fetch complete pool data with team stats
+          await dispatch(fetchPoolByIdAsync(mostRecentPool.id)).unwrap();
+
+          // Store active pool ID in localStorage
+          localStorage.setItem('activePoolId', mostRecentPool.id);
+          localStorage.setItem('userId', user.id);
+        } catch (error) {
+          console.error('Error initializing pool: ', error);
+        }
+      }
+    };
+
+    initializePool();
+  }, [userPools, userPoolsLoading, user, dispatch]);
+
+  const handleGoToPool = () => {
+    // If user has pools then navigate to pool home
+    if (userPools.length > 0) {
+      navigate('/pool-home');
+    } else {
+      navigate('/choose-league');
+    }
+  };
 
   return (
     <div className={classes[`welcome-container`]}>
+      <header className={classes['welcome-header']}>
+        <SignedIn>
+          <UserButton />
+        </SignedIn>
+      </header>
       <HeaderLogo />
       <TextCarrousel />
-      {isExistingPool ? (
-        <PrimaryLinkButton text="Go To Pool" path="/pool-home" />
-      ) : (
-        <PrimaryLinkButton text={'Get Started'} path={'/choose-league'} />
-      )}
+      <SignedOut>
+        <SignInButton mode="modal">
+          <button className={classes['sign-in-btn']}>Get Started</button>
+        </SignInButton>
+      </SignedOut>
+      <SignedIn>
+        {(poolLoading || userPoolsLoading) && <CircularIndeterminate />}
+        {!poolLoading && !userPoolsLoading && (
+          <PrimaryLinkButton
+            text={userPools.length > 0 ? 'Go To Pool' : 'Create Pool'}
+            handleClick={handleGoToPool}
+          />
+        )}
+      </SignedIn>
     </div>
   );
 }
@@ -33,10 +102,17 @@ function HeaderLogo() {
 }
 
 function TextCarrousel() {
+  const { user } = useUser();
   return (
     <div className="text-carrousel-container">
-      <h1>Welcome to WizPool</h1>
-      <p>The app that will make you a wins pool tracking wizard.</p>
+      <SignedOut>
+        <h1>Welcome to WizPool</h1>
+        <p>The app that will make you a wins pool tracking wizard.</p>
+      </SignedOut>
+      <SignedIn>
+        <h1>Welcome Back, {user?.firstName || 'Wizard'}!</h1>
+        <p>The app that will make you a wins pool tracking wizard.</p>
+      </SignedIn>
     </div>
   );
 }

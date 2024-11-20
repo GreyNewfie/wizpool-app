@@ -9,14 +9,11 @@ import DesktopNavHeader from '../components/DesktopNavHeader';
 import useIsDesktop from '../utils/useIsDesktop';
 import useStoredPools from '../utils/useStoredPools';
 import { useEffect } from 'react';
-import useApiData from '../utils/useApiData';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectSortedPlayersByWins, setPool } from '../state/poolSlice';
 import { fetchCompletePool } from '../services/poolService';
 import CircularIndeterminate from '../components/Loading';
-
-const getTotalWins = (player) =>
-  player.teams.reduce((totalWins, team) => totalWins + team.wins, 0);
+import { useState } from 'react';
 
 const getStandingSuffix = (standing) => {
   const standingDigits = [...standing.toString()].map(Number);
@@ -52,12 +49,12 @@ const getPlayerStandings = (sortedPlayers) => {
 
   while (currentIndex < sortedPlayers.length) {
     let playerA = sortedPlayers[currentIndex];
-    let playerAWins = getTotalWins(playerA);
+    let playerAWins = playerA.totalWins;
     const nextIndex = currentIndex + 1;
 
     if (nextIndex < sortedPlayers.length) {
       const playerB = sortedPlayers[nextIndex];
-      const playerBWins = getTotalWins(playerB);
+      const playerBWins = playerB.totalWins;
 
       // Compare players a and b
       // Check if playeA and playerB have the same number of wins
@@ -70,7 +67,7 @@ const getPlayerStandings = (sortedPlayers) => {
             playerStandings[playerB.name] =
               `T-${playerStandings[playerA.name]}`;
           }
-          // dd playerA's standing to playerB
+          // Add playerA's standing to playerB
           playerStandings[playerB.name] = `${playerStandings[playerA.name]}`;
         } else {
           // If playerA doesn't have a standing assign current standing to both players
@@ -101,8 +98,10 @@ const getPlayerStandings = (sortedPlayers) => {
 
 export default function PoolHomePage() {
   const { theme } = useTheme();
-  const { getApiLeagueData } = useApiData();
   const { getNonActivePools } = useStoredPools();
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const dispatch = useDispatch();
   const pool = useSelector((state) => state.pool);
@@ -113,29 +112,65 @@ export default function PoolHomePage() {
   const playerStandings = getPlayerStandings(sortedPlayers);
 
   useEffect(() => {
+    let isMounted = true;
+    const controller = new AbortController();
+
     const fetchData = async () => {
       const activePoolId = localStorage.getItem('activePoolId');
-      if (!activePoolId) return;
+      if (!activePoolId) {
+        setIsLoading(false);
+        return;
+      }
 
-      const poolData = await fetchCompletePool(activePoolId);
-      const leagueData = await getApiLeagueData(poolData.league);
+      // Check if pool is already set in state and has players
+      if (pool.id === activePoolId && pool.players?.length > 0) {
+        setIsLoading(false);
+        return;
+      }
 
-      // Update teams with additional league data
-      const updatedPlayers = poolData.players.map((player) => {
-        const updatedTeams = player.teams.map((team) => {
-          const teamData = leagueData.find(
-            (dataTeam) => dataTeam.key === team.key,
-          );
-          return teamData ? { ...team, ...teamData } : team;
+      try {
+        setIsLoading(true);
+        setError(null);
+
+        const poolData = await fetchCompletePool(activePoolId, {
+          maxRetries: 3,
+          retryDelay: 500,
+          signal: controller.signal,
+          initialDelay: 300,
         });
-        return { ...player, teams: updatedTeams };
-      });
-      dispatch(setPool({ ...poolData, players: updatedPlayers }));
+
+        if (!isMounted) return;
+
+        if (!poolData) {
+          setError('Pool not found');
+          return;
+        }
+
+        dispatch(setPool(poolData));
+      } catch (error) {
+        if (error.name === 'AbortError') {
+          console.log('Request aborted');
+          return;
+        }
+        if (isMounted) {
+          console.error('Error fetching pool data:', error);
+          setError(error.message);
+        }
+      } finally {
+        if (isMounted) {
+          setIsLoading(false);
+        }
+      }
     };
 
     fetchData();
-    console.log('poolData:', pool);
-  }, []);
+
+    return () => {
+      isMounted = false;
+      controller.abort();
+      setIsLoading(false);
+    };
+  }, [dispatch, pool.id, pool.players?.length]);
 
   const createNewPool = () => {};
 
@@ -145,10 +180,18 @@ export default function PoolHomePage() {
     console.log('changePool');
   };
 
-  if (!pool.name || !sortedPlayers) {
+  if (isLoading) {
     return (
       <div className={classes['page-loading-container']}>
         <CircularIndeterminate />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className={classes['page-loading-container']}>
+        <p>Error: {error}</p>
       </div>
     );
   }

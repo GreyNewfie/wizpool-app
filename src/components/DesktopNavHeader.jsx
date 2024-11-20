@@ -4,12 +4,17 @@ import useIsDesktop from '../utils/useIsDesktop';
 import AvatarAndMenu from './AvatarAndMenu';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-
+import {
+  SignedOut,
+  SignedIn,
+  SignInButton,
+  UserButton,
+} from '@clerk/clerk-react';
 export default function DesktopNavHeader(props) {
   const isDesktop = useIsDesktop();
   const pool = useSelector((state) => state.pool);
   return (
-    <div className={classes['desktop-nav-header']}>
+    <header className={classes['desktop-nav-header']}>
       <img
         className={classes['logo']}
         src="./wizpool-wordmark-230x70.png"
@@ -49,8 +54,14 @@ export default function DesktopNavHeader(props) {
             nonActivePools={props.nonActivePools}
           />
         )}
+        <SignedOut>
+          <SignInButton className={classes['sign-in-btn']} />
+        </SignedOut>
+        <SignedIn>
+          <UserButton />
+        </SignedIn>
       </div>
-    </div>
+    </header>
   );
 }
 
