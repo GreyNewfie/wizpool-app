@@ -2,48 +2,44 @@ import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPoolByIdAsync } from '../state/poolSlice';
-import { useAuth } from '@clerk/clerk-react';
+import { useUser } from '@clerk/clerk-react';
 import { Navigate } from 'react-router-dom';
 import CircularIndeterminate from './Loading';
 import { fetchUserPoolsAsync } from '../state/userPoolsSlice';
 
 export default function ProtectedPoolRoute({ children }) {
   const dispatch = useDispatch();
-  const { isSignedIn, user } = useAuth();
+  const { isSignedIn, user } = useUser();
   const [isInitializing, setIsInitializing] = useState(true);
   const pool = useSelector((state) => state.pool);
-  const userPools = useSelector((state) => state.userPools.pools);
   const activePoolId = localStorage.getItem('activePoolId');
 
   // Initialize pool state
   useEffect(() => {
     const initializePool = async () => {
+      if (!isSignedIn) {
+        setIsInitializing(false);
+        return;
+      }
+
       try {
         // First try to get pool from activePoolId
         if (activePoolId) {
           // Only fetch if pool is not already in state
           if (!pool.id || pool.id !== activePoolId) {
             await dispatch(fetchPoolByIdAsync(activePoolId)).unwrap();
-            setIsInitializing(false);
-            return;
           }
-          setIsInitializing(false);
-          return;
-        }
-
-        // If no activePoolId, try to get user's pools
-        if (user?.id) {
-          const result = await dispatch(fetchUserPoolsAsync(user.id)).unwrap();
-
-          // If user has pools, set most recent pool as active
-          if (result && result.length > 0) {
-            const mostRecentPool = result[0];
-            await dispatch(fetchPoolByIdAsync(mostRecentPool.id)).unwrap();
+        } else if (user?.id) {
+          const userPools = await dispatch(
+            fetchUserPoolsAsync(user.id),
+          ).unwrap();
+          // If no activePoolId, fetch user's pools and update state with most recent
+          if (userPools.length > 0) {
+            const mostRecentPool = userPools[0];
             localStorage.setItem('activePoolId', mostRecentPool.id);
-            localStorage.setItem('userId', user.id);
+            await dispatch(fetchPoolByIdAsync(mostRecentPool.id)).unwrap();
           }
         }
-        setIsInitializing(false);
       } catch (error) {
         console.error('Error initializing pool: ', error);
       } finally {
@@ -56,7 +52,7 @@ export default function ProtectedPoolRoute({ children }) {
     } else {
       setIsInitializing(false);
     }
-  }, [pool.id, dispatch, isSignedIn, activePoolId, user?.id]);
+  }, [isSignedIn, user?.id, pool.id, dispatch, activePoolId]);
 
   // Show loading indicator while initializing
   if (isInitializing || isSignedIn === undefined || !pool?.name) {

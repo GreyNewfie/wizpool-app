@@ -8,12 +8,8 @@ import classNames from 'classnames';
 import DesktopNavHeader from '../components/DesktopNavHeader';
 import useIsDesktop from '../utils/useIsDesktop';
 import useStoredPools from '../utils/useStoredPools';
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { selectSortedPlayersByWins, setPool } from '../state/poolSlice';
-import { fetchCompletePool } from '../services/poolService';
-import CircularIndeterminate from '../components/Loading';
-import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { selectSortedPlayersByWins } from '../state/poolSlice';
 
 const getStandingSuffix = (standing) => {
   const standingDigits = [...standing.toString()].map(Number);
