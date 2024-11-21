@@ -20,7 +20,9 @@ import { Provider } from 'react-redux';
 import store from './state/store';
 import { ClerkProvider } from '@clerk/clerk-react';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
-// Import your publishable key
+import ProtectedPoolRoute from './components/ProtectedPoolRoute.jsx';
+
+// Import publishable key
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
 if (!PUBLISHABLE_KEY) {
@@ -73,45 +75,45 @@ const router = createBrowserRouter(
     {
       path: '/pool-home',
       element: (
-        <ProtectedRoute>
+        <ProtectedPoolRoute>
           <PoolHomePage />
-        </ProtectedRoute>
+        </ProtectedPoolRoute>
       ),
       errorElement: <ErrorPage />,
     },
     {
       path: '/pool-players',
       element: (
-        <ProtectedRoute>
+        <ProtectedPoolRoute>
           <PoolPlayersPage />
-        </ProtectedRoute>
+        </ProtectedPoolRoute>
       ),
       errorElement: <ErrorPage />,
     },
     {
       path: '/pool-picks',
       element: (
-        <ProtectedRoute>
+        <ProtectedPoolRoute>
           <PoolPicksPage />
-        </ProtectedRoute>
+        </ProtectedPoolRoute>
       ),
       errorElement: <ErrorPage />,
     },
     {
       path: '/pool-settings',
       element: (
-        <ProtectedRoute>
+        <ProtectedPoolRoute>
           <SettingsPage />
-        </ProtectedRoute>
+        </ProtectedPoolRoute>
       ),
       errorElement: <ErrorPage />,
     },
     {
       path: '/manage-players',
       element: (
-        <ProtectedRoute>
+        <ProtectedPoolRoute>
           <ManagePlayersPage />
-        </ProtectedRoute>
+        </ProtectedPoolRoute>
       ),
       errorElement: <ErrorPage />,
     },
@@ -127,9 +129,9 @@ const router = createBrowserRouter(
     {
       path: '/delete-pool',
       element: (
-        <ProtectedRoute>
+        <ProtectedPoolRoute>
           <DeletePoolPage />
-        </ProtectedRoute>
+        </ProtectedPoolRoute>
       ),
       errorElement: <ErrorPage />,
     },
