@@ -100,77 +100,12 @@ export default function PoolHomePage() {
   const { theme } = useTheme();
   const { getNonActivePools } = useStoredPools();
 
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  const dispatch = useDispatch();
   const pool = useSelector((state) => state.pool);
   const sortedPlayers = useSelector(selectSortedPlayersByWins);
   const poolClasses = classNames(classes['pool-home'], classes[theme]);
   const isDesktop = useIsDesktop();
   const nonActivePools = getNonActivePools();
   const playerStandings = getPlayerStandings(sortedPlayers);
-
-  useEffect(() => {
-    let isMounted = true;
-    const controller = new AbortController();
-
-    const fetchData = async () => {
-      const activePoolId = localStorage.getItem('activePoolId');
-      if (!activePoolId) {
-        setIsLoading(false);
-        return;
-      }
-
-      // Check if pool is already set in state and has players
-      if (pool.id === activePoolId && pool.players?.length > 0) {
-        setIsLoading(false);
-        return;
-      }
-
-      try {
-        setIsLoading(true);
-        setError(null);
-
-        const poolData = await fetchCompletePool(activePoolId, {
-          maxRetries: 3,
-          retryDelay: 500,
-          signal: controller.signal,
-          initialDelay: 300,
-        });
-
-        if (!isMounted) return;
-
-        if (!poolData) {
-          setError('Pool not found');
-          return;
-        }
-
-        dispatch(setPool(poolData));
-      } catch (error) {
-        if (error.name === 'AbortError') {
-          console.log('Request aborted');
-          return;
-        }
-        if (isMounted) {
-          console.error('Error fetching pool data:', error);
-          setError(error.message);
-        }
-      } finally {
-        if (isMounted) {
-          setIsLoading(false);
-        }
-      }
-    };
-
-    fetchData();
-
-    return () => {
-      isMounted = false;
-      controller.abort();
-      setIsLoading(false);
-    };
-  }, [dispatch, pool.id, pool.players?.length]);
 
   const createNewPool = () => {};
 
@@ -179,22 +114,6 @@ export default function PoolHomePage() {
   const changePool = () => {
     console.log('changePool');
   };
-
-  if (isLoading) {
-    return (
-      <div className={classes['page-loading-container']}>
-        <CircularIndeterminate />
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className={classes['page-loading-container']}>
-        <p>Error: {error}</p>
-      </div>
-    );
-  }
 
   return (
     <div className={classes['page-container']}>
