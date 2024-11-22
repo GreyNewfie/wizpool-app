@@ -11,17 +11,18 @@ import ConfirmDialog from '../components/ConfirmDialog';
 import useIsDesktop from '../utils/useIsDesktop';
 import DesktopNavHeader from '../components/DesktopNavHeader';
 import useStoredPools from '../utils/useStoredPools';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  setPlayerName,
+  setTeamName,
+  addPlayer,
+  deletePlayer,
+} from '../state/poolSlice';
 
 export default function ManagePlayersPage() {
-  const {
-    pool,
-    createNewPool,
-    changePool,
-    handlePlayerNameChange,
-    handleTeamNameChange,
-    addBlankPlayer,
-    deletePlayer,
-  } = usePool();
+  const { createNewPool, changePool } = usePool();
+  const dispatch = useDispatch();
+  const pool = useSelector((state) => state.pool);
   const [playerToEdit, setPlayerToEdit] = useState(null);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [playerToDelete, setPlayerToDelete] = useState(null);
@@ -44,15 +45,27 @@ export default function ManagePlayersPage() {
   };
 
   const handleDeletePlayer = () => {
-    deletePlayer(playerToDelete);
+    dispatch(deletePlayer(playerToDelete));
     setShowConfirmDialog(false);
+  };
+
+  const handlePlayerNameChange = (name, index) => {
+    dispatch(setPlayerName({ name, index }));
+  };
+
+  const handleTeamNameChange = (teamName, playerIndex) => {
+    dispatch(setTeamName({ teamName, playerIndex }));
+  };
+
+  const addBlankPlayer = () => {
+    dispatch(addPlayer({ name: '', teamName: '', teams: [] }));
   };
 
   return (
     <div className={classes['page-container']}>
       {isDesktop && (
         <DesktopNavHeader
-          poolName={pool.poolName}
+          poolName={pool.name}
           createNewPool={createNewPool}
           changePool={changePool}
           nonActivePools={nonActivePools}
@@ -61,9 +74,9 @@ export default function ManagePlayersPage() {
       <div className={classes['manage-players']}>
         <PageHeader
           headerText="Manage Players"
-          leftBtnText=<ArrowBackIcon />
+          leftBtnText={<ArrowBackIcon />}
           path="/pool-settings"
-          poolName={pool.poolName}
+          poolName={pool.name}
           createNewPool={createNewPool}
           changePool={changePool}
           nonActivePools={nonActivePools}
