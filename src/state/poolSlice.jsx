@@ -91,6 +91,12 @@ const poolSlice = createSlice({
     addPlayer: (state, action) => {
       state.players.push({ ...action.payload, id: uuid() });
     },
+    deletePlayer: (state, action) => {
+      const playerToDelete = action.payload;
+      state.players = state.players.filter(
+        (player) => player.id !== playerToDelete.id,
+      );
+    },
     setPlayerName: (state, action) => {
       const { name, index } = action.payload;
       const player = state.players[index];
@@ -100,8 +106,8 @@ const poolSlice = createSlice({
       }
     },
     setTeamName: (state, action) => {
-      const { teamName, index } = action.payload;
-      const player = state.players[index];
+      const { teamName, playerIndex } = action.payload;
+      const player = state.players[playerIndex];
 
       if (player) {
         player.teamName = teamName;
@@ -187,6 +193,7 @@ export const {
   removeTeamFromPlayer,
   removeEmptyPlayers,
   setUserId,
+  deletePlayer,
 } = poolSlice.actions;
 
 export default poolSlice.reducer;
