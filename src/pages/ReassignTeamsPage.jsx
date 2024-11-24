@@ -9,9 +9,12 @@ import { Fragment, useState } from 'react';
 import useIsDesktop from '../utils/useIsDesktop';
 import DesktopNavHeader from '../components/DesktopNavHeader';
 import useStoredPools from '../utils/useStoredPools';
+import { useSelector } from 'react-redux';
+import { setPool } from '../state/poolSlice';
 
 export default function ReassignTeamsPage() {
-  const { pool, setPool, createNewPool, changePool } = usePool();
+  const { createNewPool, changePool } = usePool();
+  const pool = useSelector((state) => state.pool);
   const [playerToEdit, setPlayerToEdit] = useState(null);
   const isDesktop = useIsDesktop();
   const { getNonActivePools } = useStoredPools();
@@ -25,7 +28,7 @@ export default function ReassignTeamsPage() {
     <div className={classes['page-container']}>
       {isDesktop && (
         <DesktopNavHeader
-          poolName={pool.poolName}
+          poolName={pool.name}
           createNewPool={createNewPool}
           changePool={changePool}
           nonActivePools={nonActivePools}
@@ -34,9 +37,9 @@ export default function ReassignTeamsPage() {
       <div className={classes['reassign-teams']}>
         <PageHeader
           headerText="Rassign Teams"
-          leftBtnText=<ArrowBackIcon />
+          leftBtnText={<ArrowBackIcon />}
           path="/pool-settings"
-          poolName={pool.poolName}
+          poolName={pool.name}
           createNewPool={createNewPool}
           changePool={changePool}
           nonActivePools={nonActivePools}
