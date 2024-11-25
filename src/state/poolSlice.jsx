@@ -75,6 +75,19 @@ export const fetchPoolByIdAsync = createAsyncThunk(
   },
 );
 
+export const fetchPoolAsync = createAsyncThunk(
+  'pool/fetchPoolAsync',
+  async (poolId, { rejectWithValue }) => {
+    try {
+      const poolData = await fetchCompletePool(poolId);
+      return poolData;
+    } catch (error) {
+      console.error('Error fetching pool: ', error);
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
 const poolSlice = createSlice({
   name: 'pool',
   initialState,
@@ -91,6 +104,12 @@ const poolSlice = createSlice({
     addPlayer: (state, action) => {
       state.players.push({ ...action.payload, id: uuid() });
     },
+    deletePlayer: (state, action) => {
+      const playerToDelete = action.payload;
+      state.players = state.players.filter(
+        (player) => player.id !== playerToDelete.id,
+      );
+    },
     setPlayerName: (state, action) => {
       const { name, index } = action.payload;
       const player = state.players[index];
@@ -100,8 +119,8 @@ const poolSlice = createSlice({
       }
     },
     setTeamName: (state, action) => {
-      const { teamName, index } = action.payload;
-      const player = state.players[index];
+      const { teamName, playerIndex } = action.payload;
+      const player = state.players[playerIndex];
 
       if (player) {
         player.teamName = teamName;
@@ -158,6 +177,21 @@ const poolSlice = createSlice({
       .addCase(fetchPoolByIdAsync.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
+      })
+      .addCase(fetchPoolAsync.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchPoolAsync.fulfilled, (state, action) => {
+        Object.assign(state, {
+          ...action.payload,
+          loading: false,
+          error: true,
+        });
+      })
+      .addCase(fetchPoolAsync.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload || 'Failed to fetch pool data';
       });
   },
 });
@@ -187,6 +221,7 @@ export const {
   removeTeamFromPlayer,
   removeEmptyPlayers,
   setUserId,
+  deletePlayer,
 } = poolSlice.actions;
 
 export default poolSlice.reducer;

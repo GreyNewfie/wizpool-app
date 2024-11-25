@@ -62,7 +62,7 @@ export default function TeamsList({ playerIndex }) {
             team={team}
             playerIndex={playerIndex}
             setTeam={(teamName) =>
-              dispatch(setTeamName({ teamName, index: playerIndex }))
+              dispatch(setTeamName({ teamName, playerIndex }))
             }
           />
         );

@@ -44,7 +44,7 @@ export default function CreatePoolPage() {
   };
 
   const handleTeamNameChange = (value, index) => {
-    dispatch(setTeamName({ teamName: value, index }));
+    dispatch(setTeamName({ teamName: value, playerIndex: index }));
   };
 
   return (
