@@ -3,15 +3,21 @@ import { fetchUserPools } from '../services/poolService';
 
 const initialState = {
   pools: [],
+  activePool: null,
   loading: false,
   error: null,
 };
 
 export const fetchUserPoolsAsync = createAsyncThunk(
   'userPools/fetchUserPools',
-  async (userId) => {
-    const userPools = await fetchUserPools(userId);
-    return userPools;
+  async (userId, { rejectWithValue }) => {
+    try {
+      const userPools = await fetchUserPools(userId);
+      return userPools;
+    } catch (error) {
+      console.error('Error fetching user pools:', error);
+      return rejectWithValue(error.message);
+    }
   },
 );
 
@@ -22,6 +28,9 @@ const userPoolsSlice = createSlice({
     clearUserPools: (state) => {
       state.pools = [];
     },
+    setActivePool: (state, action) => {
+      state.activePool = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -30,15 +39,15 @@ const userPoolsSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchUserPoolsAsync.fulfilled, (state, action) => {
-        state.pools = action.payload;
         state.loading = false;
+        state.pools = action.payload;
       })
       .addCase(fetchUserPoolsAsync.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message;
+        state.error = action.payload;
       });
   },
 });
 
-export const { clearUserPools } = userPoolsSlice.actions;
+export const { clearUserPools, setActivePool } = userPoolsSlice.actions;
 export default userPoolsSlice.reducer;
