@@ -10,9 +10,11 @@ import {
   SignInButton,
   UserButton,
 } from '@clerk/clerk-react';
+
 export default function DesktopNavHeader(props) {
   const isDesktop = useIsDesktop();
   const pool = useSelector((state) => state.pool);
+
   return (
     <header className={classes['desktop-nav-header']}>
       <img
