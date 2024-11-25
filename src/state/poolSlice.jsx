@@ -75,6 +75,19 @@ export const fetchPoolByIdAsync = createAsyncThunk(
   },
 );
 
+export const fetchPoolAsync = createAsyncThunk(
+  'pool/fetchPoolAsync',
+  async (poolId, { rejectWithValue }) => {
+    try {
+      const poolData = await fetchCompletePool(poolId);
+      return poolData;
+    } catch (error) {
+      console.error('Error fetching pool: ', error);
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
 const poolSlice = createSlice({
   name: 'pool',
   initialState,
@@ -164,6 +177,21 @@ const poolSlice = createSlice({
       .addCase(fetchPoolByIdAsync.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
+      })
+      .addCase(fetchPoolAsync.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchPoolAsync.fulfilled, (state, action) => {
+        Object.assign(state, {
+          ...action.payload,
+          loading: false,
+          error: true,
+        });
+      })
+      .addCase(fetchPoolAsync.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload || 'Failed to fetch pool data';
       });
   },
 });
