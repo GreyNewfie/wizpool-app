@@ -82,6 +82,7 @@ export default function AvatarAndMenu() {
 
   const handleSwitchPool = (poolId) => {
     dispatch(fetchPoolAsync(poolId));
+    localStorage.setItem('activePoolId', poolId); // Update local storage to indicate acttive pool
     handleMenuClose();
   };
 
