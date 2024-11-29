@@ -39,6 +39,7 @@ export async function createPool(pool) {
 
     // Verify that the pool was created by trying to fetch it
     const verifyResponse = await fetch(`${BASE_URL}/complete_pools/${pool.id}`);
+
     if (!verifyResponse.ok) {
       throw new Error('Pool creation verification failed');
     }
@@ -182,7 +183,7 @@ export async function fetchPlayersInPool(poolId) {
   }
 }
 
-export async function fetchCompletePool(poolId, options = {}) {
+export async function fetchCompletePool(poolId, token, options = {}) {
   const {
     maxRetries = 3,
     retryDelay = 1000,
@@ -212,6 +213,10 @@ export async function fetchCompletePool(poolId, options = {}) {
       );
 
       const response = await fetch(`${BASE_URL}/complete_pools/${poolId}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
         signal,
       });
 
@@ -263,7 +268,11 @@ export async function fetchCompletePool(poolId, options = {}) {
 
 export async function fetchUserPools(userId) {
   try {
-    const response = await fetch(`${BASE_URL}/pools/user/${userId}`);
+    const response = await fetch(`${BASE_URL}/pools/user/${userId}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
 
     if (!response.ok)
       throw new Error('Failed to fetch user pools: ', response.statusText);

@@ -6,10 +6,12 @@ import { useUser } from '@clerk/clerk-react';
 import { Navigate } from 'react-router-dom';
 import CircularIndeterminate from './Loading';
 import { fetchUserPoolsAsync } from '../state/userPoolsSlice';
+import { useAuth } from '@clerk/clerk-react';
 
 export default function ProtectedPoolRoute({ children }) {
   const dispatch = useDispatch();
   const { isSignedIn, user } = useUser();
+  const { getToken } = useAuth();
   const [isInitializing, setIsInitializing] = useState(true);
   const pool = useSelector((state) => state.pool);
   const activePoolId = localStorage.getItem('activePoolId');
@@ -23,11 +25,12 @@ export default function ProtectedPoolRoute({ children }) {
       }
 
       try {
+        const token = await getToken();
         // First try to get pool from activePoolId
         if (activePoolId) {
           // Only fetch if pool is not already in state
           if (!pool.id || pool.id !== activePoolId) {
-            await dispatch(fetchPoolByIdAsync(activePoolId)).unwrap();
+            await dispatch(fetchPoolByIdAsync({poolId: activePoolId, token})).unwrap();
           }
         } else if (user?.id) {
           const userPools = await dispatch(
@@ -37,7 +40,7 @@ export default function ProtectedPoolRoute({ children }) {
           if (userPools.length > 0) {
             const mostRecentPool = userPools[0];
             localStorage.setItem('activePoolId', mostRecentPool.id);
-            await dispatch(fetchPoolByIdAsync(mostRecentPool.id)).unwrap();
+            await dispatch(fetchPoolByIdAsync({poolId: mostRecentPool.id, token})).unwrap();
           }
         }
       } catch (error) {

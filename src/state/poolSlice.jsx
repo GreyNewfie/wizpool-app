@@ -5,6 +5,7 @@ import {
 } from '@reduxjs/toolkit';
 import { v4 as uuid } from 'uuid';
 import { createPool, fetchCompletePool } from '../services/poolService';
+import { useAuth } from '@clerk/clerk-react';
 
 const initialState = {
   id: uuid(),
@@ -37,7 +38,7 @@ export const storePoolAsync = createAsyncThunk(
       await new Promise((resolve) => setTimeout(resolve, 1500));
 
       // Fetch the pool with retry options
-      const fetchedPool = await fetchCompletePool(pool.id, {
+      const fetchedPool = await fetchCompletePool(pool.id, token, {
         maxRetries: 3,
         retryDelay: 1000,
         initialDelay: 500,
@@ -57,9 +58,9 @@ export const storePoolAsync = createAsyncThunk(
 
 export const fetchPoolByIdAsync = createAsyncThunk(
   'pool/fetchPoolByIdAsync',
-  async (poolId) => {
+  async ({poolId, token}, { rejectWithValue }) => {
     try {
-      const pool = await fetchCompletePool(poolId, {
+      const pool = await fetchCompletePool(poolId, token, {
         maxRetries: 3,
         retryDelay: 500,
         initialDelay: 300,
@@ -69,17 +70,16 @@ export const fetchPoolByIdAsync = createAsyncThunk(
 
       return pool;
     } catch (error) {
-      console.error('Error in fetch pool by id process:', error);
-      throw error;
+      return rejectWithValue(error.message);
     }
   },
 );
 
 export const fetchPoolAsync = createAsyncThunk(
   'pool/fetchPoolAsync',
-  async (poolId, { rejectWithValue }) => {
+  async ({ poolId, token }, { rejectWithValue }) => {
     try {
-      const poolData = await fetchCompletePool(poolId);
+      const poolData = await fetchCompletePool(poolId, token);
       return poolData;
     } catch (error) {
       console.error('Error fetching pool: ', error);
