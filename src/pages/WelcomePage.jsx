@@ -3,7 +3,7 @@ import classes from './WelcomePage.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { fetchUserPoolsAsync } from '../state/userPoolsSlice';
-import { fetchPoolByIdAsync } from '../state/poolSlice';
+import { fetchPoolAsync } from '../state/poolSlice';
 import { useEffect } from 'react';
 import CircularIndeterminate from '../components/Loading';
 import {
@@ -39,7 +39,7 @@ export default function Welcome() {
 
         try {
           // Fetch complete pool data with team stats
-          await dispatch(fetchPoolByIdAsync(mostRecentPool.id)).unwrap();
+          await dispatch(fetchPoolAsync(mostRecentPool.id)).unwrap();
 
           // Store active pool ID in localStorage
           localStorage.setItem('activePoolId', mostRecentPool.id);
