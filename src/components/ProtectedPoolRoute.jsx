@@ -34,7 +34,7 @@ export default function ProtectedPoolRoute({ children }) {
           }
         } else if (user?.id) {
           const userPools = await dispatch(
-            fetchUserPoolsAsync(user.id),
+            fetchUserPoolsAsync({userId: user.id, token}),
           ).unwrap();
           // If no activePoolId, fetch user's pools and update state with most recent
           if (userPools.length > 0) {

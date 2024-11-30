@@ -6,11 +6,12 @@ import classes from './ChoosePlayerPage.module.css';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { storePoolAsync, setUserId } from '../state/poolSlice';
-import { useUser } from '@clerk/clerk-react';
+import { useUser, useAuth } from '@clerk/clerk-react';
 import { useNavigate } from 'react-router-dom';
 
 export default function ChoosePlayerPage() {
   const { user } = useUser();
+  const { getToken } = useAuth();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const pool = useSelector((state) => state.pool);
@@ -31,7 +32,8 @@ export default function ChoosePlayerPage() {
       // Add user id to pool before storing
       dispatch(setUserId(user.id));
       // Wait for the pool to be stored
-      const result = await dispatch(storePoolAsync()).unwrap();
+      const token = await getToken();
+      const result = await dispatch(storePoolAsync({ token })).unwrap();
       console.log('Pool stored: ', result);
 
       localStorage.setItem('activePoolId', pool.id);
