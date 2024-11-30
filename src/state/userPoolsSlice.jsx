@@ -10,9 +10,9 @@ const initialState = {
 
 export const fetchUserPoolsAsync = createAsyncThunk(
   'userPools/fetchUserPools',
-  async (userId, { rejectWithValue }) => {
+  async ({userId, token}, { rejectWithValue }) => {
     try {
-      const userPools = await fetchUserPools(userId);
+      const userPools = await fetchUserPools(userId, token);
       return userPools;
     } catch (error) {
       console.error('Error fetching user pools:', error);
