@@ -16,7 +16,7 @@ import { fetchPoolAsync, setPool } from '../state/poolSlice';
 import { v4 as uuid } from 'uuid';
 import { useNavigate } from 'react-router-dom';
 import { fetchUserPoolsAsync } from '../state/userPoolsSlice';
-import { useUser } from '@clerk/clerk-react';
+import { useUser, useAuth } from '@clerk/clerk-react';
 import CircularIndeterminate from '../components/Loading';
 
 const stringAvatar = (poolName) => {
@@ -34,9 +34,10 @@ const stringAvatar = (poolName) => {
 };
 
 export default function AvatarAndMenu() {
+  const { getToken } = useAuth();
+  const { user } = useUser();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { user } = useUser();
   const pool = useSelector((state) => state.pool);
   const userPools = useSelector((state) => state.userPools.pools);
   const [otherUserPools, setOtherUserPools] = useState(null);
@@ -44,8 +45,11 @@ export default function AvatarAndMenu() {
   const open = Boolean(anchorEl);
 
   useEffect(() => {
+    const updateUserPools = async () => {
+      const token = await getToken();
+    
     if (!userPools.length > 0 && user?.id) {
-      dispatch(fetchUserPoolsAsync(user.id));
+      dispatch(fetchUserPoolsAsync({userId: user.id, token}));
     }
 
     if (userPools.length > 1) {
@@ -53,7 +57,10 @@ export default function AvatarAndMenu() {
         userPools.filter((userPool) => userPool.id !== pool.id),
       );
     }
-  }, [user?.id, dispatch, pool.id, userPools]);
+    };
+
+  updateUserPools();
+  }, [user?.id, dispatch, pool.id, userPools, getToken]);
 
   const handleMenuOpen = (event) => setAnchorEl(event.currentTarget);
   const handleMenuClose = () => setAnchorEl(null);
@@ -80,14 +87,15 @@ export default function AvatarAndMenu() {
     handleMenuClose();
   };
 
-  const handleSwitchPool = (poolId) => {
-    dispatch(fetchPoolAsync(poolId));
+  const handleSwitchPool = async (poolId) => {
+    const token = await getToken();
+    dispatch(fetchPoolAsync({poolId, token}));
     localStorage.setItem('activePoolId', poolId); // Update local storage to indicate acttive pool
     handleMenuClose();
   };
 
   const handleDeletePool = () => {
-    handleMenuClose;
+    handleMenuClose();
   };
 
   return (

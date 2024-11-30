@@ -12,10 +12,12 @@ import {
   SignedIn,
   useUser,
   UserButton,
+  useAuth,
 } from '@clerk/clerk-react';
 
 export default function Welcome() {
   const { user } = useUser();
+  const { getToken } = useAuth();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userPools = useSelector((state) => state.userPools.pools);
@@ -24,22 +26,31 @@ export default function Welcome() {
 
   useEffect(() => {
     // If user then fetch user pools
+    const updateUserPools = async () => {
     if (user) {
-      dispatch(fetchUserPoolsAsync(user.id));
+      const token = await getToken();
+      dispatch(fetchUserPoolsAsync({userId: user.id, token}));
       console.log('User is signed in: ', user);
       console.log('User pools: ', userPools);
     }
-  }, [user, dispatch]);
+  };
+  updateUserPools();
+  }, [user, dispatch, getToken]);
 
   useEffect(() => {
     // If user has pools then set the most recent pool as the active pool
     const initializePool = async () => {
-      if (userPools.length > 0 && !userPoolsLoading) {
+      if (!userPoolsLoading && userPools.length > 0 && user) {
         const mostRecentPool = userPools[0]; // TODO: sort pools by most recently updated
+        if (!mostRecentPool?.id) {
+          console.error('Invalid pool data:', mostRecentPool);
+          return;
+        }
 
         try {
           // Fetch complete pool data with team stats
-          await dispatch(fetchPoolAsync(mostRecentPool.id)).unwrap();
+          const token = await getToken();
+          await dispatch(fetchPoolAsync({poolId: mostRecentPool.id, token})).unwrap();
 
           // Store active pool ID in localStorage
           localStorage.setItem('activePoolId', mostRecentPool.id);

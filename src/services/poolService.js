@@ -1,7 +1,7 @@
 import { getApiBaseUrl } from '../config/config';
 const BASE_URL = getApiBaseUrl();
 
-export async function createPool(pool) {
+export async function createPool(pool, token) {
   const payload = {
     id: pool.id,
     name: pool.name,
@@ -24,6 +24,7 @@ export async function createPool(pool) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(payload),
     });
@@ -50,7 +51,7 @@ export async function createPool(pool) {
     throw error;
   }
 }
-
+// TO BE REMOVED, ONLY USED BY usePool
 export async function createPlayers(players) {
   const playerPromises = players.map(async (player) => {
     const payload = {
@@ -79,7 +80,7 @@ export async function createPlayers(players) {
   });
   return await Promise.all(playerPromises);
 }
-
+// TO BE REMOVED, ONLY USED BY usePool
 export async function createPoolPlayers(pool) {
   const playerPromises = pool.players.map(async (player) => {
     const payload = {
@@ -110,7 +111,7 @@ export async function createPoolPlayers(pool) {
   });
   return await Promise.all(playerPromises);
 }
-
+// TO BE REMOVED, ONLY USED BY usePool
 export async function createPlayerTeams(pool) {
   const allPlayerTeamsPromises = pool.players.map(async (player) => {
     const playerTeamsPromises = player.teams.map(async (team) => {
@@ -145,7 +146,7 @@ export async function createPlayerTeams(pool) {
   });
   return await Promise.all(allPlayerTeamsPromises);
 }
-
+// TO BE REMOVED, ONLY USED BY usePool
 export async function fetchPoolById(poolId) {
   try {
     const response = await fetch(`${BASE_URL}/pools/${poolId}`);
@@ -167,7 +168,7 @@ export async function fetchPoolById(poolId) {
     throw error;
   }
 }
-
+// TO BE REMOVED, ONLY USED BY usePool
 export async function fetchPlayersInPool(poolId) {
   try {
     const response = await fetch(`${BASE_URL}/pool_players/${poolId}`);
@@ -266,11 +267,12 @@ export async function fetchCompletePool(poolId, token, options = {}) {
   throw lastError || new Error('Failed to fetch pool after all retries');
 }
 
-export async function fetchUserPools(userId) {
+export async function fetchUserPools(userId, token) {
   try {
     const response = await fetch(`${BASE_URL}/pools/user/${userId}`, {
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
       },
     });
 

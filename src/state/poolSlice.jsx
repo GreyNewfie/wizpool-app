@@ -5,7 +5,6 @@ import {
 } from '@reduxjs/toolkit';
 import { v4 as uuid } from 'uuid';
 import { createPool, fetchCompletePool } from '../services/poolService';
-import { useAuth } from '@clerk/clerk-react';
 
 const initialState = {
   id: uuid(),
@@ -24,12 +23,12 @@ const initialState = {
 
 export const storePoolAsync = createAsyncThunk(
   'pool/storePoolAsync',
-  async (_, { getState }) => {
+  async ({ token }, { getState }) => {
     const pool = getState().pool;
 
     try {
       // Create the pool
-      const result = await createPool(pool);
+      const result = await createPool(pool, token);
       if (!result) {
         throw new Error('Failed to create pool');
       }
