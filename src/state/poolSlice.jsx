@@ -4,7 +4,7 @@ import {
   createSelector,
 } from '@reduxjs/toolkit';
 import { v4 as uuid } from 'uuid';
-import { createPool, fetchCompletePool } from '../services/poolService';
+import { createPool, fetchCompletePool, deletePool } from '../services/poolService';
 
 const initialState = {
   id: uuid(),
@@ -86,6 +86,25 @@ export const fetchPoolAsync = createAsyncThunk(
     }
   },
 );
+
+export const deletePoolAsync = createAsyncThunk(
+  'pool/deletePoolAsync',
+  async ({poolId, token}, { rejectWithValue}) => {
+    try {
+      const deleteResponse = await deletePool( poolId, token );
+      console.log('Response to deleting pool: ', deleteResponse);
+      console.log('JSON response to deleting pool: ', deleteResponse.json());
+      
+      
+      if (!deleteResponse.ok)
+        return console.error('Error tring to delete pool from the database');
+        
+    } catch (error) {
+      console.error('Error attempting to delete pool', error);
+      throw rejectWithValue(error.message);      
+    }
+  }
+)
 
 const poolSlice = createSlice({
   name: 'pool',
@@ -191,7 +210,22 @@ const poolSlice = createSlice({
       .addCase(fetchPoolAsync.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload || 'Failed to fetch pool data';
-      });
+      })
+      .addCase(deletePoolAsync.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deletePoolAsync.fulfilled, () => {
+        return {
+          ...initialState,
+          loading: false,
+          error: null,
+        }
+      })
+      .addCase(deletePoolAsync.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload || 'Failed to delete pool';
+      })
   },
 });
 
