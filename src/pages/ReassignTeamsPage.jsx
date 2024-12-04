@@ -4,7 +4,6 @@ import PageHeader from '../components/PageHeader';
 import MobileNavMenu from '../components/MobileNavMenu';
 import PlayerHomeProfile from '../components/PlayerHomeProfile';
 import TeamsList from '../components/TeamsList';
-import usePool from '../utils/usePool';
 import { Fragment, useState } from 'react';
 import useIsDesktop from '../utils/useIsDesktop';
 import DesktopNavHeader from '../components/DesktopNavHeader';
@@ -13,7 +12,6 @@ import { useSelector } from 'react-redux';
 import { setPool } from '../state/poolSlice';
 
 export default function ReassignTeamsPage() {
-  const { createNewPool, changePool } = usePool();
   const pool = useSelector((state) => state.pool);
   const [playerToEdit, setPlayerToEdit] = useState(null);
   const isDesktop = useIsDesktop();
@@ -29,8 +27,6 @@ export default function ReassignTeamsPage() {
       {isDesktop && (
         <DesktopNavHeader
           poolName={pool.name}
-          createNewPool={createNewPool}
-          changePool={changePool}
           nonActivePools={nonActivePools}
         />
       )}
@@ -40,8 +36,6 @@ export default function ReassignTeamsPage() {
           leftBtnText={<ArrowBackIcon />}
           path="/pool-settings"
           poolName={pool.name}
-          createNewPool={createNewPool}
-          changePool={changePool}
           nonActivePools={nonActivePools}
         />
         <div className={classes['players-container']}>

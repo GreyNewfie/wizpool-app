@@ -3,7 +3,6 @@ import PageHeader from '../components/PageHeader';
 import MobileNavMenu from '../components/MobileNavMenu';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import PlayerHomeProfile from '../components/PlayerHomeProfile';
-import usePool from '../utils/usePool';
 import { useState } from 'react';
 import PlayerInput from '../components/PlayerInput';
 import PrimaryActionButton from '../components/PrimaryActionButton';
@@ -20,7 +19,6 @@ import {
 } from '../state/poolSlice';
 
 export default function ManagePlayersPage() {
-  const { createNewPool, changePool } = usePool();
   const dispatch = useDispatch();
   const pool = useSelector((state) => state.pool);
   const [playerToEdit, setPlayerToEdit] = useState(null);
@@ -66,8 +64,6 @@ export default function ManagePlayersPage() {
       {isDesktop && (
         <DesktopNavHeader
           poolName={pool.name}
-          createNewPool={createNewPool}
-          changePool={changePool}
           nonActivePools={nonActivePools}
         />
       )}
@@ -77,8 +73,6 @@ export default function ManagePlayersPage() {
           leftBtnText={<ArrowBackIcon />}
           path="/pool-settings"
           poolName={pool.name}
-          createNewPool={createNewPool}
-          changePool={changePool}
           nonActivePools={nonActivePools}
         />
         <div className={classes['players-container']}>
