@@ -286,3 +286,23 @@ export async function fetchUserPools(userId, token) {
     throw error;
   }
 }
+
+export async function deletePool(poolId, token) {
+  try {
+    const response = await fetch(`${BASE_URL}/pools/${poolId}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      }
+    })
+
+    if (!response.ok)
+      throw new Error('Failed to delete pool: ', response.statusText);
+
+    console.log(response.json());
+    return response.json();
+  } catch (error) {
+    console.error('Error deleting pool: ', error);
+    throw error;    
+  }
+}
