@@ -39,7 +39,12 @@ export async function createPool(pool, token) {
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
     // Verify that the pool was created by trying to fetch it
-    const verifyResponse = await fetch(`${BASE_URL}/complete_pools/${pool.id}`);
+    const verifyResponse = await fetch(`${BASE_URL}/complete_pools/${pool.id}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     if (!verifyResponse.ok) {
       throw new Error('Pool creation verification failed');
@@ -290,17 +295,19 @@ export async function fetchUserPools(userId, token) {
 export async function deletePool(poolId, token) {
   try {
     const response = await fetch(`${BASE_URL}/pools/${poolId}`, {
+      method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`,
       }
     })
 
-    if (!response.ok)
-      throw new Error('Failed to delete pool: ', response.statusText);
+    if (!response.ok){
+      const errorText = await response.text();
+      throw new Error('Failed to delete pool: ', errorText);
+    }
 
-    console.log(response.json());
-    return response.json();
+    return {success: true};
   } catch (error) {
     console.error('Error deleting pool: ', error);
     throw error;    
