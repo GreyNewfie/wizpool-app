@@ -91,14 +91,12 @@ export const deletePoolAsync = createAsyncThunk(
   'pool/deletePoolAsync',
   async ({poolId, token}, { rejectWithValue}) => {
     try {
-      const deleteResponse = await deletePool( poolId, token );
-      console.log('Response to deleting pool: ', deleteResponse);
-      console.log('JSON response to deleting pool: ', deleteResponse.json());
+      const deleteResponse = await deletePool( poolId, token );    
       
-      
-      if (!deleteResponse.ok)
-        return console.error('Error tring to delete pool from the database');
+      if (!deleteResponse.success)
+        throw new Error('Error tring to delete pool from the database');
         
+      return { poolId };
     } catch (error) {
       console.error('Error attempting to delete pool', error);
       throw rejectWithValue(error.message);      
