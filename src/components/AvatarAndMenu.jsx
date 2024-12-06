@@ -12,7 +12,7 @@ import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPoolAsync, setPool } from '../state/poolSlice';
+import { fetchPoolAsync, setPool} from '../state/poolSlice';
 import { v4 as uuid } from 'uuid';
 import { useNavigate } from 'react-router-dom';
 import { fetchUserPoolsAsync } from '../state/userPoolsSlice';
@@ -94,9 +94,7 @@ export default function AvatarAndMenu() {
     handleMenuClose();
   };
 
-  const handleDeletePool = () => {
-    handleMenuClose();
-  };
+
 
   return (
     <>
@@ -202,7 +200,7 @@ export default function AvatarAndMenu() {
           Create a new pool
         </MenuItem>
         <Link className={classes['menu-item-link']} to={'/delete-pool'}>
-          <MenuItem className={classes.menuItem} onClick={handleDeletePool}>
+          <MenuItem className={classes.menuItem} onClick={handleMenuClose}>
             <ListItemIcon className={classes.menuListItemIcon}>
               <RemoveCircleOutlineIcon
                 className={classes.menuListItemIconMinus}
