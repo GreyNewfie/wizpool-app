@@ -4,7 +4,12 @@ import {
   createSelector,
 } from '@reduxjs/toolkit';
 import { v4 as uuid } from 'uuid';
-import { createPool, fetchCompletePool, deletePool } from '../services/poolService';
+import {
+  createPool,
+  fetchCompletePool,
+  deletePool,
+  updatePool,
+} from '../services/poolService';
 
 const initialState = {
   id: uuid(),
@@ -57,7 +62,7 @@ export const storePoolAsync = createAsyncThunk(
 
 export const fetchPoolByIdAsync = createAsyncThunk(
   'pool/fetchPoolByIdAsync',
-  async ({poolId, token}, { rejectWithValue }) => {
+  async ({ poolId, token }, { rejectWithValue }) => {
     try {
       const pool = await fetchCompletePool(poolId, token, {
         maxRetries: 3,
@@ -89,20 +94,39 @@ export const fetchPoolAsync = createAsyncThunk(
 
 export const deletePoolAsync = createAsyncThunk(
   'pool/deletePoolAsync',
-  async ({poolId, token}, { rejectWithValue}) => {
+  async ({ poolId, token }, { rejectWithValue }) => {
     try {
-      const deleteResponse = await deletePool( poolId, token );    
-      
+      const deleteResponse = await deletePool(poolId, token);
+
       if (!deleteResponse.success)
-        throw new Error('Error tring to delete pool from the database');
-        
+        throw new Error('Error trying to delete pool from the database');
+
       return { poolId };
     } catch (error) {
       console.error('Error attempting to delete pool', error);
-      throw rejectWithValue(error.message);      
+      throw rejectWithValue(error.message);
     }
-  }
-)
+  },
+);
+
+export const updatePoolAsync = createAsyncThunk(
+  'pool/updatePoolAsync',
+  async ({ token }, { getState, rejectWithValue }) => {
+    try {
+      const pool = getState().pool;
+
+      const updateResponse = await updatePool(pool, token);
+
+      if (!updateResponse.success)
+        throw new Error('Error trying to update the pool in the database');
+
+      return { poolId: pool.id };
+    } catch (error) {
+      console.error('Error attempting to update the pool: ', error);
+      throw rejectWithValue(error.message);
+    }
+  },
+);
 
 const poolSlice = createSlice({
   name: 'pool',
@@ -173,6 +197,7 @@ const poolSlice = createSlice({
       })
       .addCase(storePoolAsync.fulfilled, (state) => {
         state.loading = false;
+        state.error = null;
       })
       .addCase(storePoolAsync.rejected, (state, action) => {
         state.loading = false;
@@ -183,11 +208,11 @@ const poolSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchPoolByIdAsync.fulfilled, (state, action) => {
-        // Instead of returning the action payload, we'll merge it with the current state
+        // Instead of returning the action payload, merge it with the current state
         Object.assign(state, {
           ...action.payload,
           loading: false,
-          error: true,
+          error: null,
         });
       })
       .addCase(fetchPoolByIdAsync.rejected, (state, action) => {
@@ -202,7 +227,7 @@ const poolSlice = createSlice({
         Object.assign(state, {
           ...action.payload,
           loading: false,
-          error: true,
+          error: null,
         });
       })
       .addCase(fetchPoolAsync.rejected, (state, action) => {
@@ -218,12 +243,24 @@ const poolSlice = createSlice({
           ...initialState,
           loading: false,
           error: null,
-        }
+        };
       })
       .addCase(deletePoolAsync.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload || 'Failed to delete pool';
       })
+      .addCase(updatePoolAsync.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updatePoolAsync.fulfilled, (state) => {
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(updatePoolAsync.rejected, (state) => {
+        state.loading = false;
+        state.error = true;
+      });
   },
 });
 
