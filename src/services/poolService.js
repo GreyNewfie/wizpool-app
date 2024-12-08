@@ -39,12 +39,15 @@ export async function createPool(pool, token) {
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
     // Verify that the pool was created by trying to fetch it
-    const verifyResponse = await fetch(`${BASE_URL}/complete_pools/${pool.id}`, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+    const verifyResponse = await fetch(
+      `${BASE_URL}/complete_pools/${pool.id}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
       },
-    });
+    );
 
     if (!verifyResponse.ok) {
       throw new Error('Pool creation verification failed');
@@ -221,7 +224,7 @@ export async function fetchCompletePool(poolId, token, options = {}) {
       const response = await fetch(`${BASE_URL}/complete_pools/${poolId}`, {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
         signal,
       });
@@ -277,7 +280,7 @@ export async function fetchUserPools(userId, token) {
     const response = await fetch(`${BASE_URL}/pools/user/${userId}`, {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     });
 
@@ -298,18 +301,57 @@ export async function deletePool(poolId, token) {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-      }
-    })
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-    if (!response.ok){
+    if (!response.ok) {
       const errorText = await response.text();
       throw new Error('Failed to delete pool: ', errorText);
     }
 
-    return {success: true};
+    return { success: true };
   } catch (error) {
     console.error('Error deleting pool: ', error);
-    throw error;    
+    throw error;
+  }
+}
+
+export async function updatePool(pool, token) {
+  const payload = {
+    id: pool.id,
+    name: pool.name,
+    league: pool.league,
+    userId: pool.userId,
+    players: pool.players.map((player) => ({
+      id: player.id,
+      name: player.name,
+      teamName: player.teamName || '',
+      teams: player.teams.map((team) => ({
+        key: team.key,
+      })),
+    })),
+  };
+
+  console.log('Pool to udpate payload: ', payload);
+
+  try {
+    const response = await fetch(`${BASE_URL}/complete_pools/${pool.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error('Failed to update pool: ', errorText);
+    }
+    return { success: true };
+  } catch (error) {
+    console.error('Error updating pool: ', error);
+    throw error;
   }
 }
