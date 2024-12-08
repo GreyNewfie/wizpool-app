@@ -16,9 +16,12 @@ import {
   setTeamName,
   addPlayer,
   deletePlayer,
+  updatePoolAsync,
 } from '../state/poolSlice';
+import { useAuth } from '@clerk/clerk-react';
 
 export default function ManagePlayersPage() {
+  const { getToken } = useAuth();
   const dispatch = useDispatch();
   const pool = useSelector((state) => state.pool);
   const [playerToEdit, setPlayerToEdit] = useState(null);
@@ -59,6 +62,12 @@ export default function ManagePlayersPage() {
     dispatch(addPlayer({ name: '', teamName: '', teams: [] }));
   };
 
+  const handleSavingPlayer = async (index) => {
+    const token = await getToken();
+    dispatch(updatePoolAsync({ token }));
+    togglePlayerToEdit(index);
+  };
+
   return (
     <div className={classes['page-container']}>
       {isDesktop && (
@@ -94,7 +103,7 @@ export default function ManagePlayersPage() {
                 <div className={classes['edit-player-btns']}>
                   <button
                     className={classes['edit-btn']}
-                    onClick={() => togglePlayerToEdit(index)}
+                    onClick={() => handleSavingPlayer(index)}
                   >
                     Save
                   </button>
