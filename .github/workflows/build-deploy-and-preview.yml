@@ -1,0 +1,36 @@
+name: Build, Deploy to GitHub Pages and PR Preview
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - closed
+
+permissions:
+  contents: write
+  pull-requests: write
+  pages: write
+  id-token: write
+
+concurrency: 
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-deploy-and-preview:
+    name: Build, Deploy to GitHub Pages and PR Preview
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build, Deploy to GitHub Pages and Deploy PR Preview
+        uses: chvmvd/build-deploy-and-preview-action@v1.2.0
+        with:
+          type: vite
+          build-command: npm run build
+          deploy-command: npm run deploy
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          base-branch: main
+          output-directory: dist
