@@ -25,10 +25,7 @@ export default function ReassignTeamsPage() {
   return (
     <div className={classes['page-container']}>
       {isDesktop && (
-        <DesktopNavHeader
-          poolName={pool.name}
-          nonActivePools={nonActivePools}
-        />
+        <DesktopNavHeader />
       )}
       <div className={classes['reassign-teams']}>
         <PageHeader

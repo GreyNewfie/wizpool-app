@@ -9,7 +9,6 @@ import { Switch } from '@mui/material';
 import useTheme from '../context/useTheme';
 import useIsDesktop from '../utils/useIsDesktop';
 import DesktopNavHeader from '../components/DesktopNavHeader';
-import useStoredPools from '../utils/useStoredPools';
 import { useSelector } from 'react-redux';
 
 export default function SettingsPage() {
@@ -17,8 +16,6 @@ export default function SettingsPage() {
   const { theme, setTheme } = useTheme();
   const [currentMode, setCurrentMode] = useState(theme);
   const isDesktop = useIsDesktop();
-  const { getNonActivePools } = useStoredPools();
-  const nonActivePools = getNonActivePools();
 
   const handleChange = (e) => {
     const newMode = e.target.checked ? 'light' : 'dark';
@@ -29,10 +26,7 @@ export default function SettingsPage() {
   return (
     <div className={classes['page-container']}>
       {isDesktop && (
-        <DesktopNavHeader
-          poolName={pool.poolName}
-          nonActivePools={nonActivePools}
-        />
+        <DesktopNavHeader />
       )}
       <div className={classes['pool-settings']}>
         <PageHeader
@@ -40,7 +34,6 @@ export default function SettingsPage() {
           leftBtnText={<ArrowBackIcon />}
           path="/pool-home"
           poolName={pool.poolName}
-          nonActivePools={nonActivePools}
         />
         <div className={classes['settings-content']}>
           <div className={classes['pool-info-container']}>

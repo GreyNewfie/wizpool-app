@@ -2,8 +2,6 @@ import { NavLink } from 'react-router-dom';
 import classes from './DesktopNavHeader.module.css';
 import useIsDesktop from '../utils/useIsDesktop';
 import AvatarAndMenu from './AvatarAndMenu';
-import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
 import {
   SignedOut,
   SignedIn,
@@ -11,9 +9,8 @@ import {
   UserButton,
 } from '@clerk/clerk-react';
 
-export default function DesktopNavHeader(props) {
+export default function DesktopNavHeader() {
   const isDesktop = useIsDesktop();
-  const pool = useSelector((state) => state.pool);
 
   return (
     <header className={classes['desktop-nav-header']}>
@@ -48,13 +45,7 @@ export default function DesktopNavHeader(props) {
           Settings
         </NavLink>
         {isDesktop && (
-          <AvatarAndMenu
-            poolName={pool.name}
-            createNewPool={props.createNewPool}
-            deletePool={props.deletePool}
-            changePool={props.changePool}
-            nonActivePools={props.nonActivePools}
-          />
+          <AvatarAndMenu />
         )}
         <SignedOut>
           <SignInButton className={classes['sign-in-btn']} />
@@ -66,10 +57,3 @@ export default function DesktopNavHeader(props) {
     </header>
   );
 }
-
-DesktopNavHeader.propTypes = {
-  createNewPool: PropTypes.func,
-  deletePool: PropTypes.func,
-  changePool: PropTypes.func,
-  nonActivePools: PropTypes.array,
-};
