@@ -284,8 +284,18 @@ export async function fetchUserPools(userId, token) {
       },
     });
 
-    if (!response.ok)
-      throw new Error('Failed to fetch user pools: ', response.statusText);
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('Fetch response not OK:', errorText);
+      throw new Error(`Failed to fetch user pools: ${response.status} ${response.statusText}`);
+    }
+
+    const contentType = response.headers.get('content-type');
+    if (!contentType || !contentType.includes('application/json')) {
+      const responseText = await response.text();
+      console.error('Unexpected response type:', responseText);
+      throw new Error('Expected JSON response, but received different content type');
+    }
 
     const userPools = await response.json();
     return userPools;
