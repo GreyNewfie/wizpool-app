@@ -77,7 +77,7 @@ describe('poolSlice reducer', () => {
 
     // Action to add a team to the player
     const action = addTeamToPlayer({
-      team: { teamId: 'team1', name: 'Team A' },
+      team: { key: 'team1', name: 'Team A' },
       playerIndex: 0,
     });
 
@@ -86,7 +86,7 @@ describe('poolSlice reducer', () => {
 
     // Assertion
     expect(newState.players[0].teams.length).toBe(1);
-    expect(newState.players[0].teams[0].teamId).toBe('team1');
+    expect(newState.players[0].teams[0].key).toBe('team1');
     expect(newState.players[0].teams[0].name).toBe('Team A');
   });
 

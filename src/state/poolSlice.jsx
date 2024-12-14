@@ -177,7 +177,7 @@ const poolSlice = createSlice({
       const { team, playerIndex } = action.payload;
       const player = state.players[playerIndex];
       if (player) {
-        player.teams = player.teams.filter((t) => t.teamId !== team.teamId);
+        player.teams = player.teams.filter((t) => t.key !== team.key);
       }
     },
     removeEmptyPlayers: (state) => {
@@ -187,7 +187,7 @@ const poolSlice = createSlice({
     },
     setUserId: (state, action) => {
       return { ...state, userId: action.payload };
-    },
+    }
   },
   extraReducers: (builder) => {
     builder

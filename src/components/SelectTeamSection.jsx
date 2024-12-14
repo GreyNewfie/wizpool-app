@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addTeamToPlayer, removeTeamFromPlayer } from '../state/poolSlice';
 
 const isTeamSelected = (player, team) => {
-  return player.teams?.some((playerTeam) => playerTeam.name === team.name)
+  return player.teams?.some((playerTeam) => playerTeam.key === team.key)
     ? true
     : false;
 };
@@ -16,7 +16,7 @@ export default function SelectTeamSection(props) {
   const [isSelected, setIsSelected] = useState(
     isTeamSelected(pool.players[props.playerIndex], props.team),
   );
-  const lowerCaseTeamId = props.team.teamId.toLowerCase();
+  const lowerCaseKey = props.team.key.toLowerCase();
   const baseUrl = import.meta.env.VITE_BASE_PATH || '/wizpool-app/';
 
   const toggleSelect = (pool, team, playerIndex, setIsSelected) => {
@@ -38,7 +38,7 @@ export default function SelectTeamSection(props) {
       <div className={classes['team-info-container']}>
         <img
           className={classes['select-team-icon']}
-          src={`${baseUrl}${pool.league}-logos/${lowerCaseTeamId}-logo.png`}
+          src={`${baseUrl}${pool.league}-logos/${lowerCaseKey}-logo.png`}
           alt={`${props.team.city} ${props.team.name} ${pool.league} team logo`}
         />
         <p>{`${props.team.city} ${props.team.name}`}</p>

@@ -12,7 +12,7 @@ export async function createPool(pool, token) {
       name: player.name,
       teamName: player.teamName || '',
       teams: player.teams.map((team) => ({
-        key: team.teamId,
+        key: team.key,
       })),
     })),
   };
@@ -125,7 +125,7 @@ export async function createPlayerTeams(pool) {
     const playerTeamsPromises = player.teams.map(async (team) => {
       const payload = {
         player_id: player.id,
-        team_key: team.teamId,
+        team_key: team.key,
         pool_id: pool.id,
       };
 
