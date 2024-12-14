@@ -67,9 +67,7 @@ export default function DeletePoolPage() {
   return (
     <div className={classes['page-container']}>
       {isDesktop && (
-        <DesktopNavHeader
-          poolName={pool.name}
-        />
+        <DesktopNavHeader />
       )}
       <div className={classes['delete-pool']}>
         <PageHeader

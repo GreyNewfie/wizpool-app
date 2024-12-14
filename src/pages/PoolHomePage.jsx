@@ -7,7 +7,6 @@ import useTheme from '../context/useTheme';
 import classNames from 'classnames';
 import DesktopNavHeader from '../components/DesktopNavHeader';
 import useIsDesktop from '../utils/useIsDesktop';
-import useStoredPools from '../utils/useStoredPools';
 import { useSelector } from 'react-redux';
 import { selectSortedPlayersByWins } from '../state/poolSlice';
 
@@ -94,40 +93,21 @@ const getPlayerStandings = (sortedPlayers) => {
 
 export default function PoolHomePage() {
   const { theme } = useTheme();
-  const { getNonActivePools } = useStoredPools();
-
   const pool = useSelector((state) => state.pool);
   const sortedPlayers = useSelector(selectSortedPlayersByWins);
   const poolClasses = classNames(classes['pool-home'], classes[theme]);
   const isDesktop = useIsDesktop();
-  const nonActivePools = getNonActivePools();
   const playerStandings = getPlayerStandings(sortedPlayers);
-
-  const createNewPool = () => {};
-
-  const deletePool = () => {};
-
-  const changePool = () => {
-    console.log('changePool');
-  };
 
   return (
     <div className={classes['page-container']}>
       {isDesktop && (
-        <DesktopNavHeader
-          createNewPool={createNewPool}
-          deletePool={deletePool}
-          changePool={changePool}
-          nonActivePools={nonActivePools}
-        />
+        <DesktopNavHeader />
       )}
       <div className={poolClasses}>
         <PageHeader
           headerText={pool.name}
           poolName={pool.name}
-          createNewPool={createNewPool}
-          changePool={changePool}
-          nonActivePools={nonActivePools}
         />
         <div className={classes['pool-players']}>
           <h3>Overall Standings</h3>

@@ -145,7 +145,7 @@ export default function useApiData() {
     if (leagueData) {
       // Get list of team names
       const teamsList = leagueData?.map((team) => ({
-        teamId: team.key,
+        key: team.key,
         city: team.city,
         name: team.name,
       }));

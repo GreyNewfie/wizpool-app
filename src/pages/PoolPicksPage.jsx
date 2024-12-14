@@ -5,14 +5,11 @@ import MobileNavMenu from '../components/MobileNavMenu';
 import DisplayTeams from '../components/DisplayTeams';
 import useIsDesktop from '../utils/useIsDesktop';
 import DesktopNavHeader from '../components/DesktopNavHeader';
-import useStoredPools from '../utils/useStoredPools';
 import { useSelector } from 'react-redux';
 
 export default function PoolPicksPage() {
   const pool = useSelector((state) => state.pool);
   const isDesktop = useIsDesktop();
-  const { getNonActivePools } = useStoredPools();
-  const nonActivePools = getNonActivePools();
 
   const getTeamsAndPlayers = () => {
     const teamsAndPlayersList = pool.players.flatMap((player) => {
@@ -31,19 +28,10 @@ export default function PoolPicksPage() {
 
   const teamsAndPlayersList = getTeamsAndPlayers();
 
-  const changePool = () => {};
-
-  const createNewPool = () => {};
-
   return (
     <div className={classes['page-container']}>
       {isDesktop && (
-        <DesktopNavHeader
-          poolName={pool.poolName}
-          createNewPool={createNewPool}
-          changePool={changePool}
-          nonActivePools={nonActivePools}
-        />
+        <DesktopNavHeader />
       )}
       <div className={classes['pool-picks']}>
         <PageHeader
@@ -51,9 +39,6 @@ export default function PoolPicksPage() {
           leftBtnText={<ArrowBackIcon />}
           path="/pool-home"
           poolName={pool.poolName}
-          createNewPool={createNewPool}
-          changePool={changePool}
-          nonActivePools={nonActivePools}
         />
         <div className={classes['picks-container']}>
           <p>See which players have the teams with the most wins</p>

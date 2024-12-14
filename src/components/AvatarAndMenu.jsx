@@ -94,8 +94,6 @@ export default function AvatarAndMenu() {
     handleMenuClose();
   };
 
-
-
   return (
     <>
       <IconButton
