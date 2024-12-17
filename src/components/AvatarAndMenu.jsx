@@ -1,6 +1,5 @@
 import classes from './AvatarAndMenu.module.css';
 import Avatar from '@mui/material/Avatar';
-import { StyledEngineProvider } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Menu from '@mui/material/Menu';
@@ -9,6 +8,8 @@ import Divider from '@mui/material/Divider';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import CircularIndeterminate from '../components/Loading';
+import { StyledEngineProvider } from '@mui/material/styles';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,7 +18,6 @@ import { v4 as uuid } from 'uuid';
 import { useNavigate } from 'react-router-dom';
 import { fetchUserPoolsAsync } from '../state/userPoolsSlice';
 import { useUser, useAuth } from '@clerk/clerk-react';
-import CircularIndeterminate from '../components/Loading';
 
 const stringAvatar = (poolName) => {
   if (!poolName) return '?';
