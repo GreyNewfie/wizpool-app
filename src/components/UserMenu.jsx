@@ -64,6 +64,20 @@ const RemovePoolIcon = () => (
   </div>
 )
 
+const LoadingPoolsIcon = () => (
+  <div
+    style={{
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: '100%',
+      height: '100%',
+    }}
+  >
+    <CircularIndeterminate style={{width: '16px', height: '16px'}} />
+  </div>
+)
+
 export default function UserMenu() {
   const { getToken } = useAuth();
   const { user } = useUser();
@@ -73,30 +87,30 @@ export default function UserMenu() {
   const pool = useSelector((state) => state.pool);
   const userPools = useSelector((state) => state.userPools.pools);
   const [otherUserPools, setOtherUserPools] = useState(null);
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
 
   useEffect(() => {
-    const updateUserPools = async () => {
+    const fetchPools = async () => {
       const token = await getToken();
   
-      console.log('User:', user);
-      console.log('User Pools:', userPools);
-      console.log('Current Pool:', pool);
-  
-      if (!userPools.length > 0 && user?.id) {
+      if (userPools.length === 0 && user?.id) {
         dispatch(fetchUserPoolsAsync({ userId: user.id, token }));
       }
+      };
   
-      if (userPools && userPools.length > 1) {
+    fetchPools();
+  }, [user?.id, dispatch, pool.id, getToken, userPools]);
+
+  useEffect(() => {
+    if (userPools && userPools.length > 0) {
+      if (userPools.length > 1) {
         const filteredPools = userPools.filter((userPool) => userPool.id !== pool.id);
         console.log('Filtered Pools:', filteredPools);
-        setOtherUserPools(filteredPools);
+        setOtherUserPools(filteredPools);  
+      } else {
+        setOtherUserPools([]);
       }
-    };
-  
-    updateUserPools();
-  }, [user?.id, dispatch, pool.id, userPools, getToken]);
+    }
+  }, [userPools, pool.id]);
 
   const handleCreateNewPool = () => {
     dispatch(
@@ -125,30 +139,27 @@ export default function UserMenu() {
     localStorage.setItem('activePoolId', poolId); // Update local storage to indicate acttive pool
   };
 
-  if (!otherUserPools) return <CircularIndeterminate />;
-
   return (
     <>
       <SignedOut>
         <SignInButton className={classes['sign-in-btn']} />
       </SignedOut>
       <SignedIn>
-        <UserButton>
+        <UserButton key={otherUserPools === null ? 'loading' : 'loaded'}>
           <UserButton.MenuItems>
-            {userPools.loading ? (
-              <CircularIndeterminate />
-            ) : userPools.error ? (
-              <UserButton.Link
-                label="Error loading pools"
-                href={`${baseURL}`}
-              />
-            ) : (
               <UserButton.Link
                 label={`${pool.name} (Active Pool)`}
                 href={`${baseURL}pool-home`}
                 labelIcon={<TrophyIcon />}
               />
-            )}
+              {otherUserPools === null && userPools?.length === 0 && (
+                <UserButton.Action 
+                label="Loading..."
+                labelIcon={<LoadingPoolsIcon />}
+                onClick={() => {}}
+                showInList={otherUserPools === null && userPools?.length > 0}
+              />
+              )}
             {otherUserPools?.map((userPool) =>  (
               <UserButton.Action
                 key={userPool.id}
