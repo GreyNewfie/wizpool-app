@@ -1,7 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import classes from './DesktopNavHeader.module.css';
 import useIsDesktop from '../utils/useIsDesktop';
-import AvatarAndMenu from './AvatarAndMenu';
 import UserMenu from './UserMenu';
 
 export default function DesktopNavHeader() {
@@ -41,7 +40,6 @@ export default function DesktopNavHeader() {
         </NavLink>
         {isDesktop && (
           <>
-          <AvatarAndMenu />
           <UserMenu />
           </>
         )}
