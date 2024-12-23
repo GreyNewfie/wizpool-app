@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import classes from './PageHeader.module.css';
-import AvatarAndMenu from './AvatarAndMenu';
 import useIsDesktop from '../utils/useIsDesktop';
+import UserMenu from './UserMenu';
 
 export default function PageHeader(props) {
   const isDesktop = useIsDesktop();
@@ -18,7 +18,7 @@ export default function PageHeader(props) {
         {props.rightBtnText}
       </button>
       {props.poolName && !isDesktop && (
-        <AvatarAndMenu />
+        <UserMenu />
       )}
     </div>
   );

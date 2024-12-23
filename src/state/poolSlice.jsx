@@ -51,7 +51,7 @@ export const storePoolAsync = createAsyncThunk(
       if (!fetchedPool) {
         throw new Error('Failed to verify pool creation');
       }
-
+      
       return fetchedPool;
     } catch (error) {
       console.error('Error in pool creation process:', error);

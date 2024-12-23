@@ -1,13 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import classes from './DesktopNavHeader.module.css';
 import useIsDesktop from '../utils/useIsDesktop';
-import AvatarAndMenu from './AvatarAndMenu';
-import {
-  SignedOut,
-  SignedIn,
-  SignInButton,
-  UserButton,
-} from '@clerk/clerk-react';
+import UserMenu from './UserMenu';
 
 export default function DesktopNavHeader() {
   const isDesktop = useIsDesktop();
@@ -45,14 +39,10 @@ export default function DesktopNavHeader() {
           Settings
         </NavLink>
         {isDesktop && (
-          <AvatarAndMenu />
+          <>
+          <UserMenu />
+          </>
         )}
-        <SignedOut>
-          <SignInButton className={classes['sign-in-btn']} />
-        </SignedOut>
-        <SignedIn>
-          <UserButton />
-        </SignedIn>
       </div>
     </header>
   );
