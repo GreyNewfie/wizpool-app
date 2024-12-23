@@ -22,7 +22,7 @@ export default function ChooseTeamsPage() {
         <h2>Assign Teams</h2>
         <DoneHeaderButton path="/choose-player" />
       </div>
-      <h3>Select teams for {pool.players[id].playerName}</h3>
+      <h3>Select teams for {pool.players[id].name}</h3>
       <TeamsList pool={pool} setPool={setPool} playerIndex={parseInt(id)} />
     </div>
   );
