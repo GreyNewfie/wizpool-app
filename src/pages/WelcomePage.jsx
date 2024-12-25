@@ -40,12 +40,16 @@ export default function Welcome() {
   useEffect(() => {
     // If user has pools then set the most recent pool as the active pool
     const initializePool = async () => {
-      if (!userPoolsLoading && userPools.length > 0 && user) {
-        const mostRecentPool = userPools[0]; // TODO: sort pools by most recently updated
-        if (!mostRecentPool?.id) {
-          console.error('Invalid pool data:', mostRecentPool);
-          return;
-        }
+      if (!userPoolsLoading && user) {
+        console.log('User pools state: ', {userPools, loading: userPoolsLoading});
+        
+        if (userPools && userPools.length > 0) {
+          const mostRecentPool = userPools[0]; // TODO: sort pools by most recently updated
+
+          if (!mostRecentPool?.id) {
+            console.error('Invalid pool data:', mostRecentPool);
+            return;  
+          }
 
         try {
           // Fetch complete pool data with team stats
@@ -55,14 +59,19 @@ export default function Welcome() {
           // Store active pool ID in localStorage
           localStorage.setItem('activePoolId', mostRecentPool.id);
           localStorage.setItem('userId', user.id);
+          navigate('/pool-home');
         } catch (error) {
           console.error('Error initializing pool: ', error);
         }
+      } else if (!userPoolsLoading && userPools && userPools.length === 0) {
+        // If user has no pools, navigate to choose league page
+        navigate('/choose-league');
       }
-    };
+    }
+  };
 
     initializePool();
-  }, [userPools, userPoolsLoading, user, dispatch]);
+  }, [userPools, userPoolsLoading, user, dispatch, navigate, getToken]);
 
   const handleGoToPool = () => {
     // If user has pools then navigate to pool home
@@ -75,11 +84,6 @@ export default function Welcome() {
 
   return (
     <div className={classes[`welcome-container`]}>
-      <header className={classes['welcome-header']}>
-        <SignedIn>
-          <UserButton />
-        </SignedIn>
-      </header>
       <HeaderLogo />
       <TextCarrousel />
       <SignedOut>
@@ -89,12 +93,12 @@ export default function Welcome() {
       </SignedOut>
       <SignedIn>
         {(poolLoading || userPoolsLoading) && <CircularIndeterminate />}
-        {!poolLoading && !userPoolsLoading && (
+        {/* {!poolLoading && !userPoolsLoading && (
           <PrimaryLinkButton
             text={userPools.length > 0 ? 'Go To Pool' : 'Create Pool'}
             handleClick={handleGoToPool}
           />
-        )}
+        )} */}
       </SignedIn>
     </div>
   );
