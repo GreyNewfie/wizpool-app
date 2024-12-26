@@ -3,6 +3,7 @@ import BackHeaderButton from '../components/BackHeaderButton';
 import NextHeaderButton from '../components/NextHeaderButton';
 import PrimaryActionButton from '../components/PrimaryActionButton';
 import classes from './ChoosePlayerPage.module.css';
+import CircularIndeterminate from '../components/Loading';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { storePoolAsync, setUserId, setPool } from '../state/poolSlice';
@@ -15,6 +16,7 @@ export default function ChoosePlayerPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const pool = useSelector((state) => state.pool);
+  const isStoringPool = useSelector((state) => state.pool.storingPool);
   const [areTeamsSelected, setAreTeamsSelected] = useState(false);
 
   // Check if all players have teams to determine if next button should be enabled
@@ -55,11 +57,17 @@ export default function ChoosePlayerPage() {
         <NextHeaderButton path="/pool-home" disabled={!areTeamsSelected} />
       </div>
       <ChoosePlayerList />
-      <PrimaryActionButton
+      {isStoringPool ? (
+        <div className={classes['loading-container']}>
+          <CircularIndeterminate />
+        </div>
+      ) : (
+        <PrimaryActionButton
         text="Create Pool"
         handleClick={handleStorePool}
         disabled={!areTeamsSelected}
       />
+      )}
     </div>
   );
 }
