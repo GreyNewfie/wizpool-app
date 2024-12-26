@@ -1,4 +1,3 @@
-import PrimaryLinkButton from '../components/PrimaryLinkButton';
 import classes from './WelcomePage.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -11,7 +10,6 @@ import {
   SignInButton,
   SignedIn,
   useUser,
-  UserButton,
   useAuth,
 } from '@clerk/clerk-react';
 
@@ -25,62 +23,47 @@ export default function Welcome() {
   const poolLoading = useSelector((state) => state.pool.loading);
 
   useEffect(() => {
-    // If user then fetch user pools
-    const updateUserPools = async () => {
-    if (user) {
-      const token = await getToken();
-      dispatch(fetchUserPoolsAsync({userId: user.id, token}));
-      console.log('User is signed in: ', user);
-      console.log('User pools: ', userPools);
-    }
-  };
-  updateUserPools();
-  }, [user, dispatch, getToken]);
-
-  useEffect(() => {
-    // If user has pools then set the most recent pool as the active pool
-    const initializePool = async () => {
-      if (!userPoolsLoading && user) {
-        console.log('User pools state: ', {userPools, loading: userPoolsLoading});
-        
-        if (userPools && userPools.length > 0) {
-          const mostRecentPool = userPools[0]; // TODO: sort pools by most recently updated
-
-          if (!mostRecentPool?.id) {
-            console.error('Invalid pool data:', mostRecentPool);
-            return;  
-          }
-
+    const initializeUser = async () => {
+      if (user) {
+        console.log('Starting user initialization');
         try {
-          // Fetch complete pool data with team stats
+          // Step 1: Fetch user pools
+          console.log('Before fetching pools:', { userPoolsLoading, userPools });
           const token = await getToken();
-          await dispatch(fetchPoolAsync({poolId: mostRecentPool.id, token})).unwrap();
+          const result = await dispatch(fetchUserPoolsAsync({userId: user.id, token})).unwrap();
+          console.log('Pools fetched successfully:', result);
 
-          // Store active pool ID in localStorage
-          localStorage.setItem('activePoolId', mostRecentPool.id);
-          localStorage.setItem('userId', user.id);
-          navigate('/pool-home');
+          // Step 2: Initialize pool if we have pools
+          if (result && result.length > 0) {
+            console.log('User has pools, initializing most recent pool');
+            const mostRecentPool = result[0];
+            
+            if (!mostRecentPool?.id) {
+              console.error('Invalid pool data:', mostRecentPool);
+              return;
+            }
+
+            try {
+              // Fetch complete pool data with team stats
+              await dispatch(fetchPoolAsync({poolId: mostRecentPool.id, token})).unwrap();
+              localStorage.setItem('activePoolId', mostRecentPool.id);
+              localStorage.setItem('userId', user.id);
+              navigate('/pool-home');
+            } catch (error) {
+              console.error('Error initializing pool:', error);
+            }
+          } else {
+            console.log('No pools found, navigating to choose-league');
+            navigate('/choose-league');
+          }
         } catch (error) {
-          console.error('Error initializing pool: ', error);
+          console.error('Error in user initialization:', error);
         }
-      } else if (!userPoolsLoading && userPools && userPools.length === 0) {
-        // If user has no pools, navigate to choose league page
-        navigate('/choose-league');
       }
-    }
-  };
+    };
 
-    initializePool();
-  }, [userPools, userPoolsLoading, user, dispatch, navigate, getToken]);
-
-  const handleGoToPool = () => {
-    // If user has pools then navigate to pool home
-    if (userPools.length > 0) {
-      navigate('/pool-home');
-    } else {
-      navigate('/choose-league');
-    }
-  };
+    initializeUser();
+  }, [user, dispatch, navigate, getToken]);
 
   return (
     <div className={classes[`welcome-container`]}>
@@ -93,12 +76,6 @@ export default function Welcome() {
       </SignedOut>
       <SignedIn>
         {(poolLoading || userPoolsLoading) && <CircularIndeterminate />}
-        {/* {!poolLoading && !userPoolsLoading && (
-          <PrimaryLinkButton
-            text={userPools.length > 0 ? 'Go To Pool' : 'Create Pool'}
-            handleClick={handleGoToPool}
-          />
-        )} */}
       </SignedIn>
     </div>
   );
