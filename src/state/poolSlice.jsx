@@ -259,9 +259,9 @@ const poolSlice = createSlice({
         state.loading = false;
         state.error = null;
       })
-      .addCase(updatePoolAsync.rejected, (state) => {
+      .addCase(updatePoolAsync.rejected, (state, action) => {
         state.loading = false;
-        state.error = true;
+        state.error = action.error.message;
       });
   },
 });
