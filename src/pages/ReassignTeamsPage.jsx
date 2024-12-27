@@ -4,18 +4,21 @@ import PageHeader from '../components/PageHeader';
 import MobileNavMenu from '../components/MobileNavMenu';
 import PlayerHomeProfile from '../components/PlayerHomeProfile';
 import TeamsList from '../components/TeamsList';
-import { Fragment, useState } from 'react';
 import useIsDesktop from '../utils/useIsDesktop';
 import DesktopNavHeader from '../components/DesktopNavHeader';
+import CircularIndeterminate from '../components/Loading';
+import { Fragment, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { setPool, updatePoolAsync } from '../state/poolSlice';
 import { useAuth } from '@clerk/clerk-react';
 import { useDispatch } from 'react-redux';
+import { fetchCompletePool } from '../services/poolService';
 
 export default function ReassignTeamsPage() {
   const { getToken } = useAuth();
   const dispatch = useDispatch();
   const pool = useSelector((state) => state.pool);
+  const updatingPool = useSelector((state) => state.pool.loading);
   const [playerToEdit, setPlayerToEdit] = useState(null);
   const isDesktop = useIsDesktop();
 
@@ -23,22 +26,29 @@ export default function ReassignTeamsPage() {
     setPlayerToEdit((prevIndex) => (prevIndex === index ? null : index));
   };
 
-  const handleUpdateTeams = async () => {    
+  const handleUpdateTeams = async () => {
     try {
+      console.log('Storing pool: ', updatingPool);
       const token = await getToken();
+
+      // First update the pool in the database
       await dispatch(updatePoolAsync({ token })).unwrap();
+
+      // Then fetch the complete pool with team data
+      const updatedPool = await fetchCompletePool(pool.id, token);
+      dispatch(setPool(updatedPool));
+
+      console.log('Finished storing pool: ', updatingPool);
     } catch (error) {
       console.error('Error updating teams: ', error);
     } finally {
       setPlayerToEdit(null);
     }
-  }
+  };
 
   return (
     <div className={classes['page-container']}>
-      {isDesktop && (
-        <DesktopNavHeader />
-      )}
+      {isDesktop && <DesktopNavHeader />}
       <div className={classes['reassign-teams']}>
         <PageHeader
           headerText="Rassign Teams"
@@ -55,12 +65,22 @@ export default function ReassignTeamsPage() {
                   <PlayerHomeProfile player={player} playerIndex={index} />
                   <button
                     className={classes['edit-btn']}
-                    onClick={playerToEdit !== null ? handleUpdateTeams : () => togglePlayerToEdit(index)}
+                    onClick={
+                      playerToEdit !== null
+                        ? handleUpdateTeams
+                        : () => togglePlayerToEdit(index)
+                    }
+                    disabled={updatingPool}
                   >
                     {playerToEdit === index ? 'Save' : 'Edit'}
                   </button>
                 </div>
-                {playerToEdit === index && (
+                {updatingPool && playerToEdit === index && (
+                  <div className={classes['loading-container']}>
+                    <CircularIndeterminate />
+                  </div>
+                )}
+                {playerToEdit === index && !updatingPool && (
                   <TeamsList
                     pool={pool}
                     setPool={setPool}

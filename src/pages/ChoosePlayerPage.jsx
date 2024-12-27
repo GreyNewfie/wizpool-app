@@ -3,9 +3,10 @@ import BackHeaderButton from '../components/BackHeaderButton';
 import NextHeaderButton from '../components/NextHeaderButton';
 import PrimaryActionButton from '../components/PrimaryActionButton';
 import classes from './ChoosePlayerPage.module.css';
+import CircularIndeterminate from '../components/Loading';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { storePoolAsync, setUserId } from '../state/poolSlice';
+import { storePoolAsync, setUserId, setPool } from '../state/poolSlice';
 import { useUser, useAuth } from '@clerk/clerk-react';
 import { useNavigate } from 'react-router-dom';
 
@@ -15,6 +16,7 @@ export default function ChoosePlayerPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const pool = useSelector((state) => state.pool);
+  const isStoringPool = useSelector((state) => state.pool.storingPool);
   const [areTeamsSelected, setAreTeamsSelected] = useState(false);
 
   // Check if all players have teams to determine if next button should be enabled
@@ -33,8 +35,10 @@ export default function ChoosePlayerPage() {
       dispatch(setUserId(user.id));
       // Wait for the pool to be stored
       const token = await getToken();
-      const result = await dispatch(storePoolAsync({ token })).unwrap();
-      console.log('Pool stored: ', result);
+      const storedPool = await dispatch(storePoolAsync({ token })).unwrap();
+      console.log('Pool stored: ', storedPool);
+
+      dispatch(setPool(storedPool));
 
       localStorage.setItem('activePoolId', pool.id);
       localStorage.setItem('userId', user.id);
@@ -53,11 +57,17 @@ export default function ChoosePlayerPage() {
         <NextHeaderButton path="/pool-home" disabled={!areTeamsSelected} />
       </div>
       <ChoosePlayerList />
-      <PrimaryActionButton
+      {isStoringPool ? (
+        <div className={classes['loading-container']}>
+          <CircularIndeterminate />
+        </div>
+      ) : (
+        <PrimaryActionButton
         text="Create Pool"
         handleClick={handleStorePool}
         disabled={!areTeamsSelected}
       />
+      )}
     </div>
   );
 }

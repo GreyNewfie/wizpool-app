@@ -29,3 +29,11 @@
 [class*='assign-teams-page'] > div:last-of-type {
   width: clamp(200px, 100%, 350px);
 }
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: clamp(200px, 100%, 350px);
+  height: 48px;  /* Match the height of the button */
+}

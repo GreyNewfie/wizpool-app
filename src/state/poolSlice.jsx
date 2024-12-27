@@ -24,6 +24,8 @@ const initialState = {
   ],
   name: '',
   userId: '',
+  storingPool: false,
+  error: null,
 };
 
 export const storePoolAsync = createAsyncThunk(
@@ -192,15 +194,15 @@ const poolSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(storePoolAsync.pending, (state) => {
-        state.loading = true;
+        state.storingPool = true;
         state.error = null;
       })
       .addCase(storePoolAsync.fulfilled, (state) => {
-        state.loading = false;
+        state.storingPool = false;
         state.error = null;
       })
       .addCase(storePoolAsync.rejected, (state, action) => {
-        state.loading = false;
+        state.storingPool = false;
         state.error = action.error.message;
       })
       .addCase(fetchPoolByIdAsync.pending, (state) => {
@@ -257,10 +259,10 @@ const poolSlice = createSlice({
         state.loading = false;
         state.error = null;
       })
-      .addCase(updatePoolAsync.rejected, (state) => {
+      .addCase(updatePoolAsync.rejected, (state, action) => {
         state.loading = false;
-        state.error = true;
-      });
+        state.error = action.error.message;
+      })
   },
 });
 
