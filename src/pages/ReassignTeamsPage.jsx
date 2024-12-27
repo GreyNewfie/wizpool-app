@@ -6,7 +6,7 @@ import PlayerHomeProfile from '../components/PlayerHomeProfile';
 import TeamsList from '../components/TeamsList';
 import useIsDesktop from '../utils/useIsDesktop';
 import DesktopNavHeader from '../components/DesktopNavHeader';
-import CircularIndeterminate from '../components/Loading';
+import LoadingOverlay from '../components/LoadingOverlay';
 import { Fragment, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { setPool, updatePoolAsync } from '../state/poolSlice';
@@ -77,7 +77,7 @@ export default function ReassignTeamsPage() {
                 </div>
                 {updatingPool && playerToEdit === index && (
                   <div className={classes['loading-container']}>
-                    <CircularIndeterminate />
+                    <LoadingOverlay />
                   </div>
                 )}
                 {playerToEdit === index && !updatingPool && (

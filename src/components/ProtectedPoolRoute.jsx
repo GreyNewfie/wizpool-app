@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchPoolByIdAsync } from '../state/poolSlice';
 import { useUser } from '@clerk/clerk-react';
 import { Navigate } from 'react-router-dom';
-import CircularIndeterminate from './Loading';
 import { fetchUserPoolsAsync } from '../state/userPoolsSlice';
 import { useAuth } from '@clerk/clerk-react';
+import LoadingOverlay from './LoadingOverlay';
 
 export default function ProtectedPoolRoute({ children }) {
   const dispatch = useDispatch();
@@ -59,7 +59,7 @@ export default function ProtectedPoolRoute({ children }) {
 
   // Show loading indicator while initializing
   if (isInitializing || isSignedIn === undefined || !pool?.name) {
-    return <CircularIndeterminate />;
+    return <LoadingOverlay />;
   }
 
   // Check authentication after initialization
@@ -73,7 +73,7 @@ export default function ProtectedPoolRoute({ children }) {
     if (!activePoolId) {
       return <Navigate to="/" replace />;
     }
-    return <CircularIndeterminate />;
+    return <LoadingOverlay />;
   }
 
   return children;
