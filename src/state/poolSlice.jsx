@@ -25,6 +25,7 @@ const initialState = {
   name: '',
   userId: '',
   storingPool: false,
+  loading: false,
   error: null,
 };
 
@@ -227,6 +228,7 @@ const poolSlice = createSlice({
       })
       .addCase(fetchPoolAsync.fulfilled, (state, action) => {
         Object.assign(state, {
+          ...state,
           ...action.payload,
           loading: false,
           error: null,

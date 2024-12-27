@@ -135,8 +135,9 @@ export default function UserMenu() {
 
   const handleSwitchPool = async (poolId) => {
     const token = await getToken();
-    dispatch(fetchPoolAsync({ poolId, token }));
     localStorage.setItem('activePoolId', poolId); // Update local storage to indicate acttive pool
+    navigate('/pool-home')
+    dispatch(fetchPoolAsync({ poolId, token }));
   };
 
   return (

@@ -7,6 +7,7 @@ import useTheme from '../context/useTheme';
 import classNames from 'classnames';
 import DesktopNavHeader from '../components/DesktopNavHeader';
 import useIsDesktop from '../utils/useIsDesktop';
+import LoadingOverlay from '../components/LoadingOverlay';
 import { useSelector } from 'react-redux';
 import { selectSortedPlayersByWins } from '../state/poolSlice';
 
@@ -94,6 +95,7 @@ const getPlayerStandings = (sortedPlayers) => {
 export default function PoolHomePage() {
   const { theme } = useTheme();
   const pool = useSelector((state) => state.pool);
+  const isLoading = useSelector((state) => state.pool.loading);
   const sortedPlayers = useSelector(selectSortedPlayersByWins);
   const poolClasses = classNames(classes['pool-home'], classes[theme]);
   const isDesktop = useIsDesktop();
@@ -101,14 +103,10 @@ export default function PoolHomePage() {
 
   return (
     <div className={classes['page-container']}>
-      {isDesktop && (
-        <DesktopNavHeader />
-      )}
+      {isLoading && <LoadingOverlay />}
+      {isDesktop && <DesktopNavHeader />}
       <div className={poolClasses}>
-        <PageHeader
-          headerText={pool.name}
-          poolName={pool.name}
-        />
+        <PageHeader headerText={pool.name} poolName={pool.name} />
         <div className={classes['pool-players']}>
           <h3>Overall Standings</h3>
           {sortedPlayers.map((player, playerIndex) => {
