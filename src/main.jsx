@@ -16,6 +16,18 @@ import ReassignTeamsPage from './pages/ReassignTeamsPage.jsx';
 import ThemeProvider from './context/ThemeContext.jsx';
 import ChooseLeaguePage from './pages/ChooseLeaguePage.jsx';
 import DeletePoolPage from './pages/DeletePoolPage.jsx';
+import { Provider } from 'react-redux';
+import store from './state/store';
+import { ClerkProvider } from '@clerk/clerk-react';
+import ProtectedRoute from './components/ProtectedRoute.jsx';
+import ProtectedPoolRoute from './components/ProtectedPoolRoute.jsx';
+
+// Import publishable key
+const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
+
+if (!PUBLISHABLE_KEY) {
+  throw new Error('Add your Clerk publishable key to the .env.local file');
+}
 
 const router = createBrowserRouter(
   [
@@ -26,57 +38,101 @@ const router = createBrowserRouter(
     },
     {
       path: '/choose-league',
-      element: <ChooseLeaguePage />,
+      element: (
+        <ProtectedRoute>
+          <ChooseLeaguePage />
+        </ProtectedRoute>
+      ),
       errorElement: <ErrorPage />,
     },
     {
       path: '/create-pool',
-      element: <CreatePoolPage />,
+      element: (
+        <ProtectedRoute>
+          <CreatePoolPage />
+        </ProtectedRoute>
+      ),
       errorElement: <ErrorPage />,
     },
     {
       path: '/choose-player',
-      element: <ChoosePlayerPage />,
+      element: (
+        <ProtectedRoute>
+          <ChoosePlayerPage />
+        </ProtectedRoute>
+      ),
       errorElement: <ErrorPage />,
     },
     {
       path: '/choose-teams/:id',
-      element: <ChooseTeamsPage />,
+      element: (
+        <ProtectedRoute>
+          <ChooseTeamsPage />
+        </ProtectedRoute>
+      ),
       errorElement: <ErrorPage />,
     },
     {
       path: '/pool-home',
-      element: <PoolHomePage />,
+      element: (
+        <ProtectedPoolRoute>
+          <PoolHomePage />
+        </ProtectedPoolRoute>
+      ),
       errorElement: <ErrorPage />,
     },
     {
       path: '/pool-players',
-      element: <PoolPlayersPage />,
+      element: (
+        <ProtectedPoolRoute>
+          <PoolPlayersPage />
+        </ProtectedPoolRoute>
+      ),
       errorElement: <ErrorPage />,
     },
     {
       path: '/pool-picks',
-      element: <PoolPicksPage />,
+      element: (
+        <ProtectedPoolRoute>
+          <PoolPicksPage />
+        </ProtectedPoolRoute>
+      ),
       errorElement: <ErrorPage />,
     },
     {
       path: '/pool-settings',
-      element: <SettingsPage />,
+      element: (
+        <ProtectedPoolRoute>
+          <SettingsPage />
+        </ProtectedPoolRoute>
+      ),
       errorElement: <ErrorPage />,
     },
     {
       path: '/manage-players',
-      element: <ManagePlayersPage />,
+      element: (
+        <ProtectedPoolRoute>
+          <ManagePlayersPage />
+        </ProtectedPoolRoute>
+      ),
       errorElement: <ErrorPage />,
     },
     {
       path: '/reassign-teams',
-      element: <ReassignTeamsPage />,
+      element: (
+        <ProtectedRoute>
+          <ReassignTeamsPage />
+        </ProtectedRoute>
+      ),
       errorElement: <ErrorPage />,
     },
     {
       path: '/delete-pool',
-      element: <DeletePoolPage />,
+      element: (
+        <ProtectedPoolRoute>
+          <DeletePoolPage />
+        </ProtectedPoolRoute>
+      ),
       errorElement: <ErrorPage />,
     },
   ],
@@ -85,8 +141,12 @@ const router = createBrowserRouter(
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <ThemeProvider>
-      <RouterProvider router={router} />
-    </ThemeProvider>
+    <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
+      <Provider store={store}>
+        <ThemeProvider>
+          <RouterProvider router={router} />
+        </ThemeProvider>
+      </Provider>
+    </ClerkProvider>
   </React.StrictMode>,
 );

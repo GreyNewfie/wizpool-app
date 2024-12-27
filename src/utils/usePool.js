@@ -2,65 +2,103 @@ import { useState, useEffect } from 'react';
 import Pool from './Pool';
 import { useNavigate } from 'react-router-dom';
 import useStoredPools from './useStoredPools';
+// import { create } from '@mui/material/styles/createTransitions';
+import {
+  createPool,
+  createPlayers,
+  createPoolPlayers,
+  createPlayerTeams,
+  fetchPoolById,
+} from '../services/poolService';
+import { v4 as uuidv4 } from 'uuid';
 
-const getInitialPool = () => {
+const getInitialPool = async () => {
   const activePoolId = localStorage.getItem('activePoolId');
   if (activePoolId) {
-    const storedPool = JSON.parse(localStorage.getItem(`pool-${activePoolId}`));
-    if (storedPool) {
-      const clonedPlayers = storedPool.players.map((player) => ({ ...player }));
+    // Check if pool is stored in the database, and if so return it
+    const poolFromDb = await fetchPoolById(activePoolId);
+    if (poolFromDb) {
+      console.log('Pool is set from database');
+      return new Pool(poolFromDb.name, [], poolFromDb.league, poolFromDb.id);
+    }
+
+    // Check if pool is stored in local storage, and if so return it
+    const poolFromLocalStorage = JSON.parse(
+      localStorage.getItem(`pool-${activePoolId}`),
+    );
+    if (poolFromLocalStorage) {
+      console.log('Pool is set from local storage');
+      const clonedPlayers = poolFromLocalStorage.players.map((player) => ({
+        ...player,
+      }));
       return new Pool(
-        storedPool.poolName,
+        poolFromLocalStorage.poolName,
         clonedPlayers,
-        storedPool.league,
-        storedPool.id,
+        poolFromLocalStorage.league,
+        poolFromLocalStorage.id,
       );
     }
   }
+  // Return blank pool if no pool is found
   return new Pool('', [], '');
 };
 
 const cleanPool = (pool) => {
-  const updatedPlayers = pool.players.filter(
-    (player) => player.playerName !== '',
-  );
-  const cleanedPool = new Pool(
-    pool.poolName,
-    updatedPlayers,
-    pool.league,
-    pool.id,
-  );
-  return cleanedPool;
+  if (pool?.players?.length > 0) {
+    const updatedPlayers = pool.players.filter(
+      (player) => player.playerName.trim() !== '',
+    );
+    const cleanedPool = new Pool(
+      pool.poolName,
+      updatedPlayers,
+      pool.league,
+      pool.id,
+    );
+    return cleanedPool;
+  }
+  return pool;
 };
 
 export default function usePool() {
-  const [pool, setPool] = useState(getInitialPool());
+  const [pool, setPool] = useState();
   const [activePoolId, setActivePoolId] = useState(
     localStorage.getItem('activePoolId') || null,
   );
   const navigate = useNavigate();
   const { getNonActivePools } = useStoredPools();
 
+  // Fetch initial pool data when the component mounts
+  useEffect(() => {
+    const initializePool = async () => {
+      const initialPool = await getInitialPool();
+      if (initialPool) {
+        setPool(initialPool);
+      }
+    };
+
+    initializePool();
+  }, []);
+
   // Update localStorage when pool changes
   useEffect(() => {
     // Remove possible blank players before adding to localStorage
-    const cleanedPool = cleanPool(pool);
-    localStorage.setItem(`pool-${cleanedPool.id}`, JSON.stringify(cleanedPool));
-  }, [pool]);
+    if (activePoolId === pool?.id) {
+      const cleanedPool = cleanPool(pool);
+      localStorage.setItem(
+        `pool-${cleanedPool.id}`,
+        JSON.stringify(cleanedPool),
+      );
+    }
+  }, [activePoolId, pool]);
 
   // Update active pool when it changes
   useEffect(() => {
-    if (activePoolId !== pool.id) {
+    if (pool && activePoolId !== pool?.id && pool?.name !== '') {
       setActivePoolId(pool.id);
       localStorage.setItem('activePoolId', pool.id);
       console.log('Stored active pool has been updated');
     }
-  }, [activePoolId, pool.id]);
-
-  const updateActivePoolId = (poolId) => {
-    setActivePoolId(poolId);
-    localStorage.setItem('activePool', poolId);
-  };
+  }, [activePoolId, pool]);
 
   const createNewPool = () => {
     const newPool = new Pool('', [], '');
@@ -70,6 +108,26 @@ export default function usePool() {
     localStorage.setItem('activePoolId', newPool.id);
     navigate('/choose-league');
   };
+
+  const storePoolToDb = async () => {
+    const poolToStore = pool.clonePool();
+    try {
+      const poolResponse = await createPool(poolToStore);
+      console.log(poolResponse.message);
+      const playerResponse = await createPlayers(poolToStore.players);
+      console.log('Players stored:', playerResponse);
+      const poolPlayersResponse = await createPoolPlayers(poolToStore);
+      console.log('Pool players stored:', poolPlayersResponse);
+      const playerTeamsResponse = await createPlayerTeams(poolToStore);
+      console.log("All player's teams stored:", playerTeamsResponse);
+    } catch (error) {
+      console.error('Error storing pool and related data:', error);
+    }
+  };
+
+  // const clearPoolFromLocal = (poolId) => {
+  //   localStorage.removeItem(`pool-${poolId}`);
+  // };
 
   const changePool = (poolId) => {
     const selectedPoolData = localStorage.getItem(`pool-${poolId}`);
@@ -145,6 +203,7 @@ export default function usePool() {
       playerName: '',
       teamName: '',
       teams: [],
+      id: uuidv4(),
     });
     setPool(updatedPool);
   };
@@ -176,43 +235,30 @@ export default function usePool() {
     return sortedPlayers;
   };
 
-  const updatePlayersTeamsRecords = () => {
+  const updatePlayersTeamsRecords = async (leagueData) => {
     // Clone pool
     const updatedPool = pool.clonePool();
-    const apiData = JSON.parse(localStorage.getItem('storedData'));
     // Check if apiData exists
-    if (!apiData || apiData?.data.length === 0) {
-      console.log('No API data found in local storage.');
-      return;
+    if (leagueData === null) {
+      throw new Error('League data is not available');
     }
+
     // Iterate through players
     updatedPool.players.forEach((player) => {
       // Iterate through player's teams
-      player.teams?.forEach((team) => {
-        // Check league to determine how to reference team data
-        if (pool.league === 'nfl') {
-          // Find team record
-          const teamRecord = apiData.data.find(
-            (data) => data.Name === `${team.city} ${team.name}`,
-          );
-          if (teamRecord) {
-            // Update player's team's record
-            team.wins = teamRecord.Wins;
-            team.losses = teamRecord.Losses;
-            team.division = teamRecord.Division;
-          }
-        } else {
-          // Find team record
-          const teamRecord = apiData.data.find(
-            (data) => data.Name === team.name,
-          );
-          if (teamRecord) {
-            // Update player's team's record
-            team.wins = teamRecord.Wins;
-            team.losses = teamRecord.Losses;
-            team.division = teamRecord.Division;
-          }
-        }
+      player.teams?.forEach((playerTeam) => {
+        // Find team record
+        const teamRecord = leagueData.find(
+          (dataTeam) => dataTeam.name === `${playerTeam.name}`,
+        );
+        if (!teamRecord)
+          return console.error(`Team record not found for ${playerTeam.name}`);
+
+        // Update player's team's record
+        playerTeam.wins = teamRecord.wins;
+        playerTeam.losses = teamRecord.losses;
+        playerTeam.division = teamRecord.division;
+        playerTeam.conference = teamRecord.conference;
       });
     });
     // Update pool
@@ -232,8 +278,8 @@ export default function usePool() {
     addBlankPlayer,
     deletePlayer,
     activePoolId,
-    updateActivePoolId,
     sortPlayersByWins,
     updatePlayersTeamsRecords,
+    storePoolToDb,
   };
 }

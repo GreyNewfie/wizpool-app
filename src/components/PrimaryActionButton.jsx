@@ -6,15 +6,28 @@ import classNames from 'classnames';
 export default function PrimaryActionButton(props) {
   const btnClasses = classNames(classes['primary-button'], {
     [classes['has-teams']]: props.hasTeams,
+    [classes['disabled']]: props.disabled,
   });
-  return (
+
+  const linkClasses = classNames(classes['primary-link'], {
+    [classes['disabled']]: props.disabled,
+  });
+
+  return props.path ? (
     <div className={classes['primary-button-container']}>
-      <Link to={props.path} className={classes['primary-link']}>
+      <Link to={props.path} className={linkClasses}>
         <button className={btnClasses} onClick={props.handleClick}>
           <span className={classes['plus-symbol']}>{props.optionalSymbol}</span>
           <span>{props.text}</span>
         </button>
       </Link>
+    </div>
+  ) : (
+    <div className={classes['primary-button-container']}>
+      <button className={btnClasses} onClick={props.handleClick}>
+        <span className={classes['plus-symbol']}>{props.optionalSymbol}</span>
+        <span>{props.text}</span>
+      </button>
     </div>
   );
 }
@@ -26,4 +39,5 @@ PrimaryActionButton.propTypes = {
   path: PropTypes.string,
   id: PropTypes.number,
   hasTeams: PropTypes.bool,
+  disabled: PropTypes.bool,
 };

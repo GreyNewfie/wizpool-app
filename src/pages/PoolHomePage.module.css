@@ -5,6 +5,14 @@
   align-items: center;
 }
 
+.page-loading-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .pool-home {
   width: clamp(320px, 100%, 480px);
   padding: 1.16rem 0.75rem 0;

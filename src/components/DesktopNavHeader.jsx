@@ -1,13 +1,13 @@
 import { NavLink } from 'react-router-dom';
 import classes from './DesktopNavHeader.module.css';
 import useIsDesktop from '../utils/useIsDesktop';
-import AvatarAndMenu from './AvatarAndMenu';
-import PropTypes from 'prop-types';
+import UserMenu from './UserMenu';
 
-export default function DesktopNavHeader(props) {
+export default function DesktopNavHeader() {
   const isDesktop = useIsDesktop();
+
   return (
-    <div className={classes['desktop-nav-header']}>
+    <header className={classes['desktop-nav-header']}>
       <img
         className={classes['logo']}
         src="./wizpool-wordmark-230x70.png"
@@ -39,23 +39,11 @@ export default function DesktopNavHeader(props) {
           Settings
         </NavLink>
         {isDesktop && (
-          <AvatarAndMenu
-            poolName={props.poolName}
-            createNewPool={props.createNewPool}
-            deletePool={props.deletePool}
-            changePool={props.changePool}
-            nonActivePools={props.nonActivePools}
-          />
+          <>
+          <UserMenu />
+          </>
         )}
       </div>
-    </div>
+    </header>
   );
 }
-
-DesktopNavHeader.propTypes = {
-  poolName: PropTypes.string,
-  createNewPool: PropTypes.func,
-  deletePool: PropTypes.func,
-  changePool: PropTypes.func,
-  nonActivePools: PropTypes.array,
-};

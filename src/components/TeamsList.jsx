@@ -2,14 +2,16 @@ import classes from './TeamsList.module.css';
 import PropTypes from 'prop-types';
 import useApiData from '../utils/useApiData';
 import SelectTeamSection from './SelectTeamSection';
-import CircularIndeterminate from './Loading';
 import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setTeamName } from '../state/poolSlice';
+import LoadingOverlay from './LoadingOverlay';
 
-const getAvailableTeams = (pool, teams, playerIndex) => {
+const getUnassignedTeams = (players, teams, playerIndex) => {
   // Get a list of teams each other player has selected
-  const selectedTeams = pool.players.flatMap((player) => {
+  const selectedTeams = players.flatMap((player, index) => {
     // If the index matches the current player's index don't include teams
-    if (pool.players.indexOf(player) == playerIndex || !player.teams) {
+    if (index === playerIndex || !player.teams) {
       return [];
     }
     return player.teams;
@@ -22,54 +24,46 @@ const getAvailableTeams = (pool, teams, playerIndex) => {
   return availableTeams;
 };
 
-export default function TeamsList(props) {
+export default function TeamsList({ playerIndex }) {
+  const dispatch = useDispatch();
   const { getAllTeams, loading } = useApiData();
-  const [allTeams, setAllTeams] = useState(null);
-  const [isFetchingTeams, setIsFetching] = useState(false);
-  const updatedPool = props.pool.clonePool();
-
-  const fetchTeamsData = async () => {
-    setIsFetching(true);
-    try {
-      const teams = await getAllTeams(props.pool.league);
-      setAllTeams(teams);
-    } catch (error) {
-      console.log('Error fetching teams:', error);
-    } finally {
-      setIsFetching(false);
-    }
-  };
+  const pool = useSelector((state) => state.pool);
+  const [allTeams, setAllTeams] = useState(undefined);
 
   useEffect(() => {
-    if (!allTeams && !isFetchingTeams) {
-      fetchTeamsData();
-    }
-  }, [allTeams, isFetchingTeams]);
+    const fetchTeams = async () => {
+      const teams = await getAllTeams(pool.league);
+      setAllTeams(teams || []);
+    };
 
-  if (loading) return <CircularIndeterminate />;
+    if (!allTeams?.length) {
+      fetchTeams();
+    }
+  }, [getAllTeams, pool.league]);
+
+  if (loading) return <LoadingOverlay />;
 
   // Ensure teams are available before rendering
-  if (!allTeams) return null;
+  if (!allTeams?.length) return null;
 
   // Filter the available teams based on other players' selected teams
-  const availableTeams = getAvailableTeams(
-    updatedPool,
+  const availableTeams = getUnassignedTeams(
+    pool.players,
     allTeams,
-    props.playerIndex,
+    playerIndex,
   ).sort((team1, team2) => team1.city.localeCompare(team2.city));
 
   return (
     <div className={classes['teams-list']}>
-      {availableTeams.map((team, teamIndex) => {
+      {availableTeams.map((team, index) => {
         return (
           <SelectTeamSection
-            key={teamIndex}
-            league={props.pool.league}
+            key={index}
             team={team}
-            teamName={team}
-            playerIndex={props.playerIndex}
-            updatedPool={updatedPool}
-            setPool={props.setPool}
+            playerIndex={playerIndex}
+            setTeam={(teamName) =>
+              dispatch(setTeamName({ teamName, playerIndex }))
+            }
           />
         );
       })}
@@ -78,7 +72,5 @@ export default function TeamsList(props) {
 }
 
 TeamsList.propTypes = {
-  pool: PropTypes.object.isRequired,
-  setPool: PropTypes.func.isRequired,
-  playerIndex: PropTypes.number.isRequired,
+  playerIndex: PropTypes.number,
 };

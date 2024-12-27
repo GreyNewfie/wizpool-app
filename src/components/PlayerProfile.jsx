@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import PrimaryActionButton from './PrimayActionButton';
+import PrimaryActionButton from './PrimaryActionButton';
 import classes from './PlayerProfile.module.css';
 
 export default function PlayerProfile({ player, index }) {
@@ -17,7 +17,7 @@ export default function PlayerProfile({ player, index }) {
           <h5
             className={`${classes['player-name']} ${classes['truncated-text']}`}
           >
-            {player.playerName}
+            {player.name}
           </h5>
           <span
             className={`${classes['team-name']} ${classes['truncated-text']}`}
@@ -30,12 +30,12 @@ export default function PlayerProfile({ player, index }) {
       </div>
       {!hasTeams ? (
         <PrimaryActionButton
-          text={`Assign Teams to ${player.playerName}`}
+          text={`Assign Teams to ${player.name}`}
           path={`/choose-teams/${index}`}
         />
       ) : (
         <PrimaryActionButton
-          text={`Edit Teams for ${player.playerName}`}
+          text={`Edit Teams for ${player.name}`}
           path={`/choose-teams/${index}`}
           hasTeams={hasTeams}
         />

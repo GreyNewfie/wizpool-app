@@ -21,6 +21,10 @@ export default function ConfirmDialog({
         onClose={onClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
+        disablePortal={false}
+        keepMounted={false}
+        disableEnforceFocus={false}
+        disableAutoFocus={false}
       >
         <DialogTitle id="alert-dialog-title">{dialogTitle}</DialogTitle>
         <DialogContent>
@@ -30,7 +34,7 @@ export default function ConfirmDialog({
         </DialogContent>
         <DialogActions>
           <Button onClick={onClose}>Cancel</Button>
-          <Button onClick={onConfirm} autoFocus>
+          <Button onClick={onConfirm} autoFocus color='error'>
             Delete
           </Button>
         </DialogActions>

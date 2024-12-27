@@ -1,21 +1,17 @@
 import PageHeader from '../components/PageHeader';
 import PlayerHomeProfile from '../components/PlayerHomeProfile';
 import MobileNavMenu from '../components/MobileNavMenu';
-import usePool from '../utils/usePool';
 import classes from './PoolPlayersPage.module.css';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import DisplayTeams from '../components/DisplayTeams';
 import { useState } from 'react';
 import useIsDesktop from '../utils/useIsDesktop';
 import DesktopNavHeader from '../components/DesktopNavHeader';
-import useStoredPools from '../utils/useStoredPools';
-
+import { useSelector } from 'react-redux';
 export default function PoolPlayersPage() {
-  const { pool, createNewPool, changePool } = usePool();
+  const pool = useSelector((state) => state.pool);
   const [viewingTeamsFor, setViewingTeamsFor] = useState(null);
   const isDesktop = useIsDesktop();
-  const { getNonActivePools } = useStoredPools();
-  const nonActivePools = getNonActivePools();
 
   const toggleViewTeam = (index) => {
     setViewingTeamsFor((prevIndex) => (prevIndex === index ? null : index));
@@ -24,22 +20,14 @@ export default function PoolPlayersPage() {
   return (
     <div className={classes['page-container']}>
       {isDesktop && (
-        <DesktopNavHeader
-          poolName={pool.poolName}
-          createNewPool={createNewPool}
-          changePool={changePool}
-          nonActivePools={nonActivePools}
-        />
+        <DesktopNavHeader />
       )}
       <div className={classes['pool-players']}>
         <PageHeader
           headerText="Player's Teams"
           path="/pool-home"
           leftBtnText=<ArrowBackIcon />
-          poolName={pool.poolName}
-          createNewPool={createNewPool}
-          changePool={changePool}
-          nonActivePools={nonActivePools}
+          poolName={pool.name}
         />
         <div className={classes['players-container']}>
           <p>{`View each player's teams with season record`}</p>

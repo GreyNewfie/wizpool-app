@@ -9,7 +9,7 @@ export default function PlayerInput(props) {
         className={classes['text-input']}
         id={`player-${props.index}-name`}
         name={`player-${props.index}-name`}
-        value={props.player.playerName}
+        value={props.player.name}
         placeholderText="Player's Name"
         handleChange={(e) =>
           props.handleNameChange(e.target.value, props.index)

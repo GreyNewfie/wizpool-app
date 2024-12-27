@@ -14,11 +14,17 @@ export default function PrimaryLinkButton({ text, path, handleClick }) {
         </button>
       </Link>
     </div>
-  ) : (
+  ) : path ? (
     <div className={classes['primary-button-container']}>
       <Link to={path}>
         <button className={classes['primary-button']}>{text}</button>
       </Link>
+    </div>
+  ) : (
+    <div className={classes['primary-button-container']}>
+      <button className={classes['primary-button']} onClick={handleClick}>
+        {text}
+      </button>
     </div>
   );
 }
