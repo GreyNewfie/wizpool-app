@@ -4,13 +4,13 @@ import useIsDesktop from '../utils/useIsDesktop';
 import MobileNavMenu from '../components/MobileNavMenu';
 import DesktopNavHeader from '../components/DesktopNavHeader';
 import ConfirmDialog from '../components/ConfirmDialog';
+import LoadingOverlay from '../components/LoadingOverlay';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useAuth, useUser } from '@clerk/clerk-react';
 import { deletePoolAsync, setPool, fetchPoolAsync } from '../state/poolSlice';
 import { fetchUserPoolsAsync } from '../state/userPoolsSlice';
 import { Link, useNavigate } from 'react-router-dom';
-import CircularIndeterminate from '../components/Loading';
 
 export default function DeletePoolPage() {
   const dispatch = useDispatch();
@@ -78,7 +78,7 @@ export default function DeletePoolPage() {
           <p>{`Select the pool that you want to delete. If you delete your only pool
         you'll automatically begin creating a new pool.`}</p>
           {loading ? (
-            <CircularIndeterminate />
+            <LoadingOverlay />
           ) : userPools.length === 0 ? (
             <>
             <p>No pools available</p>

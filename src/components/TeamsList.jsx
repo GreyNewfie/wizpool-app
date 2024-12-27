@@ -2,10 +2,10 @@ import classes from './TeamsList.module.css';
 import PropTypes from 'prop-types';
 import useApiData from '../utils/useApiData';
 import SelectTeamSection from './SelectTeamSection';
-import CircularIndeterminate from './Loading';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setPool, setTeamName } from '../state/poolSlice';
+import { setTeamName } from '../state/poolSlice';
+import LoadingOverlay from './LoadingOverlay';
 
 const getUnassignedTeams = (players, teams, playerIndex) => {
   // Get a list of teams each other player has selected
@@ -41,7 +41,7 @@ export default function TeamsList({ playerIndex }) {
     }
   }, [getAllTeams, pool.league]);
 
-  if (loading) return <CircularIndeterminate />;
+  if (loading) return <LoadingOverlay />;
 
   // Ensure teams are available before rendering
   if (!allTeams?.length) return null;

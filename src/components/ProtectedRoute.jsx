@@ -1,7 +1,7 @@
 import { useAuth } from '@clerk/clerk-react';
 import { Navigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import CircularIndeterminate from './Loading';
+import LoadingOverlay from './LoadingOverlay';
 
 export default function ProtectedRoute({ children }) {
   const { isSignedIn, isLoaded } = useAuth();
@@ -12,7 +12,7 @@ export default function ProtectedRoute({ children }) {
  // Don't redirect until Clerk has finished loading
  if (!isLoaded) {
   console.log("Auth is still loading...");
-  return <CircularIndeterminate />;
+  return <LoadingOverlay />;
 }
 
   if (!isSignedIn) {
