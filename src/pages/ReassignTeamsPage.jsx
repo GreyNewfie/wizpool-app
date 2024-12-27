@@ -12,6 +12,7 @@ import { useSelector } from 'react-redux';
 import { setPool, updatePoolAsync } from '../state/poolSlice';
 import { useAuth } from '@clerk/clerk-react';
 import { useDispatch } from 'react-redux';
+import { fetchCompletePool } from '../services/poolService';
 
 export default function ReassignTeamsPage() {
   const { getToken } = useAuth();
@@ -28,10 +29,15 @@ export default function ReassignTeamsPage() {
   const handleUpdateTeams = async () => {
     try {
       console.log('Storing pool: ', updatingPool);
-
       const token = await getToken();
-      const updatedPool = await dispatch(updatePoolAsync({ token })).unwrap();
+
+      // First update the pool in the database
+      await dispatch(updatePoolAsync({ token })).unwrap();
+
+      // Then fetch the complete pool with team data
+      const updatedPool = await fetchCompletePool(pool.id, token);
       dispatch(setPool(updatedPool));
+
       console.log('Finished storing pool: ', updatingPool);
     } catch (error) {
       console.error('Error updating teams: ', error);
