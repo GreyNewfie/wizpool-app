@@ -55,7 +55,6 @@ export default function ChoosePlayerPage() {
       <div className={classes['assign-teams-page-header']}>
         <BackHeaderButton path="/create-pool" />
         <h2>Assign Teams</h2>
-        <NextHeaderButton path="/pool-home" disabled={!areTeamsSelected} />
       </div>
       <ChoosePlayerList />
         <PrimaryActionButton
