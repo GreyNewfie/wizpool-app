@@ -30,6 +30,12 @@
   gap: 1.5rem;
 }
 
+@media (max-width: 768px) {
+  .pool-players {
+    margin-bottom: 80px;
+  }
+}
+
 .pool-home > h3 {
   margin-right: auto;
 }
