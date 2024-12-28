@@ -16,13 +16,18 @@
 
 .assign-teams-page-header {
   width: 100%;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
 }
 
 .assign-teams-page-header > button {
   align-self: center;
+}
+
+.assign-teams-page-header h2 {
+  text-align: center;
+  grid-column: 2;
 }
 
 /* Adjust the width of the Create Pool button */
