@@ -20,15 +20,15 @@
 }
 
 .select-league-btn:hover {
-  opacity: 0.7;
+  background-color: var(--primary-btn-bg-color);
 }
 
 .select-league-btn:active {
-  opacity: 0.9;
+  opacity: 0.7;
 }
 
 .selected {
-  background-color: var(--primary-btn-bg-color);
+  opacity: .5;
 }
 
 .league-logo {
