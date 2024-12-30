@@ -1,18 +1,16 @@
 import classes from './ChooseLeaguePage.module.css';
-import NextHeaderButton from '../components/NextHeaderButton';
 import SelectLeagueButtons from '../components/SelectLeagueButtons';
-import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setLeague } from '../state/poolSlice';
+import { useNavigate } from 'react-router-dom';
 
 export default function ChooseLeaugePage() {
   const dispatch = useDispatch();
-
-  const [isLeagueSelected, setIsLeagueSelected] = useState(false);
+  const navigate = useNavigate();
 
   const handleSetLeague = (league) => {
     dispatch(setLeague(league));
-    setIsLeagueSelected(true);
+    setTimeout(() => navigate('/create-pool'), 300);
   };
 
   return (
@@ -21,7 +19,6 @@ export default function ChooseLeaugePage() {
       className={classes['choose-league-container']}
     >
       <div className={classes['choose-league-page-header']}>
-        <NextHeaderButton path="/create-pool" disabled={!isLeagueSelected} />
         <h1>Choose a League</h1>
       </div>
 
