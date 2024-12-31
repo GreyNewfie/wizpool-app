@@ -17,7 +17,7 @@ export default function PageHeader(props) {
       <button className={classes['right-header-btn']}>
         {props.rightBtnText}
       </button>
-      {props.poolName && !isDesktop && (
+      {!isDesktop && (
         <UserMenu />
       )}
     </div>
