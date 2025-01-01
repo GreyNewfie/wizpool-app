@@ -5,10 +5,7 @@ import LoadingOverlay from './LoadingOverlay';
 
 export default function ProtectedRoute({ children }) {
   const { isSignedIn, isLoaded } = useAuth();
-
-   // Log the authentication status
-   console.log("Auth state:", isSignedIn);
-
+  
  // Don't redirect until Clerk has finished loading
  if (!isLoaded) {
   console.log("Auth is still loading...");

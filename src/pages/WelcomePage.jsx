@@ -25,17 +25,13 @@ export default function Welcome() {
   useEffect(() => {
     const initializeUser = async () => {
       if (user) {
-        console.log('Starting user initialization');
         try {
           // Step 1: Fetch user pools
-          console.log('Before fetching pools:', { userPoolsLoading, userPools });
           const token = await getToken();
           const result = await dispatch(fetchUserPoolsAsync({userId: user.id, token})).unwrap();
-          console.log('Pools fetched successfully:', result);
 
           // Step 2: Initialize pool if we have pools
           if (result && result.length > 0) {
-            console.log('User has pools, initializing most recent pool');
             const mostRecentPool = result[0];
             
             if (!mostRecentPool?.id) {
@@ -53,7 +49,6 @@ export default function Welcome() {
               console.error('Error initializing pool:', error);
             }
           } else {
-            console.log('No pools found, navigating to choose-league');
             navigate('/choose-league');
           }
         } catch (error) {
