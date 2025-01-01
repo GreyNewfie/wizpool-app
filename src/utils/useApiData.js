@@ -5,7 +5,6 @@ import { useAuth } from '@clerk/clerk-react';
 const BASE_URL = getApiBaseUrl();
 
 export default function useApiData() {
-  const [apiData, setApiData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState();
   const { getToken } = useAuth();
@@ -38,108 +37,6 @@ export default function useApiData() {
     return data;
   };
 
-  const getUpdatedUrl = (league, season) => {
-    const url = `${BASE_URL}/${league}_data`;
-    if (season === 2024) {
-      return url;
-    } else {
-      console.log('Season needs to be updated');
-      return url;
-    }
-  };
-
-  const getLeagueData = async (league) => {
-    let season;
-    let data;
-    let url;
-    let approxSeasonStartDay;
-    let approxSeasonStartMonth;
-    // league season start dates
-    switch (league) {
-      case 'nba':
-        approxSeasonStartDay = 10;
-        approxSeasonStartMonth = 9;
-        break;
-      case 'mlb':
-        approxSeasonStartDay = 20;
-        approxSeasonStartMonth = 2;
-        break;
-      case 'nfl':
-        approxSeasonStartDay = 9;
-        approxSeasonStartMonth = 8;
-        break;
-      default:
-        throw new Error('No league specified');
-    }
-    // get current month and day
-    const currentDate = new Date();
-    const currentDay = currentDate.getDate();
-    const currentMonth = currentDate.getMonth();
-    // check if day and month are later than MLB's and NFL's approximate season start date
-    if (
-      currentDay >= approxSeasonStartDay &&
-      currentMonth >= approxSeasonStartMonth &&
-      league !== 'nba'
-    ) {
-      // if yes, set season to current year, get url, fetch data and check that data array is not empty
-      season = currentDate.getFullYear();
-      url = getUpdatedUrl(league, season);
-      data = await fetchData(url);
-      console.log('fetchData called in getLeagueData');
-
-      // check that data array is not empty
-      if (data && data.length > 0) {
-        // if not empty, return data
-        return data;
-        // if empty, set season to previous year, fetch data and return data
-      } else if (data && data.length === 0) {
-        season = currentDate.getFullYear() - 1;
-      }
-      // if no, set season to last year
-    } else {
-      if (league === 'mlb' || league === 'nfl') {
-        season = currentDate.getFullYear() - 1;
-      }
-    }
-    // check if day and month are later than the NBA's approximate season start date
-    if (
-      currentDay >= approxSeasonStartDay &&
-      currentMonth >= approxSeasonStartMonth &&
-      league === 'nba'
-    ) {
-      // if yes, set season to next year (API works differently for NBA)
-      season = currentDate.getFullYear() + 1;
-    } else {
-      // if no, set season to current year
-      season = currentDate.getFullYear();
-    }
-
-    url = getUpdatedUrl(league, season);
-    data = await fetchData(url);
-    console.log('fetchData called in getLeagueData');
-    return data;
-  };
-
-  const getApiLeagueData = async (league) => {
-    if (!league) {
-      throw new Error('League is required to get league data');
-    }
-
-    const url = `${BASE_URL}/${league}_data`;
-
-    try {
-      const leagueDataFromDb = await fetchData(url);
-
-      if (!leagueDataFromDb) {
-        throw new Error('League data not found.');
-      }
-
-      setApiData(leagueDataFromDb);
-      return leagueDataFromDb;
-    } catch (error) {
-      console.error('Error retrieving league data: ', error);
-    }
-  };
 
   const getAllTeams = async (league) => {
     if (!league) {
@@ -163,10 +60,8 @@ export default function useApiData() {
   };
 
   return {
-    apiData,
     loading,
     error,
     getAllTeams,
-    getApiLeagueData,
   };
 }

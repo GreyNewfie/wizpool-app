@@ -36,7 +36,6 @@ export default function ChoosePlayerPage() {
       // Wait for the pool to be stored
       const token = await getToken();
       const storedPool = await dispatch(storePoolAsync({ token })).unwrap();
-      console.log('Pool stored: ', storedPool);
 
       dispatch(setPool(storedPool));
 
