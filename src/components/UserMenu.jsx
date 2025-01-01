@@ -104,7 +104,6 @@ export default function UserMenu() {
     if (userPools && userPools.length > 0) {
       if (userPools.length > 1) {
         const filteredPools = userPools.filter((userPool) => userPool.id !== pool.id);
-        console.log('Filtered Pools:', filteredPools);
         setOtherUserPools(filteredPools);  
       } else {
         setOtherUserPools([]);
