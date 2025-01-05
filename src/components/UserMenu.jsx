@@ -183,10 +183,10 @@ export default function UserMenu() {
                 onClick={() => handleSwitchPool(userPool.id)}
               />
             ))}
-            <UserButton.Action
+            <UserButton.Link
               label="Invite Others to Your Pool"
+              href={`${baseURL}invite`}
               labelIcon={<InviteIcon />}
-              onClick={() => {}}
             />
             <UserButton.Action
               label="Create a New Pool"
