@@ -232,16 +232,15 @@ export async function updatePool(pool, token) {
   }
 }
 
-export async function inviteToPool(poolId, userId, email, token) {
+export async function inviteToPool(poolId, email, token) {
   const payload = {
     email: email,
-    userId: userId, 
   }
 
   try {
     const response = await fetch(`${BASE_URL}/invitations/${poolId}`, {
       method: 'POST',
-      header: {
+      headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
@@ -249,8 +248,8 @@ export async function inviteToPool(poolId, userId, email, token) {
     })
 
     if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error('Failed to send invite:', errorText)
+      const errorData = await response.json();
+      throw new Error(errorData.error || 'Failed to send invite')
     }
     return {success: true}
   } catch (error) {
