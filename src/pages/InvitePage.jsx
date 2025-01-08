@@ -69,13 +69,13 @@ export default function InvitePage() {
         <PageHeader
           headerText="Send Pool Invites"
           leftBtnText={<ArrowBackIcon />}
-          path="/invite"
+          path="/pool-home"
           poolName={pool.poolName}
         />
         <div className={classes['invite-contents']}>
           <p style={{ marginBottom: '1rem' }}>
-            Invite others to view your pool. Simply send an email invite to send
-            a link to sign up and be able to view your pool.
+            Invite others to view your pool. Send an email invite to allow
+            others to be able to sign up and view your pool.
           </p>
           <form onSubmit={handleSubmit}>
             <TextField
@@ -88,17 +88,48 @@ export default function InvitePage() {
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
-              error={emailError}
-              helperText={Boolean(emailError)}
+              error={Boolean(emailError)}
+              helperText={emailError || ''}
               placeholder="Enter email address"
-              sx={{ color: 'white' }}
+              sx={{
+                '& .MuiInputBase-root': {
+                  color: 'var(--input-text-color)',
+                  backgroundColor: 'var(--input-bg-color)',
+                  borderRadius: '10px',
+                },
+                '& .MuiInputLabel-root': {
+                  color: 'var(--secondary-text-color)',
+                  '&.Mui-focused': {
+                    color: 'var(--primary-color)',
+                  },
+                },
+                '& .MuiOutlinedInput-root': {
+                  '& fieldset': {
+                    borderRadius: '10px',
+                  },
+                  '&:hover fieldset': {
+                    borderColor: 'var(--primary-color)',
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: 'var(--primary-color)',
+                  },
+                },
+              }}
             />
             <Button
               variant="contained"
               color="primary"
               type="submit"
               fullWidth
-              sx={{ mt: 2 }}
+              sx={{
+                mt: 2,
+                color: 'var(--fourth-color)',
+                borderRadius: '10px',
+                backgroundColor: 'var(--secondary-btn-bg-color)',
+                '&:hover': {
+                  backgroundColor: 'var(--primary-btn-bg-color)',
+                },
+              }}
             >
               Send Invite
             </Button>
@@ -110,10 +141,16 @@ export default function InvitePage() {
         autoHideDuration={5000}
         onClose={() => setShowSuccess(false)}
         message="Invite sent successfully!"
-        anchorOrigin={{vertical: 'top', horizontal: 'right'}}
-      >  <Alert onClose={() => setShowSuccess(false)} severity="success" sx={{ width: '100%' }}>
-    Invite sent successfully!
-  </Alert></Snackbar>
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      >
+        <Alert
+          onClose={() => setShowSuccess(false)}
+          severity="success"
+          sx={{ width: '100%' }}
+        >
+          Invite sent successfully!
+        </Alert>
+      </Snackbar>
     </div>
   );
 }
