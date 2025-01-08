@@ -1,7 +1,8 @@
 import classes from './UserMenu.module.css';
 import CircularIndeterminate from './Loading';
-import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import RemoveCircleOutlinedIcon from '@mui/icons-material/RemoveCircleOutlined';
+import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
+import SendIcon from '@mui/icons-material/Send';
 import { useEffect } from 'react';
 import { useUser, useAuth } from '@clerk/clerk-react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -46,7 +47,7 @@ const AddPoolIcon = () => (
       height: '100%',
     }}
   >
-    <AddCircleOutlineIcon style={{width: '16px', height: '16px'}}/>
+    <AddCircleOutlinedIcon style={{width: '16px', height: '16px'}}/>
   </div>
 )
 
@@ -60,7 +61,21 @@ const RemovePoolIcon = () => (
       height: '100%',
     }}
   >
-    <RemoveCircleOutlineIcon style={{width: '16px', height: '16px'}} />
+    <RemoveCircleOutlinedIcon style={{width: '16px', height: '16px'}} />
+  </div>
+)
+
+const InviteIcon = () => (
+  <div
+      style={{
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: '100%',
+      height: '100%',
+    }}
+  >
+    <SendIcon style={{width: '16px', height: '16px'}}/>
   </div>
 )
 
@@ -168,6 +183,11 @@ export default function UserMenu() {
                 onClick={() => handleSwitchPool(userPool.id)}
               />
             ))}
+            <UserButton.Link
+              label="Invite Others to Your Pool"
+              href={`${baseURL}invite`}
+              labelIcon={<InviteIcon />}
+            />
             <UserButton.Action
               label="Create a New Pool"
               labelIcon={<AddPoolIcon />}

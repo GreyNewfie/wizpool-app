@@ -211,8 +211,6 @@ export async function updatePool(pool, token) {
     })),
   };
 
-  console.log('Pool to udpate payload: ', payload);
-
   try {
     const response = await fetch(`${BASE_URL}/complete_pools/${pool.id}`, {
       method: 'PUT',
@@ -231,5 +229,31 @@ export async function updatePool(pool, token) {
   } catch (error) {
     console.error('Error updating pool: ', error);
     throw error;
+  }
+}
+
+export async function inviteToPool(poolId, email, token) {
+  const payload = {
+    email: email,
+  }
+
+  try {
+    const response = await fetch(`${BASE_URL}/invitations/${poolId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(payload),
+    })
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || 'Failed to send invite')
+    }
+    return {success: true}
+  } catch (error) {
+    console.error('Error sending invite: ', error);
+    throw error
   }
 }
