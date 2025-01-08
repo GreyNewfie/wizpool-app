@@ -2,10 +2,9 @@ import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPoolByIdAsync } from '../state/poolSlice';
-import { useUser } from '@clerk/clerk-react';
+import { useUser, useAuth } from '@clerk/clerk-react';
 import { Navigate } from 'react-router-dom';
 import { fetchUserPoolsAsync } from '../state/userPoolsSlice';
-import { useAuth } from '@clerk/clerk-react';
 import LoadingOverlay from './LoadingOverlay';
 
 export default function ProtectedPoolRoute({ children }) {

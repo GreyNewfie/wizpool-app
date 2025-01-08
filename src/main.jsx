@@ -1,7 +1,6 @@
+import './styles.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './styles.css';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App.jsx';
 import CreatePoolPage from './pages/CreatePoolPage.jsx';
 import ChoosePlayerPage from './pages/ChoosePlayerPage.jsx';
@@ -16,11 +15,13 @@ import ReassignTeamsPage from './pages/ReassignTeamsPage.jsx';
 import ThemeProvider from './context/ThemeContext.jsx';
 import ChooseLeaguePage from './pages/ChooseLeaguePage.jsx';
 import DeletePoolPage from './pages/DeletePoolPage.jsx';
-import { Provider } from 'react-redux';
+import InvitePage from './pages/InvitePage.jsx';
 import store from './state/store';
-import { ClerkProvider } from '@clerk/clerk-react';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import ProtectedPoolRoute from './components/ProtectedPoolRoute.jsx';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { ClerkProvider } from '@clerk/clerk-react';
+import { Provider } from 'react-redux';
 
 // Import publishable key
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
@@ -135,6 +136,14 @@ const router = createBrowserRouter(
       ),
       errorElement: <ErrorPage />,
     },
+    {
+      path: '/invite',
+      element: (
+        <ProtectedPoolRoute>
+          <InvitePage />
+        </ProtectedPoolRoute>
+      )
+    }
   ],
   { basename: import.meta.env.BASE_URL },
 );

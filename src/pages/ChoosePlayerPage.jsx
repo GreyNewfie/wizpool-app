@@ -1,6 +1,5 @@
 import ChoosePlayerList from '../components/ChoosePlayerList';
 import BackHeaderButton from '../components/BackHeaderButton';
-import NextHeaderButton from '../components/NextHeaderButton';
 import PrimaryActionButton from '../components/PrimaryActionButton';
 import classes from './ChoosePlayerPage.module.css';
 import LoadingOverlay from '../components/LoadingOverlay';
