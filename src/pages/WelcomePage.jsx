@@ -18,7 +18,6 @@ export default function Welcome() {
   const { getToken } = useAuth();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const userPools = useSelector((state) => state.userPools.pools);
   const userPoolsLoading = useSelector((state) => state.userPools.loading);
   const poolLoading = useSelector((state) => state.pool.loading);
 
