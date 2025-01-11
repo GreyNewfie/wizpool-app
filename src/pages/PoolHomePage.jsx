@@ -8,8 +8,11 @@ import classNames from 'classnames';
 import DesktopNavHeader from '../components/DesktopNavHeader';
 import useIsDesktop from '../utils/useIsDesktop';
 import LoadingOverlay from '../components/LoadingOverlay';
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectSortedPlayersByWins } from '../state/poolSlice';
+import { useAuth, useUser } from '@clerk/clerk-react';
+import { setPool } from '../state/poolSlice';
 
 const getStandingSuffix = (standing) => {
   const standingDigits = [...standing.toString()].map(Number);
@@ -94,12 +97,43 @@ const getPlayerStandings = (sortedPlayers) => {
 
 export default function PoolHomePage() {
   const { theme } = useTheme();
+  const { user } = useUser();
+  const { getToken } = useAuth();
+  const { dispatch } = useDispatch();
   const pool = useSelector((state) => state.pool);
   const isLoading = useSelector((state) => state.pool.loading);
   const sortedPlayers = useSelector(selectSortedPlayersByWins);
   const poolClasses = classNames(classes['pool-home'], classes[theme]);
   const isDesktop = useIsDesktop();
   const playerStandings = getPlayerStandings(sortedPlayers);
+
+  useEffect(() => {
+    const handleInvitation = async () => {
+          // Check if the User has a poolId in their publicMetadata
+          const invitePoolId = user?.publicMetadata?.poolId;
+          if (!user.invitePoolId) return;
+
+          try {
+          const token = await getToken();
+
+          const response = await fetch(`${import.meta.evn.VITE_BASE_API_URL}/complete_pools/:${invitePoolId}`, {
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json',
+            }
+          })
+
+          if (!response.ok)  throw new Error('Failed to fetch pool data for invite');
+
+          const poolData = response.json();
+          dispatch(setPool(poolData));
+        } catch (error) {
+          console.error('Error handling pool invitation:', error);
+        }
+    };
+
+    handleInvitation();
+  }, [user, dispatch, getToken])
 
   return (
     <div className={classes['page-container']}>
