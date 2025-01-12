@@ -109,31 +109,59 @@ export default function PoolHomePage() {
 
   useEffect(() => {
     const handleInvitation = async () => {
-          // Check if the User has a poolId in their publicMetadata
-          const invitePoolId = user?.publicMetadata?.poolId;
-          if (!user.invitePoolId) return;
+      // Check if the User has an invitationId in their publicMetadata
+      const invitationId = user?.publicMetadata?.invitationId;
+      if (!invitationId) return;
 
-          try {
-          const token = await getToken();
+      try {
+        const token = await getToken();
 
-          const response = await fetch(`${import.meta.evn.VITE_BASE_API_URL}/complete_pools/:${invitePoolId}`, {
+        // Step 1: Accept the invitation
+        const response = await fetch(
+          `${import.meta.env.VITE_BASE_API_URL}/invitations/${invitationId}/accept`,
+          {
+            method: 'PUT',
             headers: {
-              'Authorization': `Bearer ${token}`,
+              Authorization: `Bearer ${token}`,
               'Content-Type': 'application/json',
-            }
-          })
+            },
+          },
+        );
 
-          if (!response.ok)  throw new Error('Failed to fetch pool data for invite');
+        if (!response.ok) throw new Error('Failed to accept pool invitation');
 
-          const poolData = response.json();
-          dispatch(setPool(poolData));
-        } catch (error) {
-          console.error('Error handling pool invitation:', error);
-        }
+        const { poolId } = await response.json();
+
+        // Step 2: Fetch the pool data
+        const poolResponse = await fetch(
+          `${import.meta.env.VITE_BASE_API_URL}/complete_pools/${poolId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              'Content-Type': 'application/json',
+            },
+          },
+        );
+
+        if (!poolResponse.ok) throw new Error('Failed to fetch pool data');
+
+        const poolData = await poolResponse.json();
+        dispatch(setPool(poolData));
+
+        // Clear the invitation ID from metadata since it's been used
+        await user.update({
+          publicMetadata: {
+            ...user.publicMetadata,
+            invitationId: null,
+          },
+        });
+      } catch (error) {
+        console.error('Error handling pool invitation:', error);
+      }
     };
 
     handleInvitation();
-  }, [user, dispatch, getToken])
+  }, [user, dispatch, getToken]);
 
   return (
     <div className={classes['page-container']}>
