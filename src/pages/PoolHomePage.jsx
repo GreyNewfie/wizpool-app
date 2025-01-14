@@ -8,11 +8,8 @@ import classNames from 'classnames';
 import DesktopNavHeader from '../components/DesktopNavHeader';
 import useIsDesktop from '../utils/useIsDesktop';
 import LoadingOverlay from '../components/LoadingOverlay';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { selectSortedPlayersByWins } from '../state/poolSlice';
-import { useAuth, useUser } from '@clerk/clerk-react';
-import { setPool } from '../state/poolSlice';
 
 const getStandingSuffix = (standing) => {
   const standingDigits = [...standing.toString()].map(Number);
@@ -97,9 +94,6 @@ const getPlayerStandings = (sortedPlayers) => {
 
 export default function PoolHomePage() {
   const { theme } = useTheme();
-  const { user } = useUser();
-  const { getToken } = useAuth();
-  const { dispatch } = useDispatch();
   const pool = useSelector((state) => state.pool);
   const isLoading = useSelector((state) => state.pool.loading);
   const sortedPlayers = useSelector(selectSortedPlayersByWins);
@@ -107,65 +101,12 @@ export default function PoolHomePage() {
   const isDesktop = useIsDesktop();
   const playerStandings = getPlayerStandings(sortedPlayers);
 
-  useEffect(() => {
-    const handleInvitation = async () => {
-      // Check if the User has an invitationId in their publicMetadata
-      const invitationId = user?.publicMetadata?.invitationId;
-      if (!invitationId) return;
-
-      try {
-        const token = await getToken();
-
-        // Step 1: Accept the invitation
-        const response = await fetch(
-          `${import.meta.env.VITE_BASE_API_URL}/invitations/${invitationId}/accept`,
-          {
-            method: 'PUT',
-            headers: {
-              Authorization: `Bearer ${token}`,
-              'Content-Type': 'application/json',
-            },
-          },
-        );
-
-        if (!response.ok) throw new Error('Failed to accept pool invitation');
-
-        const { poolId } = await response.json();
-
-        // Step 2: Fetch the pool data
-        const poolResponse = await fetch(
-          `${import.meta.env.VITE_BASE_API_URL}/complete_pools/${poolId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              'Content-Type': 'application/json',
-            },
-          },
-        );
-
-        if (!poolResponse.ok) throw new Error('Failed to fetch pool data');
-
-        const poolData = await poolResponse.json();
-        dispatch(setPool(poolData));
-
-        // Clear the invitation ID from metadata since it's been used
-        await user.update({
-          publicMetadata: {
-            ...user.publicMetadata,
-            invitationId: null,
-          },
-        });
-      } catch (error) {
-        console.error('Error handling pool invitation:', error);
-      }
-    };
-
-    handleInvitation();
-  }, [user, dispatch, getToken]);
+  if (isLoading) {
+    return <LoadingOverlay />;
+  }
 
   return (
     <div className={classes['page-container']}>
-      {isLoading && <LoadingOverlay />}
       {isDesktop && <DesktopNavHeader />}
       <div className={poolClasses}>
         <PageHeader headerText={pool.name} poolName={pool.name} />
