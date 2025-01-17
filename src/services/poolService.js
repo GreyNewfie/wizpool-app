@@ -258,9 +258,9 @@ export async function inviteToPool(poolId, email, token) {
   }
 }
 
-export async function acceptInvitation(invitationId, token) {
+export async function acceptInvitation(poolId, token) {
   try {
-    const response = await fetch(`${BASE_URL}/invitations/${invitationId}/accept`, {
+    const response = await fetch(`${BASE_URL}/invitations/${poolId}/accept`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
