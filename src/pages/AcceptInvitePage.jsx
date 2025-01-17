@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setPool } from '../state/poolSlice';
-import { getApiBaseUrl } from '../config/config';
 import { acceptInvitation, fetchCompletePool } from '../services/poolService';
 import classes from './AcceptInvitePage.module.css';
 import LoadingOverlay from '../components/LoadingOverlay';
@@ -20,8 +19,8 @@ export default function AcceptInvitePage() {
     const processInvitation = async () => {
       if (!isLoaded || !isSignedIn) return;
 
-      const invitationId = user?.publicMetadata?.invitationId;
-      if (!invitationId) return;
+      const poolId = user?.publicMetadata?.poolId;
+      if (!poolId) return;
 
       // Prevent duplicate processing
       if (isProcessing) return;
@@ -31,7 +30,7 @@ export default function AcceptInvitePage() {
         const token = await getToken();
 
         // Step 1: Accept the invitation
-        const { poolId } = await acceptInvitation(invitationId, token)
+        const { poolId } = await acceptInvitation(poolId, token)
 
         // Set as active pool
         localStorage.setItem('activePoolId', poolId);
