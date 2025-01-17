@@ -257,3 +257,25 @@ export async function inviteToPool(poolId, email, token) {
     throw error
   }
 }
+
+export async function acceptInvitation(invitationId, token) {
+  try {
+    const response = await fetch(`${BASE_URL}/invitations/${invitationId}/accept`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || 'Failed to accept invitation');
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Error accepting invitation:', error);
+    throw error;
+  }
+}
