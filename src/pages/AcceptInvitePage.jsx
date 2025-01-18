@@ -17,16 +17,12 @@ export default function AcceptInvitePage() {
   const [hasAttempted, setHasAttempted] = useState(false);
 
   const processInvitation = useCallback(async () => {
-    // Don't process if we've already tried
     if (hasAttempted) {
       console.log('Already attempted to process invitation');
       return;
     }
 
-    if (!isLoaded || !isSignedIn) {
-      console.log('User not loaded or not signed in');
-      return;
-    }
+    if (!isLoaded || !isSignedIn) return;
 
     const poolId = user?.publicMetadata?.poolId;
     if (!poolId) {
@@ -34,15 +30,8 @@ export default function AcceptInvitePage() {
       return;
     }
 
-    // Prevent duplicate processing
-    if (isProcessing) {
-      console.log('Already processing');
-      return;
-    }
-
     console.log('Starting invitation process for poolId:', poolId);
     setIsProcessing(true);
-    setHasAttempted(true);
 
     try {
       const token = await getToken();
@@ -59,37 +48,16 @@ export default function AcceptInvitePage() {
       dispatch(setPool(poolData));
       console.log('Pool data fetched successfully');
 
-      // Clear invitation metadata on success
-      await user.update({
-        publicMetadata: {
-          ...user.publicMetadata,
-          poolId: null,
-        },
-      });
-      console.log('Metadata cleared successfully');
-
       // Navigate to pool home
       navigate('/pool-home');
     } catch (error) {
       console.error('Error processing invitation:', error);
       setError(error.message);
-      
-      // Clear metadata even on error
-      try {
-        await user.update({
-          publicMetadata: {
-            ...user.publicMetadata,
-            poolId: null,
-          },
-        });
-        console.log('Metadata cleared after error');
-      } catch (updateError) {
-        console.error('Failed to clear metadata:', updateError);
-      }
     } finally {
       setIsProcessing(false);
+      setHasAttempted(true);
     }
-  }, [isLoaded, isSignedIn, user, getToken, navigate, dispatch, isProcessing, hasAttempted]);
+  }, [user, isLoaded, isSignedIn, getToken, navigate, dispatch, hasAttempted]);
 
   useEffect(() => {
     processInvitation();
@@ -108,8 +76,8 @@ export default function AcceptInvitePage() {
           <h2>Failed to Accept Invitation</h2>
           <p>{error}</p>
           <p>Please contact support or try again later.</p>
-          <button 
-            onClick={() => navigate('/pool-home')} 
+          <button
+            onClick={() => navigate('/pool-home')}
             className={classes['back-button']}
           >
             Back to Home
