@@ -42,7 +42,6 @@ const Landing = () => {
           </div>
         </div>
       </section>
-
       <section className="teams-section">
         <div className="teams-container">
           <div className="teams-content">
@@ -58,6 +57,25 @@ const Landing = () => {
               src="players-teams.png"
               alt="WizPool Player Teams display showing team selections and records"
             />
+          </div>
+        </div>
+      </section>
+
+      <section className="picks-section">
+        <div className="picks-container">
+          <div className="picks-image">
+            <img
+              src="league-picks.png"
+              alt="WizPool Team Selection List showing teams and their records"
+            />
+          </div>
+          <div className="picks-content">
+            <h2>Team Selection List</h2>
+            <p>
+              See each team that has been selected and the player who selected the teams.
+              This list is shown from best to worst record, so players can see which
+              players have the teams with the best records.
+            </p>
           </div>
         </div>
       </section>
