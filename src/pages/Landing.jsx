@@ -24,6 +24,24 @@ const Landing = () => {
           </button>
         </div>
       </section>
+      <section className="standings-section">
+        <div className="standings-container">
+          <div className="standings-image">
+            <img
+              src="standing-board.png"
+              alt="WizPool Standings Board showing player rankings"
+            />
+          </div>
+          <div className="standings-content">
+            <h2>Current Standings Board</h2>
+            <p>
+              The league standings board tracks each players' total wins and
+              displays how players compare to each other. Team win loss records
+              are updated automatically for effortless tracking.
+            </p>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };
