@@ -5,6 +5,16 @@ const Landing = () => {
 
   return (
     <div className="landing-page">
+      <nav className="landing-nav">
+        <img
+          className="nav-logo"
+          src="./wizpool-wordmark-230x70.png"
+          alt="WizPool logo"
+        />
+        <button className="nav-button" onClick={() => navigate('/dashboard')}>
+          Go to App
+        </button>
+      </nav>
       <section className="hero-section">
         <div className="hero-content">
           <h1>Discover the magic of WizPool</h1>
