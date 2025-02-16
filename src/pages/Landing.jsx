@@ -124,6 +124,32 @@ const Landing = () => {
           </div>
         </div>
       </section>
+
+      <footer className="landing-footer">
+        <div className="footer-content">
+          <div className="footer-left">
+            <a href="https://github.com/GreyNewfie/wizpool-app" target="_blank" rel="noopener noreferrer" className="footer-link">
+              About
+            </a>
+            <a href="https://github.com/GreyNewfie/wizpool-backend" target="_blank" rel="noopener noreferrer" className="footer-link">
+              WizPool Backend
+            </a>
+          </div>
+          <div className="footer-right">
+            <div className="footer-author">
+              <span>Built by Danny Simms</span>
+            </div>
+            <div className="footer-social">
+              <a href="https://github.com/GreyNewfie" target="_blank" rel="noopener noreferrer" className="footer-link">
+                <img src="github-mark-white.svg" alt="GitHub" className="footer-icon" />
+              </a>
+              <a href="https://www.linkedin.com/in/danny-simms-2a14631a4/" target="_blank" rel="noopener noreferrer" className="footer-link">
+                <img src="linkedin.svg" alt="LinkedIn" className="footer-icon" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
