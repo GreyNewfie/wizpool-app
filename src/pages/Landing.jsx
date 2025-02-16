@@ -70,12 +70,57 @@ const Landing = () => {
             />
           </div>
           <div className="picks-content">
-            <h2>Team Selection List</h2>
+            <h2>Selected Teams List</h2>
             <p>
-              See each team that has been selected and the player who selected the teams.
-              This list is shown from best to worst record, so players can see which
-              players have the teams with the best records.
+              See each team that has been selected and the player who selected
+              them. This list is shown from best to worst record, so players can
+              quickly see which players have the teams with the best and worst
+              records.
             </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="features-grid-section">
+        <div className="features-grid-container">
+          <div className="feature-card">
+            <div className="feature-card-icon">
+              <img src="invite-players.png" alt="Invite Players Feature" />
+            </div>
+            <div className="feature-card-content">
+              <h3>Invite Players</h3>
+              <p>Easily invite new players to join your pool with a simple invitation link.</p>
+            </div>
+          </div>
+
+          <div className="feature-card">
+            <div className="feature-card-icon">
+              <img src="manage-players.png" alt="Manage Players Feature" />
+            </div>
+            <div className="feature-card-content">
+              <h3>Manage Players</h3>
+              <p>Add, remove, or update player information with an intuitive management interface.</p>
+            </div>
+          </div>
+
+          <div className="feature-card">
+            <div className="feature-card-icon">
+              <img src="manage-player-teams.png" alt="Manage Teams Feature" />
+            </div>
+            <div className="feature-card-content">
+              <h3>Manage Teams</h3>
+              <p>Assign and reassign teams to players throughout the season as needed.</p>
+            </div>
+          </div>
+
+          <div className="feature-card">
+            <div className="feature-card-icon">
+              <img src="select-league.png" alt="Select League Feature" />
+            </div>
+            <div className="feature-card-content">
+              <h3>Select League</h3>
+              <p>Choose between NFL, NBA, or MLB leagues to start your wins pool.</p>
+            </div>
           </div>
         </div>
       </section>
