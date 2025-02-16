@@ -15,8 +15,16 @@
   justify-content: space-between;
   align-items: center;
   padding: 1.5rem 4%;
-  background: transparent;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(19, 14, 45, 0.7);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border-style: solid;
+  border-width: 0;
+  border-bottom-width: 1px;
+  border-color: rgba(103, 104, 169, 0.3);
+  height: 100px;
+  width: 100%;
+  opacity: 1;
 }
 
 .nav-logo {
@@ -310,7 +318,7 @@
   background-color: var(--main-bg-color);
   padding: 2rem;
   margin-top: 4rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(102, 105, 168, 0.3);
 }
 
 .footer-content {
