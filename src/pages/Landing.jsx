@@ -42,6 +42,25 @@ const Landing = () => {
           </div>
         </div>
       </section>
+
+      <section className="teams-section">
+        <div className="teams-container">
+          <div className="teams-content">
+            <h2>View Players' Teams</h2>
+            <p>
+              See the teams each player selected with their current season wins
+              loss record. This allows players to see which teams are
+              contributing to their total wins.
+            </p>
+          </div>
+          <div className="teams-image">
+            <img
+              src="players-teams.png"
+              alt="WizPool Player Teams display showing team selections and records"
+            />
+          </div>
+        </div>
+      </section>
     </div>
   );
 };
