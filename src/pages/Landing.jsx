@@ -82,14 +82,30 @@ const Landing = () => {
       </section>
 
       <section className="features-grid-section">
+        <h2 className="features-grid-header">WizPool Features</h2>
         <div className="features-grid-container">
+          <div className="feature-card">
+            <div className="feature-card-icon">
+              <img src="select-league.png" alt="Select League Feature" />
+            </div>
+            <div className="feature-card-content">
+              <h3>Chouse Your League</h3>
+              <p>
+                Choose between NFL, NBA, or MLB leagues to start your wins pool.
+              </p>
+            </div>
+          </div>
+
           <div className="feature-card">
             <div className="feature-card-icon">
               <img src="invite-players.png" alt="Invite Players Feature" />
             </div>
             <div className="feature-card-content">
               <h3>Invite Players</h3>
-              <p>Easily invite new players to join your pool with a simple invitation link.</p>
+              <p>
+                Easily invite players to view your pool with a simple invitation
+                link.
+              </p>
             </div>
           </div>
 
@@ -99,7 +115,10 @@ const Landing = () => {
             </div>
             <div className="feature-card-content">
               <h3>Manage Players</h3>
-              <p>Add, remove, or update player information with an intuitive management interface.</p>
+              <p>
+                Add, remove, or update player information with an intuitive
+                management interface.
+              </p>
             </div>
           </div>
 
@@ -109,17 +128,10 @@ const Landing = () => {
             </div>
             <div className="feature-card-content">
               <h3>Manage Teams</h3>
-              <p>Assign and reassign teams to players throughout the season as needed.</p>
-            </div>
-          </div>
-
-          <div className="feature-card">
-            <div className="feature-card-icon">
-              <img src="select-league.png" alt="Select League Feature" />
-            </div>
-            <div className="feature-card-content">
-              <h3>Select League</h3>
-              <p>Choose between NFL, NBA, or MLB leagues to start your wins pool.</p>
+              <p>
+                Assign and reassign teams to players at any point, giving you
+                full control of your pool.
+              </p>
             </div>
           </div>
         </div>
@@ -128,10 +140,20 @@ const Landing = () => {
       <footer className="landing-footer">
         <div className="footer-content">
           <div className="footer-left">
-            <a href="https://github.com/GreyNewfie/wizpool-app" target="_blank" rel="noopener noreferrer" className="footer-link">
+            <a
+              href="https://github.com/GreyNewfie/wizpool-app"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="footer-link"
+            >
               About
             </a>
-            <a href="https://github.com/GreyNewfie/wizpool-backend" target="_blank" rel="noopener noreferrer" className="footer-link">
+            <a
+              href="https://github.com/GreyNewfie/wizpool-backend"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="footer-link"
+            >
               WizPool Backend
             </a>
           </div>
@@ -140,11 +162,29 @@ const Landing = () => {
               <span>Built by Danny Simms</span>
             </div>
             <div className="footer-social">
-              <a href="https://github.com/GreyNewfie" target="_blank" rel="noopener noreferrer" className="footer-link">
-                <img src="github-mark-white.svg" alt="GitHub" className="footer-icon" />
+              <a
+                href="https://github.com/GreyNewfie"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="footer-link"
+              >
+                <img
+                  src="github-mark-white.svg"
+                  alt="GitHub"
+                  className="footer-icon"
+                />
               </a>
-              <a href="https://www.linkedin.com/in/danny-simms-2a14631a4/" target="_blank" rel="noopener noreferrer" className="footer-link">
-                <img src="linkedin.svg" alt="LinkedIn" className="footer-icon" />
+              <a
+                href="https://www.linkedin.com/in/danny-simms-2a14631a4/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="footer-link"
+              >
+                <img
+                  src="linkedin.svg"
+                  alt="LinkedIn"
+                  className="footer-icon"
+                />
               </a>
             </div>
           </div>
