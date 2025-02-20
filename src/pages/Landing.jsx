@@ -24,6 +24,7 @@ const Landing = () => {
           </button>
         </div>
       </section>
+      <h2 className="sections-heading">How WizPool Works</h2>
       <section className="standings-section">
         <div className="standings-container">
           <div className="standings-image">

@@ -78,6 +78,14 @@
   font-weight: 300;
 }
 
+.sections-heading {
+  text-align: center;
+  font-size: 48px;
+  color: var(--text-color);
+  margin: 4rem 0 2rem;
+  font-weight: 700;
+}
+
 .cta-button {
   padding: 1rem 2.5rem;
   font-size: 1.2rem;
@@ -97,10 +105,9 @@
 }
 
 .standings-section {
-  min-height: 100vh;
   display: flex;
   align-items: center;
-  padding: 6rem 2rem;
+  padding: 5rem 2rem;
   background-color: var(--main-bg-color);
 }
 
@@ -120,7 +127,7 @@
 }
 
 .standings-content h2 {
-  font-size: 3rem;
+  font-size: 2.5rem;
   font-weight: 600;
   margin-bottom: 1.5rem;
   color: var(--text-color);
@@ -133,10 +140,9 @@
 }
 
 .teams-section {
-  min-height: 100vh;
   display: flex;
   align-items: center;
-  padding: 6rem 2rem;
+  padding: 5rem 2rem;
   background-color: var(--main-bg-color);
 }
 
@@ -156,7 +162,7 @@
 }
 
 .teams-content h2 {
-  font-size: 3rem;
+  font-size: 2.5rem;
   font-weight: 600;
   margin-bottom: 1.5rem;
   color: var(--text-color);
@@ -169,10 +175,9 @@
 }
 
 .picks-section {
-  min-height: 100vh;
   display: flex;
   align-items: center;
-  padding: 6rem 2rem;
+  padding: 5rem 2rem;
   background-color: var(--main-bg-color);
 }
 
@@ -192,7 +197,7 @@
 }
 
 .picks-content h2 {
-  font-size: 3rem;
+  font-size: 2.5rem;
   font-weight: 600;
   margin-bottom: 1.5rem;
   color: var(--text-color);
@@ -212,7 +217,7 @@
 }
 
 .features-grid-section {
-  padding: 6rem 2rem;
+  padding: 5rem 2rem;
   background-color: rgba(103, 104, 169, 0.05);
 }
 
