@@ -23,6 +23,8 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { ClerkProvider } from '@clerk/clerk-react';
 import { Provider } from 'react-redux';
 import AcceptInvitePage from './pages/AcceptInvitePage.jsx';
+import Landing from './pages/Landing.jsx';
+import './pages/Landing.css';
 
 // Import publishable key
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
@@ -35,6 +37,11 @@ const router = createBrowserRouter(
   [
     {
       path: '/',
+      element: <Landing />,
+      errorElement: <ErrorPage />,
+    },
+    {
+      path: '/dashboard',
       element: <App />,
       errorElement: <ErrorPage />,
     },
