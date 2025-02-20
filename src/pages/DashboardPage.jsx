@@ -1,4 +1,4 @@
-import classes from './WelcomePage.module.css';
+import classes from './DashboardPage.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { fetchUserPoolsAsync } from '../state/userPoolsSlice';
@@ -13,7 +13,7 @@ import {
   useAuth,
 } from '@clerk/clerk-react';
 
-export default function Welcome() {
+export default function Dashboard() {
   const { user } = useUser();
   const { getToken } = useAuth();
   const dispatch = useDispatch();

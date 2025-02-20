@@ -1,5 +1,5 @@
-import Welcome from './pages/WelcomePage';
+import Dashboard from './pages/DashboardPage';
 
 export default function App() {
-  return <Welcome />;
+  return <Dashboard />;
 }
