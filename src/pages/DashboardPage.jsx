@@ -59,17 +59,19 @@ export default function Dashboard() {
   }, [user, dispatch, navigate, getToken]);
 
   return (
-    <div className={classes[`welcome-container`]}>
-      <div className={classes['auth-container']}>
-        <SignIn />
+    <div className={classes['page-wrapper']}>
+      <div className={classes[`welcome-container`]}>
+        <div className={classes['auth-container']}>
+          <SignIn />
+        </div>
+        <div className={classes['features-container']}>
+          <HeaderLogo />
+          <FeaturesList />
+        </div>
+        <SignedIn>
+          {(poolLoading || userPoolsLoading) && <CircularIndeterminate />}
+        </SignedIn>
       </div>
-      <div className={classes['features-container']}>
-        <HeaderLogo />
-        <FeaturesList />
-      </div>
-      <SignedIn>
-        {(poolLoading || userPoolsLoading) && <CircularIndeterminate />}
-      </SignedIn>
     </div>
   );
 }
