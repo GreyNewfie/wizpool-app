@@ -5,13 +5,8 @@ import { fetchUserPoolsAsync } from '../state/userPoolsSlice';
 import { fetchPoolAsync } from '../state/poolSlice';
 import { useEffect } from 'react';
 import CircularIndeterminate from '../components/Loading';
-import {
-  SignedOut,
-  SignInButton,
-  SignedIn,
-  useUser,
-  useAuth,
-} from '@clerk/clerk-react';
+import { SignIn, SignedIn, useUser, useAuth } from '@clerk/clerk-react';
+import FeaturesList from '../components/FeaturesList';
 
 export default function Dashboard() {
   const { user } = useUser();
@@ -27,12 +22,14 @@ export default function Dashboard() {
         try {
           // Step 1: Fetch user pools
           const token = await getToken();
-          const result = await dispatch(fetchUserPoolsAsync({userId: user.id, token})).unwrap();
+          const result = await dispatch(
+            fetchUserPoolsAsync({ userId: user.id, token }),
+          ).unwrap();
 
           // Step 2: Initialize pool if we have pools
           if (result && result.length > 0) {
             const mostRecentPool = result[0];
-            
+
             if (!mostRecentPool?.id) {
               console.error('Invalid pool data:', mostRecentPool);
               return;
@@ -40,7 +37,9 @@ export default function Dashboard() {
 
             try {
               // Fetch complete pool data with team stats
-              await dispatch(fetchPoolAsync({poolId: mostRecentPool.id, token})).unwrap();
+              await dispatch(
+                fetchPoolAsync({ poolId: mostRecentPool.id, token }),
+              ).unwrap();
               localStorage.setItem('activePoolId', mostRecentPool.id);
               localStorage.setItem('userId', user.id);
               navigate('/pool-home');
@@ -61,13 +60,13 @@ export default function Dashboard() {
 
   return (
     <div className={classes[`welcome-container`]}>
-      <HeaderLogo />
-      <TextCarrousel />
-      <SignedOut>
-        <SignInButton mode="modal">
-          <button className={classes['sign-in-btn']}>Get Started</button>
-        </SignInButton>
-      </SignedOut>
+      <div className={classes['auth-container']}>
+        <SignIn />
+      </div>
+      <div className={classes['features-container']}>
+        <HeaderLogo />
+        <FeaturesList />
+      </div>
       <SignedIn>
         {(poolLoading || userPoolsLoading) && <CircularIndeterminate />}
       </SignedIn>
@@ -80,25 +79,9 @@ function HeaderLogo() {
     <div className="header-logo-container">
       <img
         className="header-logo"
-        src={'./wizpool-stacked-no-bg-750x650.png'}
-        alt="a trophy with a wizard hat on top"
+        src="./wizpool-wordmark-230x70.png"
+        alt="WizPool logo"
       />
-    </div>
-  );
-}
-
-function TextCarrousel() {
-  const { user } = useUser();
-  return (
-    <div className="text-carrousel-container">
-      <SignedOut>
-        <h1>Welcome to WizPool</h1>
-        <p>The app that will make you a wins pool tracking wizard.</p>
-      </SignedOut>
-      <SignedIn>
-        <h1>Welcome Back, {user?.firstName || 'Wizard'}!</h1>
-        <p>The app that will make you a wins pool tracking wizard.</p>
-      </SignedIn>
     </div>
   );
 }

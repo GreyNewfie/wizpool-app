@@ -1,10 +1,11 @@
 .welcome-container {
-  padding: 30px 30px 0;
-  text-align: center;
+  height: 100vh;
+  max-height: 900px;
+  width: 100%;
+  max-width: 1350px;
   gap: 45px;
-
   display: flex;
-  flex-direction: column;
+  justify-content: space-evenly;
   align-items: center;
 }
 
@@ -12,6 +13,23 @@
   .welcome-container {
     padding: 60px 30px 0;
   }
+}
+
+.auth-container,
+.features-container {
+  display: flex;
+  align-items: center;
+}
+
+.auth-container {
+  justify-content: center;
+}
+
+.features-container {
+  height: 100%;
+  margin-top: 3rem;
+  flex-direction: column;
+  gap: 2.5rem;
 }
 
 .sign-in-btn {
