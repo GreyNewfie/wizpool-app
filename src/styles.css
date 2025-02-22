@@ -33,6 +33,12 @@
   justify-content: center;
 }
 
+div:has([class*='welcome-container']) {
+  display: flex;
+  align-items: center;
+  min-height: 100vh;
+}
+
 body.light {
   --main-bg-color: #fff;
   --primary-text-color: #000;
