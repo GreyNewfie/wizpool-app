@@ -17,8 +17,16 @@
   max-width: 1350px;
   gap: 45px;
   display: flex;
-  justify-content: space-evenly;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
+}
+
+@media (min-width: 768px) {
+  .welcome-container {
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
 }
 
 @media (min-width: 768px) {
@@ -42,6 +50,13 @@
   margin-top: 3rem;
   flex-direction: column;
   gap: 2.5rem;
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .features-container {
+    display: flex;
+  }
 }
 
 .sign-in-btn {
