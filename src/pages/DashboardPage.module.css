@@ -1,0 +1,86 @@
+.page-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(325deg, var(--main-bg-color) 40%, var(--darkest-purple) 100%);
+}
+
+.welcome-container {
+  height: 100vh;
+  max-height: 900px;
+  width: 100%;
+  max-width: 1350px;
+  gap: 45px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .welcome-container {
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+}
+
+@media (min-width: 768px) {
+  .welcome-container {
+    padding: 60px 30px 0;
+  }
+}
+
+.auth-container,
+.features-container {
+  display: flex;
+  align-items: center;
+}
+
+.auth-container {
+  justify-content: center;
+}
+
+.features-container {
+  height: 100%;
+  margin-top: 3rem;
+  flex-direction: column;
+  gap: 2.5rem;
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .features-container {
+    display: flex;
+  }
+}
+
+.sign-in-btn {
+  width: 100%;
+  max-width: 300px;
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  background: var(--secondary-btn-bg-color);
+  color: var(--primary-text-color);
+  font-size: inherit;
+  border: none;
+}
+
+.sign-in-btn:hover {
+  background: var(--third-btn-bg-color);
+  color: var(--third-text-color);
+}
+
+.sign-in-btn:active {
+  opacity: 0.7;
+}
+
+.welcome-header {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}

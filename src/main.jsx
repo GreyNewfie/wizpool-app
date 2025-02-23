@@ -1,7 +1,7 @@
 import './styles.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App.jsx';
+import Dashboard from './pages/DashboardPage';
 import CreatePoolPage from './pages/CreatePoolPage.jsx';
 import ChoosePlayerPage from './pages/ChoosePlayerPage.jsx';
 import ErrorPage from './pages/ErrorPage.jsx';
@@ -42,7 +42,7 @@ const router = createBrowserRouter(
     },
     {
       path: '/dashboard',
-      element: <App />,
+      element: <Dashboard />,
       errorElement: <ErrorPage />,
     },
     {
