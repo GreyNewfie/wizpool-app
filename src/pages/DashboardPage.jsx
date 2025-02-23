@@ -65,6 +65,7 @@ export default function Dashboard() {
         <div className={classes['auth-container']}>
           <SignIn
             forceRedirectUrl={`${baseURL}pool-home`}
+            withSignUp={true}
           />
         </div>
         <div className={classes['features-container']}>
