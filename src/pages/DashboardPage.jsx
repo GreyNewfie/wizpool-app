@@ -9,60 +9,63 @@ import { SignIn, SignedIn, useUser, useAuth } from '@clerk/clerk-react';
 import FeaturesList from '../components/FeaturesList';
 
 export default function Dashboard() {
-  const { user } = useUser();
+  const { user, isLoaded: isUserLoaded } = useUser();
   const { getToken } = useAuth();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userPoolsLoading = useSelector((state) => state.userPools.loading);
   const poolLoading = useSelector((state) => state.pool.loading);
+  const baseURL = import.meta.env.BASE_URL || '/';
 
   useEffect(() => {
     const initializeUser = async () => {
-      if (user) {
-        try {
-          // Step 1: Fetch user pools
-          const token = await getToken();
-          const result = await dispatch(
-            fetchUserPoolsAsync({ userId: user.id, token }),
-          ).unwrap();
+      // Wait for user data to be loaded
+      if (!isUserLoaded || !user) return;
+      
+      try {
+        const token = await getToken();
+        const result = await dispatch(
+          fetchUserPoolsAsync({ userId: user.id, token }),
+        ).unwrap();
 
-          // Step 2: Initialize pool if we have pools
-          if (result && result.length > 0) {
-            const mostRecentPool = result[0];
-
-            if (!mostRecentPool?.id) {
-              console.error('Invalid pool data:', mostRecentPool);
-              return;
-            }
-
-            try {
-              // Fetch complete pool data with team stats
-              await dispatch(
-                fetchPoolAsync({ poolId: mostRecentPool.id, token }),
-              ).unwrap();
-              localStorage.setItem('activePoolId', mostRecentPool.id);
-              localStorage.setItem('userId', user.id);
-              navigate('/pool-home');
-            } catch (error) {
-              console.error('Error initializing pool:', error);
-            }
-          } else {
-            navigate('/choose-league');
-          }
-        } catch (error) {
-          console.error('Error in user initialization:', error);
+        if (!result?.length) {
+          navigate('/choose-league');
+          return;
         }
+
+        const mostRecentPool = result[0];
+        if (!mostRecentPool?.id) {
+          console.error('Invalid pool data:', mostRecentPool);
+          navigate('/choose-league');
+          return;
+        }
+
+        try {
+          await dispatch(
+            fetchPoolAsync({ poolId: mostRecentPool.id, token }),
+          ).unwrap();
+          localStorage.setItem('activePoolId', mostRecentPool.id);
+          localStorage.setItem('userId', user.id);
+        } catch (error) {
+          console.error('Error initializing pool:', error);
+          navigate('/choose-league');
+        }
+      } catch (error) {
+        console.error('Error in user initialization:', error);
+        navigate('/choose-league');
       }
     };
 
     initializeUser();
-  }, [user, dispatch, navigate, getToken]);
+  }, [isUserLoaded, user, dispatch, navigate, getToken]);
 
   return (
     <div className={classes['page-wrapper']}>
       <div className={classes[`welcome-container`]}>
         <div className={classes['auth-container']}>
-          <SignIn />
+          <SignIn
+            forceRedirectUrl={`${baseURL}pool-home`}
+          />
         </div>
         <div className={classes['features-container']}>
           <HeaderLogo />
