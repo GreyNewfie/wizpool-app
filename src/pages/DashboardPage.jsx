@@ -21,7 +21,7 @@ export default function Dashboard() {
     const initializeUser = async () => {
       // Wait for user data to be loaded
       if (!isUserLoaded || !user) return;
-      
+
       try {
         const token = await getToken();
         const result = await dispatch(
@@ -63,10 +63,7 @@ export default function Dashboard() {
     <div className={classes['page-wrapper']}>
       <div className={classes[`welcome-container`]}>
         <div className={classes['auth-container']}>
-          <SignIn
-            forceRedirectUrl={`${baseURL}pool-home`}
-            withSignUp={true}
-          />
+          <SignIn forceRedirectUrl={`${baseURL}pool-home`} withSignUp={true} />
         </div>
         <div className={classes['features-container']}>
           <HeaderLogo />
@@ -85,7 +82,7 @@ function HeaderLogo() {
     <div className="header-logo-container">
       <img
         className="header-logo"
-        src="./wizpool-wordmark-230x70.png"
+        src="./wizpool-wordmark-690x210.png"
         alt="WizPool logo"
       />
     </div>
