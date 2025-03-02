@@ -37,12 +37,11 @@ export default function useApiData() {
     return data;
   };
 
-
   const getAllTeams = async (league) => {
     if (!league) {
       throw new Error('League is required to get all teams');
     }
-    
+
     // Set api url based on league
     const url = `${BASE_URL}/${league}_data`;
 

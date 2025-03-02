@@ -155,14 +155,18 @@ export async function fetchUserPools(userId, token) {
     if (!response.ok) {
       const errorText = await response.text();
       console.error('Fetch response not OK:', errorText);
-      throw new Error(`Failed to fetch user pools: ${response.status} ${response.statusText}`);
+      throw new Error(
+        `Failed to fetch user pools: ${response.status} ${response.statusText}`,
+      );
     }
 
     const contentType = response.headers.get('content-type');
     if (!contentType || !contentType.includes('application/json')) {
       const responseText = await response.text();
       console.error('Unexpected response type:', responseText);
-      throw new Error('Expected JSON response, but received different content type');
+      throw new Error(
+        'Expected JSON response, but received different content type',
+      );
     }
 
     const userPools = await response.json();
@@ -235,7 +239,7 @@ export async function updatePool(pool, token) {
 export async function inviteToPool(poolId, email, token) {
   const payload = {
     email: email,
-  }
+  };
 
   try {
     const response = await fetch(`${BASE_URL}/invitations/${poolId}`, {
@@ -245,16 +249,16 @@ export async function inviteToPool(poolId, email, token) {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(payload),
-    })
+    });
 
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(errorData.error || 'Failed to send invite')
+      throw new Error(errorData.error || 'Failed to send invite');
     }
-    return {success: true}
+    return { success: true };
   } catch (error) {
     console.error('Error sending invite: ', error);
-    throw error
+    throw error;
   }
 }
 
