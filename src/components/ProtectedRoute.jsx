@@ -5,16 +5,14 @@ import LoadingOverlay from './LoadingOverlay';
 
 export default function ProtectedRoute({ children }) {
   const { isSignedIn, isLoaded } = useAuth();
-  
- // Don't redirect until Clerk has finished loading
- if (!isLoaded) {
-  console.log("Auth is still loading...");
-  return <LoadingOverlay />;
-}
+
+  // Don't redirect until Clerk has finished loading
+  if (!isLoaded) {
+    return <LoadingOverlay />;
+  }
 
   if (!isSignedIn) {
-    console.log("User is not signed in, redirecting to home.");
-    return <Navigate to="/" replace />;
+    return <Navigate to="/dashboard" replace />;
   }
 
   return children;
