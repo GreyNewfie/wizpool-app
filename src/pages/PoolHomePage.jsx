@@ -9,6 +9,7 @@ import DesktopNavHeader from '../components/DesktopNavHeader';
 import useIsDesktop from '../utils/useIsDesktop';
 import LoadingOverlay from '../components/LoadingOverlay';
 import { useSelector } from 'react-redux';
+import { useUser } from '@clerk/clerk-react';
 import { selectSortedPlayersByWins } from '../state/poolSlice';
 
 const getStandingSuffix = (standing) => {
@@ -94,6 +95,7 @@ const getPlayerStandings = (sortedPlayers) => {
 
 export default function PoolHomePage() {
   const { theme } = useTheme();
+  const { isLoaded: isUserLoaded } = useUser();
   const pool = useSelector((state) => state.pool);
   const isLoading = useSelector((state) => state.pool.loading);
   const sortedPlayers = useSelector(selectSortedPlayersByWins);
@@ -101,7 +103,7 @@ export default function PoolHomePage() {
   const isDesktop = useIsDesktop();
   const playerStandings = getPlayerStandings(sortedPlayers);
 
-  if (isLoading) {
+  if (isLoading || !isUserLoaded) {
     return <LoadingOverlay />;
   }
 
