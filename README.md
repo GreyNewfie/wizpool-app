@@ -1,27 +1,80 @@
-Inspiration for WizPool
+# WizPool - Season Long Sports Wins Pool Tracker
 
-WizPool is an app that allows a user to track their season long wins pool and see which player's teams will accumulate the most wins. It automatically tracks the win-loss record of each team, calculates the total wins of each players chosen teams and displays a standings board of who is in the lead at any given point.
+![WizPool Logo](./public/wizpool-wordmark-690x210.png)
 
-MVP Features:
+[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://wizpool-app.vercel.app/)
+[![GitHub Repository](https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github)](https://github.com/GreyNewfie/wizpool-app)
 
-- Allow user to choose number of players in the pool
-- Allow the user to enter player's names or team names
-- Allow user to assign teams to each player
-- Dashboard that displays all teams' current point totals and standings
-- A page for each player/team showing their NFL teams, their wins-loss record and their cumulative points totals
-- Works for the NFL, NBA, MLB
+## 🧙‍♂️ About WizPool
 
-Additional Features:
+WizPool is a modern web application that simplifies tracking season-long sports wins pools. It automatically monitors the win-loss records of teams, calculates total wins for each player's selected teams, and displays real-time standings to show who's leading at any point in the season.
 
-- Allow organizer to randomly generate a team name for each player
-- Invite players to join the pool and have individual logins
-- Add NHL as a fourth league option
-- Allow the user to choose or edit their team name
-- Live draft that allows players to choose teams in real time
-- Allow user to decide what order players draft teams
-- Page showing last week's results
-- Page showing each players cumulative result, wins & losses, from the previous week - who won this week
+### Why WizPool?
 
-Target Audience
+Managing a sports wins pool manually can be tedious and error-prone. WizPool automates the entire process, giving you and your friends more time to enjoy the competition and less time spent on spreadsheets and calculations.
 
-- NFL, NBA and MLB fans that have a season long wins pool that would like to have an easier way to track their pool and standings.
+## ✨ Key Features
+
+### Current Features
+
+- **Multi-League Support** - Create pools for NFL, NBA, or MLB seasons
+- **Easy Team Management** - Add players and assign teams with just a few clicks
+- **Live Standings** - Track wins and standings updated in real-time
+- **Season Stats** - Access current or most recently completed season stats
+- **Share Your Pool** - Invite friends to view and follow your pool progress
+- **Player Team Pages** - View detailed pages for each player showing their teams, win-loss records, and point totals
+- **Customizable Pools** - Choose the number of players and configure pool settings
+
+### Future Features
+
+- **Random Team Name Generator** - Automatically generate fun team names for players
+- **Individual Player Logins** - Allow each participant to have their own account
+- **NHL Support** - Expand to include NHL as a fourth league option
+- **Live Draft System** - Enable real-time team selection with customizable draft order
+- **Weekly Results Page** - See which players performed best each week
+- **Cumulative Weekly Stats** - Track player performance over time
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js (v14 or higher)
+- npm or yarn
+
+## 🛠️ Technologies Used
+
+- **Frontend**: React, Redux Toolkit, React Router
+- **UI Components**: Material UI
+- **Authentication**: Clerk
+- **Deployment**: Vercel
+- **Testing**: Vitest, Testing Library
+- **Build Tools**: Vite
+
+## 👥 Target Audience
+
+WizPool is perfect for sports fans who participate in season-long wins pools and want an easier way to track standings and results. It's designed for:
+
+- NFL, NBA, and MLB fans
+- Fantasy sports enthusiasts
+- Friend groups who run manual wins pools
+- Sports bars or establishments that host season-long competitions
+
+## 🔗 Links
+
+- [Live Demo](https://wizpool-app.vercel.app/)
+- [Backend Repository](https://github.com/GreyNewfie/wizpool-backend)
+
+## 👨‍💻 Author
+
+**Danny Simms**
+
+- [GitHub](https://github.com/GreyNewfie)
+- [LinkedIn](https://www.linkedin.com/in/danny-simms-2a14631a4/)
+
+## 📄 License
+
+This project is available under the [MIT License](LICENSE).
+
+---
+
+_Discover the magic of WizPool - Track your season long wins pool with ease._
