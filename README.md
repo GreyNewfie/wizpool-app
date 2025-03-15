@@ -34,12 +34,14 @@ Managing a sports wins pool manually can be tedious and error-prone. WizPool aut
 - **Weekly Results Page** - See which players performed best each week
 - **Cumulative Weekly Stats** - Track player performance over time
 
-## 🚀 Getting Started
+## 👥 Target Audience
 
-### Prerequisites
+WizPool is perfect for sports fans who participate in season-long wins pools and want an easier way to track standings and results. It's designed for:
 
-- Node.js (v14 or higher)
-- npm or yarn
+- NFL, NBA, and MLB fans
+- Fantasy sports enthusiasts
+- Friend groups who run manual wins pools
+- Sports bars or establishments that host season-long competitions
 
 ## 🛠️ Technologies Used
 
@@ -49,15 +51,6 @@ Managing a sports wins pool manually can be tedious and error-prone. WizPool aut
 - **Deployment**: Vercel
 - **Testing**: Vitest, Testing Library
 - **Build Tools**: Vite
-
-## 👥 Target Audience
-
-WizPool is perfect for sports fans who participate in season-long wins pools and want an easier way to track standings and results. It's designed for:
-
-- NFL, NBA, and MLB fans
-- Fantasy sports enthusiasts
-- Friend groups who run manual wins pools
-- Sports bars or establishments that host season-long competitions
 
 ## 🔗 Links
 
