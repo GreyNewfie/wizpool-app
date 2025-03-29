@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const Landing = () => {
   const navigate = useNavigate();
@@ -36,9 +36,9 @@ const Landing = () => {
           <div className="standings-content">
             <h2>Current Standings Board</h2>
             <p>
-              The league standings board tracks each players' total wins and
-              displays how players compare to each other. Team win loss records
-              are updated automatically for effortless tracking.
+              The league standings board tracks each players&apos; total wins
+              and displays how players compare to each other. Team win loss
+              records are updated automatically for effortless tracking.
             </p>
           </div>
         </div>
@@ -46,7 +46,7 @@ const Landing = () => {
       <section className="teams-section">
         <div className="teams-container">
           <div className="teams-content">
-            <h2>View Players' Teams</h2>
+            <h2>View Players&apos; Teams</h2>
             <p>
               See the teams each player selected with their current season wins
               loss record. This allows players to see which teams are
@@ -141,14 +141,9 @@ const Landing = () => {
       <footer className="landing-footer">
         <div className="footer-content">
           <div className="footer-left">
-            <a
-              href="https://github.com/GreyNewfie/wizpool-app"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="footer-link"
-            >
+            <Link to="/about" className="footer-link">
               About
-            </a>
+            </Link>
             <a
               href="https://github.com/GreyNewfie/wizpool-backend"
               target="_blank"

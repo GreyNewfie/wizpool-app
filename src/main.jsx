@@ -16,6 +16,7 @@ import ThemeProvider from './context/ThemeContext.jsx';
 import ChooseLeaguePage from './pages/ChooseLeaguePage.jsx';
 import DeletePoolPage from './pages/DeletePoolPage.jsx';
 import InvitePage from './pages/InvitePage.jsx';
+import AboutPage from './pages/AboutPage.jsx';
 import store from './state/store';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import ProtectedPoolRoute from './components/ProtectedPoolRoute.jsx';
@@ -38,6 +39,11 @@ const router = createBrowserRouter(
     {
       path: '/',
       element: <Landing />,
+      errorElement: <ErrorPage />,
+    },
+    {
+      path: '/about',
+      element: <AboutPage />,
       errorElement: <ErrorPage />,
     },
     {
@@ -150,14 +156,12 @@ const router = createBrowserRouter(
         <ProtectedPoolRoute>
           <InvitePage />
         </ProtectedPoolRoute>
-      )
+      ),
     },
     {
       path: '/accept-invite',
-      element: (
-        <AcceptInvitePage />
-      )
-    }
+      element: <AcceptInvitePage />,
+    },
   ],
   { basename: import.meta.env.BASE_URL },
 );

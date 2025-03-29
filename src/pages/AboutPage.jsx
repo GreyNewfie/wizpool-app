@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import classes from './AboutPage.module.css';
 
 const AboutPage = () => {
@@ -188,9 +188,9 @@ const AboutPage = () => {
       <footer className={classes['footer']}>
         <div className={classes['footer-content']}>
           <div className={classes['footer-left']}>
-            <a href="/about" className={classes['footer-link']}>
+            <Link to="/about" className={classes['footer-link']}>
               About
-            </a>
+            </Link>
             <a
               href="https://github.com/GreyNewfie/wizpool-backend"
               target="_blank"
