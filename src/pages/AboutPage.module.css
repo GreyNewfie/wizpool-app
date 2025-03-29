@@ -1,0 +1,372 @@
+/* About page styles */
+.about-page {
+  width: 100%;
+  background-color: var(--main-bg-color);
+  color: var(--primary-text-color);
+  position: relative;
+}
+
+/* Navigation styling - matching Landing page */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 4%;
+  background-color: rgba(19, 14, 45, 0.7);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border-style: solid;
+  border-width: 0;
+  border-bottom-width: 1px;
+  border-color: rgba(103, 104, 169, 0.3);
+  height: 100px;
+  width: 100%;
+  opacity: 1;
+}
+
+.nav-logo {
+  width: 200px;
+  height: auto;
+}
+
+.nav-button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  font-weight: 500;
+  align-self: flex-end;
+}
+
+.nav-button:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+/* Hero section */
+.hero-section {
+  padding: 180px 4% 80px;
+  text-align: center;
+  background-color: var(--main-bg-color);
+}
+
+.hero-content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+  color: var(--primary-text-color);
+}
+
+.about-description {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: var(--secondary-text-color);
+}
+
+/* Sections heading */
+.sections-heading {
+  text-align: center;
+  font-size: 2.2rem;
+  margin: 3rem 0 2rem;
+  color: var(--primary-text-color);
+}
+
+/* Guide section styles */
+.guide-section {
+  max-width: 1200px;
+  margin: 0 auto 3rem;
+  padding: 0 4%;
+}
+
+.guide-container {
+  display: flex;
+  align-items: center;
+  padding: 2.5rem;
+  margin-bottom: 2.5rem;
+  background-color: rgba(103, 104, 169, 0.1);
+  border-radius: 12px;
+  border: 1px solid rgba(102, 105, 168, 0.3);
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 12px rgba(103, 104, 169, 0.2), 0 3px 6px rgba(103, 104, 169, 0.15);
+}
+
+.guide-content {
+  flex: 1;
+  padding-right: 2.5rem;
+}
+
+.guide-content h3 {
+  font-size: 1.8rem;
+  color: var(--third-color);
+  margin-bottom: 1.2rem;
+}
+
+.guide-content p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  color: var(--secondary-text-color);
+}
+
+.guide-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.guide-image img {
+  max-width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Features section */
+.features-section {
+  max-width: 1200px;
+  margin: 2rem auto 4rem;
+  padding: 0 4%;
+}
+
+.features-list {
+  background-color: rgba(103, 104, 169, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 2.5rem;
+  border: 1px solid rgba(103, 104, 169, 0.2);
+}
+
+.features-list ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.features-list li {
+  margin: 0.8rem 1rem;
+  padding: 0.8rem 1.5rem;
+  background-color: rgba(103, 104, 169, 0.2);
+  border-radius: 30px;
+  font-weight: 500;
+  color: var(--third-color);
+  font-size: 1.1rem;
+  break-inside: avoid;
+}
+
+/* WizPool Features Section */
+.wizpool-features {
+  max-width: 1200px;
+  margin: 4rem auto;
+  padding: 0 4%;
+}
+
+.feature-item {
+  margin-bottom: 5rem;
+}
+
+.feature-title {
+  font-size: 1.8rem;
+  color: var(--third-color);
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.feature-row {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+}
+
+.feature-image {
+  max-width: 50%;
+  display: flex;
+  flex: 1;
+}
+
+.feature-image img {
+  width: 90%;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.feature-description {
+  flex: 1;
+}
+
+.feature-description p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--secondary-text-color);
+}
+
+/* CTA section */
+.cta-container {
+  text-align: center;
+  margin: 5rem 0;
+}
+
+.cta-button {
+  padding: 1rem 2.5rem;
+  font-size: 1.2rem;
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  font-weight: 600;
+}
+
+.cta-button:hover {
+  transform: translateY(-3px);
+  opacity: 0.9;
+}
+
+/* Footer styling - matching Landing page */
+.footer {
+  background-color: var(--main-bg-color);
+  padding: 2rem;
+  margin-top: 4rem;
+  border-top: 1px solid rgba(102, 105, 168, 0.3);
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 4%;
+  align-items: center;
+}
+
+.footer-left {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.footer-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.footer-author span {
+  color: var(--text-color);
+  font-size: 1rem;
+}
+
+.footer-social {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.footer-link {
+  color: var(--text-color);
+  text-decoration: none;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+  color: var(--primary-color);
+}
+
+.footer-icon {
+  width: 20px;
+  height: 20px;
+  transition: opacity 0.3s ease;
+}
+
+.footer-link:hover .footer-icon {
+  opacity: 0.8;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .hero-content h1 {
+    font-size: 2.2rem;
+  }
+  
+  .about-description {
+    font-size: 1rem;
+  }
+  
+  .guide-container {
+    flex-direction: column;
+    padding: 1.5rem;
+  }
+  
+  .guide-content {
+    padding-right: 0;
+    margin-bottom: 1.5rem;
+  }
+  
+  .guide-image {
+    margin-bottom: 1.5rem;
+  }
+  
+  .sections-heading {
+    font-size: 1.8rem;
+  }
+  
+  .guide-content h3 {
+    font-size: 1.5rem;
+  }
+  
+  /* Responsive styling for features list */
+  .features-list ul {
+    column-count: 1;
+    padding: 0 1rem;
+  }
+  
+  /* Responsive styling for WizPool features */
+  .feature-row {
+    flex-direction: column-reverse;
+    gap: 1.5rem;
+  }
+  
+  .feature-image {
+    max-width: 100%;
+  }
+  
+  .feature-title {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+  
+  .feature-item {
+    margin-bottom: 3rem;
+  }
+  
+  .footer-content {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .footer-left, .footer-right {
+    width: 100%;
+    justify-content: center;
+  }
+}
