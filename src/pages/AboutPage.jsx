@@ -99,10 +99,10 @@ const AboutPage = () => {
       <section className={classes['features-section']}>
         <div className={classes['features-list']}>
           <ul>
-            <li>Create your league dashboard</li>
-            <li>Track wins and losses for all teams in real-time</li>
-            <li>Calculate standings based on cumulative wins</li>
-            <li>Update the leaderboard throughout the season</li>
+            <li>Creating your standings board</li>
+            <li>Tracking team records automatically</li>
+            <li>Updating standings based in real-time</li>
+            <li>Providing reliable season long tracking</li>
           </ul>
         </div>
       </section>
