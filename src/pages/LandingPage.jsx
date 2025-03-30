@@ -1,59 +1,63 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import classes from './LandingPage.module.css';
 
-const Landing = () => {
+const LandingPage = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="landing-page">
-      <nav className="landing-nav">
+    <div className={classes['landing-page']}>
+      <nav className={classes['landing-nav']}>
         <img
-          className="nav-logo"
+          className={classes['nav-logo']}
           src="./wizpool-wordmark-230x70.png"
           alt="WizPool logo"
         />
-        <button className="nav-button" onClick={() => navigate('/dashboard')}>
-          Go to App
-        </button>
+        <div className={classes['nav-links']}>
+          <Link to="/about" className={classes['nav-link']}>About</Link>
+          <button className={classes['nav-button']} onClick={() => navigate('/dashboard')}>
+            Go to App
+          </button>
+        </div>
       </nav>
-      <section className="hero-section">
-        <div className="hero-content">
+      <section className={classes['hero-section']}>
+        <div className={classes['hero-content']}>
           <h1>Discover the magic of WizPool</h1>
           <p>Track your season long wins pool with ease.</p>
-          <button className="cta-button" onClick={() => navigate('/dashboard')}>
+          <button className={classes['cta-button']} onClick={() => navigate('/dashboard')}>
             Go to WizPool
           </button>
         </div>
       </section>
-      <h2 className="sections-heading">How WizPool Works</h2>
-      <section className="standings-section">
-        <div className="standings-container">
-          <div className="standings-image">
+      <h2 className={classes['sections-heading']}>How WizPool Works</h2>
+      <section className={classes['standings-section']}>
+        <div className={classes['standings-container']}>
+          <div className={classes['standings-image']}>
             <img
               src="standing-board.png"
               alt="WizPool Standings Board showing player rankings"
             />
           </div>
-          <div className="standings-content">
+          <div className={classes['standings-content']}>
             <h2>Current Standings Board</h2>
             <p>
-              The league standings board tracks each players' total wins and
-              displays how players compare to each other. Team win loss records
-              are updated automatically for effortless tracking.
+              The league standings board tracks each players&apos; total wins
+              and displays how players compare to each other. Team win loss
+              records are updated automatically for effortless tracking.
             </p>
           </div>
         </div>
       </section>
-      <section className="teams-section">
-        <div className="teams-container">
-          <div className="teams-content">
-            <h2>View Players' Teams</h2>
+      <section className={classes['teams-section']}>
+        <div className={classes['teams-container']}>
+          <div className={classes['teams-content']}>
+            <h2>View Players&apos; Teams</h2>
             <p>
               See the teams each player selected with their current season wins
               loss record. This allows players to see which teams are
               contributing to their total wins.
             </p>
           </div>
-          <div className="teams-image">
+          <div className={classes['teams-image']}>
             <img
               src="players-teams.png"
               alt="WizPool Player Teams display showing team selections and records"
@@ -62,15 +66,15 @@ const Landing = () => {
         </div>
       </section>
 
-      <section className="picks-section">
-        <div className="picks-container">
-          <div className="picks-image">
+      <section className={classes['picks-section']}>
+        <div className={classes['picks-container']}>
+          <div className={classes['picks-image']}>
             <img
               src="league-picks.png"
               alt="WizPool Team Selection List showing teams and their records"
             />
           </div>
-          <div className="picks-content">
+          <div className={classes['picks-content']}>
             <h2>Selected Teams List</h2>
             <p>
               See each team that has been selected and the player who selected
@@ -82,14 +86,14 @@ const Landing = () => {
         </div>
       </section>
 
-      <section className="features-grid-section">
-        <h2 className="features-grid-header">WizPool Features</h2>
-        <div className="features-grid-container">
-          <div className="feature-card">
-            <div className="feature-card-icon">
+      <section className={classes['features-grid-section']}>
+        <h2 className={classes['features-grid-header']}>WizPool Features</h2>
+        <div className={classes['features-grid-container']}>
+          <div className={classes['feature-card']}>
+            <div className={classes['feature-card-icon']}>
               <img src="select-league.png" alt="Select League Feature" />
             </div>
-            <div className="feature-card-content">
+            <div className={classes['feature-card-content']}>
               <h3>Chouse Your League</h3>
               <p>
                 Choose between NFL, NBA, or MLB leagues to start your wins pool.
@@ -97,11 +101,11 @@ const Landing = () => {
             </div>
           </div>
 
-          <div className="feature-card">
-            <div className="feature-card-icon">
+          <div className={classes['feature-card']}>
+            <div className={classes['feature-card-icon']}>
               <img src="invite-players.png" alt="Invite Players Feature" />
             </div>
-            <div className="feature-card-content">
+            <div className={classes['feature-card-content']}>
               <h3>Invite Players</h3>
               <p>
                 Easily invite players to view your pool with a simple invitation
@@ -110,11 +114,11 @@ const Landing = () => {
             </div>
           </div>
 
-          <div className="feature-card">
-            <div className="feature-card-icon">
+          <div className={classes['feature-card']}>
+            <div className={classes['feature-card-icon']}>
               <img src="manage-players.png" alt="Manage Players Feature" />
             </div>
-            <div className="feature-card-content">
+            <div className={classes['feature-card-content']}>
               <h3>Manage Players</h3>
               <p>
                 Add, remove, or update player information with an intuitive
@@ -123,11 +127,11 @@ const Landing = () => {
             </div>
           </div>
 
-          <div className="feature-card">
-            <div className="feature-card-icon">
+          <div className={classes['feature-card']}>
+            <div className={classes['feature-card-icon']}>
               <img src="manage-player-teams.png" alt="Manage Teams Feature" />
             </div>
-            <div className="feature-card-content">
+            <div className={classes['feature-card-content']}>
               <h3>Manage Teams</h3>
               <p>
                 Assign and reassign teams to players at any point, giving you
@@ -138,53 +142,40 @@ const Landing = () => {
         </div>
       </section>
 
-      <footer className="landing-footer">
-        <div className="footer-content">
-          <div className="footer-left">
-            <a
-              href="https://github.com/GreyNewfie/wizpool-app"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="footer-link"
-            >
+      <footer className={classes['landing-footer']}>
+        <div className={classes['footer-content']}>
+          <div className={classes['footer-left']}>
+            <Link to="/about" className={classes['footer-link']}>
               About
-            </a>
-            <a
-              href="https://github.com/GreyNewfie/wizpool-backend"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="footer-link"
-            >
-              WizPool Backend
-            </a>
+            </Link>
           </div>
-          <div className="footer-right">
-            <div className="footer-author">
+          <div className={classes['footer-right']}>
+            <div className={classes['footer-author']}>
               <span>Built by Danny Simms</span>
             </div>
-            <div className="footer-social">
+            <div className={classes['footer-social']}>
               <a
                 href="https://github.com/GreyNewfie"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="footer-link"
+                className={classes['footer-link']}
               >
                 <img
                   src="github-mark-white.svg"
                   alt="GitHub"
-                  className="footer-icon"
+                  className={classes['footer-icon']}
                 />
               </a>
               <a
                 href="https://www.linkedin.com/in/danny-simms-2a14631a4/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="footer-link"
+                className={classes['footer-link']}
               >
                 <img
                   src="linkedin.svg"
                   alt="LinkedIn"
-                  className="footer-icon"
+                  className={classes['footer-icon']}
                 />
               </a>
             </div>
@@ -195,4 +186,4 @@ const Landing = () => {
   );
 };
 
-export default Landing;
+export default LandingPage;
