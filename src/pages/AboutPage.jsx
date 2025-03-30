@@ -15,12 +15,15 @@ const AboutPage = () => {
           onClick={() => navigate('/')}
           style={{ cursor: 'pointer' }}
         />
-        <button
-          className={classes['nav-button']}
-          onClick={() => navigate('/dashboard')}
-        >
-          Go to App
-        </button>
+        <div className={classes['nav-links']}>
+          <Link to="/about" className={classes['nav-link']}>About</Link>
+          <button
+            className={classes['nav-button']}
+            onClick={() => navigate('/dashboard')}
+          >
+            Go to App
+          </button>
+        </div>
       </nav>
 
       {/* Hero section similar to Landing page */}
@@ -191,14 +194,6 @@ const AboutPage = () => {
             <Link to="/about" className={classes['footer-link']}>
               About
             </Link>
-            <a
-              href="https://github.com/GreyNewfie/wizpool-backend"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={classes['footer-link']}
-            >
-              WizPool Backend
-            </a>
           </div>
           <div className={classes['footer-right']}>
             <div className={classes['footer-author']}>
