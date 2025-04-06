@@ -127,7 +127,10 @@ const LandingPage = () => {
 
           <div className={classes['feature-card']}>
             <div className={classes['feature-card-icon']}>
-              <img src="manage-players.png" alt="Manage Players Feature" />
+              <img
+                src="manage-players-530x600.png"
+                alt="Manage Players Feature"
+              />
             </div>
             <div className={classes['feature-card-content']}>
               <h3>Manage Players</h3>
@@ -140,7 +143,7 @@ const LandingPage = () => {
 
           <div className={classes['feature-card']}>
             <div className={classes['feature-card-icon']}>
-              <img src="manage-player-teams.png" alt="Manage Teams Feature" />
+              <img src="manage-teams-530x600.png" alt="Manage Teams Feature" />
             </div>
             <div className={classes['feature-card-content']}>
               <h3>Manage Teams</h3>
