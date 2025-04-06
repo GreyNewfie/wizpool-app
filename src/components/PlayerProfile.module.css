@@ -6,6 +6,9 @@
 
 .team-icon {
   width: 60px;
+  background-color: var(--secondary-bg-color);
+  border-radius: 50%;
+  padding: 6px;
 }
 
 .player-info {
