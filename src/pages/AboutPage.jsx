@@ -6,7 +6,6 @@ const AboutPage = () => {
 
   return (
     <div className={classes['about-page']}>
-      {/* Header copied from Landing.jsx */}
       <nav className={classes['nav']}>
         <img
           className={classes['nav-logo']}
@@ -27,8 +26,6 @@ const AboutPage = () => {
           </button>
         </div>
       </nav>
-
-      {/* Hero section similar to Landing page */}
       <section className={classes['hero-section']}>
         <div className={classes['hero-content']}>
           <h1>About WizPool</h1>
@@ -44,7 +41,6 @@ const AboutPage = () => {
 
       <h2 className={classes['sections-heading']}>How to Create Your League</h2>
 
-      {/* Guide sections with consistent left text, right image layout */}
       <section className={classes['guide-section']}>
         <div className={classes['guide-container']}>
           <div className={classes['guide-content']}>
