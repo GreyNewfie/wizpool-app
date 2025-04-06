@@ -16,7 +16,9 @@ const AboutPage = () => {
           style={{ cursor: 'pointer' }}
         />
         <div className={classes['nav-links']}>
-          <Link to="/about" className={classes['nav-link']}>About</Link>
+          <Link to="/about" className={classes['nav-link']}>
+            About
+          </Link>
           <button
             className={classes['nav-button']}
             onClick={() => navigate('/dashboard')}
@@ -54,7 +56,10 @@ const AboutPage = () => {
             </p>
           </div>
           <div className={classes['guide-image']}>
-            <img src="./select-league.png" alt="Select your league" />
+            <img
+              src="./setup-choose-league-530x600.png"
+              alt="Select your league"
+            />
           </div>
         </div>
       </section>
@@ -74,7 +79,10 @@ const AboutPage = () => {
             </p>
           </div>
           <div className={classes['guide-image']}>
-            <img src="./manage-players.png" alt="Enter league details" />
+            <img
+              src="./setup-create-league-530x600.png"
+              alt="Enter league details"
+            />
           </div>
         </div>
       </section>
@@ -90,7 +98,10 @@ const AboutPage = () => {
             </p>
           </div>
           <div className={classes['guide-image']}>
-            <img src="./manage-player-teams.png" alt="Add teams to players" />
+            <img
+              src="./setup-assign-teams-530x600.png"
+              alt="Add teams to players"
+            />
           </div>
         </div>
       </section>
