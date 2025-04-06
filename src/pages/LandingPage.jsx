@@ -13,8 +13,13 @@ const LandingPage = () => {
           alt="WizPool logo"
         />
         <div className={classes['nav-links']}>
-          <Link to="/about" className={classes['nav-link']}>About</Link>
-          <button className={classes['nav-button']} onClick={() => navigate('/dashboard')}>
+          <Link to="/about" className={classes['nav-link']}>
+            About
+          </Link>
+          <button
+            className={classes['nav-button']}
+            onClick={() => navigate('/dashboard')}
+          >
             Go to App
           </button>
         </div>
@@ -23,7 +28,10 @@ const LandingPage = () => {
         <div className={classes['hero-content']}>
           <h1>Discover the magic of WizPool</h1>
           <p>Track your season long wins pool with ease.</p>
-          <button className={classes['cta-button']} onClick={() => navigate('/dashboard')}>
+          <button
+            className={classes['cta-button']}
+            onClick={() => navigate('/dashboard')}
+          >
             Go to WizPool
           </button>
         </div>
@@ -70,7 +78,7 @@ const LandingPage = () => {
         <div className={classes['picks-container']}>
           <div className={classes['picks-image']}>
             <img
-              src="league-picks.png"
+              src="choose-league-530x600.png"
               alt="WizPool Team Selection List showing teams and their records"
             />
           </div>
@@ -91,10 +99,13 @@ const LandingPage = () => {
         <div className={classes['features-grid-container']}>
           <div className={classes['feature-card']}>
             <div className={classes['feature-card-icon']}>
-              <img src="select-league.png" alt="Select League Feature" />
+              <img
+                src="choose-league-530x600.png"
+                alt="Select League Feature"
+              />
             </div>
             <div className={classes['feature-card-content']}>
-              <h3>Chouse Your League</h3>
+              <h3>Choose Your League</h3>
               <p>
                 Choose between NFL, NBA, or MLB leagues to start your wins pool.
               </p>
@@ -103,7 +114,7 @@ const LandingPage = () => {
 
           <div className={classes['feature-card']}>
             <div className={classes['feature-card-icon']}>
-              <img src="invite-players.png" alt="Invite Players Feature" />
+              <img src="send-invite-530x600.png" alt="Invite Players Feature" />
             </div>
             <div className={classes['feature-card-content']}>
               <h3>Invite Players</h3>
@@ -116,7 +127,10 @@ const LandingPage = () => {
 
           <div className={classes['feature-card']}>
             <div className={classes['feature-card-icon']}>
-              <img src="manage-players.png" alt="Manage Players Feature" />
+              <img
+                src="manage-players-530x600.png"
+                alt="Manage Players Feature"
+              />
             </div>
             <div className={classes['feature-card-content']}>
               <h3>Manage Players</h3>
@@ -129,7 +143,7 @@ const LandingPage = () => {
 
           <div className={classes['feature-card']}>
             <div className={classes['feature-card-icon']}>
-              <img src="manage-player-teams.png" alt="Manage Teams Feature" />
+              <img src="manage-teams-530x600.png" alt="Manage Teams Feature" />
             </div>
             <div className={classes['feature-card-content']}>
               <h3>Manage Teams</h3>

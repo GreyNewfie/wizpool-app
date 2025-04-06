@@ -3,14 +3,13 @@ import PrimaryActionButton from './PrimaryActionButton';
 import classes from './PlayerProfile.module.css';
 
 export default function PlayerProfile({ player, index }) {
-  const iconNum = index + 1;
   const hasTeams = player.teams?.length > 0;
   return (
     <div className={classes['player']}>
       <div className={classes['player-info']}>
         <img
           className={classes['team-icon']}
-          src={`./player-icon-${iconNum}-150x150.png`}
+          src={`./wizpool-trophy-icon-512x512.png`}
           alt="team icon"
         />
         <div className={classes['profile-container']}>

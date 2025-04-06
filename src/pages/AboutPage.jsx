@@ -6,7 +6,6 @@ const AboutPage = () => {
 
   return (
     <div className={classes['about-page']}>
-      {/* Header copied from Landing.jsx */}
       <nav className={classes['nav']}>
         <img
           className={classes['nav-logo']}
@@ -16,7 +15,9 @@ const AboutPage = () => {
           style={{ cursor: 'pointer' }}
         />
         <div className={classes['nav-links']}>
-          <Link to="/about" className={classes['nav-link']}>About</Link>
+          <Link to="/about" className={classes['nav-link']}>
+            About
+          </Link>
           <button
             className={classes['nav-button']}
             onClick={() => navigate('/dashboard')}
@@ -25,8 +26,6 @@ const AboutPage = () => {
           </button>
         </div>
       </nav>
-
-      {/* Hero section similar to Landing page */}
       <section className={classes['hero-section']}>
         <div className={classes['hero-content']}>
           <h1>About WizPool</h1>
@@ -42,7 +41,6 @@ const AboutPage = () => {
 
       <h2 className={classes['sections-heading']}>How to Create Your League</h2>
 
-      {/* Guide sections with consistent left text, right image layout */}
       <section className={classes['guide-section']}>
         <div className={classes['guide-container']}>
           <div className={classes['guide-content']}>
@@ -54,7 +52,10 @@ const AboutPage = () => {
             </p>
           </div>
           <div className={classes['guide-image']}>
-            <img src="./select-league.png" alt="Select your league" />
+            <img
+              src="./setup-choose-league-530x600.png"
+              alt="Select your league"
+            />
           </div>
         </div>
       </section>
@@ -74,7 +75,10 @@ const AboutPage = () => {
             </p>
           </div>
           <div className={classes['guide-image']}>
-            <img src="./manage-players.png" alt="Enter league details" />
+            <img
+              src="./setup-create-league-530x600.png"
+              alt="Enter league details"
+            />
           </div>
         </div>
       </section>
@@ -90,7 +94,10 @@ const AboutPage = () => {
             </p>
           </div>
           <div className={classes['guide-image']}>
-            <img src="./manage-player-teams.png" alt="Add teams to players" />
+            <img
+              src="./setup-assign-teams-530x600.png"
+              alt="Add teams to players"
+            />
           </div>
         </div>
       </section>
