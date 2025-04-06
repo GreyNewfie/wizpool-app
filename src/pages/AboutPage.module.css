@@ -48,6 +48,10 @@
   transition: opacity 0.2s ease;
 }
 
+.hamburger-button {
+  color: var(--text-color);
+}
+
 .nav-link:hover {
   opacity: 0.8;
 }
@@ -329,6 +333,16 @@
   
   .about-description {
     font-size: 1rem;
+  }
+  
+  .nav-logo {
+    width: 150px;
+  }
+  
+  .nav {
+    padding: 1rem 4%;
+    height: 80px;
+    align-items: center;
   }
   
   .guide-container {
