@@ -67,6 +67,10 @@
   opacity: 0.9;
 }
 
+.hamburger-button {
+  color: var(--text-color);
+}
+
 .hero-section {
   min-height: 100vh;
   display: flex;
@@ -452,5 +456,15 @@
   .cta-button {
     padding: 0.8rem 2rem;
     font-size: 1rem;
+  }
+  
+  .nav-logo {
+    width: 150px;
+  }
+  
+  .landing-nav {
+    padding: 1rem 4%;
+    height: 80px;
+    align-items: center;
   }
 }
