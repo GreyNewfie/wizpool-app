@@ -1,8 +1,49 @@
 import { useNavigate, Link } from 'react-router-dom';
 import classes from './LandingPage.module.css';
+import { useState, useEffect } from 'react';
+import IconButton from '@mui/material/IconButton';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import MenuIcon from '@mui/icons-material/Menu';
 
 const LandingPage = () => {
   const navigate = useNavigate();
+  
+  // State for mobile detection
+  const [isMobile, setIsMobile] = useState(false);
+  
+  // State for hamburger menu
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  
+  // Check if mobile on mount and when window resizes
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    // Initial check
+    checkIfMobile();
+    
+    // Add event listener for window resize
+    window.addEventListener('resize', checkIfMobile);
+    
+    // Cleanup
+    return () => window.removeEventListener('resize', checkIfMobile);
+  }, []);
+  
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+  
+  const handleGoToApp = () => {
+    handleMenuClose();
+    navigate('/dashboard');
+  };
 
   return (
     <div className={classes['landing-page']}>
@@ -12,17 +53,74 @@ const LandingPage = () => {
           src="./wizpool-wordmark-230x70.png"
           alt="WizPool logo"
         />
-        <div className={classes['nav-links']}>
-          <Link to="/about" className={classes['nav-link']}>
-            About
-          </Link>
-          <button
-            className={classes['nav-button']}
-            onClick={() => navigate('/dashboard')}
-          >
-            Go to App
-          </button>
-        </div>
+        {isMobile ? (
+          <div>
+            <IconButton
+              aria-label="menu"
+              aria-controls="mobile-menu"
+              aria-haspopup="true"
+              onClick={handleMenuOpen}
+              color="inherit"
+              size="large"
+              className={classes['hamburger-button']}
+              sx={{ color: 'var(--text-color)' }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              id="mobile-menu"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleMenuClose}
+              MenuListProps={{
+                'aria-labelledby': 'mobile-menu-button',
+              }}
+              PaperProps={{
+                sx: {
+                  backgroundColor: 'var(--main-bg-color)',
+                  color: 'var(--text-color)',
+                  borderRadius: '8px',
+                  border: '1px solid rgba(103, 104, 169, 0.3)',
+                  boxShadow: '0 8px 16px rgba(0, 0, 0, 0.3)',
+                  minWidth: '150px',
+                }
+              }}
+            >
+              <MenuItem 
+                onClick={() => { handleMenuClose(); navigate('/about'); }}
+                sx={{ 
+                  '&:hover': { backgroundColor: 'rgba(103, 104, 169, 0.2)' },
+                  padding: '10px 16px',
+                  fontSize: '1rem',
+                }}
+              >
+                About
+              </MenuItem>
+              <MenuItem 
+                onClick={handleGoToApp}
+                sx={{ 
+                  '&:hover': { backgroundColor: 'rgba(103, 104, 169, 0.2)' },
+                  padding: '10px 16px',
+                  fontSize: '1rem',
+                }}
+              >
+                Go to App
+              </MenuItem>
+            </Menu>
+          </div>
+        ) : (
+          <div className={classes['nav-links']}>
+            <Link to="/about" className={classes['nav-link']}>
+              About
+            </Link>
+            <button
+              className={classes['nav-button']}
+              onClick={() => navigate('/dashboard')}
+            >
+              Go to App
+            </button>
+          </div>
+        )}
       </nav>
       <section className={classes['hero-section']}>
         <div className={classes['hero-content']}>
