@@ -91,6 +91,19 @@ const AboutPage = () => {
               <MenuItem
                 onClick={() => {
                   handleMenuClose();
+                  navigate('/');
+                }}
+                sx={{
+                  '&:hover': { backgroundColor: 'rgba(103, 104, 169, 0.2)' },
+                  padding: '10px 16px',
+                  fontSize: '1rem',
+                }}
+              >
+                Home
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  handleMenuClose();
                   navigate('/about');
                 }}
                 sx={{
@@ -115,6 +128,9 @@ const AboutPage = () => {
           </div>
         ) : (
           <div className={classes['nav-links']}>
+            <Link to="/" className={classes['nav-link']}>
+              Home
+            </Link>
             <Link to="/about" className={classes['nav-link']}>
               About
             </Link>
