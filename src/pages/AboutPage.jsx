@@ -8,38 +8,38 @@ import MenuIcon from '@mui/icons-material/Menu';
 
 const AboutPage = () => {
   const navigate = useNavigate();
-  
+
   // State for mobile detection
   const [isMobile, setIsMobile] = useState(false);
-  
+
   // State for hamburger menu
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  
+
   // Check if mobile on mount and when window resizes
   useEffect(() => {
     const checkIfMobile = () => {
       setIsMobile(window.innerWidth <= 768);
     };
-    
+
     // Initial check
     checkIfMobile();
-    
+
     // Add event listener for window resize
     window.addEventListener('resize', checkIfMobile);
-    
+
     // Cleanup
     return () => window.removeEventListener('resize', checkIfMobile);
   }, []);
-  
+
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
-  
+
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
-  
+
   const handleGoToApp = () => {
     handleMenuClose();
     navigate('/dashboard');
@@ -50,7 +50,7 @@ const AboutPage = () => {
       <nav className={classes['nav']}>
         <img
           className={classes['nav-logo']}
-          src="./wizpool-wordmark-230x70.png"
+          src="./wizpool-wordmark-690x210.png"
           alt="WizPool logo"
           onClick={() => navigate('/')}
           style={{ cursor: 'pointer' }}
@@ -85,12 +85,15 @@ const AboutPage = () => {
                   border: '1px solid rgba(103, 104, 169, 0.3)',
                   boxShadow: '0 8px 16px rgba(0, 0, 0, 0.3)',
                   minWidth: '150px',
-                }
+                },
               }}
             >
-              <MenuItem 
-                onClick={() => { handleMenuClose(); navigate('/about'); }}
-                sx={{ 
+              <MenuItem
+                onClick={() => {
+                  handleMenuClose();
+                  navigate('/about');
+                }}
+                sx={{
                   '&:hover': { backgroundColor: 'rgba(103, 104, 169, 0.2)' },
                   padding: '10px 16px',
                   fontSize: '1rem',
@@ -98,9 +101,9 @@ const AboutPage = () => {
               >
                 About
               </MenuItem>
-              <MenuItem 
+              <MenuItem
                 onClick={handleGoToApp}
-                sx={{ 
+                sx={{
                   '&:hover': { backgroundColor: 'rgba(103, 104, 169, 0.2)' },
                   padding: '10px 16px',
                   fontSize: '1rem',
