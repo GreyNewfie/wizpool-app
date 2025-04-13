@@ -10,7 +10,7 @@ export default function DesktopNavHeader() {
     <header className={classes['desktop-nav-header']}>
       <img
         className={classes['logo']}
-        src="./wizpool-wordmark-230x70.png"
+        src="./wizpool-wordmark-690x210.png"
         alt="WizPool logo"
       />
       <div className={classes['nav-items']}>
@@ -40,7 +40,7 @@ export default function DesktopNavHeader() {
         </NavLink>
         {isDesktop && (
           <>
-          <UserMenu />
+            <UserMenu />
           </>
         )}
       </div>
