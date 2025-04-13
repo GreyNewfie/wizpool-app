@@ -275,11 +275,6 @@ const LandingPage = () => {
 
       <footer className={classes['landing-footer']}>
         <div className={classes['footer-content']}>
-          <div className={classes['footer-left']}>
-            <Link to="/about" className={classes['footer-link']}>
-              About
-            </Link>
-          </div>
           <div className={classes['footer-right']}>
             <div className={classes['footer-author']}>
               <span>Built by Danny Simms</span>
