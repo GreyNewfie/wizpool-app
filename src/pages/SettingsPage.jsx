@@ -25,9 +25,7 @@ export default function SettingsPage() {
 
   return (
     <div className={classes['page-container']}>
-      {isDesktop && (
-        <DesktopNavHeader />
-      )}
+      {isDesktop && <DesktopNavHeader />}
       <div className={classes['pool-settings']}>
         <PageHeader
           headerText="Settings"
@@ -41,7 +39,7 @@ export default function SettingsPage() {
             <div className={classes['pool-info']}>
               <div className={classes['pool-name']}>
                 <p>Pool Name</p>
-                <p>{pool.poolName}</p>
+                <p>{pool.name}</p>
               </div>
               <div className={classes['pool-league']}>
                 <p>Sports League</p>
