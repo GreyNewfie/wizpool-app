@@ -25,6 +25,7 @@ import { ClerkProvider } from '@clerk/clerk-react';
 import { Provider } from 'react-redux';
 import AcceptInvitePage from './pages/AcceptInvitePage.jsx';
 import LandingPage from './pages/LandingPage.jsx';
+import ChooseDraftStylePage from './pages/ChooseDraftStylePage.jsx';
 
 // Import publishable key
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
@@ -57,6 +58,11 @@ const router = createBrowserRouter(
           <ChooseLeaguePage />
         </ProtectedRoute>
       ),
+      errorElement: <ErrorPage />,
+    },
+    {
+      path: '/choose-draft-style',
+      element: <ChooseDraftStylePage />,
       errorElement: <ErrorPage />,
     },
     {
