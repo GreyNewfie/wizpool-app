@@ -21,7 +21,7 @@ export default function SelectDraftStyleButtons({ handleSetDraftStyle }) {
           src="./nfl-logos/nfl-logo.png"
           alt="National Football League shield logo"
         />
-        Assign Teams
+        Manual Draft
       </button>
       <button
         className={`${classes['select-league-btn']} ${selectedDraftStyle === 'draft-teams' ? classes['selected'] : ''}`}
@@ -32,7 +32,7 @@ export default function SelectDraftStyleButtons({ handleSetDraftStyle }) {
           src="./nba-logos/nba-logo.png"
           alt="National Basketball Association logo"
         />
-        Draft Teams
+        Live Draft
       </button>
     </div>
   );
