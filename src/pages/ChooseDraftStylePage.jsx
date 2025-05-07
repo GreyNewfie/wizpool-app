@@ -10,7 +10,12 @@ export default function ChooseDraftStylePage() {
 
   const handleSetDraftStyle = (draftStyle) => {
     dispatch(setDraftStyle(draftStyle));
-    setTimeout(() => navigate('/create-draft'), 300);
+
+    if (draftStyle === 'manual') {
+      setTimeout(() => navigate('/create-pool', 300));
+    } else {
+      setTimeout(() => navigate('/setup-draft', 300));
+    }
   };
 
   return (
