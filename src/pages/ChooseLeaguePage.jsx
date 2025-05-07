@@ -10,7 +10,7 @@ export default function ChooseLeaugePage() {
 
   const handleSetLeague = (league) => {
     dispatch(setLeague(league));
-    setTimeout(() => navigate('/create-pool'), 300);
+    setTimeout(() => navigate('/choose-draft-style'), 300);
   };
 
   return (
