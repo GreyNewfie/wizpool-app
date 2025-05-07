@@ -3,17 +3,17 @@ import { v4 as uuid } from 'uuid';
 
 const initialState = {
   draftId: uuid(),
-  draftStyle: '',
-  draftStatus: 'pending',
-  draftOrder: [],
-  currentPick: 0,
-  timePerPick: 60,
-  draftDate: null,
-  availableTeams: [],
-  draftedTeams: [],
-  isSnakeDraft: true,
+  draftStyle: '', // 'manual' or 'live'
+  draftStatus: 'pending', // 'pending', 'scheduled', 'in-progress', 'completed'
+  draftOrder: [], // Array of player IDs in draft order
+  currentPick: 0, // Index of current pick in the draft
+  timePerPick: 60, // Time per pick in seconds
+  draftDate: null, // Date and time of the draft
+  availableTeams: [], // Teams not yet drafted
+  draftedTeams: [], // Teams already drafted with player info
+  isSnakeDraft: true, // Whether the draft order reverses each round
   currentRound: 1,
-  teamsPerPlayer: 0,
+  teamsPerPlayer: 0, // Number of teams each player can draft
   draftCompleted: false,
   draftLoading: false,
   draftError: null,
@@ -81,3 +81,21 @@ const draftSlice = createSlice({
     },
   },
 });
+
+export const {
+  setDraftStyle,
+  setDratStatus,
+  setDraftOrder,
+  setTimePerPick,
+  setDraftDate,
+  setAvailableTeams,
+  draftTeam,
+  resetDraft,
+  setTeamsPerPlayer,
+  setIsSnakeDraft,
+  setDraftCompleted,
+  setDraftLoading,
+  setDraftError,
+} = draftSlice.actions;
+
+export default draftSlice.reducer;
