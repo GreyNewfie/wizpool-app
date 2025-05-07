@@ -14,7 +14,7 @@ export default function SelectDraftStyleButtons({ handleSetDraftStyle }) {
     <div className={classes['select-league-container']}>
       <button
         className={`${classes['select-league-btn']} ${selectedDraftStyle === 'assign-teams' ? classes['selected'] : ''}`}
-        onClick={() => setDraftStyle('assign-teams')}
+        onClick={() => setDraftStyle('manual')}
       >
         <img
           className={classes['league-logo']}
@@ -25,7 +25,7 @@ export default function SelectDraftStyleButtons({ handleSetDraftStyle }) {
       </button>
       <button
         className={`${classes['select-league-btn']} ${selectedDraftStyle === 'draft-teams' ? classes['selected'] : ''}`}
-        onClick={() => setDraftStyle('draft-teams')}
+        onClick={() => setDraftStyle('live')}
       >
         <img
           className={classes['league-logo']}
