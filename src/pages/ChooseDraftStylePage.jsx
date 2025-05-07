@@ -1,7 +1,18 @@
 import classes from './ChooseDraftStylePage.module.css';
 import SelectDraftStyleButtons from '../components/SelectDraftStyleButtons';
+import { useDispatch } from 'react-redux';
+import { setDraftStyle } from '../state/draftSlice';
+import { useNavigate } from 'react-router-dom';
 
 export default function ChooseDraftStylePage() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleSetDraftStyle = (draftStyle) => {
+    dispatch(setDraftStyle(draftStyle));
+    setTimeout(() => navigate('/create-draft'), 300);
+  };
+
   return (
     <div className={classes['draft-style-container']}>
       <div className="draft-style-page-header">
@@ -14,7 +25,7 @@ export default function ChooseDraftStylePage() {
           players in real-time.
         </p>
       </div>
-      <SelectDraftStyleButtons handleSetDraftStyle={() => {}} />
+      <SelectDraftStyleButtons handleSetDraftStyle={handleSetDraftStyle} />
     </div>
   );
 }
