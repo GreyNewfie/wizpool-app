@@ -3,12 +3,14 @@ import { v4 as uuid } from 'uuid';
 
 const initialState = {
   draftId: uuid(),
+  poolName: '', // Name of the pool
   draftStyle: '', // 'manual' or 'live'
   draftStatus: 'pending', // 'pending', 'scheduled', 'in-progress', 'completed'
   draftOrder: [], // Array of player IDs in draft order
   currentPick: 0, // Index of current pick in the draft
   timePerPick: 60, // Time per pick in seconds
   draftDate: null, // Date and time of the draft
+  scheduledTime: null, // Scheduled time for the draft
   availableTeams: [], // Teams not yet drafted
   draftedTeams: [], // Teams already drafted with player info
   isSnakeDraft: true, // Whether the draft order reverses each round
@@ -23,6 +25,9 @@ const draftSlice = createSlice({
   name: 'draft',
   initialState,
   reducers: {
+    setPoolName: (state, action) => {
+      state.poolName = action.payload;
+    },
     setDraftStyle: (state, action) => {
       state.draftStyle = action.payload;
     },
@@ -37,6 +42,9 @@ const draftSlice = createSlice({
     },
     setDraftDate: (state, action) => {
       state.draftDate = action.payload;
+    },
+    setScheduledTime: (state, action) => {
+      state.scheduledTime = action.payload;
     },
     setAvailableTeams: (state, action) => {
       state.availableTeams = action.payload;
@@ -83,11 +91,13 @@ const draftSlice = createSlice({
 });
 
 export const {
+  setPoolName,
   setDraftStyle,
-  setDratStatus,
+  setDraftStatus,
   setDraftOrder,
   setTimePerPick,
   setDraftDate,
+  setScheduledTime,
   setAvailableTeams,
   draftTeam,
   resetDraft,
