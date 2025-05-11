@@ -1,3 +1,6 @@
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { ClerkProvider } from '@clerk/clerk-react';
+import { Provider } from 'react-redux';
 import './styles.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
@@ -20,12 +23,10 @@ import AboutPage from './pages/AboutPage.jsx';
 import store from './state/store';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import ProtectedPoolRoute from './components/ProtectedPoolRoute.jsx';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { ClerkProvider } from '@clerk/clerk-react';
-import { Provider } from 'react-redux';
 import AcceptInvitePage from './pages/AcceptInvitePage.jsx';
 import LandingPage from './pages/LandingPage.jsx';
 import ChooseDraftStylePage from './pages/ChooseDraftStylePage.jsx';
+import SetupDraftPage from './pages/SetupDraftPage.jsx';
 
 // Import publishable key
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
@@ -63,6 +64,11 @@ const router = createBrowserRouter(
     {
       path: '/choose-draft-style',
       element: <ChooseDraftStylePage />,
+      errorElement: <ErrorPage />,
+    },
+    {
+      path: '/setup-draft',
+      element: <SetupDraftPage />,
       errorElement: <ErrorPage />,
     },
     {
