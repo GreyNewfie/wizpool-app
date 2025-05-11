@@ -16,6 +16,8 @@ const initialState = {
   isSnakeDraft: true, // Whether the draft order reverses each round
   currentRound: 1,
   teamsPerPlayer: 0, // Number of teams each player can draft
+  numberOfPlayers: 3, // Default number of players in the draft
+  draftOrderAssignment: 'random', // 'manual' or 'random'
   draftCompleted: false,
   draftLoading: false,
   draftError: null,
@@ -45,6 +47,12 @@ const draftSlice = createSlice({
     },
     setScheduledTime: (state, action) => {
       state.scheduledTime = action.payload;
+    },
+    setNumberOfPlayers: (state, action) => {
+      state.numberOfPlayers = action.payload;
+    },
+    setDraftOrderAssignment: (state, action) => {
+      state.draftOrderAssignment = action.payload;
     },
     setAvailableTeams: (state, action) => {
       state.availableTeams = action.payload;
@@ -98,6 +106,8 @@ export const {
   setTimePerPick,
   setDraftDate,
   setScheduledTime,
+  setNumberOfPlayers,
+  setDraftOrderAssignment,
   setAvailableTeams,
   draftTeam,
   resetDraft,
