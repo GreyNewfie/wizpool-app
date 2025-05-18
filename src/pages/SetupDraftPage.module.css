@@ -5,7 +5,7 @@
 
 .setup-draft-container {
   width: clamp(320px, 100%, 480px);
-  padding: 30px 20px 0;
+  padding: 30px 20px;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;

@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   setPoolName,
   setTimePerPick,
@@ -23,22 +23,60 @@ import classes from './SetupDraftPage.module.css';
 import UserTextInput from '../components/UserTextInput';
 import PrimaryActionButton from '../components/PrimaryActionButton';
 
+const calculateMaxTeams = (numberOfPlayers, league) => {
+  let numberOfTeams;
+  switch (league) {
+    case 'nfl':
+      numberOfTeams = 32;
+      break;
+    case 'nba':
+      numberOfTeams = 30;
+      break;
+    case 'mlb':
+      numberOfTeams = 30;
+      break;
+    default:
+      numberOfTeams = 30; // Default to 30 teams if league is undefined or not recognized
+  }
+
+  // Ensure numberOfPlayers is at least 1 to avoid division by zero
+  const players = Math.max(1, numberOfPlayers);
+  return Math.floor(numberOfTeams / players);
+};
+
 export default function SetupDraftPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const pool = useSelector((state) => state.pool);
 
   const [poolName, setPoolNameLocal] = useState('');
   const [timePerPick, setTimePerPickLocal] = useState(60);
   const [isSnakeDraft, setIsSnakeDraftLocal] = useState(true);
   const [scheduledTime, setScheduledTimeLocal] = useState(null);
   const [numberOfPlayers, setNumberOfPlayersLocal] = useState(4);
+  const [teamsPerPlayer, setTeamsPerPlayer] = useState(
+    calculateMaxTeams(4, pool.league),
+  );
+  const [maxTeamsPerPlayer, setMaxTeamsPerPlayer] = useState(
+    calculateMaxTeams(numberOfPlayers, pool.league),
+  );
   const [draftOrderAssignment, setDraftOrderAssignmentLocal] =
     useState('manual');
   const [errors, setErrors] = useState({});
   const [isFormValid, setIsFormValid] = useState(false);
 
+  useEffect(() => {
+    const maxTeams = calculateMaxTeams(numberOfPlayers, pool.league);
+    setMaxTeamsPerPlayer(Math.max(1, maxTeams));
+  }, [numberOfPlayers, pool.league]);
+
   const handlePoolNameChange = (e) => {
     setPoolNameLocal(e.target.value);
+    validateForm();
+  };
+
+  const handleTeamsPerPlayerChange = (e) => {
+    setTeamsPerPlayer(e.target.value);
     validateForm();
   };
 
@@ -97,6 +135,7 @@ export default function SetupDraftPage() {
     dispatch(setIsSnakeDraft(isSnakeDraft));
     dispatch(setScheduledTime(scheduledTime.toISOString()));
     dispatch(setNumberOfPlayers(numberOfPlayers));
+    dispatch(setTeamsPerPlayer(teamsPerPlayer));
     dispatch(setDraftOrderAssignment(draftOrderAssignment));
 
     navigate('/invite-players');
@@ -185,6 +224,62 @@ export default function SetupDraftPage() {
                     {num} players
                   </MenuItem>
                 ))}
+              </Select>
+            </FormControl>
+          </div>
+
+          <div className={classes['form-group']}>
+            <label className={classes['form-label']}>Teams per Player</label>
+            <FormControl
+              fullWidth
+              variant="outlined"
+              className={classes['custom-select']}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: '10px',
+                  backgroundColor: 'var(--input-bg-color)',
+                  '& fieldset': {
+                    borderColor: 'transparent',
+                  },
+                  '&:hover fieldset': {
+                    borderColor: 'transparent',
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: 'transparent',
+                  },
+                  '& .MuiSelect-select': {
+                    color: 'var(--input-text-color)',
+                  },
+                },
+                '& .MuiInputBase-input': {
+                  color: 'var(--input-text-color)',
+                },
+                '& .MuiSvgIcon-root': {
+                  color: 'var(--input-text-color)',
+                },
+              }}
+            >
+              <Select
+                value={teamsPerPlayer}
+                onChange={handleTeamsPerPlayerChange}
+                className={classes['select-input']}
+                MenuProps={{
+                  PaperProps: {
+                    sx: {
+                      borderRadius: '10px',
+                      backgroundColor: 'var(--input-bg-color)',
+                      color: 'var(--input-text-color)',
+                    },
+                  },
+                }}
+              >
+                {Array.from({ length: maxTeamsPerPlayer }, (_, i) => i + 1).map(
+                  (num) => (
+                    <MenuItem key={num} value={num}>
+                      {num} teams per player
+                    </MenuItem>
+                  ),
+                )}
               </Select>
             </FormControl>
           </div>
