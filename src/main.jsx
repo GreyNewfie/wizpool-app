@@ -3,6 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import Dashboard from './pages/DashboardPage';
 import CreatePoolPage from './pages/CreatePoolPage.jsx';
+import ChooseAssignmentMethodPage from './pages/ChooseAssignmentMethodPage.jsx';
 import ChoosePlayerPage from './pages/ChoosePlayerPage.jsx';
 import ErrorPage from './pages/ErrorPage.jsx';
 import ChooseTeamsPage from './pages/ChooseTeamsPage.jsx';
@@ -64,6 +65,15 @@ const router = createBrowserRouter(
       element: (
         <ProtectedRoute>
           <CreatePoolPage />
+        </ProtectedRoute>
+      ),
+      errorElement: <ErrorPage />,
+    },
+    {
+      path: '/choose-assignment-method',
+      element: (
+        <ProtectedRoute>
+          <ChooseAssignmentMethodPage />
         </ProtectedRoute>
       ),
       errorElement: <ErrorPage />,
