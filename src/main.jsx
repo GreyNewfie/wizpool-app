@@ -3,6 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import Dashboard from './pages/DashboardPage';
 import CreatePoolPage from './pages/CreatePoolPage.jsx';
+import DraftPage from './pages/DraftPage.jsx';
 import ChooseAssignmentMethodPage from './pages/ChooseAssignmentMethodPage.jsx';
 import ChoosePlayerPage from './pages/ChoosePlayerPage.jsx';
 import ErrorPage from './pages/ErrorPage.jsx';
@@ -83,6 +84,15 @@ const router = createBrowserRouter(
       element: (
         <ProtectedRoute>
           <ChoosePlayerPage />
+        </ProtectedRoute>
+      ),
+      errorElement: <ErrorPage />,
+    },
+    {
+      path: '/draft',
+      element: (
+        <ProtectedRoute>
+          <DraftPage />
         </ProtectedRoute>
       ),
       errorElement: <ErrorPage />,

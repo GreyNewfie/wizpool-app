@@ -16,8 +16,7 @@ export default function ChooseAssignmentMethodPage() {
     if (selectedMethod === 'manual') {
       navigate('/choose-player');
     } else if (selectedMethod === 'draft') {
-      // TODO: Navigate to draft setup page when implemented
-      navigate('/choose-player'); // Temporary fallback
+      navigate('/draft');
     }
   };
 
