@@ -29,13 +29,15 @@ export default function DraftPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pool.league, players.length]);
 
-  // Define createDraftOrder before using it
+  // Define createDraftOrder for exactly 10 players
   // Returns an array of player INDEXES (not player objects)
   const createDraftOrder = (players) => {
-    const n = players?.length || 0;
-    if (n === 0) return [];
+    if (!players || players.length !== 10) {
+      console.warn('Draft requires exactly 10 players');
+      return [];
+    }
 
-    // Shuffle indices 0..n-1 so positions map to random players
+    // Shuffle function to randomize player positions
     const shuffle = (arr) => {
       const a = arr.slice();
       for (let i = a.length - 1; i > 0; i--) {
@@ -45,6 +47,7 @@ export default function DraftPage() {
       return a;
     };
 
+    // Draft order for 10 players (30 total picks)
     const draftOrderByPosition = {
       1: [1, 20, 26],
       2: [2, 16, 29],
@@ -58,28 +61,22 @@ export default function DraftPage() {
       10: [10, 12, 24],
     };
 
-    // Build schedule of position indexes (0-based)
-    const draftSchedule = (() => {
-      const schedule = [];
-      for (const [pos, picks] of Object.entries(draftOrderByPosition)) {
-        const pos0 = Number(pos) - 1;
-        picks.forEach((pickNum) => {
-          schedule[pickNum - 1] = pos0;
-        });
-      }
-      return schedule;
-    })();
+    // Build the complete 30-pick schedule
+    const draftSchedule = new Array(30);
+    for (const [pos, picks] of Object.entries(draftOrderByPosition)) {
+      const pos0 = Number(pos) - 1;
+      picks.forEach((pickNum) => {
+        draftSchedule[pickNum - 1] = pos0; // Convert to 0-based pick number
+      });
+    }
 
-    // Only keep schedule entries for available players count
-    const trimmedSchedule = draftSchedule.filter((pos0) => pos0 < n);
+    // Create shuffled player indices [0,1,2,3,4,5,6,7,8,9]
+    const playerIndices = Array.from({ length: 10 }, (_, i) => i);
+    const shuffledIndices = shuffle(playerIndices);
 
-    const indices = Array.from({ length: n }, (_, i) => i);
-    const shuffledIndices = shuffle(indices);
+    // Map each draft pick to the actual player index
+    const pickOrderIndices = draftSchedule.map((pos0) => shuffledIndices[pos0]);
 
-    // Map scheduled position -> actual player index via shuffled positions
-    const pickOrderIndices = trimmedSchedule.map(
-      (pos0) => shuffledIndices[pos0],
-    );
     return pickOrderIndices;
   };
 
@@ -89,7 +86,7 @@ export default function DraftPage() {
   useEffect(() => {
     if (
       (!draft.pickOrder || draft.pickOrder.length === 0) &&
-      players.length > 0
+      players.length === 10
     ) {
       const newPickOrder = createDraftOrder(players);
       dispatch(setPickOrder(newPickOrder));
@@ -98,7 +95,7 @@ export default function DraftPage() {
 
   // We use draft.currentPickIndex directly from Redux; no local sync needed
 
-  const totalPicksTarget = players.length * 1; // default 1 team per player (placeholder)
+  const totalPicksTarget = 30;
 
   // Derived state
   const totalPicksMade = useMemo(() => {
