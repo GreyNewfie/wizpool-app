@@ -21,6 +21,8 @@
   color: var(--secondary-text-color);
 }
 
+
+
 .content {
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
@@ -41,7 +43,7 @@
   margin: 0 0 0.5rem 0;
 }
 
-.players-column { /* inherits card styles */ }
+
 .players-list {
   list-style: none;
   padding: 0;
@@ -54,25 +56,109 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 0.75rem;
+  padding: 0.75rem;
   border-radius: 8px;
   background: var(--background-primary);
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
 }
+
+/* When showing status label, stack vertically */
+.has-status {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.25rem;
+}
+
+.has-status .player-left {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.player:hover {
+  border-color: var(--border-color);
+}
+
 .current {
   outline: 0;
   background: var(--primary-color);
-  color: #fff;
+  color: var(--primary-text-color);
+  transform: translateY(-2px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
 }
+
+.current::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+.next-player {
+  background: rgba(98, 0, 234, 0.15); /* Slightly more visible */
+  border-color: rgba(98, 0, 234, 0.4);
+  box-shadow: 0 1px 4px rgba(98, 0, 234, 0.1);
+}
+
+.player-status {
+  display: block;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--secondary-text-color);
+  margin-bottom: 6px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.current .player-status {
+  color: rgb(241, 236, 245);
+  font-weight: 600;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.95; }
+  50% { opacity: 1; }
+}
+
+
+
 .player-name {
   font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.2;
 }
-.player-subtle {
-  font-size: 0.85rem;
-  color: var(--secondary-text-color);
-}
+
+
+
 .player-meta {
   font-size: 0.85rem;
   color: var(--text-secondary);
+  font-weight: 500;
+  background: rgba(0, 0, 0, 0.1);
+  padding: 3px 8px;
+  border-radius: 12px;
+}
+
+.player-draft-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 
 .player-left {
@@ -81,73 +167,18 @@
   gap: 0.6rem;
 }
 
-.avatar {
-  width: 32px;
-  height: 32px;
+/* Player avatar styling */
+.player-left img {
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   background: var(--background-primary);
-  display: grid;
-  place-items: center;
-  overflow: hidden;
-}
-
-.avatar img {
-  width: 22px;
-  height: 22px;
+  padding: 5px;
 }
 
 /* Middle column: teams */
-/* teams-column inherits card styles */
-.teams-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.5rem;
-}
-.on-the-clock {
-  color: var(--secondary-text-color);
-  font-size: 0.9rem;
-}
-.teams-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 0.6rem;
-}
-
 .teams-list-wrap {
   margin-top: 0.25rem;
-}
-.team-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.25rem;
-  padding: 0.5rem;
-  border-radius: 10px;
-  background: var(--background-primary);
-  border: 1px solid var(--border-color);
-  cursor: pointer;
-}
-.team-card:hover {
-  background: var(--primary-color-light);
-}
-.team-card:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-.team-logo-wrap {
-  width: 64px;
-  height: 64px;
-  display: grid;
-  place-items: center;
-}
-.team-logo-wrap img {
-  max-width: 100%;
-  max-height: 100%;
-}
-.team-name {
-  font-size: 0.9rem;
-  text-align: center;
 }
 
 /* Right column: results */
@@ -172,6 +203,15 @@
   align-items: center;
   gap: 0.5rem;
 }
+
+.result-player-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--background-primary);
+  padding: 5px;
+}
+
 .result-player-name {
   font-weight: 600;
   margin-bottom: 0.25rem;

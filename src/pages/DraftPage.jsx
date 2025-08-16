@@ -77,7 +77,9 @@ export default function DraftPage() {
     const shuffledIndices = shuffle(indices);
 
     // Map scheduled position -> actual player index via shuffled positions
-    const pickOrderIndices = trimmedSchedule.map((pos0) => shuffledIndices[pos0]);
+    const pickOrderIndices = trimmedSchedule.map(
+      (pos0) => shuffledIndices[pos0],
+    );
     return pickOrderIndices;
   };
 
@@ -85,7 +87,10 @@ export default function DraftPage() {
   const pickOrder = draft.pickOrder || [];
 
   useEffect(() => {
-    if ((!draft.pickOrder || draft.pickOrder.length === 0) && players.length > 0) {
+    if (
+      (!draft.pickOrder || draft.pickOrder.length === 0) &&
+      players.length > 0
+    ) {
       const newPickOrder = createDraftOrder(players);
       dispatch(setPickOrder(newPickOrder));
     }
@@ -151,36 +156,53 @@ export default function DraftPage() {
         <section className={`${classes['card']} ${classes['players-column']}`}>
           <h3 className={classes['card-title']}>Players</h3>
           <ul className={classes['players-list']}>
-            {players.map((p, idx) => {
-              const isCurrent = idx === currentPlayerIndex && !draftComplete;
-              const drafted = players[idx]?.teams?.length || 0;
-              return (
-                <li
-                  key={p.id}
-                  className={`${classes['player']} ${isCurrent ? classes['current'] : ''}`}
-                >
-                  <div className={classes['player-left']}>
-                    <div className={classes['avatar']}>
-                      <img
-                        src={`./wizpool-trophy-icon-512x512.png`}
-                        alt="trophy"
-                      />
-                    </div>
-                    <div className={classes['player-texts']}>
-                      <span className={classes['player-name']}>
-                        {p.name || `Player ${idx + 1}`}
+            {/* Create an array of player indices in draft order, limited to first 10 */}
+            {pickOrder.length > 0 &&
+              pickOrder.slice(0, 10).map((playerIdx, draftPosition) => {
+                const p = players[playerIdx];
+                if (!p) return null; // Skip if player doesn't exist
+
+                const isCurrent =
+                  playerIdx === currentPlayerIndex && !draftComplete;
+                const nextPickPosition =
+                  (draft.currentPickIndex + 1) % pickOrder.length;
+                const isNext = !isCurrent && draftPosition === nextPickPosition;
+
+                // Calculate the actual pick number (1-based)
+                const pickNumber = draftPosition + 1;
+
+                return (
+                  <li
+                    key={p.id || playerIdx}
+                    className={`${classes['player']} ${isCurrent ? classes['current'] : ''} ${isNext ? classes['next-player'] : ''} ${isCurrent || isNext ? classes['has-status'] : ''}`}
+                  >
+                    {/* Status indicator above player info */}
+                    {isCurrent && (
+                      <span className={classes['player-status']}>
+                        Currently Picking
                       </span>
-                      <span className={classes['player-subtle']}>
-                        {isCurrent ? 'Picking…' : 'Up next'}
+                    )}
+                    {isNext && (
+                      <span className={classes['player-status']}>Up Next</span>
+                    )}
+
+                    <div className={classes['player-draft-container']}>
+                      <div className={classes['player-left']}>
+                        <img
+                          src={`./wizpool-trophy-icon-512x512.png`}
+                          alt="trophy"
+                        />
+                        <span className={classes['player-name']}>
+                          {p.name || `Player ${playerIdx + 1}`}
+                        </span>
+                      </div>
+                      <span className={classes['player-meta']}>
+                        Pick #{pickNumber}
                       </span>
                     </div>
-                  </div>
-                  <span className={classes['player-meta']}>
-                    Picks: {drafted}
-                  </span>
-                </li>
-              );
-            })}
+                  </li>
+                );
+              })}
           </ul>
         </section>
 
@@ -206,12 +228,11 @@ export default function DraftPage() {
             {players.map((p, idx) => (
               <div key={p.id} className={classes['result-player']}>
                 <div className={classes['result-player-header']}>
-                  <div className={classes['avatar']}>
-                    <img
-                      src={`./wizpool-trophy-icon-512x512.png`}
-                      alt="trophy"
-                    />
-                  </div>
+                  <img
+                    src={`./wizpool-trophy-icon-512x512.png`}
+                    alt="trophy"
+                    className={classes['result-player-avatar']}
+                  />
                   <div className={classes['result-player-name']}>
                     {p.name || `Player ${idx + 1}`}
                   </div>
