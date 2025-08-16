@@ -153,24 +153,21 @@ export default function DraftPage() {
         <section className={`${classes['card']} ${classes['players-column']}`}>
           <h3 className={classes['card-title']}>Players</h3>
           <ul className={classes['players-list']}>
-            {/* Create an array of player indices in draft order, limited to first 10 */}
+            {/* Show a rolling 10-pick window starting from the current pick */}
             {pickOrder.length > 0 &&
-              pickOrder.slice(0, 10).map((playerIdx, draftPosition) => {
+              Array.from({ length: 10 }, (_, offset) => {
+                const orderIdx = (draft.currentPickIndex + offset) % pickOrder.length;
+                const playerIdx = pickOrder[orderIdx];
                 const p = players[playerIdx];
-                if (!p) return null; // Skip if player doesn't exist
+                if (!p) return null;
 
-                const isCurrent =
-                  playerIdx === currentPlayerIndex && !draftComplete;
-                const nextPickPosition =
-                  (draft.currentPickIndex + 1) % pickOrder.length;
-                const isNext = !isCurrent && draftPosition === nextPickPosition;
-
-                // Calculate the actual pick number (1-based)
-                const pickNumber = draftPosition + 1;
+                const pickNumber = draft.currentPickIndex + offset + 1; // global 1-based pick number
+                const isCurrent = offset === 0 && !draftComplete;
+                const isNext = offset === 1 && !draftComplete;
 
                 return (
                   <li
-                    key={p.id || playerIdx}
+                    key={`pick-${pickNumber}-${p.id || playerIdx}`}
                     className={`${classes['player']} ${isCurrent ? classes['current'] : ''} ${isNext ? classes['next-player'] : ''} ${isCurrent || isNext ? classes['has-status'] : ''}`}
                   >
                     {/* Status indicator above player info */}
