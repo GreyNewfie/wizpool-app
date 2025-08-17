@@ -11,7 +11,7 @@
 .list {
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 0 12px 0 0; /* reserve space on the right for scrollbar */
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -23,6 +23,11 @@
 
 .division {
   margin-bottom: 20px;
+}
+
+/* Ensure last group has breathing room from bottom scrollbar */
+.division:last-child {
+  padding-bottom: 12px;
 }
 
 .divisionTitle {
