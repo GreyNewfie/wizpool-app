@@ -5,6 +5,7 @@ import MockDraftTeamsList from '../components/MockDraftTeamsList';
 import BackHeaderButton from '../components/BackHeaderButton';
 import PrimaryActionButton from '../components/PrimaryActionButton';
 import classes from './DraftPage.module.css';
+import { useUser, useAuth } from '@clerk/clerk-react';
 import {
   setPickOrder,
   incrementPickIndex,
@@ -12,11 +13,13 @@ import {
   resetDraft,
   setCurrentPickIndex,
 } from '../state/draftSlice';
-import { clearAllPlayersTeams } from '../state/poolSlice';
+import { clearAllPlayersTeams, storePoolAsync, setUserId, setPool } from '../state/poolSlice';
 
 export default function DraftPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { user } = useUser();
+  const { getToken } = useAuth();
   const pool = useSelector((state) => state.pool);
   const draft = useSelector((state) => state.draft);
   const players = useMemo(() => pool.players || [], [pool.players]);
@@ -140,11 +143,24 @@ export default function DraftPage() {
     completeModalOpen,
   ]);
 
-  const handleFinish = () => {
-    // In future, persist to backend and transition to pool home
-    // Clear any transient draft state before leaving the draft flow
-    dispatch(resetDraft());
-    navigate('/choose-player'); // reuse existing page to finalize storing the pool
+  const handleFinish = async () => {
+    try {
+      // Attach user id, persist pool, then navigate to pool home
+      dispatch(setUserId(user.id));
+      const token = await getToken();
+      const storedPool = await dispatch(storePoolAsync({ token })).unwrap();
+      dispatch(setPool(storedPool));
+
+      localStorage.setItem('activePoolId', pool.id);
+      localStorage.setItem('userId', user.id);
+
+      // Optional: clean up draft state after successful store
+      dispatch(resetDraft());
+
+      navigate('/pool-home');
+    } catch (err) {
+      console.error('Failed to store pool from DraftPage: ', err);
+    }
   };
 
   const handleResetDraft = () => {
