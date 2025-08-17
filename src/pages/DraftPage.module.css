@@ -11,7 +11,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 2rem;
+  gap: 3rem;
 }
 
 /* Center block so title/subtitle are centered between left back button and right reset */
@@ -42,7 +42,7 @@
 }
 
 .resetButton:hover {
-  background: rgba(139, 92, 246, 0.16);
+  background: var(--primary-color);
   box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2) inset;
 }
 
@@ -114,6 +114,7 @@
 }
 
 .current {
+  margin-top: 5px;
   outline: 0;
   background: var(--primary-color);
   color: var(--primary-text-color);
@@ -262,11 +263,19 @@
 }
 
 .result-player-name {
-  font-weight: 600;
-  font-size: 1rem;
-  margin-bottom: 0;
-  color: #fff;
+  font-weight: 500;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
+
+.player-picks {
+  font-size: 0.85rem;
+  color: var(--secondary-text-color);
+  font-weight: normal;
+}
+
 .result-teams {
   margin: 0;
   padding: 0;

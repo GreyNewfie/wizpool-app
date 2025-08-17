@@ -267,22 +267,38 @@ export default function DraftPage() {
         <section className={`${classes['card']} ${classes['results-column']}`}>
           <h3 className={classes['card-title']}>Draft Board</h3>
           <div className={classes['results-list']}>
-            {players.map((p, idx) => (
-              <div key={p.id} className={classes['result-player']}>
-                <div className={classes['result-player-header']}>
-                  <div className={classes['result-player-name']}>
-                    {p.name || `Player ${idx + 1}`}
+            {players.map((p, idx) => {
+              // Calculate pick numbers for this player
+              const playerPickNumbers = pickOrder
+                .map((playerIdx, pickIdx) => ({
+                  playerIdx,
+                  pickNumber: pickIdx + 1,
+                }))
+                .filter((pick) => pick.playerIdx === idx)
+                .map((pick) => pick.pickNumber);
+
+              return (
+                <div key={p.id} className={classes['result-player']}>
+                  <div className={classes['result-player-header']}>
+                    <div className={classes['result-player-name']}>
+                      {p.name || `Player ${idx + 1}`}
+                      {playerPickNumbers.length > 0 && (
+                        <span className={classes['player-picks']}>
+                          picks {playerPickNumbers.join(', ')}
+                        </span>
+                      )}
+                    </div>
                   </div>
+                  <ul className={classes['result-teams']}>
+                    {(players[idx]?.teams || []).map((t) => (
+                      <li key={t.key}>
+                        {t.city} {t.name}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <ul className={classes['result-teams']}>
-                  {(players[idx]?.teams || []).map((t) => (
-                    <li key={t.key}>
-                      {t.city} {t.name}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </section>
       </div>
