@@ -72,18 +72,42 @@
 
 .card-title {
   margin: 0 0 0.5rem 0;
+  color: var(--text-muted, #e6e6e7f9);
 }
 
 
 .players-list {
   list-style: none;
-  padding: 0;
+  padding-right: 16px; /* visual gutter so rounded corners don't clash with scrollbar */
   margin: 0.5rem 0 0 0;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   flex: 1;
   overflow-y: auto;
+  /* Reserve space for the vertical scrollbar to avoid overlapping content */
+  scrollbar-gutter: stable both-edges;
+  
+  /* Firefox scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.25) transparent;
+}
+
+/* WebKit scrollbars (Chrome, Edge, Safari) */
+.players-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.players-list::-webkit-scrollbar-track {
+  background: transparent;
+  margin: 6px; /* top/bottom gaps so thumb doesn't touch edges */
+}
+
+.players-list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 8px;
+  border: 2px solid transparent; /* creates space inside the track */
+  background-clip: padding-box; /* makes thumb thinner visually */
 }
 .player {
   display: flex;
@@ -94,6 +118,7 @@
   background: var(--background-primary);
   border: 1px solid transparent;
   transition: all 0.2s ease;
+  min-height: fit-content;
 }
 
 /* When showing status label, stack vertically */
@@ -103,7 +128,7 @@
   gap: 0.25rem;
 }
 
-.has-status .player-left {
+.has-status .player-draft-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -122,6 +147,20 @@
   border: 2px solid rgba(255, 255, 255, 0.2);
   position: relative;
   overflow: hidden;
+}
+
+.pick-number {
+  color: var(--secondary-text-color);
+}
+
+/* Ensure contents are readable on the current highlight */
+.has-status .player-name,
+.has-status .pick-number {
+  color: #ffffff;
+}
+
+.current .player-draft-container {
+  color: inherit;
 }
 
 .current::before {
@@ -215,9 +254,6 @@
   margin-top: 0.25rem;
   flex: 1;
   overflow-y: auto;
-  scrollbar-gutter: stable both-edges; /* Reserve space for scrollbar */
-  padding-bottom: 10px; /* Prevent last card from touching edge */
-  padding-right: 12px; /* Prevent scrollbar from overlapping cards */
   box-sizing: border-box;
 }
 

@@ -13,7 +13,12 @@ import {
   resetDraft,
   setCurrentPickIndex,
 } from '../state/draftSlice';
-import { clearAllPlayersTeams, storePoolAsync, setUserId, setPool } from '../state/poolSlice';
+import {
+  clearAllPlayersTeams,
+  storePoolAsync,
+  setUserId,
+  setPool,
+} from '../state/poolSlice';
 
 export default function DraftPage() {
   const navigate = useNavigate();
@@ -121,7 +126,6 @@ export default function DraftPage() {
   const currentPlayerIndex = pickOrder.length
     ? pickOrder[draft.currentPickIndex % pickOrder.length]
     : 0;
-  const currentPlayer = players[currentPlayerIndex];
 
   // When the number of picks increases in the pool state, advance to next player
   useEffect(() => {
@@ -199,7 +203,7 @@ export default function DraftPage() {
       <div className={classes['page-title']}>
         <BackHeaderButton path="/choose-assignment-method" />
         <div className={classes['page-title-center']}>
-          <h1>NFL Wins Pool Draft</h1>
+          <h1>{pool.name} Draft</h1>
           <p className={classes['subtitle']}>Draft teams for each player.</p>
         </div>
         <button
@@ -214,53 +218,66 @@ export default function DraftPage() {
       <div className={classes['content']}>
         {/* Left: Players list with current picker highlighted */}
         <section className={`${classes['card']} ${classes['players-column']}`}>
-          <h3 className={classes['card-title']}>Players</h3>
+          <h3 className={classes['card-title']}>Draft Schedule</h3>
           <ul className={classes['players-list']}>
-            {/* Show a rolling 10-pick window starting from the current pick */}
+            {/* Show a rolling window of upcoming picks, limited to 30 total, ensuring first visible item is current */}
             {pickOrder.length > 0 &&
-              Array.from({ length: 10 }, (_, offset) => {
-                const orderIdx =
-                  (draft.currentPickIndex + offset) % pickOrder.length;
-                const playerIdx = pickOrder[orderIdx];
-                const p = players[playerIdx];
-                if (!p) return null;
+              (() => {
+                const windowItems = Array.from({ length: 10 }, (_, offset) => {
+                  const nextPickIndex = draft.currentPickIndex + offset;
+                  if (nextPickIndex >= 30) return null; // cap at 30 picks
 
-                const pickNumber = draft.currentPickIndex + offset + 1; // global 1-based pick number
-                const isCurrent = offset === 0 && !draftComplete;
-                const isNext = offset === 1 && !draftComplete;
+                  const orderIdx = nextPickIndex % pickOrder.length;
+                  const playerIdx = pickOrder[orderIdx];
+                  const p = players[playerIdx];
+                  if (!p) return null;
 
-                return (
-                  <li
-                    key={`pick-${pickNumber}-${p.id || playerIdx}`}
-                    className={`${classes['player']} ${isCurrent ? classes['current'] : ''} ${isNext ? classes['next-player'] : ''} ${isCurrent || isNext ? classes['has-status'] : ''}`}
-                  >
-                    {/* Status indicator above player info */}
-                    {isCurrent && (
-                      <span className={classes['player-status']}>
-                        Currently Picking
-                      </span>
-                    )}
-                    {isNext && (
-                      <span className={classes['player-status']}>Up Next</span>
-                    )}
+                  return { p, playerIdx, nextPickIndex };
+                }).filter(Boolean);
 
-                    <div className={classes['player-draft-container']}>
-                      <div className={classes['player-left']}>
-                        <img
-                          src={`./wizpool-trophy-icon-512x512.png`}
-                          alt="trophy"
-                        />
-                        <span className={classes['player-name']}>
-                          {p.name || `Player ${playerIdx + 1}`}
+                if (windowItems.length === 0) return null;
+
+                return windowItems.map((item, index) => {
+                  const { p, playerIdx, nextPickIndex } = item;
+                  const pickNumber = nextPickIndex + 1; // global 1-based
+                  const isCurrent = index === 0 && !draftComplete;
+                  const isNext = index === 1 && !draftComplete;
+
+                  return (
+                    <li
+                      key={`pick-${pickNumber}-${p.id || playerIdx}`}
+                      className={`${classes['player']} ${isCurrent ? classes['current'] : ''} ${isNext ? classes['next-player'] : ''} ${isCurrent || isNext ? classes['has-status'] : ''}`}
+                    >
+                      {/* Status indicator above player info */}
+                      {isCurrent && (
+                        <span className={classes['player-status']}>
+                          Currently Picking
+                        </span>
+                      )}
+                      {isNext && (
+                        <span className={classes['player-status']}>
+                          Up Next
+                        </span>
+                      )}
+
+                      <div className={classes['player-draft-container']}>
+                        <div className={classes['player-left']}>
+                          <img
+                            src={`./wizpool-trophy-icon-512x512.png`}
+                            alt="trophy"
+                          />
+                          <span className={classes['player-name']}>
+                            {p.name || `Player ${playerIdx + 1}`}
+                          </span>
+                        </div>
+                        <span className={classes['pick-number']}>
+                          Pick #{pickNumber}
                         </span>
                       </div>
-                      <span className={classes['player-meta']}>
-                        Pick #{pickNumber}
-                      </span>
-                    </div>
-                  </li>
-                );
-              })}
+                    </li>
+                  );
+                });
+              })()}
           </ul>
         </section>
 
