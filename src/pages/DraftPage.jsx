@@ -10,7 +10,9 @@ import {
   incrementPickIndex,
   setDraftComplete,
   resetDraft,
+  setCurrentPickIndex,
 } from '../state/draftSlice';
+import { clearAllPlayersTeams } from '../state/poolSlice';
 
 export default function DraftPage() {
   const navigate = useNavigate();
@@ -20,6 +22,7 @@ export default function DraftPage() {
   const players = useMemo(() => pool.players || [], [pool.players]);
   const [lastPicksCount, setLastPicksCount] = useState(0);
   const [completeModalOpen, setCompleteModalOpen] = useState(false);
+  const [resetConfirmOpen, setResetConfirmOpen] = useState(false);
 
   // Reset draft state when pool context changes to avoid stale persisted data
   useEffect(() => {
@@ -144,19 +147,52 @@ export default function DraftPage() {
     navigate('/choose-player'); // reuse existing page to finalize storing the pool
   };
 
+  const handleResetDraft = () => {
+    setResetConfirmOpen(true);
+  };
+
+  const handleConfirmReset = () => {
+    // Clear selected teams from all players
+    dispatch(clearAllPlayersTeams());
+    // Reset draft progress to start
+    dispatch(setDraftComplete(false));
+    dispatch(setCurrentPickIndex(0));
+    setLastPicksCount(0);
+    setCompleteModalOpen(false);
+    setResetConfirmOpen(false);
+  };
+
+  const handleCancelReset = () => {
+    setResetConfirmOpen(false);
+  };
+
+  // Close reset modal on Escape key
+  useEffect(() => {
+    if (!resetConfirmOpen) return;
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setResetConfirmOpen(false);
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [resetConfirmOpen]);
+
   return (
     <div className={classes['draft-page']}>
       <div className={classes['page-title']}>
         <BackHeaderButton path="/choose-assignment-method" />
-        <div>
+        <div className={classes['page-title-center']}>
           <h1>NFL Wins Pool Draft</h1>
-          <p className={classes['subtitle']}>
-            Draft teams for each player.{' '}
-            {draftComplete
-              ? 'Draft complete.'
-              : `It's ${currentPlayer?.name || 'Player'}'s turn to pick.`}
-          </p>
+          <p className={classes['subtitle']}>Draft teams for each player.</p>
         </div>
+        <button
+          type="button"
+          className={classes.resetButton}
+          onClick={handleResetDraft}
+        >
+          Reset Draft
+        </button>
       </div>
 
       <div className={classes['content']}>
@@ -250,6 +286,52 @@ export default function DraftPage() {
           </div>
         </section>
       </div>
+
+      {/* Reset Confirmation Modal */}
+      {resetConfirmOpen && (
+        <div
+          className={classes.modalBackdrop}
+          role="presentation"
+          onClick={handleCancelReset}
+        >
+          <div
+            className={classes.modal}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="reset-title"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              type="button"
+              className={classes.modalClose}
+              aria-label="Close"
+              onClick={handleCancelReset}
+            >
+              ×
+            </button>
+            <h3 id="reset-title" className={classes.modalTitle}>
+              Reset Draft?
+            </h3>
+            <p className={classes.modalBody}>
+              This will clear all teams selected so far and reset the draft back
+              to the first pick. This action cannot be undone.
+            </p>
+            <div className={classes.modalActions}>
+              <button
+                type="button"
+                className={classes.modalSecondary}
+                onClick={handleCancelReset}
+              >
+                Cancel
+              </button>
+              <PrimaryActionButton
+                text="Reset"
+                handleClick={handleConfirmReset}
+              />
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Completion Modal */}
       {completeModalOpen && (
