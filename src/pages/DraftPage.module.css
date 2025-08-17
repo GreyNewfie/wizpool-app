@@ -8,6 +8,7 @@
 
 .page-title {
   display: flex;
+  justify-content: center;
   align-items: center;
   gap: 1rem;
 }
@@ -25,7 +26,7 @@
 
 .content {
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-columns: 3fr 3fr 2fr;
   gap: 1rem;
   align-items: start;
 }
@@ -196,12 +197,16 @@
   background: var(--background-primary);
   border: 1px solid var(--border-color);
   border-radius: 8px;
-  padding: 0.5rem;
+  padding: 0.75rem 0.75rem 0.5rem;
+  margin-bottom: 0.25rem;
 }
 .result-player-header {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  margin-bottom: 6px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .result-player-avatar {
@@ -214,11 +219,21 @@
 
 .result-player-name {
   font-weight: 600;
-  margin-bottom: 0.25rem;
+  font-size: 1rem;
+  margin-bottom: 0;
+  color: #fff;
 }
 .result-teams {
   margin: 0;
-  padding-left: 1rem;
+  padding: 0;
+  list-style: none;
+}
+
+.result-teams li {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+  margin-top: 4px;
+  padding-left: 4px;
 }
 
 @media (max-width: 900px) {

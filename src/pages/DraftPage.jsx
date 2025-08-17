@@ -156,7 +156,8 @@ export default function DraftPage() {
             {/* Show a rolling 10-pick window starting from the current pick */}
             {pickOrder.length > 0 &&
               Array.from({ length: 10 }, (_, offset) => {
-                const orderIdx = (draft.currentPickIndex + offset) % pickOrder.length;
+                const orderIdx =
+                  (draft.currentPickIndex + offset) % pickOrder.length;
                 const playerIdx = pickOrder[orderIdx];
                 const p = players[playerIdx];
                 if (!p) return null;
@@ -222,11 +223,6 @@ export default function DraftPage() {
             {players.map((p, idx) => (
               <div key={p.id} className={classes['result-player']}>
                 <div className={classes['result-player-header']}>
-                  <img
-                    src={`./wizpool-trophy-icon-512x512.png`}
-                    alt="trophy"
-                    className={classes['result-player-avatar']}
-                  />
                   <div className={classes['result-player-name']}>
                     {p.name || `Player ${idx + 1}`}
                   </div>
