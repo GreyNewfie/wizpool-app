@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import TeamsList from '../components/TeamsList';
+import MockDraftTeamsList from '../components/MockDraftTeamsList';
 import BackHeaderButton from '../components/BackHeaderButton';
 import PrimaryActionButton from '../components/PrimaryActionButton';
 import classes from './DraftPage.module.css';
@@ -206,7 +206,7 @@ export default function DraftPage() {
           <div className={classes['teams-list-wrap']}>
             {/* Only render TeamsList when a league is selected to avoid API errors */}
             {pool.league ? (
-              <TeamsList playerIndex={currentPlayerIndex} />
+              <MockDraftTeamsList playerIndex={currentPlayerIndex} />
             ) : (
               <div className={classes['empty-state']}>
                 <p>Please choose a league first to load available teams.</p>
