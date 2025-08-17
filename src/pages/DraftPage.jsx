@@ -19,6 +19,7 @@ export default function DraftPage() {
   const draft = useSelector((state) => state.draft);
   const players = useMemo(() => pool.players || [], [pool.players]);
   const [lastPicksCount, setLastPicksCount] = useState(0);
+  const [completeModalOpen, setCompleteModalOpen] = useState(false);
 
   // Reset draft state when pool context changes to avoid stale persisted data
   useEffect(() => {
@@ -124,7 +125,17 @@ export default function DraftPage() {
     } else if (totalPicksMade > lastPicksCount) {
       setLastPicksCount(totalPicksMade);
     }
-  }, [totalPicksMade, draftComplete, lastPicksCount, dispatch]);
+    // Open completion modal at or beyond 30 picks (3 rounds for 10 players)
+    if (totalPicksMade >= 30 && !completeModalOpen) {
+      setCompleteModalOpen(true);
+    }
+  }, [
+    totalPicksMade,
+    draftComplete,
+    lastPicksCount,
+    dispatch,
+    completeModalOpen,
+  ]);
 
   const handleFinish = () => {
     // In future, persist to backend and transition to pool home
@@ -237,12 +248,34 @@ export default function DraftPage() {
               </div>
             ))}
           </div>
-          <PrimaryActionButton
-            text={draftComplete ? 'Continue' : 'Skip to Finish'}
-            handleClick={handleFinish}
-          />
         </section>
       </div>
+
+      {/* Completion Modal */}
+      {completeModalOpen && (
+        <div className={classes.modalBackdrop} role="presentation">
+          <div
+            className={classes.modal}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="complete-title"
+          >
+            <h3 id="complete-title" className={classes.modalTitle}>
+              Draft Complete!{' '}
+            </h3>
+            <p className={classes.modalBody}>
+              Each player has selected 3 teams. You may not head over to the
+              standings page.
+            </p>
+            <div className={classes.modalActions}>
+              <PrimaryActionButton
+                text="Complete Draft"
+                handleClick={handleFinish}
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

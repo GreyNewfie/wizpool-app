@@ -294,3 +294,40 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Completion Modal */
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  width: min(520px, 92vw);
+  background: var(--background-primary, #0e0e12);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 12px 36px rgba(0,0,0,0.55);
+  color: var(--text-primary, #fff);
+}
+
+.modalTitle {
+  margin: 0 0 1rem 0;
+  color: var(--text-primary, #fff);
+}
+
+.modalBody {
+  margin: 0 0 2rem 0;
+  color: var(--secondary-text-color, #d6d6e3);
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+}
