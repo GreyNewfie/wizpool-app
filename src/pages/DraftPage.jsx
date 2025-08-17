@@ -160,6 +160,13 @@ export default function DraftPage() {
       localStorage.setItem('activePoolId', pool.id);
       localStorage.setItem('userId', user.id);
 
+      // Clear any persisted draft info now that the draft is complete
+      try {
+        localStorage.removeItem('wizpool_draft_state');
+      } catch (e) {
+        console.warn('Unable to clear draft state from localStorage:', e);
+      }
+
       // Optional: clean up draft state after successful store
       dispatch(resetDraft());
 
