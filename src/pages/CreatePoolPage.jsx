@@ -54,7 +54,7 @@ export default function CreatePoolPage() {
     >
       <div className={classes['create-pool-page-header']}>
         <NextHeaderButton
-          path="/choose-player"
+          path="/choose-assignment-method"
           disabled={!isPoolCreated}
           optionalFunction={() => dispatch(removeEmptyPlayers())}
         />
