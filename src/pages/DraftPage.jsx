@@ -5,6 +5,7 @@ import MockDraftTeamsList from '../components/MockDraftTeamsList';
 import BackHeaderButton from '../components/BackHeaderButton';
 import PrimaryActionButton from '../components/PrimaryActionButton';
 import classes from './DraftPage.module.css';
+import LoadingOverlay from '../components/LoadingOverlay';
 import { useUser, useAuth } from '@clerk/clerk-react';
 import {
   setPickOrder,
@@ -26,6 +27,7 @@ export default function DraftPage() {
   const { user } = useUser();
   const { getToken } = useAuth();
   const pool = useSelector((state) => state.pool);
+  const isStoringPool = useSelector((state) => state.pool.storingPool);
   const draft = useSelector((state) => state.draft);
   const players = useMemo(() => pool.players || [], [pool.players]);
   const [lastPicksCount, setLastPicksCount] = useState(0);
@@ -200,6 +202,7 @@ export default function DraftPage() {
 
   return (
     <div className={classes['draft-page']}>
+      {isStoringPool && <LoadingOverlay />}
       <div className={classes['page-title']}>
         <BackHeaderButton path="/choose-assignment-method" />
         <div className={classes['page-title-center']}>
