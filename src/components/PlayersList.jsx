@@ -4,6 +4,11 @@ import { useSelector } from 'react-redux';
 
 export default function PlayersList(props) {
   const pool = useSelector((state) => state.pool);
+  const poolHasName =
+    !!pool?.name && pool.name.replace(/[^a-zA-Z]/g, '').length > 0;
+  const firstEmptyIndex = pool.players.findIndex(
+    (p) => !(p?.name && p.name.replace(/[^a-zA-Z]/g, '').length > 0),
+  );
   return (
     <>
       {pool.players.map((_, index) => {
@@ -19,7 +24,7 @@ export default function PlayersList(props) {
             handleTeamNameChange={(e) =>
               props.handleTeamNameChange(e.target.value, index)
             }
-            autoFocusPlayerName={!pool.players[index]?.name ? true : false}
+            autoFocusPlayerName={poolHasName && index === firstEmptyIndex}
             autoFocusTeamName={false}
           />
         );
