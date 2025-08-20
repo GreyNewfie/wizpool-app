@@ -10,17 +10,13 @@ export default function ChooseAssignmentMethodPage() {
   const hasTenPlayers = (pool?.players?.length ?? 0) === 10;
   const navigate = useNavigate();
 
-  const handleNext = () => {
-    if (selectedMethod === 'manual') {
-      navigate('/choose-player');
-    } else if (selectedMethod === 'draft' && hasTenPlayers) {
-      navigate('/draft');
-    }
-  };
-
   const handleMethodSelect = (method) => {
     setSelectedMethod(method);
-    handleNext();
+    if (method === 'manual') {
+      navigate('/choose-player');
+    } else if (method === 'draft' && hasTenPlayers) {
+      navigate('/draft');
+    }
   };
 
   return (
