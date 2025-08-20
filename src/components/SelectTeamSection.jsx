@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addTeamToPlayer, removeTeamFromPlayer } from '../state/poolSlice';
 
 const isTeamSelected = (player, team) => {
+  if (!player) return false;
   return player.teams?.some((playerTeam) => playerTeam.key === team.key)
     ? true
     : false;
@@ -14,14 +15,16 @@ export default function SelectTeamSection(props) {
   const dispatch = useDispatch();
   const pool = useSelector((state) => state.pool);
   const [isSelected, setIsSelected] = useState(
-    isTeamSelected(pool.players[props.playerIndex], props.team),
+    isTeamSelected(pool.players?.[props.playerIndex], props.team),
   );
   const lowerCaseKey = props.team.key.toLowerCase();
   const baseUrl = import.meta.env.VITE_BASE_PATH || '/wizpool-app/';
 
   const toggleSelect = (pool, team, playerIndex, setIsSelected) => {
     // Check if team is already selected, and if so, remove it from the player
-    if (isTeamSelected(pool.players[playerIndex], team)) {
+    const player = pool.players?.[playerIndex];
+    if (!player) return; // guard
+    if (isTeamSelected(player, team)) {
       dispatch(removeTeamFromPlayer({ team, playerIndex }));
       // Update the isSelected value to false to update the button
       setIsSelected(false);

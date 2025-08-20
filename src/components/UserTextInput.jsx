@@ -39,7 +39,7 @@ export default function UserTextInput(props) {
       className={inputClassName}
       placeholder={props.placeholderText}
       onChange={handleChange}
-      autoFocus
+      autoFocus={props.autoFocus}
     />
   );
 }

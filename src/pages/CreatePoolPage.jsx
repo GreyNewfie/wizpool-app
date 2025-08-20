@@ -3,7 +3,7 @@ import PrimaryActionButton from '../components/PrimaryActionButton';
 import UserTextInput from '../components/UserTextInput';
 import classes from './CreatePoolPage.module.css';
 import PlayersList from '../components/PlayersList';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   addPlayer,
@@ -22,18 +22,27 @@ export default function CreatePoolPage() {
     if (!pool) return;
     // Check if first player has name and pool has a name
     const checkPoolCreated = () => {
-      let playersHaveNames =
+      let firstPlayerHasName =
         pool.players[0].name.replace(/[^a-zA-z]/g, '').length > 0;
       let poolHasName = pool.name.replace(/[^a-zA-Z]/g, '').length > 0;
-      return playersHaveNames && poolHasName;
+      return firstPlayerHasName && poolHasName;
     };
     // Set isPoolCreated to toggle next button
     setIsPoolCreated(checkPoolCreated());
   }, [pool]);
 
-  const handleAddBlankPlayer = () => {
+  const handleAddBlankPlayer = useCallback(() => {
     dispatch(addPlayer({ name: '', teamName: '', teams: [] }));
-  };
+  }, [dispatch]);
+
+  useEffect(() => {
+    const allPlayersHaveNames = pool.players.every(
+      (p) => (p?.name || '').replace(/[^a-zA-z]/g, '').length > 0,
+    );
+    if (allPlayersHaveNames) {
+      handleAddBlankPlayer();
+    }
+  }, [handleAddBlankPlayer, pool.players]);
 
   const handlePoolNameChange = (value) => {
     dispatch(setPoolName(value));
@@ -54,7 +63,7 @@ export default function CreatePoolPage() {
     >
       <div className={classes['create-pool-page-header']}>
         <NextHeaderButton
-          path="/choose-player"
+          path="/choose-assignment-method"
           disabled={!isPoolCreated}
           optionalFunction={() => dispatch(removeEmptyPlayers())}
         />

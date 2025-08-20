@@ -1,0 +1,104 @@
+.assignment-method-container {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  min-height: 100vh;
+  gap: 2rem;
+}
+
+.assignment-method-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.assignment-method-header h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.assignment-method-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  flex: 1;
+}
+
+.page-description {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  text-align: center;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.method-selection-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 500px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.method-btn {
+  font-family: inherit;
+  font-size: 2rem;
+  font-weight: bold;
+  background-color: var(--primary-color);
+  border: none;
+  border-radius: 10px;
+  padding: 1rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+/* Disabled visual state */
+.method-btn:disabled,
+.method-btn.disabled {
+  background-color: var(--button-disabled-bg, #3a3a3a);
+  color: var(--text-disabled, #8a8a8a);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Helper note under disabled button */
+.disabled-note {
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.method-btn:not(:disabled):hover {
+  background-color: var(--primary-btn-bg-color);
+}
+
+.method-btn:not(:disabled):active {
+  opacity: 0.7;
+}
+
+.method-btn.selected {
+  opacity: 0.5;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .assignment-method-container {
+    padding: 0.5rem;
+  }
+  
+  .assignment-method-header h1 {
+    font-size: 1.3rem;
+  }
+  
+  .method-btn {
+    font-size: 1.5rem;
+    padding: 0.8rem;
+  }
+}
