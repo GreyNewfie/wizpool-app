@@ -48,13 +48,8 @@ export default function useApiData() {
     // If not storedData, fetch league's teams names and store in localStorage
     const leagueData = await fetchData(url);
     if (leagueData) {
-      // Get list of team names
-      const teamsList = leagueData?.map((team) => ({
-        key: team.key,
-        city: team.city,
-        name: team.name,
-      }));
-      return teamsList;
+      // Return full team objects so consumers can access conference/division
+      return leagueData;
     }
   };
 

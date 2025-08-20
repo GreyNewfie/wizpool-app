@@ -1,0 +1,449 @@
+.draft-page {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  gap: 2rem;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+.page-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+}
+
+/* Center block so title/subtitle are centered between left back button and right reset */
+.page-title-center {
+  text-align: center;
+}
+
+.page-title h1 {
+  margin: 0;
+}
+
+.subtitle {
+  margin: 2px 0 0 0;
+  color: var(--secondary-text-color);
+}
+
+/* Reset Draft button */
+.resetButton {
+  padding: 0.5rem 0.9rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  color: #fff;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  cursor: pointer;
+  transition: background 150ms ease, box-shadow 150ms ease;
+}
+
+.resetButton:hover {
+  background: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2) inset;
+}
+
+
+
+.content {
+  display: grid;
+  grid-template-columns: 3fr 3fr 2fr;
+  gap: 1rem;
+  align-items: start;
+  flex: 1;
+  overflow: hidden; /* Prevent content from overflowing */
+}
+
+/* Left column: players */
+.card {
+  background: var(--background-secondary);
+  border-radius: 14px;
+  padding: 0.75rem;
+  box-shadow: 0 1px 0 0 rgba(255,255,255,0.03) inset,
+              0 0 0 1px rgba(255,255,255,0.04) inset;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.card-title {
+  margin: 0 0 0.5rem 0;
+  color: var(--text-muted, #e6e6e7f9);
+}
+
+
+.players-list {
+  list-style: none;
+  padding-right: 16px; /* visual gutter so rounded corners don't clash with scrollbar */
+  margin: 0.5rem 0 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+  overflow-y: auto;
+  /* Reserve space for the vertical scrollbar to avoid overlapping content */
+  scrollbar-gutter: stable both-edges;
+  
+  /* Firefox scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.25) transparent;
+}
+
+/* WebKit scrollbars (Chrome, Edge, Safari) */
+.players-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.players-list::-webkit-scrollbar-track {
+  background: transparent;
+  margin: 6px; /* top/bottom gaps so thumb doesn't touch edges */
+}
+
+.players-list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 8px;
+  border: 2px solid transparent; /* creates space inside the track */
+  background-clip: padding-box; /* makes thumb thinner visually */
+}
+.player {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  border-radius: 8px;
+  background: var(--background-primary);
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+  min-height: fit-content;
+}
+
+/* When showing status label, stack vertically */
+.has-status {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.25rem;
+}
+
+.has-status .player-draft-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.player:hover {
+  border-color: var(--border-color);
+}
+
+.current {
+  margin-top: 5px;
+  outline: 0;
+  background: var(--primary-color);
+  color: var(--primary-text-color);
+  transform: translateY(-2px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.pick-number {
+  color: var(--secondary-text-color);
+}
+
+/* Ensure contents are readable on the current highlight */
+.has-status .player-name,
+.has-status .pick-number {
+  color: #ffffff;
+}
+
+.current .player-draft-container {
+  color: inherit;
+}
+
+.current::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+.next-player {
+  background: rgba(98, 0, 234, 0.15); /* Slightly more visible */
+  border-color: rgba(98, 0, 234, 0.4);
+  box-shadow: 0 1px 4px rgba(98, 0, 234, 0.1);
+}
+
+.player-status {
+  display: block;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--secondary-text-color);
+  margin-bottom: 6px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.current .player-status {
+  color: rgb(241, 236, 245);
+  font-weight: 600;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.95; }
+  50% { opacity: 1; }
+}
+
+
+
+.player-name {
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+
+
+.player-meta {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  background: rgba(0, 0, 0, 0.1);
+  padding: 3px 8px;
+  border-radius: 12px;
+}
+
+.player-draft-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.player-left {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+/* Player avatar styling */
+.player-left img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--background-primary);
+  padding: 5px;
+}
+
+/* Middle column: teams */
+.teams-list-wrap {
+  margin-top: 0.25rem;
+  flex: 1;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+/* Right column: results */
+.results-column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  height: 100%;
+}
+.results-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-gutter: stable both-edges; /* Reserve space for scrollbar */
+  padding-bottom: 8px;
+  padding-right: 4px; /* Space for scrollbar */
+}
+.result-player {
+  background: var(--background-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.75rem 0.75rem 0.5rem;
+  margin-bottom: 0.25rem;
+}
+.result-player-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 6px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.result-player-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--background-primary);
+  padding: 5px;
+}
+
+.result-player-name {
+  font-weight: 500;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.player-picks {
+  font-size: 0.85rem;
+  color: var(--secondary-text-color);
+  font-weight: normal;
+}
+
+.result-teams {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.result-teams li {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+  margin-top: 4px;
+  padding-left: 4px;
+}
+
+/* Custom scrollbar styling */
+.players-list::-webkit-scrollbar,
+.teams-list-wrap::-webkit-scrollbar,
+.results-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.players-list::-webkit-scrollbar-track,
+.teams-list-wrap::-webkit-scrollbar-track,
+.results-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.players-list::-webkit-scrollbar-thumb,
+.teams-list-wrap::-webkit-scrollbar-thumb,
+.results-list::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+}
+
+.players-list::-webkit-scrollbar-thumb:hover,
+.teams-list-wrap::-webkit-scrollbar-thumb:hover,
+.results-list::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Hide scrollbar for Firefox */
+.players-list, .teams-list-wrap, .results-list {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+@media (max-width: 900px) {
+  .content {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Completion Modal */
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  width: min(520px, 92vw);
+  background: var(--background-primary, #0e0e12);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 12px 36px rgba(0,0,0,0.55);
+  color: var(--text-primary, #fff);
+  position: relative;
+}
+
+.modalTitle {
+  margin: 0 0 1rem 0;
+  color: var(--text-primary, #fff);
+}
+
+.modalBody {
+  margin: 0 0 2rem 0;
+  color: var(--secondary-text-color, #d6d6e3);
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.modalClose {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  font-size: 20px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.modalClose:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.modalSecondary {
+  padding: 10px 2rem;
+  border-radius: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 150ms ease;
+  font-family: inherit;
+  min-width: 120px;
+  text-align: center;
+}
+
+.modalSecondary:hover {
+  color: var(--fourth-color);
+  background-color: var(--primary-btn-bg-color);
+}
+
+.modalSecondary:active {
+  opacity: 0.7;
+}

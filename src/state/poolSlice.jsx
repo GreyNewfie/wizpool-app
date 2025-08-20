@@ -188,6 +188,12 @@ const poolSlice = createSlice({
         (player) => player.name.trim() !== '',
       );
     },
+    clearAllPlayersTeams: (state) => {
+      state.players = state.players.map((player) => ({
+        ...player,
+        teams: [],
+      }));
+    },
     setUserId: (state, action) => {
       return { ...state, userId: action.payload };
     }
@@ -292,6 +298,7 @@ export const {
   addTeamToPlayer,
   removeTeamFromPlayer,
   removeEmptyPlayers,
+  clearAllPlayersTeams,
   setUserId,
   deletePlayer,
 } = poolSlice.actions;
