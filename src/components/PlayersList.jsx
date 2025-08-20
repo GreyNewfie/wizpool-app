@@ -9,6 +9,14 @@ export default function PlayersList(props) {
   const firstEmptyIndex = pool.players.findIndex(
     (p) => !(p?.name && p.name.replace(/[^a-zA-Z]/g, '').length > 0),
   );
+  const allPlayersHaveNameAndTeamName = pool.players.every((p) => {
+    const allPlayersHaveNames =
+      !!p?.name && p.name.replace(/[^a-zA-Z]/g, '').length > 0;
+    const allPlayersHaveTeamNames =
+      !!p?.teamName && p.teamName.replace(/[^a-zA-Z]/g, '').length > 0;
+    return allPlayersHaveNames && allPlayersHaveTeamNames;
+  });
+
   return (
     <>
       {pool.players.map((_, index) => {
@@ -24,7 +32,11 @@ export default function PlayersList(props) {
             handleTeamNameChange={(e) =>
               props.handleTeamNameChange(e.target.value, index)
             }
-            autoFocusPlayerName={poolHasName && index === firstEmptyIndex}
+            autoFocusPlayerName={
+              poolHasName &&
+              allPlayersHaveNameAndTeamName &&
+              index === firstEmptyIndex
+            }
             autoFocusTeamName={false}
           />
         );
