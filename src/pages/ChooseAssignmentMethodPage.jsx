@@ -1,23 +1,26 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BackHeaderButton from '../components/BackHeaderButton';
-import PrimaryActionButton from '../components/PrimaryActionButton';
 import classes from './ChooseAssignmentMethodPage.module.css';
+import { useSelector } from 'react-redux';
 
 export default function ChooseAssignmentMethodPage() {
   const [selectedMethod, setSelectedMethod] = useState('');
+  const pool = useSelector((state) => state.pool);
+  const hasTenPlayers = (pool?.players?.length ?? 0) === 10;
   const navigate = useNavigate();
-
-  const handleMethodSelect = (method) => {
-    setSelectedMethod(method);
-  };
 
   const handleNext = () => {
     if (selectedMethod === 'manual') {
       navigate('/choose-player');
-    } else if (selectedMethod === 'draft') {
+    } else if (selectedMethod === 'draft' && hasTenPlayers) {
       navigate('/draft');
     }
+  };
+
+  const handleMethodSelect = (method) => {
+    setSelectedMethod(method);
+    handleNext();
   };
 
   return (
@@ -37,22 +40,22 @@ export default function ChooseAssignmentMethodPage() {
             className={`${classes['method-btn']} ${selectedMethod === 'manual' ? classes['selected'] : ''}`}
             onClick={() => handleMethodSelect('manual')}
           >
-            Manual Assignment
+            Manually Assign
           </button>
 
           <button
             className={`${classes['method-btn']} ${selectedMethod === 'draft' ? classes['selected'] : ''}`}
             onClick={() => handleMethodSelect('draft')}
+            disabled={!hasTenPlayers}
           >
-            Mock Draft
+            Draft
           </button>
+          {!hasTenPlayers && (
+            <p className={classes['disabled-note']}>
+              Draft is only available for pools with 10 players
+            </p>
+          )}
         </div>
-
-        <PrimaryActionButton
-          text="Continue"
-          handleClick={handleNext}
-          disabled={!selectedMethod}
-        />
       </div>
     </div>
   );
