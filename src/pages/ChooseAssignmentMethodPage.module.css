@@ -59,11 +59,27 @@
   color: white;
 }
 
-.method-btn:hover {
+/* Disabled visual state */
+.method-btn:disabled,
+.method-btn.disabled {
+  background-color: var(--button-disabled-bg, #3a3a3a);
+  color: var(--text-disabled, #8a8a8a);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Helper note under disabled button */
+.disabled-note {
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.method-btn:not(:disabled):hover {
   background-color: var(--primary-btn-bg-color);
 }
 
-.method-btn:active {
+.method-btn:not(:disabled):active {
   opacity: 0.7;
 }
 

@@ -405,7 +405,7 @@ export default function DraftPage() {
               Draft Complete!{' '}
             </h3>
             <p className={classes.modalBody}>
-              Each player has selected 3 teams. You may not head over to the
+              Each player has selected 3 teams. You may now head over to the
               standings page.
             </p>
             <div className={classes.modalActions}>
