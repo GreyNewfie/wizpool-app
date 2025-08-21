@@ -8,46 +8,6 @@ export default function Dashboard() {
   const userPoolsLoading = useSelector((state) => state.userPools.loading);
   const poolLoading = useSelector((state) => state.pool.loading);
   const baseURL = import.meta.env.BASE_URL || '/';
-  //   const initializeUser = async () => {
-  //     // Wait for user data to be loaded
-  //     if (!isUserLoaded || !user) return;
-
-  //     try {
-  //       const token = await getToken();
-  //       const result = await dispatch(
-  //         fetchUserPoolsAsync({ userId: user.id, token }),
-  //       ).unwrap();
-
-  //       if (!result?.length) {
-  //         navigate('/choose-league');
-  //         return;
-  //       }
-
-  //       const mostRecentPool = result[0];
-  //       if (!mostRecentPool?.id) {
-  //         console.error('Invalid pool data:', mostRecentPool);
-  //         navigate('/choose-league');
-  //         return;
-  //       }
-
-  //       try {
-  //         await dispatch(
-  //           fetchPoolAsync({ poolId: mostRecentPool.id, token }),
-  //         ).unwrap();
-  //         localStorage.setItem('activePoolId', mostRecentPool.id);
-  //         localStorage.setItem('userId', user.id);
-  //       } catch (error) {
-  //         console.error('Error initializing pool:', error);
-  //         navigate('/choose-league');
-  //       }
-  //     } catch (error) {
-  //       console.error('Error in user initialization:', error);
-  //       navigate('/choose-league');
-  //     }
-  //   };
-
-  //   initializeUser();
-  // }, [isUserLoaded, user, dispatch, navigate, getToken]);
 
   return (
     <div className={classes['page-wrapper']}>
