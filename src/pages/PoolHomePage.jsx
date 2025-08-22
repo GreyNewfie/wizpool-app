@@ -102,6 +102,13 @@ export default function PoolHomePage() {
   const poolClasses = classNames(classes['pool-home'], classes[theme]);
   const isDesktop = useIsDesktop();
   const playerStandings = getPlayerStandings(sortedPlayers);
+  // If everyone has 0 wins, the season hasn't started; suppress standings
+  const everyoneZeroWins =
+    Array.isArray(sortedPlayers) &&
+    sortedPlayers.length > 0 &&
+    sortedPlayers.every((p) => (p?.totalWins ?? 0) === 0);
+  const getDisplayStanding = (playerName) =>
+    everyoneZeroWins ? '' : playerStandings[playerName];
 
   if (isLoading || !isUserLoaded) {
     return <LoadingOverlay />;
@@ -114,8 +121,13 @@ export default function PoolHomePage() {
         <PageHeader headerText={pool.name} poolName={pool.name} />
         <div className={classes['pool-players']}>
           <h3>Overall Standings</h3>
+          {everyoneZeroWins && (
+            <p className={classes['preseason-note']}>
+              Awaiting season start — standings will appear once games begin.
+            </p>
+          )}
           {sortedPlayers.map((player, playerIndex) => {
-            const playerStanding = playerStandings[player.name];
+            const playerStanding = getDisplayStanding(player.name);
             return (
               <div key={playerIndex} className={classes['player-container']}>
                 <PlayerHomeProfile
