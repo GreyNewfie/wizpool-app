@@ -18,7 +18,11 @@ export default function PlayerWinsTracker({ player, standing }) {
 
   return (
     <div className={classes['wins-tracker-container']}>
-      <p className={classes['player-standing']}>{`${standing}`}</p>
+      {standing ? (
+        <p className={classes['player-standing']}>{`${standing}`}</p>
+      ) : (
+        <span />
+      )}
       <p className={classes['player-wins']}>{`${playerWins} Wins`}</p>
     </div>
   );
