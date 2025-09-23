@@ -29,12 +29,10 @@ export default function ProtectedPoolRoute({ children }) {
 
         // First try to get pool from activePoolId
         if (activePoolId) {
-          // Only fetch if pool is not already in state
-          if (!pool.id || pool.id !== activePoolId) {
-            await dispatch(
-              fetchPoolByIdAsync({ poolId: activePoolId, token }),
-            ).unwrap();
-          }
+          // Always fetch the active pool on initialization to ensure fresh data
+          await dispatch(
+            fetchPoolByIdAsync({ poolId: activePoolId, token }),
+          ).unwrap();
         } else if (user?.id) {
           try {
             const userPools = await dispatch(
