@@ -66,6 +66,9 @@ export default function ProtectedPoolRoute({ children }) {
         }
       } catch (error) {
         console.error('Error initializing pool: ', error);
+        if (error.message?.includes('404')) {
+          localStorage.removeItem('activePoolId');
+        }
       } finally {
         setIsInitializing(false);
       }
