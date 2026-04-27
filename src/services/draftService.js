@@ -92,3 +92,28 @@ export async function makePick(sessionId, teamKey, token) {
     throw error;
   }
 }
+
+export async function getDraft(sessionId, token) {
+  try {
+    const response = await fetch(`${BASE_URL}/draft/session/${sessionId}`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error('Server error details:', errorData);
+      throw new Error('Failed to get draft');
+    }
+
+    const { data } = await response.json();
+
+    console.log('Retrieved draft:', data);
+    return data;
+  } catch (error) {
+    console.error('Error getting draft:', error);
+    throw error;
+  }
+}
