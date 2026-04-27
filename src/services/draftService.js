@@ -63,3 +63,32 @@ export async function startDraft(sessionId, token) {
     throw error;
   }
 }
+
+export async function makePick(sessionId, teamKey, token) {
+  const payload = { session_id: sessionId, team_key: teamKey };
+
+  try {
+    const response = await fetch(`${BASE_URL}/draft/pick`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error('Server error details:', errorData);
+      throw new Error('Failed to store draft pick');
+    }
+
+    const pickData = await response.json();
+
+    console.log('Pick updated:', pickData);
+    return pickData;
+  } catch (error) {
+    console.error('Error processing pick:', error);
+    throw error;
+  }
+}
