@@ -54,7 +54,7 @@ export async function startDraft(sessionId, token) {
       throw new Error('Failed to start draft');
     }
 
-    const { draftSessio: updatedDraftSession } = await response.json();
+    const { draftSession: updatedDraftSession } = await response.json();
 
     console.log('Draft started:', updatedDraftSession);
     return updatedDraftSession;
