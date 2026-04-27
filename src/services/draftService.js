@@ -27,7 +27,7 @@ export async function initDraft(poolId, token) {
 
     const { draftSession } = await response.json();
 
-    console.log('Pool initialized:', draftSession);
+    console.log('Draft initialized:', draftSession);
     return draftSession;
   } catch (error) {
     console.error('Error initializing draft:', error);
