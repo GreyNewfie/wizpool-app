@@ -22,7 +22,7 @@ export async function initDraft(poolId, token) {
     if (!response.ok) {
       const errorData = await response.json();
       console.error('Server error details:', errorData);
-      throw new Error('Failed to initialize draft');
+      throw new Error(errorData.error || 'Failed to initialize draft');
     }
 
     const { draftSession } = await response.json();
@@ -51,7 +51,7 @@ export async function startDraft(sessionId, token) {
     if (!response.ok) {
       const errorData = await response.json();
       console.error('Server error details:', errorData);
-      throw new Error('Failed to start draft');
+      throw new Error(errorData.error || 'Failed to start draft');
     }
 
     const { draftSession: updatedDraftSession } = await response.json();
@@ -80,7 +80,7 @@ export async function makePick(sessionId, teamKey, token) {
     if (!response.ok) {
       const errorData = await response.json();
       console.error('Server error details:', errorData);
-      throw new Error('Failed to store draft pick');
+      throw new Error(errorData.error || 'Failed to store draft pick');
     }
 
     const pickData = await response.json();
@@ -105,7 +105,7 @@ export async function getDraft(sessionId, token) {
     if (!response.ok) {
       const errorData = await response.json();
       console.error('Server error details:', errorData);
-      throw new Error('Failed to get draft');
+      throw new Error(errorData.error || 'Failed to get draft');
     }
 
     const { data } = await response.json();
