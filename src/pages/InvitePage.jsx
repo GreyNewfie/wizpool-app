@@ -4,20 +4,25 @@ import useIsDesktop from '../utils/useIsDesktop';
 import PageHeader from '../components/PageHeader';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import LoadingOverlay from '../components/LoadingOverlay';
-import { Button, Snackbar, TextField, Alert } from '@mui/material';
+import { Button, Snackbar, TextField, Alert, MenuItem } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { inviteToPool } from '../services/poolService';
 import { useAuth } from '@clerk/clerk-react';
+import useTheme from '../context/useTheme';
 
 export default function InvitePage() {
   const pool = useSelector((state) => state.pool);
   const isDesktop = useIsDesktop();
   const { getToken } = useAuth();
+  const { theme } = useTheme();
+  const isDark = theme !== 'light';
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState(null);
   const [showSuccess, setShowSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedPlayerId, setSelectedPlayerId] = useState('');
+  const [playerError, setPlayerError] = useState(null);
 
   const validateEmail = (email) => {
     return email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
@@ -25,6 +30,10 @@ export default function InvitePage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!selectedPlayerId) {
+      setPlayerError('Please select a player');
+    }
+
     if (!email) {
       setEmailError('Email is required');
       return;
@@ -39,9 +48,11 @@ export default function InvitePage() {
     try {
       // Add invite logic here
       const token = await getToken();
-      await inviteToPool(pool.id, email, token);
+      await inviteToPool(pool.id, email, selectedPlayerId, token);
       console.log('Sending invite to:', email);
       setShowSuccess(true);
+      setSelectedPlayerId('');
+      setPlayerError('');
       setEmail('');
       setEmailError('');
     } catch (error) {
@@ -79,6 +90,78 @@ export default function InvitePage() {
           </p>
           <form onSubmit={handleSubmit}>
             <TextField
+              select
+              required
+              fullWidth
+              id="player"
+              label="Select Player"
+              value={selectedPlayerId}
+              onChange={(e) => {
+                setSelectedPlayerId(e.target.value);
+                setPlayerError(null);
+              }}
+              error={Boolean(playerError)}
+              helperText={
+                playerError || 'Choose which player this invite is for'
+              }
+              sx={{
+                mb: 2,
+                '& .MuiInputBase-root': {
+                  color: isDark ? '#fff' : '#000',
+                  backgroundColor: isDark ? '#3a3a42' : '#fff',
+                  borderRadius: '10px',
+                },
+                '& .MuiInputLabel-root': {
+                  color: 'var(--secondary-text-color)',
+                  '&.Mui-focused': {
+                    color: 'var(--primary-color)',
+                  },
+                },
+                '& .MuiOutlinedInput-root': {
+                  '& fieldset': {
+                    borderRadius: '10px',
+                  },
+                  '&:hover fieldset': {
+                    borderColor: 'var(--primary-color)',
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: 'var(--primary-color)',
+                  },
+                },
+              }}
+              SelectProps={{
+                MenuProps: {
+                  PaperProps: {
+                    sx: {
+                      backgroundColor: isDark ? '#2e2e33' : '#fff',
+                      color: isDark ? '#fff' : '#000',
+                      '& .MuiMenuItem-root': {
+                        '&:hover': {
+                          backgroundColor: '#6768a9',
+                          color: '#fff',
+                        },
+                        '&.Mui-selected': {
+                          backgroundColor: '#6768a9',
+                          color: '#fff',
+                          '&:hover': {
+                            backgroundColor: '#6768a9',
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              }}
+            >
+              {pool.players.map((player) => {
+                return (
+                  <MenuItem key={player.id} value={player.id}>
+                    {player.name}
+                  </MenuItem>
+                );
+              })}
+            </TextField>
+            <TextField
               required
               fullWidth
               id="email"
@@ -93,8 +176,8 @@ export default function InvitePage() {
               placeholder="Enter email address"
               sx={{
                 '& .MuiInputBase-root': {
-                  color: 'var(--input-text-color)',
-                  backgroundColor: 'var(--input-bg-color)',
+                  color: isDark ? '#fff' : '#000',
+                  backgroundColor: isDark ? '#3a3a42' : '#fff',
                   borderRadius: '10px',
                 },
                 '& .MuiInputLabel-root': {
