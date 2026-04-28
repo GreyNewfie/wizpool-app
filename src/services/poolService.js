@@ -236,9 +236,10 @@ export async function updatePool(pool, token) {
   }
 }
 
-export async function inviteToPool(poolId, email, token) {
+export async function inviteToPool(poolId, email, playerId, token) {
   const payload = {
     email: email,
+    playerId: playerId,
   };
 
   try {

@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import MockDraftTeamsList from '../components/MockDraftTeamsList';
@@ -45,7 +45,7 @@ export default function DraftPage() {
 
   // Define createDraftOrder for exactly 10 players
   // Returns an array of player INDEXES (not player objects)
-  const createDraftOrder = (players) => {
+  const createDraftOrder = useCallback((players) => {
     if (!players || players.length !== 10) {
       console.warn('Draft requires exactly 10 players');
       return [];
@@ -84,15 +84,18 @@ export default function DraftPage() {
       });
     }
 
-    // Create shuffled player indices [0,1,2,3,4,5,6,7,8,9]
+    // Create player indices [0,1,2,3,4,5,6,7,8,9]
     const playerIndices = Array.from({ length: 10 }, (_, i) => i);
-    const shuffledIndices = shuffle(playerIndices);
+    const shuffledIndices =
+      (draft?.draftOrder || 'random') === 'pool'
+        ? playerIndices
+        : shuffle(playerIndices);
 
     // Map each draft pick to the actual player index
     const pickOrderIndices = draftSchedule.map((pos0) => shuffledIndices[pos0]);
 
     return pickOrderIndices;
-  };
+  }, [draft?.draftOrder]);
 
   // Use pickOrder from Redux; initialize it after mount to avoid dispatching during render
   const pickOrder = draft.pickOrder || [];
@@ -105,7 +108,7 @@ export default function DraftPage() {
       const newPickOrder = createDraftOrder(players);
       dispatch(setPickOrder(newPickOrder));
     }
-  }, [draft.pickOrder, players, dispatch]);
+  }, [draft.pickOrder, players, dispatch, createDraftOrder]);
 
   // We use draft.currentPickIndex directly from Redux; no local sync needed
 
