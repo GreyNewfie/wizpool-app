@@ -6,6 +6,7 @@ import CreatePoolPage from './pages/CreatePoolPage.jsx';
 import DraftPage from './pages/DraftPage.jsx';
 import ChooseAssignmentMethodPage from './pages/ChooseAssignmentMethodPage.jsx';
 import ChoosePlayerPage from './pages/ChoosePlayerPage.jsx';
+import LiveDraftSettingsPage from './pages/LiveDraftSettingsPage.jsx';
 import ErrorPage from './pages/ErrorPage.jsx';
 import ChooseTeamsPage from './pages/ChooseTeamsPage.jsx';
 import PoolHomePage from './pages/PoolHomePage.jsx';
@@ -78,6 +79,14 @@ const router = createBrowserRouter(
         </ProtectedRoute>
       ),
       errorElement: <ErrorPage />,
+    },
+    {
+      path: '/live-draft-settings',
+      element: (
+        <ProtectedRoute>
+          <LiveDraftSettingsPage />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/choose-player',

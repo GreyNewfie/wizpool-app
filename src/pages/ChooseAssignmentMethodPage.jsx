@@ -22,6 +22,8 @@ export default function ChooseAssignmentMethodPage() {
       if (hasTenPlayers) {
         setOrderModalOpen(true);
       }
+    } else if (method === 'live') {
+      navigate('/live-draft-settings');
     }
   };
 
@@ -63,15 +65,22 @@ export default function ChooseAssignmentMethodPage() {
           </button>
 
           <button
+            className={`${classes['method-btn']} ${selectedMethod === 'live' ? classes['selected'] : ''}`}
+            onClick={() => handleMethodSelect('live')}
+          >
+            Live Draft
+          </button>
+
+          <button
             className={`${classes['method-btn']} ${selectedMethod === 'draft' ? classes['selected'] : ''}`}
             onClick={() => handleMethodSelect('draft')}
             disabled={!hasTenPlayers}
           >
-            Draft
+            Local Draft
           </button>
           {!hasTenPlayers && (
             <p className={classes['disabled-note']}>
-              Draft is only available for pools with 10 players
+              Local draft is only available for pools with 10 players
             </p>
           )}
         </div>
