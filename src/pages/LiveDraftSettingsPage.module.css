@@ -1,0 +1,84 @@
+.page-container {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.live-draft-settings {
+  width: clamp(320px, 100%, 480px);
+  padding: 1.16rem 0.75rem 0;
+  align-items: center;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.intro-section {
+  width: 100%;
+}
+
+.intro-section h3 {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--primary-text-color);
+}
+
+.intro-section p {
+  font-size: 1rem;
+  color: var(--secondary-text-color);
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.form-control {
+  background-color: var(--input-bg-color);
+  border-radius: 8px;
+}
+
+/* Target the label text color */
+.form-control :global(.MuiInputLabel-root) {
+  color: var(--secondary-text-color);
+}
+
+/* Target the border/outline */
+.form-control :global(.MuiOutlinedInput-notchedOutline) {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Target the selected text color */
+.form-control :global(.MuiSelect-select) {
+  color: var(--primary-text-color);
+}
+
+/* Optional: change the arrow color */
+.form-control :global(.MuiSelect-icon) {
+  color: var(--secondary-text-color);
+}
+
+/* This targets the actual popup box */
+.select-popover :global(.MuiPaper-root) {
+  background-color: var(--input-bg-color) !important;
+  color: var(--primary-text-color) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* This targets the individual items in the list */
+.select-popover :global(.MuiMenuItem-root) {
+  font-family: var(--primary-text-font);
+}
+
+/* Styling the hover state for items */
+.select-popover :global(.MuiMenuItem-root:hover) {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Styling the "selected" item state */
+.select-popover :global(.MuiMenuItem-root.Mui-selected) {
+  background-color: var(--primary-color) !important;
+}
