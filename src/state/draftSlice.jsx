@@ -7,8 +7,7 @@ const initialState = {
   // draftOrder determines how initial draft order is assigned
   // 'random' (shuffled) or 'pool' (entered order)
   draftOrder: 'random',
-  // We could add more draft-specific state here
-  // like availableTeams, draftHistory, etc.
+  timePerPick: 60,
 };
 
 const draftSlice = createSlice({
@@ -30,6 +29,9 @@ const draftSlice = createSlice({
     setDraftOrder: (state, action) => {
       state.draftOrder = action.payload;
     },
+    setTimePerPick: (state, action) => {
+      state.timePerPick = action.payload;
+    },
     resetDraft: () => initialState,
   },
 });
@@ -41,6 +43,7 @@ export const {
   setDraftComplete,
   setDraftOrder,
   resetDraft,
+  setTimePerPick,
 } = draftSlice.actions;
 
 export default draftSlice.reducer;
