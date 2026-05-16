@@ -24,6 +24,7 @@ const initialState = {
   ],
   name: '',
   userId: '',
+  teamsPerPlayer: '',
   storingPool: false,
   loading: false,
   error: null,
@@ -54,7 +55,7 @@ export const storePoolAsync = createAsyncThunk(
       if (!fetchedPool) {
         throw new Error('Failed to verify pool creation');
       }
-      
+
       return fetchedPool;
     } catch (error) {
       console.error('Error in pool creation process:', error);
@@ -196,7 +197,10 @@ const poolSlice = createSlice({
     },
     setUserId: (state, action) => {
       return { ...state, userId: action.payload };
-    }
+    },
+    setTeamsPerPlayer: (state, action) => {
+      return { ...state, teamsPerPlayer: action.payload };
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -270,7 +274,7 @@ const poolSlice = createSlice({
       .addCase(updatePoolAsync.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
-      })
+      });
   },
 });
 
@@ -301,6 +305,7 @@ export const {
   clearAllPlayersTeams,
   setUserId,
   deletePlayer,
+  setTeamsPerPlayer,
 } = poolSlice.actions;
 
 export default poolSlice.reducer;
