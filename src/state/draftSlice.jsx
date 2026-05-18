@@ -48,6 +48,7 @@ const draftSlice = createSlice({
 });
 
 export const {
+  setSessionId,
   setPickOrder,
   setCurrentPickIndex,
   incrementPickIndex,
