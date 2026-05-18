@@ -89,3 +89,7 @@
 .select-popover :global(.MuiMenuItem-root.Mui-selected) {
   background-color: var(--primary-color) !important;
 }
+
+.action-container {
+  width: 100%;
+}

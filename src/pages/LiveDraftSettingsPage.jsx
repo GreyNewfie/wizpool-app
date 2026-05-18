@@ -1,4 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { setTeamsPerPlayer } from '../state/poolSlice';
 import { setTimePerPick } from '../state/draftSlice';
 import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
@@ -7,13 +8,15 @@ import classes from './LiveDraftSettingsPage.module.css';
 import useIsDesktop from '../utils/useIsDesktop';
 import DesktopNavHeader from '../components/DesktopNavHeader';
 import PageHeader from '../components/PageHeader';
+import PrimaryActionButton from '../components/PrimaryActionButton';
 
 export default function LiveDraftSettingsPage() {
   const isDesktop = useIsDesktop();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const pool = useSelector((state) => state.pool);
   const { timePerPick } = useSelector((state) => state.draft);
-
+  const isBtnDisabled = !pool.teamsPerPlayer || timePerPick;
   // Calculate the options for number of teams per player
   const teamsPerPlayerOptions = (league) => {
     const numPlayers = pool.players.length;
@@ -33,6 +36,10 @@ export default function LiveDraftSettingsPage() {
 
   const handleTeamsChange = (e) => dispatch(setTeamsPerPlayer(e.target.value));
   const handleTimeChange = (e) => dispatch(setTimePerPick(e.target.value));
+  const handleSaveSettings = () => {
+    // Add API call to update live draft settings
+    navigate(`/invite/${pool.id}`);
+  };
 
   return (
     <div className={classes['page-container']}>
@@ -127,6 +134,13 @@ export default function LiveDraftSettingsPage() {
               </Select>
             </FormControl>
           </Box>
+        </div>
+        <div className={classes['action-container']}>
+          <PrimaryActionButton
+            text="Save & Continue"
+            disabled={isBtnDisabled}
+            handleClick={handleSaveSettings}
+          />
         </div>
       </div>
     </div>
