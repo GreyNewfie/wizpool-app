@@ -24,7 +24,6 @@ const initialState = {
   ],
   name: '',
   userId: '',
-  teamsPerPlayer: '',
   storingPool: false,
   loading: false,
   error: null,
@@ -198,9 +197,6 @@ const poolSlice = createSlice({
     setUserId: (state, action) => {
       return { ...state, userId: action.payload };
     },
-    setTeamsPerPlayer: (state, action) => {
-      return { ...state, teamsPerPlayer: action.payload };
-    },
   },
   extraReducers: (builder) => {
     builder
@@ -305,7 +301,6 @@ export const {
   clearAllPlayersTeams,
   setUserId,
   deletePlayer,
-  setTeamsPerPlayer,
 } = poolSlice.actions;
 
 export default poolSlice.reducer;
