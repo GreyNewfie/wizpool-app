@@ -15,7 +15,7 @@ export default function LiveDraftSettingsPage() {
   const navigate = useNavigate();
   const pool = useSelector((state) => state.pool);
   const { timePerPick, teamsPerPlayer } = useSelector(
-    (state) => state.draft.settings,
+    (state) => state.draft.settings || {},
   );
   const isBtnDisabled = !teamsPerPlayer || !timePerPick;
   // Calculate the options for number of teams per player
