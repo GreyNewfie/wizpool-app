@@ -2,9 +2,10 @@ import { getApiBaseUrl } from '../config/config';
 
 const BASE_URL = getApiBaseUrl();
 
-export async function initDraft(poolId, token) {
+export async function initDraft(poolId, settings, token) {
   const payload = {
     poolId,
+    settings,
   };
 
   try {
