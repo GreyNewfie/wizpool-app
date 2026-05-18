@@ -19,6 +19,9 @@ const draftSlice = createSlice({
   name: 'draft',
   initialState,
   reducers: {
+    setSessionId: (state, action) => {
+      state.sessionId = action.payload;
+    },
     setPickOrder: (state, action) => {
       state.pickOrder = action.payload;
     },
