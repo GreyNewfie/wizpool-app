@@ -1,7 +1,13 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { setTimePerPick, setTeamsPerPlayer } from '../state/draftSlice';
+import { useAuth } from '@clerk/clerk-react';
+import {
+  setTimePerPick,
+  setTeamsPerPlayer,
+  setSessionId,
+} from '../state/draftSlice';
 import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { initDraft } from '../services/draftService';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import classes from './LiveDraftSettingsPage.module.css';
 import useIsDesktop from '../utils/useIsDesktop';
@@ -17,6 +23,7 @@ export default function LiveDraftSettingsPage() {
   const { timePerPick, teamsPerPlayer } = useSelector(
     (state) => state.draft.settings || {},
   );
+  const { getToken } = useAuth();
   const isBtnDisabled = !teamsPerPlayer || !timePerPick;
   // Calculate the options for number of teams per player
   const teamsPerPlayerOptions = (league) => {
@@ -37,8 +44,18 @@ export default function LiveDraftSettingsPage() {
 
   const handleTeamsChange = (e) => dispatch(setTeamsPerPlayer(e.target.value));
   const handleTimeChange = (e) => dispatch(setTimePerPick(e.target.value));
-  const handleSaveSettings = () => {
-    // Add API call to update live draft settings
+  const handleSaveSettings = async () => {
+    try {
+      const token = await getToken();
+      const session = await initDraft(
+        pool.id,
+        { timePerPick, teamsPerPlayer },
+        token,
+      );
+      dispatch(setSessionId(session.id));
+    } catch (error) {
+      console.error('Failed to initialize draft:', error);
+    }
     navigate(`/invite/${pool.id}`);
   };
 
