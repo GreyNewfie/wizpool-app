@@ -1,7 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { setTeamsPerPlayer } from '../state/poolSlice';
-import { setTimePerPick } from '../state/draftSlice';
+import { setTimePerPick, setTeamsPerPlayer } from '../state/draftSlice';
 import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import classes from './LiveDraftSettingsPage.module.css';
@@ -15,8 +14,10 @@ export default function LiveDraftSettingsPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const pool = useSelector((state) => state.pool);
-  const { timePerPick } = useSelector((state) => state.draft);
-  const isBtnDisabled = !pool.teamsPerPlayer || !timePerPick;
+  const { timePerPick, teamsPerPlayer } = useSelector(
+    (state) => state.draft.settings,
+  );
+  const isBtnDisabled = !teamsPerPlayer || !timePerPick;
   // Calculate the options for number of teams per player
   const teamsPerPlayerOptions = (league) => {
     const numPlayers = pool.players.length;
@@ -49,7 +50,7 @@ export default function LiveDraftSettingsPage() {
           headerText="Live Draft Settings"
           leftBtnText={<ArrowBackIcon />}
           path="/choose-assignment-method"
-          poolName={pool.poolName}
+          poolName={pool.name}
         />
         <div className={classes['teams-per-player-setting']}>
           <div className={classes['intro-section']}>
@@ -64,7 +65,7 @@ export default function LiveDraftSettingsPage() {
               <Select
                 labelId="teams-per-player-label"
                 id="teams-per-player-select"
-                value={pool.teamsPerPlayer || ''}
+                value={teamsPerPlayer}
                 onChange={handleTeamsChange}
                 label="Teams Per Player"
                 MenuProps={{
