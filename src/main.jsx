@@ -7,6 +7,7 @@ import DraftPage from './pages/DraftPage.jsx';
 import ChooseAssignmentMethodPage from './pages/ChooseAssignmentMethodPage.jsx';
 import ChoosePlayerPage from './pages/ChoosePlayerPage.jsx';
 import LiveDraftSettingsPage from './pages/LiveDraftSettingsPage.jsx';
+import SendInvitesPage from './pages/SendInvitesPage.jsx';
 import ErrorPage from './pages/ErrorPage.jsx';
 import ChooseTeamsPage from './pages/ChooseTeamsPage.jsx';
 import PoolHomePage from './pages/PoolHomePage.jsx';
@@ -114,6 +115,14 @@ const router = createBrowserRouter(
         </ProtectedRoute>
       ),
       errorElement: <ErrorPage />,
+    },
+    {
+      path: '/send-invites/:poolId',
+      element: (
+        <ProtectedRoute>
+          <SendInvitesPage />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/pool-home',
