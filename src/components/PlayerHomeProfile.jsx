@@ -15,7 +15,7 @@ export default function PlayerHomeProfile(props) {
                 ? classes['third-place-icon']
                 : classes['team-icon']
         }
-        src="./wizpool-trophy-icon-512x512.png"
+        src={`${import.meta.env.BASE_URL}wizpool-trophy-icon-512x512.png`}
         alt="team profile image"
       />
       <div className={classes['player-info']}>
