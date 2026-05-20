@@ -1,29 +1,19 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '@clerk/clerk-react';
-import {
-  setTimePerPick,
-  setTeamsPerPlayer,
-  setSessionId,
-} from '../state/draftSlice';
+import { setTimePerPick, setTeamsPerPlayer } from '../state/draftSlice';
 import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import { initDraft } from '../services/draftService';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import classes from './LiveDraftSettingsPage.module.css';
-import useIsDesktop from '../utils/useIsDesktop';
-import DesktopNavHeader from '../components/DesktopNavHeader';
 import PageHeader from '../components/PageHeader';
 import PrimaryActionButton from '../components/PrimaryActionButton';
 
 export default function LiveDraftSettingsPage() {
-  const isDesktop = useIsDesktop();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const pool = useSelector((state) => state.pool);
   const { timePerPick, teamsPerPlayer } = useSelector(
     (state) => state.draft.settings || {},
   );
-  const { getToken } = useAuth();
   const isBtnDisabled = !teamsPerPlayer || !timePerPick;
   // Calculate the options for number of teams per player
   const teamsPerPlayerOptions = (league) => {
@@ -44,24 +34,12 @@ export default function LiveDraftSettingsPage() {
 
   const handleTeamsChange = (e) => dispatch(setTeamsPerPlayer(e.target.value));
   const handleTimeChange = (e) => dispatch(setTimePerPick(e.target.value));
-  const handleSaveSettings = async () => {
-    try {
-      const token = await getToken();
-      const session = await initDraft(
-        pool.id,
-        { timePerPick, teamsPerPlayer },
-        token,
-      );
-      dispatch(setSessionId(session.id));
-    } catch (error) {
-      console.error('Failed to initialize draft:', error);
-    }
-    navigate(`/invite/${pool.id}`);
+  const handleSaveSettings = () => {
+    navigate(`/send-invites/${pool.id}`);
   };
 
   return (
     <div className={classes['page-container']}>
-      {isDesktop && <DesktopNavHeader />}
       <div className={classes['live-draft-settings']}>
         <PageHeader
           headerText="Live Draft Settings"
