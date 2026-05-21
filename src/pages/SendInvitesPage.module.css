@@ -1,0 +1,52 @@
+.page-container {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.send-invites-content {
+  width: clamp(320px, 100%, 480px);
+  padding: 1.16rem 0.75rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.intro-section {
+  font-size: 1rem;
+  color: var(--secondary-text-color);
+}
+
+.player-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.player-invite-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem;
+}
+
+.player-email-input {
+  width: 100%;
+}
+
+.player-profile-wrapper,
+.input-wrapper {
+  width: 100%;
+}
+
+.action-container {
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .player-invite-row {
+  }
+  .input-wrapper {
+  }
+}
