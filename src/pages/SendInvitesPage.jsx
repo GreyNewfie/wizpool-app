@@ -29,6 +29,7 @@ export default function SendInvitesPage() {
         <PageHeader
           headerText="Send Pool Invites"
           leftBtnText={<ArrowBackIcon />}
+          path="/live-draft-settings"
         />
         <div className={classes['intro-section']}>
           <p>
