@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import classes from './UserTextInput.module.css';
-import { useCallback, useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import debounce from '../utils/debounce';
 
 export default function UserTextInput(props) {
@@ -13,10 +13,24 @@ export default function UserTextInput(props) {
   );
   const inputElement = useRef(null);
 
+  const handleChangeRef = useRef(props.handleChange);
+
+  useEffect(() => {
+    handleChangeRef.current = props.handleChange;
+  }, [props.handleChange]);
+
+  useEffect(() => {
+    setLocalValue(props.value);
+  }, [props.value]);
+
   // Using debounce on handleChange to delay updating state as user enters input value
-  const debounceHandleChange = useCallback(debounce(props.handleChange), [
-    props.handleChange,
-  ]);
+  const debounceHandleChange = useMemo(
+    () =>
+      debounce((value) => {
+        handleChangeRef.current({ target: { value } });
+      }),
+    [],
+  );
 
   useEffect(() => {
     if (props.autoFocus && inputElement.current) {
@@ -25,8 +39,9 @@ export default function UserTextInput(props) {
   }, [props.autoFocus]);
 
   const handleChange = (e) => {
-    setLocalValue(e.target.value);
-    debounceHandleChange(e);
+    const val = e.target.value;
+    setLocalValue(val);
+    debounceHandleChange(val);
   };
 
   return (
