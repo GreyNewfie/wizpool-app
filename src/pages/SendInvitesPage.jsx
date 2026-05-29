@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import classes from './SendInvitesPage.module.css';
 import PlayerHomeProfile from '../components/PlayerHomeProfile';
 import UserTextInput from '../components/UserTextInput';
@@ -8,16 +8,24 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 export default function SendInvitesPage() {
   const pool = useSelector((state) => state.pool);
-  const [emails, setEmails] = useState({});
+  const [emails, setEmails] = useState(() => {
+    const savedEmails = localStorage.getItem(`player-emails-${pool.id}`);
+    return savedEmails ? JSON.parse(savedEmails) : {};
+  });
 
   console.log('Pool:', pool);
+  console.log('Player Emails:', emails);
 
-  const handleEmailChange = (playerId, email) => {
+  useEffect(() => {
+    localStorage.setItem(`player-emails-${pool.id}`, JSON.stringify(emails));
+  }, [emails, pool.id]);
+
+  const handleEmailChange = useCallback((playerId, email) => {
     setEmails((prev) => ({
       ...prev,
       [playerId]: email,
     }));
-  };
+  }, []);
 
   // iterate through the list to send out invites
   // create pool
