@@ -1,6 +1,6 @@
 import { SignUp, useUser, useAuth } from '@clerk/clerk-react';
 import { useEffect, useState, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setPool } from '../state/poolSlice';
 import { acceptInvitation, fetchCompletePool } from '../services/poolService';
@@ -15,6 +15,7 @@ export default function AcceptInvitePage() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState(null);
   const [hasAttempted, setHasAttempted] = useState(false);
+  const [searchParams] = useSearchParams();
 
   const processInvitation = useCallback(async () => {
     if (hasAttempted) {
@@ -24,7 +25,7 @@ export default function AcceptInvitePage() {
 
     if (!isLoaded || !isSignedIn) return;
 
-    const poolId = user?.publicMetadata?.poolId;
+    const poolId = user?.publicMetadata?.poolId || searchParams.get('poolId');
     if (!poolId) {
       console.log('No poolId in metadata');
       return;
@@ -91,7 +92,9 @@ export default function AcceptInvitePage() {
   if (!isSignedIn) {
     return (
       <div className={classes['accept-invite-container']}>
-        <SignUp forceRedirectUrl={'/accept-invite'} />
+        <SignUp
+          forceRedirectUrl={window.location.pathname + window.location.search}
+        />
       </div>
     );
   }
