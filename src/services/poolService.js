@@ -262,6 +262,33 @@ export async function inviteToPool(poolId, email, token) {
   }
 }
 
+export async function inviteToPoolBulk(poolId, invitations, token) {
+  const payload = {
+    invitations,
+  };
+
+  try {
+    const response = await fetch(`${BASE_URL}/invitations/${poolId}/bulk`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || 'Failed to send invitations');
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Error sending invitations:', error);
+    throw error;
+  }
+}
+
 export async function acceptInvitation(poolId, token) {
   try {
     const response = await fetch(`${BASE_URL}/invitations/${poolId}/accept`, {
