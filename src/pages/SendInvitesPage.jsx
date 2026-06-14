@@ -65,8 +65,9 @@ export default function SendInvitesPage() {
       dispatch(setSessionId(session.id));
 
       // 5. Cleanup and navigate
-      localStorage.setItem('activePoolId', pool.id);
+      localStorage.setItem('activePoolId', storedPool.id);
       localStorage.setItem('userId', user.id);
+      localStorage.removeItem(`player-emails-${pool.id}`);
 
       navigate('/pool-home');
     } catch (error) {
@@ -108,6 +109,7 @@ export default function SendInvitesPage() {
         <PrimaryActionButton
           text="Create Pool & Send Invites"
           handleClick={handleFinalize}
+          disabled={pool.storingPool}
         />
       </div>
     </div>
