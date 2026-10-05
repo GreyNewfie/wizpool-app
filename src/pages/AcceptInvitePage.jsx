@@ -1,6 +1,6 @@
-import { SignUp, useUser, useAuth } from '@clerk/clerk-react';
+import { SignIn, useUser, useAuth } from '@clerk/clerk-react';
 import { useEffect, useState, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setPool } from '../state/poolSlice';
 import { acceptInvitation, fetchCompletePool } from '../services/poolService';
@@ -12,6 +12,8 @@ export default function AcceptInvitePage() {
   const { getToken } = useAuth();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [searchParams] = useSearchParams();
+  const paramsPoolId = searchParams.get('poolId');
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState(null);
   const [hasAttempted, setHasAttempted] = useState(false);
@@ -24,9 +26,10 @@ export default function AcceptInvitePage() {
 
     if (!isLoaded || !isSignedIn) return;
 
-    const poolId = user?.publicMetadata?.poolId;
+    const poolId = paramsPoolId || user?.publicMetadata?.poolId;
     if (!poolId) {
       console.log('No poolId in metadata');
+      navigate('/pool-home');
       return;
     }
 
@@ -57,7 +60,16 @@ export default function AcceptInvitePage() {
       setIsProcessing(false);
       setHasAttempted(true);
     }
-  }, [user, isLoaded, isSignedIn, getToken, navigate, dispatch, hasAttempted]);
+  }, [
+    user,
+    isLoaded,
+    isSignedIn,
+    getToken,
+    navigate,
+    dispatch,
+    hasAttempted,
+    paramsPoolId,
+  ]);
 
   useEffect(() => {
     processInvitation();
@@ -91,7 +103,13 @@ export default function AcceptInvitePage() {
   if (!isSignedIn) {
     return (
       <div className={classes['accept-invite-container']}>
-        <SignUp forceRedirectUrl={'/accept-invite'} />
+        <SignIn
+          forceRedirectUrl={
+            paramsPoolId
+              ? `/accept-invite?poolId=${paramsPoolId}`
+              : '/accept-invite'
+          }
+        />
       </div>
     );
   }
